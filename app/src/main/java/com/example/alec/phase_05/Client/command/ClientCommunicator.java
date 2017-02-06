@@ -25,7 +25,7 @@ public class ClientCommunicator
     private String serverPort;
 
     /**
-     * Constucts a ClientCommuncator with a null server port and ip.
+     * Constructs a ClientCommuncator with a null server port and ip.
      * This method should only be called by the getInstance() method.
      */
     public ClientCommunicator()
