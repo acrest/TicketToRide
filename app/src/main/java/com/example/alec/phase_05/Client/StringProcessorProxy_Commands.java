@@ -6,9 +6,6 @@ import com.example.alec.phase_05.Server.TrimCommand;
 import com.example.alec.phase_05.Shared.BaseCommand;
 import com.example.alec.phase_05.Shared.IStringProcessor;
 
-/**
- * Created by Alec on 1/20/17.
- */
 public class StringProcessorProxy_Commands implements IStringProcessor {
     String myRtn;
     String myCmd;

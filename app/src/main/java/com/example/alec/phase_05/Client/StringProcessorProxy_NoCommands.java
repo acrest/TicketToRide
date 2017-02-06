@@ -8,9 +8,6 @@ import com.example.alec.phase_05.Shared.IStringProcessor;
 import com.example.alec.phase_05.Shared.Results;
 import com.example.alec.phase_05.Shared.Serializer;
 
-/**
- * Created by Alec on 1/20/17.
- */
 public class StringProcessorProxy_NoCommands implements IStringProcessor {
     String myRtn;
     String myCmd;

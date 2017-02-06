@@ -2,15 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5877560e-aab3-4030-891d-6e9387e21a00" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerFacade.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerModel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Game.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Player.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/Client.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/Client.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/ClientCommunicator.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/ClientCommunicator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/ClientProcessorNotProxy.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/ClientProcessorNotProxy.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/HttpURLConnection.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/HttpURLConnection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/StringProcessorProxy_Commands.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/StringProcessorProxy_Commands.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/StringProcessorProxy_NoCommands.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/StringProcessorProxy_NoCommands.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ExecCommandHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ExecCommandHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/HandlerBase.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/HandlerBase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/HttpHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/HttpHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ICommand.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ICommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ParseCommand.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ParseCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ParseIntergerHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ParseIntergerHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/Server.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/Server.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerCommunicator.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerCommunicator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerFacade.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerFacade.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerModel.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/StringProcessor.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/StringProcessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ToLowerCaseCommand.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ToLowerCaseCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ToLowerCaseHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ToLowerCaseHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/TrimCommand.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/TrimCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/TrimHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/TrimHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Arguments.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Arguments.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/BaseCommand.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/BaseCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Game.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Game.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/IStringProcessor.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/IStringProcessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/ParseIntegerCommandData.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/ParseIntegerCommandData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Player.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Results.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Results.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Serializer.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Serializer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/ToLowerCaseCommandData.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/ToLowerCaseCommandData.java" />
     </list>
     <ignored path="TicketToRide.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,49 +53,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ServerCommunicator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerCommunicator.java">
+      <file leaf-file-name="Arguments.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Arguments.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="5" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServerModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="41" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="41" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1135#1136#0" expanded="true" />
-                <element signature="e#1178#1179#0" expanded="true" />
-                <element signature="e#1227#1228#0" expanded="true" />
-                <element signature="e#1275#1276#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Results.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Results.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Player.java">
+      <file leaf-file-name="BaseCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/BaseCommand.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -83,76 +77,80 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Game.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="45" column="27" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding>
-                <element signature="e#389#390#0" expanded="true" />
-                <element signature="e#416#417#0" expanded="true" />
-                <element signature="e#456#457#0" expanded="true" />
-                <element signature="e#488#489#0" expanded="true" />
-                <element signature="e#518#519#0" expanded="true" />
-                <element signature="e#543#544#0" expanded="true" />
-                <element signature="e#580#581#0" expanded="true" />
-                <element signature="e#608#609#0" expanded="true" />
-                <element signature="e#655#656#0" expanded="true" />
-                <element signature="e#692#693#0" expanded="true" />
-                <element signature="e#730#731#0" expanded="true" />
-                <element signature="e#763#764#0" expanded="true" />
-                <element signature="e#816#817#0" expanded="true" />
-                <element signature="e#860#861#0" expanded="true" />
-                <element signature="e#899#900#0" expanded="true" />
-                <element signature="e#943#944#0" expanded="true" />
+                <element signature="e#778#779#0" expanded="true" />
+                <element signature="e#822#823#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/Client.java">
+      <file leaf-file-name="ParseIntegerCommandData.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/ParseIntegerCommandData.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientCommunicator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/ClientCommunicator.java">
+      <file leaf-file-name="IStringProcessor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/IStringProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientProcessorNotProxy.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/ClientProcessorNotProxy.java">
+      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Player.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="9" selection-end-column="17" />
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ServerFacade.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerFacade.java">
+      <file leaf-file-name="Results.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Results.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24115756">
-              <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/Server.java">
+      <file leaf-file-name="Serializer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Serializer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="49" selection-end-column="5" />
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ToLowerCaseCommandData.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/ToLowerCaseCommandData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TrimCommandData.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/TrimCommandData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.024115756">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1814,11 +1812,37 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/Client.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/ClientCommunicator.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/ClientProcessorNotProxy.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/HttpURLConnection.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/StringProcessorProxy_Commands.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/StringProcessorProxy_NoCommands.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ExecCommandHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/HandlerBase.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/HttpHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ICommand.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ParseCommand.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ParseIntergerHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/Server.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerCommunicator.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Player.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Game.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerFacade.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/StringProcessor.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ToLowerCaseCommand.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ToLowerCaseHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/TrimCommand.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/TrimHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Arguments.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/BaseCommand.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Game.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/ParseIntegerCommandData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/IStringProcessor.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Player.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Results.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Serializer.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/ToLowerCaseCommandData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/TrimCommandData.java" />
       </list>
     </option>
   </component>
@@ -2326,7 +2350,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2334,33 +2358,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/ClientProcessorNotProxy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="9" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerCommunicator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="5" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="49" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Results.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2368,40 +2366,107 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/ClientCommunicator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Player.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/HttpURLConnection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Game.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/StringProcessorProxy_Commands.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="27" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Client/StringProcessorProxy_NoCommands.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ExecCommandHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/HandlerBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/HttpHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ICommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ParseCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ParseIntergerHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerCommunicator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
-            <element signature="e#389#390#0" expanded="true" />
-            <element signature="e#416#417#0" expanded="true" />
-            <element signature="e#456#457#0" expanded="true" />
-            <element signature="e#488#489#0" expanded="true" />
-            <element signature="e#518#519#0" expanded="true" />
-            <element signature="e#543#544#0" expanded="true" />
-            <element signature="e#580#581#0" expanded="true" />
-            <element signature="e#608#609#0" expanded="true" />
-            <element signature="e#655#656#0" expanded="true" />
-            <element signature="e#692#693#0" expanded="true" />
-            <element signature="e#730#731#0" expanded="true" />
-            <element signature="e#763#764#0" expanded="true" />
-            <element signature="e#816#817#0" expanded="true" />
-            <element signature="e#860#861#0" expanded="true" />
-            <element signature="e#899#900#0" expanded="true" />
-            <element signature="e#943#944#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerFacade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2409,24 +2474,133 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="41" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="41" />
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1135#1136#0" expanded="true" />
-            <element signature="e#1178#1179#0" expanded="true" />
-            <element signature="e#1227#1228#0" expanded="true" />
-            <element signature="e#1275#1276#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ServerFacade.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/StringProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24115756">
-          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ToLowerCaseCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/ToLowerCaseHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/TrimCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Server/TrimHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Arguments.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/BaseCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#778#779#0" expanded="true" />
+            <element signature="e#822#823#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/ParseIntegerCommandData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/IStringProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Results.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/Serializer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/ToLowerCaseCommandData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/alec/phase_05/Shared/TrimCommandData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.024115756">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

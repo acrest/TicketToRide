@@ -6,9 +6,6 @@ import com.example.alec.phase_05.Shared.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Alec on 2/5/17.
- */
 public class ServerModel {
 
     private Map<Integer,Game> gamesMap;

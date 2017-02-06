@@ -9,9 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-/**
- * Created by Alec on 1/21/17.
- */
 public class Client {
 
     public static void main(String[] args) {

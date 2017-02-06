@@ -17,9 +17,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
-/**
- * Created by Alec on 1/20/17.
- */
 public class ExecCommandHandler implements com.sun.net.httpserver.HttpHandler {
 
     @Override
