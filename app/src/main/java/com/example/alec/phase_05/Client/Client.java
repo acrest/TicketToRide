@@ -1,13 +1,8 @@
 package com.example.alec.phase_05.Client;
 
-import android.util.Log;
-
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 
 /**
  * Created by Alec on 1/21/17.
@@ -46,7 +41,7 @@ public class Client {
             String serverHost = "localhost";
             String serverPort = "8080";
 
-            StringProcessorProxy_NoCommands proxy = new StringProcessorProxy_NoCommands(str,command,cc,serverHost,serverPort);
+            ServerProxy proxy = new ServerProxy(str,command,cc,serverHost,serverPort);
 
 
 
