@@ -1,9 +1,6 @@
 package com.example.alec.phase_05.Client;
 import com.example.alec.phase_05.Shared.IStringProcessor;
 
-/**
- * Created by Alec on 1/22/17.
- */
 public class ClientProcessorNotProxy implements IStringProcessor {
     String myRtn;
     String myStr;

@@ -3,9 +3,6 @@ package com.example.alec.phase_05.Shared;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-/**
- * Created by Alec on 1/21/17.
- */
 public class Serializer {
 
     public static BaseCommand deserializeCommand(String json, String packagePrefix)

@@ -11,9 +11,6 @@ import java.net.InetSocketAddress;
 
 import com.example.alec.phase_05.Server.TrimHandler;
 
-/**
- * Created by Alec on 1/21/17.
- */
 public class Server {
 
     private static final int MAX_WAITING_CONNECTIONS = 12;

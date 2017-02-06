@@ -4,9 +4,6 @@ import com.example.alec.phase_05.Shared.BaseCommand;
 import com.example.alec.phase_05.Shared.IStringProcessor;
 import com.example.alec.phase_05.Shared.Results;
 
-/**
- * Created by Alec on 1/20/17.
- */
 public class StringProcessor implements IStringProcessor {
     String myRtn;
     BaseCommand myCommand;

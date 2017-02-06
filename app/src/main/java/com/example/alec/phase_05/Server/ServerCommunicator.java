@@ -5,9 +5,6 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-/**
- * Created by Alec on 1/20/17.
- */
 public class ServerCommunicator {
 
     private static final int MAX_WAITING_CONNECTIONS = 12;

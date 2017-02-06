@@ -12,9 +12,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.io.OutputStreamWriter;
 
-/**
- * Created by Alec on 1/20/17.
- */
 public class ToLowerCaseHandler implements com.sun.net.httpserver.HttpHandler {
 
     @Override

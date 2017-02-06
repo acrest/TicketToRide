@@ -13,9 +13,6 @@ import com.example.alec.phase_05.Shared.BaseCommand;
 import com.example.alec.phase_05.Shared.Serializer;
 import com.sun.net.httpserver.*;
 
-/**
- * Created by Alec on 1/20/17.
- */
 public class ClientCommunicator {
 
 
