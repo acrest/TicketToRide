@@ -1,5 +1,0 @@
-# ignore all files/directories in this directory
-/*
-
-# except for the src directory
-!/src/
