@@ -5,8 +5,19 @@ package com.example.alec.phase_05.Shared;
  */
 public class Player {
 
-    public String name;
-    public Integer ID;
-    public String password;
+    private String name;
+    private Integer ID;
+    private String password;
+
+    public String getName(){
+        return name;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
+
+
 
 }
