@@ -11,7 +11,7 @@ import com.example.alec.phase_05.Shared.Serializer;
 /**
  * Created by Alec on 1/20/17.
  */
-public class StringProcessorProxy_NoCommands implements IStringProcessor {
+public class ServerProxy implements IStringProcessor {
     String myRtn;
     String myCmd;
     String myHost;
@@ -19,7 +19,7 @@ public class StringProcessorProxy_NoCommands implements IStringProcessor {
     String myStr;
     BaseCommand baseCMD;
     ClientCommunicator myCC;
-    public StringProcessorProxy_NoCommands(String str, String cmd, ClientCommunicator cc, String serverHost, String serverPort){
+    public ServerProxy(String str, String cmd, ClientCommunicator cc, String serverHost, String serverPort){
         myRtn = new String();
         myCmd = new String(cmd);
         myHost = new String(serverHost);
