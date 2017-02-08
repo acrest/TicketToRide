@@ -9,6 +9,11 @@ public class Player {
     private Integer ID;
     private String password;
 
+    public Player(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     public String getName(){
         return name;
     }
