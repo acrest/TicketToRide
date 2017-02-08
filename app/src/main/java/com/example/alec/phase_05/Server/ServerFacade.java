@@ -22,6 +22,10 @@ public class ServerFacade {
 
     }
 
+    public boolean login(String username, String password) {
+        return false;
+    }
+
 
 
 }
