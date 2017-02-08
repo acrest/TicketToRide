@@ -1,6 +1,8 @@
 package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.command.ClientCommunicator;
+import com.example.alec.phase_05.Client.command.ClientLoginCommand;
+import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Shared.Game;
 import com.example.alec.phase_05.Shared.Player;
 import com.example.alec.phase_05.Shared.command.AbstractLoginCommand;
@@ -57,24 +59,15 @@ public class ServerProxy implements IServer {
 
     @Override
     public boolean login(String username, String password) {
-        baseCMD = new AbstractLoginCommand(username, password) {
-            @Override
-            public Result execute() {
-                return null;
-            }
-        };
+        baseCMD = new ClientLoginCommand(username, password);
+
         myCC.executeCommandOnServer(baseCMD);
         return true;
     }
 
     @Override
     public boolean registerUser(String username, String password) {
-        baseCMD = new AbstractRegisterCommand(username, password) {
-            @Override
-            public Result execute() {
-                return null;
-            }
-        };
+        baseCMD = new ClientRegisterCommand(username, password);
         myCC.executeCommandOnServer(baseCMD);
         return true;
     }

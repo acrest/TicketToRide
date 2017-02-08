@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server.command;
 
+import com.example.alec.phase_05.Server.ServerFacade;
 import com.example.alec.phase_05.Shared.command.*;
 
 /**
@@ -23,7 +24,7 @@ public class ServerLoginCommand extends AbstractLoginCommand
      */
     public Result execute()
     {
-        boolean success = ServerFacade.getInstance().login(getUserName(), getPassword());
+        boolean success = ServerFacade.get_instance().login(getUserName(), getPassword());
         ServerLoginResponseCommand cmd = new ServerLoginResponseCommand();
         cmd.setSuccess(success);
         Result result = new Result();
