@@ -6,3 +6,6 @@
 
 # and the .gitignore file
 !/.gitignore
+
+# and the build.gradle file
+!/build.gradle
