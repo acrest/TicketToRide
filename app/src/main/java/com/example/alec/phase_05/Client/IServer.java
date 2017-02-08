@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface IServer {
 
+
+
     void configure(String host, String port);
     boolean login(String username, String password);
     boolean registerUser(String username, String password);
