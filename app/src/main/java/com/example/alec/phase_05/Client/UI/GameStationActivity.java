@@ -114,6 +114,7 @@ public class GameStationActivity extends Activity {
                 mButtonDialogOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        dialog.dismiss();
                         Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
                         startActivity(i);
                     }

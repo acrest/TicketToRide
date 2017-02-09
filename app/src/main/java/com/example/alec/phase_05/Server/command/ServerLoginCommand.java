@@ -25,10 +25,8 @@ public class ServerLoginCommand extends AbstractLoginCommand
     public Result execute()
     {
         boolean success = ServerFacade.get_instance().login(getUserName(), getPassword());
-        ServerLoginResponseCommand cmd = new ServerLoginResponseCommand();
-        cmd.setSuccess(success);
-        Result result = new Result();
-        result.setResultObject(cmd);
+        Result result = new ServerResult();
+        result.setResultObject(success);
         return result;
     }
 }

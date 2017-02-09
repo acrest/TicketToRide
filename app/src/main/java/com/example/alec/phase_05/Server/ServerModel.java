@@ -8,12 +8,14 @@ import java.util.Map;
 
 public class ServerModel {
 
+    private static int nextValidGameID = 0;
+
     private Map<Integer,Game> gamesMap;
     private Map<String,Player> playerMap;
 
     private static ServerModel _instance;
 
-    ServerModel() {
+    public ServerModel() {
 
     }
 
@@ -24,20 +26,28 @@ public class ServerModel {
         return _instance;
     }
 
+    public static int getNextValidGameID() {
+        return nextValidGameID++;
+    }
+
     public boolean addPlayer(Player newPlayer){
-        String playerName = newPlayer.name;
+        String playerName = newPlayer.getName();
+        if(playerMap.containsKey(playerName))
+            return false;
         playerMap.put(playerName,newPlayer);
         return true;
     }
 
     public boolean addGame(Game newGame){
         Integer gameID = newGame.ID;
+        if(gamesMap.containsKey(gameID))
+            return false;
         gamesMap.put(gameID,newGame);
         return true;
     }
 
     public boolean login(String inputPass, String playerName){
-        if(playerMap.get(playerName).password == inputPass){
+        if(playerMap.get(playerName).getPassword() == inputPass){
             return true;
         }
         else{

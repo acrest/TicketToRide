@@ -1,6 +1,9 @@
 package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.command.ClientCommunicator;
+import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
+import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
+import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Shared.Game;
@@ -30,6 +33,7 @@ public class ServerProxy implements IServer {
     private static String DEFAULT_PORT = "8080";
 
 
+
     public ServerProxy(String serverHost, String serverPort) {
         myHost = serverHost;
         myPort = serverPort;
@@ -46,6 +50,14 @@ public class ServerProxy implements IServer {
         }
     }
 
+    public static IServer getInstance() {
+        if(instance == null) {
+            instance = new ServerProxy(DEFAULT_HOST, DEFAULT_PORT);
+        }
+        return instance;
+    }
+
+
 
     public String createCommand() {
         return null;
@@ -60,42 +72,37 @@ public class ServerProxy implements IServer {
     @Override
     public boolean login(String username, String password) {
         baseCMD = new ClientLoginCommand(username, password);
-
-        myCC.executeCommandOnServer(baseCMD);
-        return true;
+        Result result = myCC.executeCommandOnServer(baseCMD);
+        return result.toBoolean();
     }
 
     @Override
     public boolean registerUser(String username, String password) {
         baseCMD = new ClientRegisterCommand(username, password);
-        myCC.executeCommandOnServer(baseCMD);
-        return true;
+        Result result = myCC.executeCommandOnServer(baseCMD);
+        return result.toBoolean();
     }
 
     @Override
-    public Game createGame(Player hostPLayer, int numOfPlayers, String gameName) {
-        /*
-
-        TALK TO SAM ABOUT COMMAND NAME
-
-        baseCMD = new GameCommand("createGame", hostPLayer.name, hostPLayer.password, int gameID ) {
-            @Override
-            public Result execute() {
-                return null;
-            }
-        };
-
-        */
-        return null;
+    public Game createGame(Player hostPlayer, int numOfPlayers, String gameName) {
+        //List<Game> gameList = getGames(hostPlayer.getName(), hostPlayer.getPassword());
+        //int gameID = gameList.size() + 1;
+        baseCMD = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers);
+        Result result = myCC.executeCommandOnServer(baseCMD);
+        return (Game) result.toClass(Game.class);
     }
 
     @Override
     public String joinGame(Player newPlayer, int gameID) {
-        return null;
+        baseCMD = new ClientJoinGameCommand(newPlayer.getName(), newPlayer.getPassword(), gameID);
+        Result result = myCC.executeCommandOnServer(baseCMD);
+        return result.toString();
     }
 
     @Override
-    public List<Game> getGames() {
-        return null;
+    public List<Game> getGames(String username, String password) {
+        baseCMD = new ClientGetGameListCommand(username, password);
+        Result result = myCC.executeCommandOnServer(baseCMD);
+        return (List<Game>) result.toClass(List.class);
     }
 }

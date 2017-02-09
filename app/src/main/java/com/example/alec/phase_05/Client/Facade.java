@@ -4,6 +4,8 @@ import com.example.alec.phase_05.Shared.Game;
 import com.example.alec.phase_05.Shared.Player;
 import com.example.alec.phase_05.Shared.command.AbstractLoginCommand;
 
+import java.util.List;
+
 /**
  * Created by clarkpathakis on 2/6/17.
  */
@@ -11,6 +13,7 @@ import com.example.alec.phase_05.Shared.command.AbstractLoginCommand;
 public class Facade {
 
     private Game game;
+    private Player player;
     private static Facade _instance;
     ServerProxy proxy = null;
 
@@ -37,15 +40,19 @@ public class Facade {
     }
 
     private void createGame(Player hostPlayer, int numOfPlayers, String gameName) {
+        player = hostPlayer;
+        Game newGame = proxy.createGame(hostPlayer, numOfPlayers, gameName);
 
 
     }
 
     private void joinGame(Player newPlayer, int gameID) {
-
+        player = newPlayer;
+        String joinedGame = proxy.joinGame(newPlayer, gameID);
     }
 
-    private void getGames() {
+    private void getGames(Player player) {
+        List<Game> gameList = proxy.getGames(player.getName(), player.getPassword());
 
     }
 }
