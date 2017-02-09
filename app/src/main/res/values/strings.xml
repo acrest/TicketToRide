@@ -1,3 +1,32 @@
 <resources>
-    <string name="app_name">Phase_0.5</string>
+    <string name="app_name">Ticket To Ride</string>
+    <string name="username">User Name:</string>
+    <string name="username_hint">(username)</string>
+    <string name="password">Password:</string>;
+    <string name="password_hint">(password)</string>
+    <string name="sign_in_button">SIGN IN</string>
+    <string name="confirm">Confirm:</string>
+    <string name="confirm_hint">(confirm password)</string>
+    <string name="register_button">Register</string>
+    <string name="create_game_button">CREATE GAME</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">CANCEL</string>
+    <string name="create_new_game">CREATE NEW GAME</string>
+    <string name="join_new_game">JOIN NEW GAME</string>
+    <string name="join_game_button">JOIN GAME</string>
+    <string name="game_name_tab">Game</string>
+    <string name="players_tab">Players</string>
+    <string name="in_game_tab">In Game</string>
+    <string name="waiting_for_players">Waiting for more players...</string>
+    <string name="current_number_of_players">1/5</string>
+    <string name="start_game">Start Game</string>
+    <string name="name">Name:</string>
+    <string name="hint_game_name">(name of game)</string>
+    <string name="dialog_players">Players</string>
+    <string name="dialog_color">Pick Your Color</string>
+    <string name="color_red">Red</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_green">Green</string>
+    <string name="color_black">Black</string>
 </resources>
