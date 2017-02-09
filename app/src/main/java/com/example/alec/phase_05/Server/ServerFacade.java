@@ -26,6 +26,10 @@ public class ServerFacade {
         return false;
     }
 
+    public boolean poller() {
+        return false;
+    }
+
 
 
 }
