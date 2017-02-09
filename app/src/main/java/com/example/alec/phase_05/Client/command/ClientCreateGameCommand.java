@@ -10,13 +10,12 @@ import com.example.alec.phase_05.Shared.command.Result;
 
 public class ClientCreateGameCommand extends AbstractCreateGameCommand {
     /**
-     * @param commandName command name from BaseCommand
      * @param userName    username of client
      * @param password    password of client
      * @param gameID      id of the game for which this command operates
      */
-    public ClientCreateGameCommand(String commandName, String userName, String password, int gameID) {
-        super(commandName, userName, password, gameID);
+    public ClientCreateGameCommand(String userName, String password, int gameID) {
+        super(userName, password, gameID);
     }
 
     /**

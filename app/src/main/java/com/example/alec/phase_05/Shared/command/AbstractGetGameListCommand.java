@@ -6,12 +6,11 @@ package com.example.alec.phase_05.Shared.command;
 
 public class AbstractGetGameListCommand extends AuthorizedCommand {
     /**
-     * @param commandName command name from BaseCommand
      * @param userName    username of client
      * @param password    password of client
      */
-    public AbstractGetGameListCommand(String commandName, String userName, String password) {
-        super(commandName, userName, password);
+    public AbstractGetGameListCommand(String userName, String password) {
+        super("GetGameList", userName, password);
     }
 
     @Override

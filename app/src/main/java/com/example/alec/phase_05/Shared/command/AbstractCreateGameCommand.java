@@ -6,13 +6,12 @@ package com.example.alec.phase_05.Shared.command;
 
 public class AbstractCreateGameCommand extends GameCommand {
     /**
-     * @param commandName command name from BaseCommand
      * @param userName    username of client
      * @param password    password of client
      * @param gameID      id of the game for which this command operates
      */
-    public AbstractCreateGameCommand(String commandName, String userName, String password, int gameID) {
-        super(commandName, userName, password, gameID);
+    public AbstractCreateGameCommand(String userName, String password, int gameID) {
+        super("CreateGame", userName, password, gameID);
     }
 
     @Override

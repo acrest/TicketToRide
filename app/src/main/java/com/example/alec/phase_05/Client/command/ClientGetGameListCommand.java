@@ -9,12 +9,11 @@ import com.example.alec.phase_05.Shared.command.Result;
 
 public class ClientGetGameListCommand extends AbstractGetGameListCommand {
     /**
-     * @param commandName command name from BaseCommand
      * @param userName    username of client
      * @param password    password of client
      */
-    public ClientGetGameListCommand(String commandName, String userName, String password) {
-        super(commandName, userName, password);
+    public ClientGetGameListCommand(String userName, String password) {
+        super(userName, password);
     }
 
     /**
