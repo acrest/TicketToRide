@@ -12,10 +12,9 @@ public class ClientCreateGameCommand extends AbstractCreateGameCommand {
     /**
      * @param userName    username of client
      * @param password    password of client
-     * @param gameID      id of the game for which this command operates
      */
-    public ClientCreateGameCommand(String userName, String password, int gameID) {
-        super(userName, password, gameID);
+    public ClientCreateGameCommand(String userName, String password, String gameName, int numberOfPlayers) {
+        super(userName, password, gameName, numberOfPlayers);
     }
 
     /**

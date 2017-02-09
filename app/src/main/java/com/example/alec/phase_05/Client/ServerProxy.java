@@ -72,39 +72,37 @@ public class ServerProxy implements IServer {
     @Override
     public boolean login(String username, String password) {
         baseCMD = new ClientLoginCommand(username, password);
-
-        myCC.executeCommandOnServer(baseCMD);
-        return true;
+        Result result = myCC.executeCommandOnServer(baseCMD);
+        return result.toBoolean();
     }
 
     @Override
     public boolean registerUser(String username, String password) {
         baseCMD = new ClientRegisterCommand(username, password);
-        myCC.executeCommandOnServer(baseCMD);
-        return true;
+        Result result = myCC.executeCommandOnServer(baseCMD);
+        return result.toBoolean();
     }
 
     @Override
-    public Game createGame(Player hostPLayer, int numOfPlayers, String gameName) {
-        List<Game> gameList = getGames(hostPLayer.getName(), hostPLayer.getPassword());
-        int gameID = gameList.size() + 1;
-        baseCMD = new ClientCreateGameCommand("CreateGame", hostPLayer.getName(), hostPLayer.getPassword(), gameID);
-        myCC.executeCommandOnServer(baseCMD);
-
-        return null;
+    public Game createGame(Player hostPlayer, int numOfPlayers, String gameName) {
+        //List<Game> gameList = getGames(hostPlayer.getName(), hostPlayer.getPassword());
+        //int gameID = gameList.size() + 1;
+        baseCMD = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers);
+        Result result = myCC.executeCommandOnServer(baseCMD);
+        return (Game) result.toClass(Game.class);
     }
 
     @Override
     public String joinGame(Player newPlayer, int gameID) {
-        baseCMD = new ClientJoinGameCommand("JoinGame", newPlayer.getName(), newPlayer.getPassword(), gameID);
-        myCC.executeCommandOnServer(baseCMD);
-        return null;
+        baseCMD = new ClientJoinGameCommand(newPlayer.getName(), newPlayer.getPassword(), gameID);
+        Result result = myCC.executeCommandOnServer(baseCMD);
+        return result.toString();
     }
 
     @Override
     public List<Game> getGames(String username, String password) {
-        baseCMD = new ClientGetGameListCommand("GetGameList", username, password);
-        myCC.executeCommandOnServer(baseCMD);
-        return null;
+        baseCMD = new ClientGetGameListCommand(username, password);
+        Result result = myCC.executeCommandOnServer(baseCMD);
+        return (List<Game>) result.toClass(List.class);
     }
 }

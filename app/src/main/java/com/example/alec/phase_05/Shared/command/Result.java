@@ -5,7 +5,7 @@ package com.example.alec.phase_05.Shared.command;
  * Can contain primitive data types, commands, and other classes.
  * Created by samuel on 2/3/17.
  */
-public class Result
+public abstract class Result
 {
     private String serializedResult;
     private String errorMessage;
@@ -128,13 +128,16 @@ public class Result
     }
 
     /**
-     * Will return deserialization of this Result as a commmand.
-     * Will only be used by the client.
-     * Not implemented by this class.
-     * @return null
+     * @return deserialization of this Result as a String
      */
-    public ICommand toCommand()
+    public String toString()
     {
-        return null;
+        return (String) toClass(String.class);
     }
+
+    /**
+     * Will return deserialization of this Result as a commmand.
+     * @return deserialized command
+     */
+    public abstract ICommand toCommand();
 }
