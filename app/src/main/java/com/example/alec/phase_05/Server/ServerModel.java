@@ -25,7 +25,7 @@ public class ServerModel {
     }
 
     public boolean addPlayer(Player newPlayer){
-        String playerName = newPlayer.name;
+        String playerName = newPlayer.getName();
         playerMap.put(playerName,newPlayer);
         return true;
     }
@@ -37,7 +37,7 @@ public class ServerModel {
     }
 
     public boolean login(String inputPass, String playerName){
-        if(playerMap.get(playerName).password == inputPass){
+        if(playerMap.get(playerName).getPassword() == inputPass){
             return true;
         }
         else{

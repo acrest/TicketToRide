@@ -18,5 +18,5 @@ public interface IServer {
     boolean registerUser(String username, String password);
     Game createGame(Player hostPLayer, int numOfPlayers, String gameName);
     String joinGame(Player newPlayer, int gameID);
-    List<Game> getGames();
+    List<Game> getGames(String username, String password);
 }
