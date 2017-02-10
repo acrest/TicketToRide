@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Server.command;
 
 import com.example.alec.phase_05.Server.ServerFacade;
 import com.example.alec.phase_05.Shared.command.*;
+import com.example.alec.phase_05.Shared.model.Player;
 
 /**
  * Submits a login request to the server facade.
@@ -24,11 +25,9 @@ public class ServerLoginCommand extends AbstractLoginCommand
      */
     public Result execute()
     {
-        boolean success = ServerFacade.get_instance().login(getUserName(), getPassword());
-        ServerLoginResponseCommand cmd = new ServerLoginResponseCommand();
-        cmd.setSuccess(success);
-        Result result = new Result();
-        result.setResultObject(cmd);
+        Player player = ServerFacade.get_instance().login(getUserName(), getPassword());
+        Result result = new ServerResult();
+        result.setResultObject(player);
         return result;
     }
 }

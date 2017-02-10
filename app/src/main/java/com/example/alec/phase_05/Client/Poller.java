@@ -1,9 +1,7 @@
 package com.example.alec.phase_05.Client;
 
-import com.example.alec.phase_05.Client.command.ClientCommunicator;
-import com.example.alec.phase_05.Shared.Game;
+import com.example.alec.phase_05.Shared.model.GameDescription;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,26 +17,33 @@ public class Poller {
     private int state = -1;
 
     private static Poller instance;
+    private GameDescription game;
 
 
 
-
-    public Poller(ClientCommunicator cc) {
-        // do something here.
+    /**
+     * Construct a poller instance using the given server
+     * @param theServer An instance of IServer - could be a real networking server,
+     *               or a mock server for testing.
+     */
+    public Poller(IServer theServer) {
+        server = theServer;
     }
 
     public static Poller getInstance() {
         if(instance == null) {
-            instance = new Poller(ClientCommunicator.getInstance());
+            instance = new Poller(ServerProxy.getInstance());
         }
         return instance;
     }
 
     public boolean isRunning() {
+
         return poller != null;
     }
 
     public void start() {
+        assert server != null;
         //checks if poller is null
         if (poller != null) {
             return;
@@ -51,12 +56,14 @@ public class Poller {
                 switch (state) {
                     case 1:
                         //server.getCurrentModel(Facade.getInstance.getGame().getVersion());
+
                         break;
                     case 2:
                         //server.getLatestPlayers();
                         break;
                     case 3:
-                        List<Game> games = server.getGames();
+
+                        //List<GameDescription> games = server.getGames(userName, password);
                 }
             }
         }, 0, DEFAULT_POLL_INTERVAL);
@@ -79,6 +86,10 @@ public class Poller {
     public void setListGamePolling() {
         state = 3;
     }
+
+
+
+
 
 
 }

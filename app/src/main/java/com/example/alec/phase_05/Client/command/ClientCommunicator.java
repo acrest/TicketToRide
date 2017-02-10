@@ -55,7 +55,7 @@ public class ClientCommunicator
      * @param cmd command to be sent to and executed by the server
      * @return Result of cmd.execute() on the server
      */
-    public ClientResult executeCommandOnServer(BaseCommand cmd)
+    public ClientResult executeCommandOnServer(ICommand cmd)
     {
         String serializedCommand = SerDes.serialize(cmd);
         String responseBody = sendAndGetResponse(serializedCommand, "/command");
