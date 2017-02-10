@@ -60,7 +60,7 @@ public class LogInActivity extends Activity {
             {
                 if(!mRegisterUserNameEditText.getText().toString().isEmpty() && !mRegisterPasswordEditText.getText().toString().isEmpty() && !mRegisterConfirmEditText.getText().toString().isEmpty())
                 {
-                    if(mRegisterPasswordEditText.getText().toString() == mRegisterConfirmEditText.getText().toString())
+                    if(mRegisterPasswordEditText.getText().toString().equals(mRegisterConfirmEditText.getText().toString()))
                     {
                         Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
                         startActivity(i);
