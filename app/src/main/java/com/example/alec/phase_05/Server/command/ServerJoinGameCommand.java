@@ -1,12 +1,9 @@
 package com.example.alec.phase_05.Server.command;
 
 import com.example.alec.phase_05.Server.ServerFacade;
-import com.example.alec.phase_05.Shared.Game;
-import com.example.alec.phase_05.Shared.Player;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.AbstractJoinGameCommand;
 import com.example.alec.phase_05.Shared.command.Result;
-
-import java.util.List;
 
 /**
  * Created by samuel on 2/9/17.

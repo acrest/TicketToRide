@@ -1,8 +1,7 @@
 package com.example.alec.phase_05.Client;
 
-import com.example.alec.phase_05.Shared.Game;
-import com.example.alec.phase_05.Shared.Player;
-import com.example.alec.phase_05.Shared.command.AbstractLoginCommand;
+import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
 
@@ -12,14 +11,10 @@ import java.util.List;
 
 public class Facade {
 
-    private Game game;
-    private Player player;
     private static Facade _instance;
-    ServerProxy proxy = null;
+    private ServerProxy proxy = null;
 
     public Facade() {
-
-        this.game = new Game();
         proxy = new ServerProxy(null, null);
     }
 
@@ -30,29 +25,28 @@ public class Facade {
         return _instance;
     }
 
-    private void login(String username, String password) {
-        boolean loginSuccess = proxy.login(username, password);
+    public void login(String username, String password) {
+        Player player = proxy.login(username, password);
+        ClientModel.getInstance().setCurrentPlayer(player);
     }
 
-    private void registerUser(String username, String password) {
-        boolean registerSuccess = proxy.registerUser(username, password);
-
+    public void registerUser(String username, String password) {
+        Player player = proxy.registerUser(username, password);
+        ClientModel.getInstance().setCurrentPlayer(player);
     }
 
-    private void createGame(Player hostPlayer, int numOfPlayers, String gameName) {
-        player = hostPlayer;
-        Game newGame = proxy.createGame(hostPlayer, numOfPlayers, gameName);
-
-
+    public void createGame(int numOfPlayers, String gameName) {
+        Player player = ClientModel.getInstance().getCurrentPlayer();
+        GameDescription newGame = proxy.createGame(player, numOfPlayers, gameName);
     }
 
-    private void joinGame(Player newPlayer, int gameID) {
-        player = newPlayer;
-        String joinedGame = proxy.joinGame(newPlayer, gameID);
+    public void joinGame(int gameID) {
+        Player player = ClientModel.getInstance().getCurrentPlayer();
+        String joinedGame = proxy.joinGame(player, gameID);
     }
 
-    private void getGames(Player player) {
-        List<Game> gameList = proxy.getGames(player.getName(), player.getPassword());
-
+    public void getGames(Player player) {
+        List<GameDescription> gameList = proxy.getGames(player.getName(), player.getPassword());
+        ClientFacade.getInstance().updateGameList(gameList);
     }
 }

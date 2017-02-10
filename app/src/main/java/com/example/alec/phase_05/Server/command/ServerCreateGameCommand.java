@@ -1,8 +1,8 @@
 package com.example.alec.phase_05.Server.command;
 
 import com.example.alec.phase_05.Server.ServerFacade;
-import com.example.alec.phase_05.Shared.Game;
-import com.example.alec.phase_05.Shared.Player;
+import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.*;
 
 /**
@@ -20,7 +20,7 @@ public class ServerCreateGameCommand extends AbstractCreateGameCommand
     {
         ServerFacade sf = ServerFacade.get_instance();
         Player hostPlayer = sf.getPlayerByName(getUserName());
-        Game game = sf.createGame(hostPlayer, getNumberOfPlayers(), getGameName());
+        GameDescription game = sf.createGame(hostPlayer, getNumberOfPlayers(), getGameName());
         Result result = new ServerResult();
         result.setResultObject(game);
         return result;

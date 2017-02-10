@@ -1,13 +1,13 @@
 package com.example.alec.phase_05.Server;
 
 import com.example.alec.phase_05.Client.ClientModel;
-import com.example.alec.phase_05.Shared.Game;
-import com.example.alec.phase_05.Shared.Player;
+import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
 
 public class ServerFacade {
-
     private static ServerFacade _instance;
 
     public ServerFacade() {
@@ -30,7 +30,7 @@ public class ServerFacade {
         return false;
     }
 
-    public boolean login(String username, String password) {
+    public Player login(String username, String password) {
         return ServerModel.get_instance().login(password, username);
     }
 
@@ -40,9 +40,9 @@ public class ServerFacade {
         return model.addPlayer(player);
     }
 
-    public Game createGame(Player hostPLayer, int numOfPlayers, String gameName) {
+    public GameDescription createGame(Player hostPLayer, int numOfPlayers, String gameName) {
         ServerModel model = ServerModel.get_instance();
-        Game newGame = new Game(ServerModel.getNextValidGameID(), gameName, numOfPlayers);
+        GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers);
         if(!model.addGame(newGame))
             return null;
         return newGame;
@@ -50,14 +50,20 @@ public class ServerFacade {
 
     public String joinGame(Player newPlayer, int gameID) {
         ServerModel model = ServerModel.get_instance();
-        Game game = model.getGame(gameID);
+        GameState game = model.getGame(gameID);
         if(game == null) return null;
         if(game.hasPlayer(newPlayer.getName())) return null;
         game.addPlayer(newPlayer);
-        return game.getName();
+        return game.getGameDescription().getName();
     }
 
-    public List<Game> getGames(String username, String password) {
-        return null;
+    public List<GameDescription> getGames(String username, String password) {
+        ServerModel model = ServerModel.get_instance();
+        return model.getGameDescriptions();
+    }
+
+    public boolean validateAuthentication(String username, String password) {
+        Player player = ServerModel.get_instance().getPlayer(username);
+        return player != null && player.getPassword().equals(password);
     }
 }
