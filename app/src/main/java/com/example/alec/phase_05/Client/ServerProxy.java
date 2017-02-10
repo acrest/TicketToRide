@@ -8,6 +8,7 @@ import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.Result;
@@ -108,5 +109,20 @@ public class ServerProxy implements IServer {
         ICommand cmd = new ClientGetGameListCommand(username, password);
         Result result = myCC.executeCommandOnServer(cmd);
         return (List<GameDescription>) result.toClass(List.class);
+    }
+
+    @Override
+    public void getCurrentModel(int gameID) {
+
+    }
+
+    @Override
+    public void getLatestPlayers() {
+
+    }
+
+    @Override
+    public GameState getGame(int gameID) {
+        return null;
     }
 }

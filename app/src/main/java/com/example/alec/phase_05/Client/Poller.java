@@ -1,7 +1,9 @@
 package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.Player;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -55,15 +57,18 @@ public class Poller {
             public void run() {
                 switch (state) {
                     case 1:
-                        //server.getCurrentModel(Facade.getInstance.getGame().getVersion());
+
+                        server.getCurrentModel(ClientModel.getInstance().getCurrentGame().getGameDescription().getID());
+                        //server.getCurrentModel(Facade.getInstance().getGame().getVersion());
 
                         break;
                     case 2:
-                        //server.getLatestPlayers();
+                        server.getLatestPlayers();
                         break;
                     case 3:
+                        Player currentPlayer = ClientModel.getInstance().getCurrentPlayer();
 
-                        //List<GameDescription> games = server.getGames(userName, password);
+                        List<GameDescription> games = server.getGames(currentPlayer.getName(), currentPlayer.getPassword());
                 }
             }
         }, 0, DEFAULT_POLL_INTERVAL);

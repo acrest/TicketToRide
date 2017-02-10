@@ -1,6 +1,8 @@
 package com.example.alec.phase_05.Client;
 
+import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
@@ -13,6 +15,7 @@ public class Facade {
 
     private static Facade _instance;
     private ServerProxy proxy = null;
+
 
     public Facade() {
         proxy = new ServerProxy(null, null);
@@ -48,5 +51,9 @@ public class Facade {
     public void getGames(Player player) {
         List<GameDescription> gameList = proxy.getGames(player.getName(), player.getPassword());
         ClientFacade.getInstance().updateGameList(gameList);
+    }
+
+    public void getGame(int gameID) {
+        GameState game = proxy.getGame(gameID);
     }
 }
