@@ -110,6 +110,7 @@ public class LogInActivity extends Activity {
             {
                 if(!Character.isDigit(field.charAt(i)));
                 {
+                    if(field.charAt(i) != '^' || field.charAt(i) != '*' || field.charAt(i) != '_')
                     return false;
                 }
             }
