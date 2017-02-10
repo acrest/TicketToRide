@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_lobby"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/lobby_board"
+    tools:context="com.example.alec.phase_05.Client.UI.LobbyActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#77FFFFFF">
+
+        <TextView
+            android:id="@+id/lobby_current_number_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/current_number_of_players"
+            android:textColor="#000000"
+            android:textStyle="italic"
+            android:textSize="36sp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/lobby_waiting_on_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/waiting_for_players"
+            android:textColor="#000000"
+            android:textStyle="italic"
+            android:textSize="36sp"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/lobby_current_number_players"/>
+
+        <ProgressBar
+            android:id="@+id/lobby_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lobby_current_number_players"
+            android:indeterminate="true"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/lobby_start_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_game"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/lobby_progress_bar"
+            android:layout_marginTop="10dp" />
+        <!--android:visibility="gone"-->
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
