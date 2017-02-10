@@ -1,7 +1,11 @@
+# ignore all files/directories in this directory
 /*
 
+# except for the src directory
 !/src/
 
+# and the .gitignore file
 !/.gitignore
 
+# and the build.gradle file
 !/build.gradle

@@ -1,5 +1,8 @@
+# ignore all files/directories in this directory
 /*
 
+# except for the app directory
 !/app/
 
+# and the .gitignore file
 !/.gitignore
