@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:gravity="center|left"
+    android:layout_height="56dp"
+    android:paddingLeft="16dp"
+    android:id="@+id/cont_item_root">
+
+    <ImageView
+        android:id="@+id/im_item_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@android:drawable/ic_menu_edit"
+        android:tint="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/lbl_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:text="Derp Derpson"
+        android:textColor="#66CC00"
+        android:textSize="30sp"/>
+
+</LinearLayout>
