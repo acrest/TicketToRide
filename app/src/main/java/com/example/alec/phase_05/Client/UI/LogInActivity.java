@@ -38,7 +38,7 @@ public class LogInActivity extends Activity {
             @Override
             public void onClick(View v)
             {
-                if(!mLogInUserNameEditText.getText().toString().isEmpty() && !mLogInPasswordEditText.getText().toString().isEmpty())
+                if(!mLogInUserNameEditText.getText().toString().isEmpty() && !mLogInPasswordEditText.getText().toString().isEmpty() && isValidLogin())
                 {
                     String something = mLogInUserNameEditText.toString();
                     String somethings = mLogInPasswordEditText.toString();
@@ -58,7 +58,7 @@ public class LogInActivity extends Activity {
             @Override
             public void onClick(View v)
             {
-                if(!mRegisterUserNameEditText.getText().toString().isEmpty() && !mRegisterPasswordEditText.getText().toString().isEmpty() && !mRegisterConfirmEditText.getText().toString().isEmpty())
+                if(!mRegisterUserNameEditText.getText().toString().isEmpty() && !mRegisterPasswordEditText.getText().toString().isEmpty() && !mRegisterConfirmEditText.getText().toString().isEmpty() && isValidRegister())
                 {
                     if(mRegisterPasswordEditText.getText().toString().equals(mRegisterConfirmEditText.getText().toString()))
                     {
@@ -80,5 +80,41 @@ public class LogInActivity extends Activity {
                 }
             }
         });
+    }
+
+    private boolean isValidLogin()
+    {
+        if(!isValidField(mLogInUserNameEditText.getText().toString()) || !isValidField(mLogInPasswordEditText.getText().toString()))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isValidRegister()
+    {
+        if(!isValidField(mRegisterUserNameEditText.getText().toString()) || !isValidField(mRegisterPasswordEditText.getText().toString()) || !isValidField(mRegisterConfirmEditText.getText().toString()))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isValidField(String field)
+    {
+        for(int i = 0; i < field.length(); i++)
+        {
+            if(!Character.isLetter(field.charAt(i)))
+            {
+                if(!Character.isDigit(field.charAt(i)));
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
