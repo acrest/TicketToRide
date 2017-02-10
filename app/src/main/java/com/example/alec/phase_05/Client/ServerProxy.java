@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.command.ClientCommunicator;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
+import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
@@ -111,18 +112,17 @@ public class ServerProxy implements IServer {
         return (List<GameDescription>) result.toClass(List.class);
     }
 
+
     @Override
-    public void getCurrentModel(int gameID) {
+    public void getLatestPlayers(String username, String password) {
 
     }
 
     @Override
-    public void getLatestPlayers() {
+    public GameState getGame(String username, String password, int gameID) {
 
-    }
-
-    @Override
-    public GameState getGame(int gameID) {
-        return null;
+        ICommand cmd = new ClientGetGameCommand(username, password, gameID);
+        Result result = myCC.executeCommandOnServer(cmd);
+        return (GameState) result.toClass(GameState.class);
     }
 }

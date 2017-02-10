@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
@@ -55,18 +56,21 @@ public class Poller {
         poller.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                Player currentPlayer = ClientModel.getInstance().getCurrentPlayer();
                 switch (state) {
                     case 1:
 
-                        server.getCurrentModel(ClientModel.getInstance().getCurrentGame().getGameDescription().getID());
+                        GameState currentGame = server.getGame(currentPlayer.getName(), currentPlayer.getPassword(),
+                                ClientModel.getInstance().getCurrentGame().getGameDescription().getID());
                         //server.getCurrentModel(Facade.getInstance().getGame().getVersion());
 
                         break;
                     case 2:
-                        server.getLatestPlayers();
+
+                        server.getLatestPlayers(currentPlayer.getName(), currentPlayer.getPassword());
                         break;
                     case 3:
-                        Player currentPlayer = ClientModel.getInstance().getCurrentPlayer();
+
 
                         List<GameDescription> games = server.getGames(currentPlayer.getName(), currentPlayer.getPassword());
                 }
