@@ -48,7 +48,6 @@ public class GameStationActivity extends Activity {
             public void onClick(View view) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(GameStationActivity.this);
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_create_game, null);
-
                 final EditText mGameName = (EditText) mView.findViewById(R.id.new_game_edit_text);
                 final NumberPicker mNoPicker = (NumberPicker) mView.findViewById(R.id.new_game_number_picker);
                 final Button mButtonDialogRed = (Button) mView.findViewById(R.id.new_game_button_red);
