@@ -1,22 +1,25 @@
 package com.example.alec.phase_05.Server;
 
-import com.example.alec.phase_05.Shared.Game;
-import com.example.alec.phase_05.Shared.Player;
+import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ServerModel {
-
     private static int nextValidGameID = 0;
 
-    private Map<Integer,Game> gamesMap;
+    private Map<Integer,GameState> gamesMap;
     private Map<String,Player> playerMap;
 
     private static ServerModel _instance;
 
     public ServerModel() {
-
+        playerMap = new HashMap<>();
+        gamesMap = new HashMap<>();
     }
 
     public static ServerModel get_instance(){
@@ -30,6 +33,7 @@ public class ServerModel {
         return nextValidGameID++;
     }
 
+
     public boolean addPlayer(Player newPlayer){
         String playerName = newPlayer.getName();
         if(playerMap.containsKey(playerName))
@@ -38,24 +42,15 @@ public class ServerModel {
         return true;
     }
 
-    public boolean addGame(Game newGame){
-        Integer gameID = newGame.ID;
+    public boolean addGame(GameDescription newGame){
+        Integer gameID = newGame.getID();
         if(gamesMap.containsKey(gameID))
             return false;
-        gamesMap.put(gameID,newGame);
+        gamesMap.put(gameID,new GameState(newGame));
         return true;
     }
 
-    public boolean login(String inputPass, String playerName){
-        if(playerMap.get(playerName).getPassword() == inputPass){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public Game getGame(Integer gameID){
+    public GameState getGame(Integer gameID){
         return gamesMap.get(gameID);
     }
 
@@ -63,6 +58,22 @@ public class ServerModel {
         return playerMap.get(playerName);
     }
 
+    public Player login(String inputPass, String playerName){
+        Player player = playerMap.get(playerName);
+        if(player == null) return null;
+        if(player.getPassword().equals(inputPass)){
+            return player;
+        }
+        else{
+            return null;
+        }
+    }
 
-
+    public List<GameDescription> getGameDescriptions() {
+        List<GameDescription> gameDescriptions = new ArrayList<>();
+        for(GameState gameState : gamesMap.values()) {
+            gameDescriptions.add(gameState.getGameDescription());
+        }
+        return gameDescriptions;
+    }
 }

@@ -1,9 +1,7 @@
 package com.example.alec.phase_05.Client;
 
-import com.example.alec.phase_05.Client.command.ClientCommunicator;
-import com.example.alec.phase_05.Shared.Game;
+import com.example.alec.phase_05.Shared.model.GameDescription;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,7 +17,7 @@ public class Poller {
     private int state = -1;
 
     private static Poller instance;
-    private Game game;
+    private GameDescription game;
 
 
 
@@ -65,7 +63,7 @@ public class Poller {
                         break;
                     case 3:
 
-                        //List<Game> games = server.getGames(userName, password);
+                        //List<GameDescription> games = server.getGames(userName, password);
                 }
             }
         }, 0, DEFAULT_POLL_INTERVAL);
