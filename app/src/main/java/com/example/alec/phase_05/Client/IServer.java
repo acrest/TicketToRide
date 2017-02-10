@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface IServer {
     GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName);
     String joinGame(Player newPlayer, int gameID);
     List<GameDescription> getGames(String username, String password);
+
+    void getCurrentModel(int gameID);
+    void getLatestPlayers();
+    GameState getGame(int gameID);
 }
