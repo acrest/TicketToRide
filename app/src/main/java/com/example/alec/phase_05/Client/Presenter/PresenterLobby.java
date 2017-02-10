@@ -1,22 +1,15 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Created by Andrew on 2/9/2017.
  */
 
-public class PresenterLobby implements PresenterInterface {
+public class PresenterLobby implements Observer {
     @Override
-    public void addObserver() {
-
-    }
-
-    @Override
-    public void removeObserver() {
-
-    }
-
-    @Override
-    public void update() {
+    public void update(Observable observable, Object o) {
 
     }
 }

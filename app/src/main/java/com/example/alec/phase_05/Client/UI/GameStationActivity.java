@@ -43,6 +43,7 @@ public class GameStationActivity extends Activity {
         mGameRecView.setAdapter(mAdapter);
 
         mCreateGameButton = (Button) findViewById(R.id.create_game_button);
+        mCreateGameButton = (Button) findViewById(R.id.create_game_button);
         mCreateGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -286,5 +287,45 @@ public class GameStationActivity extends Activity {
         mJoinGameButton.setEnabled(false);
         dialog.dismiss();
         startActivity(i);
+    }
+
+    public void showRed(boolean visible) {
+
+    }
+
+    public void showGreen(boolean visible) {
+
+    }
+
+    public void showBlue(boolean visible) {
+
+    }
+
+    public void showYellow(boolean visible) {
+
+    }
+
+    public void updateGameList() {
+
+    }
+
+    public void showBlack(boolean visible) {
+
+    }
+
+    public void joinGameSuccess(boolean success) {
+        if(success) {
+
+        } else {
+
+        }
+    }
+
+    public void createGameSuccess(boolean success) {
+        if(success) {
+
+        } else {
+
+        }
     }
 }

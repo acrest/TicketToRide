@@ -48,7 +48,7 @@ public class ServerFacade {
         return newGame;
     }
 
-    public String joinGame(Player newPlayer, int gameID) {
+    public String joinGame(Player newPlayer, String color, int gameID) {
         ServerModel model = ServerModel.get_instance();
         GameState game = model.getGame(gameID);
         if(game == null) return null;

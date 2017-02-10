@@ -6,12 +6,13 @@ import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by Molly on 2/6/2017.
  */
 
-public class ClientModel {
+public class ClientModel extends Observable {
     private static ClientModel instance = null;
 
     public static ClientModel getInstance() {
