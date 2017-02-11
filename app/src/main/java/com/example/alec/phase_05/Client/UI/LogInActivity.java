@@ -9,9 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.alec.phase_05.Client.Presenter.ILogInListener;
+import com.example.alec.phase_05.Client.Presenter.IPresenterLogIn;
+import com.example.alec.phase_05.Client.Presenter.PresenterLogIn;
 import com.example.alec.phase_05.R;
 
-public class LogInActivity extends Activity {
+public class LogInActivity extends Activity implements ILogInListener {
     private Button mLogInButton;
     private Button mRegisterButton;
     private EditText mLogInUserNameEditText;
@@ -19,6 +22,7 @@ public class LogInActivity extends Activity {
     private EditText mRegisterUserNameEditText;
     private EditText mRegisterPasswordEditText;
     private EditText mRegisterConfirmEditText;
+    private IPresenterLogIn presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +101,8 @@ public class LogInActivity extends Activity {
                 }
             }
         });
+
+        presenter = new PresenterLogIn(this);
     }
 
     private boolean isValidLogin()

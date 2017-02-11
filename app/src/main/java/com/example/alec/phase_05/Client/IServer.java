@@ -17,7 +17,7 @@ public interface IServer {
     String joinGame(Player newPlayer, int gameID);
     List<GameDescription> getGames(String username, String password);
 
-    void getCurrentModel(int gameID);
-    void getLatestPlayers();
-    GameState getGame(int gameID);
+
+    void getLatestPlayers(String username, String password);
+    GameState getGame(String username, String password, int gameID);
 }

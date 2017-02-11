@@ -1,13 +1,20 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import com.example.alec.phase_05.Client.UI.LobbyActivity;
+
 import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by Andrew on 2/9/2017.
  */
 
-public class PresenterLobby implements Observer {
+public class PresenterLobby implements IPresenterLobby {
+    private ILobbyListener listener;
+
+    public PresenterLobby(ILobbyListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public void update(Observable observable, Object o) {
 

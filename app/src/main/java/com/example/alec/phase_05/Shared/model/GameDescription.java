@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameDescription {
-    private Integer ID;
+    private int ID;
     private String name;
-    private Integer maxPlayers;
+    private int maxPlayers;
+    private List<Player> players;
 
     public GameDescription(int ID, String name, int maxPlayers) {
         this.ID = ID;
         this.name = name;
         this.maxPlayers = maxPlayers;
+        players = null;
     }
 
     public String getName() {
@@ -22,7 +24,7 @@ public class GameDescription {
         this.name = name;
     }
 
-    public Integer getID() {
+    public int getID() {
         return ID;
     }
 
@@ -30,12 +32,20 @@ public class GameDescription {
         this.ID = ID;
     }
 
-    public Integer getMaxPlayers() {
+    public int getMaxPlayers() {
         return maxPlayers;
     }
 
     public void setMaxPlayers(Integer maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
     public boolean equals(Object other) {
