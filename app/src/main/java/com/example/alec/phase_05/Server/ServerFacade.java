@@ -53,7 +53,7 @@ public class ServerFacade {
         GameState game = model.getGame(gameID);
         if(game == null) return null;
         if(game.hasPlayer(newPlayer.getName())) return null;
-        game.addPlayer(newPlayer);
+        //game.addPlayer(newPlayer);
         return game.getGameDescription().getName();
     }
 

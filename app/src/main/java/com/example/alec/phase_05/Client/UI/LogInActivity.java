@@ -38,12 +38,19 @@ public class LogInActivity extends Activity {
             @Override
             public void onClick(View v)
             {
-                if(!mLogInUserNameEditText.getText().toString().isEmpty() && !mLogInPasswordEditText.getText().toString().isEmpty() && isValidLogin())
+                if(!mLogInUserNameEditText.getText().toString().isEmpty() && !mLogInPasswordEditText.getText().toString().isEmpty())
                 {
-                    String something = mLogInUserNameEditText.toString();
-                    String somethings = mLogInPasswordEditText.toString();
-                    Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
-                    startActivity(i);
+                    if(isValidLogin())
+                    {
+                        mLogInUserNameEditText.setText("");
+                        mLogInPasswordEditText.setText("");
+                        Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
+                        startActivity(i);
+                    }
+                    else
+                    {
+                        Toast.makeText(LogInActivity.this, "Only letters, numbers, * ^ _ allowed", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else
                 {
@@ -58,18 +65,28 @@ public class LogInActivity extends Activity {
             @Override
             public void onClick(View v)
             {
-                if(!mRegisterUserNameEditText.getText().toString().isEmpty() && !mRegisterPasswordEditText.getText().toString().isEmpty() && !mRegisterConfirmEditText.getText().toString().isEmpty() && isValidRegister())
+                if(!mRegisterUserNameEditText.getText().toString().isEmpty() && !mRegisterPasswordEditText.getText().toString().isEmpty() && !mRegisterConfirmEditText.getText().toString().isEmpty())
                 {
-                    if(mRegisterPasswordEditText.getText().toString().equals(mRegisterConfirmEditText.getText().toString()))
+                    if(isValidRegister())
                     {
-                        Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
-                        startActivity(i);
+                        if(mRegisterPasswordEditText.getText().toString().equals(mRegisterConfirmEditText.getText().toString()))
+                        {
+                            mRegisterUserNameEditText.setText("");
+                            mRegisterPasswordEditText.setText("");
+                            mRegisterConfirmEditText.setText("");
+                            Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
+                            startActivity(i);
+                        }
+                        else
+                        {
+                            Toast.makeText(LogInActivity.this, "Confirmed password did not match.", Toast.LENGTH_SHORT).show();
+                            mRegisterPasswordEditText.setText("");
+                            mRegisterConfirmEditText.setText("");
+                        }
                     }
                     else
                     {
-                        Toast.makeText(LogInActivity.this, "Confirmed password did not match.", Toast.LENGTH_SHORT).show();
-                        mRegisterPasswordEditText.setText("");
-                        mRegisterConfirmEditText.setText("");
+                        Toast.makeText(LogInActivity.this, "Only letters, numbers, * ^ _ allowed", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else
@@ -84,20 +101,17 @@ public class LogInActivity extends Activity {
 
     private boolean isValidLogin()
     {
-        if(!isValidField(mLogInUserNameEditText.getText().toString()) || !isValidField(mLogInPasswordEditText.getText().toString()))
-        {
-            return false;
-        }
+        if(!isValidField(mLogInUserNameEditText.getText().toString())) return false;
+        if(!isValidField(mLogInPasswordEditText.getText().toString())) return false;
 
         return true;
     }
 
     private boolean isValidRegister()
     {
-        if(!isValidField(mRegisterUserNameEditText.getText().toString()) || !isValidField(mRegisterPasswordEditText.getText().toString()) || !isValidField(mRegisterConfirmEditText.getText().toString()))
-        {
-            return false;
-        }
+        if(!isValidField(mRegisterUserNameEditText.getText().toString())) return false;
+        if(!isValidField(mRegisterPasswordEditText.getText().toString())) return false;
+        if(!isValidField(mRegisterConfirmEditText.getText().toString())) return false;
 
         return true;
     }
@@ -108,10 +122,11 @@ public class LogInActivity extends Activity {
         {
             if(!Character.isLetter(field.charAt(i)))
             {
-                if(!Character.isDigit(field.charAt(i)));
+                char c = field.charAt(i);
+
+                if(!Character.isDigit(field.charAt(i)))
                 {
-                    if(field.charAt(i) != '^' || field.charAt(i) != '*' || field.charAt(i) != '_')
-                    return false;
+                    if(field.charAt(i) != '^' && field.charAt(i) != '*' && field.charAt(i) != '_') return false;
                 }
             }
         }
