@@ -38,12 +38,12 @@ public class ServerProxy implements IServer {
 //        myHost = serverHost;
 //        myPort = serverPort;
         myCC = myCC.getInstance();
-        if (serverHost.equals(null)) {
+        if (serverHost == null) {
             myCC.setServerIP(DEFAULT_HOST);
         } else {
             myCC.setServerIP(serverHost);
         }
-        if (serverPort.equals(null)) {
+        if (serverPort == null) {
             myCC.setServerPort(DEFAULT_PORT);
         } else {
             myCC.setServerPort(serverPort);
