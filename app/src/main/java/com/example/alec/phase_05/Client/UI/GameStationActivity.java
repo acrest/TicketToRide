@@ -28,6 +28,7 @@ public class GameStationActivity extends Activity {
     private RecyclerView mGameRecView;
     private DerpAdapter mAdapter;
     private Button mCreateGameButton, mJoinGameButton;
+    Button mButtonDialogRed, mButtonDialogBlue, mButtonDialogYellow, mButtonDialogGreen, mButtonDialogBlack;
     View selectedColor = null;
 
     @Override
@@ -43,6 +44,7 @@ public class GameStationActivity extends Activity {
         mGameRecView.setAdapter(mAdapter);
 
         mCreateGameButton = (Button) findViewById(R.id.create_game_button);
+        mCreateGameButton = (Button) findViewById(R.id.create_game_button);
         mCreateGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,11 +52,11 @@ public class GameStationActivity extends Activity {
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_create_game, null);
                 final EditText mGameName = (EditText) mView.findViewById(R.id.new_game_edit_text);
                 final NumberPicker mNoPicker = (NumberPicker) mView.findViewById(R.id.new_game_number_picker);
-                final Button mButtonDialogRed = (Button) mView.findViewById(R.id.new_game_button_red);
-                final Button mButtonDialogBlue = (Button) mView.findViewById(R.id.new_game_button_blue);
-                final Button mButtonDialogYellow = (Button) mView.findViewById(R.id.new_game_button_yellow);
-                final Button mButtonDialogGreen = (Button) mView.findViewById(R.id.new_game_button_green);
-                final Button mButtonDialogBlack = (Button) mView.findViewById(R.id.new_game_button_black);
+                mButtonDialogRed = (Button) mView.findViewById(R.id.new_game_button_red);
+                mButtonDialogBlue = (Button) mView.findViewById(R.id.new_game_button_blue);
+                mButtonDialogYellow = (Button) mView.findViewById(R.id.new_game_button_yellow);
+                mButtonDialogGreen = (Button) mView.findViewById(R.id.new_game_button_green);
+                mButtonDialogBlack = (Button) mView.findViewById(R.id.new_game_button_black);
                 final Button mButtonDialogCancel = (Button) mView.findViewById(R.id.new_game_button_cancel);
                 final Button mButtonDialogOk = (Button) mView.findViewById(R.id.new_game_button_ok);
 
@@ -286,5 +288,66 @@ public class GameStationActivity extends Activity {
         mJoinGameButton.setEnabled(false);
         dialog.dismiss();
         startActivity(i);
+    }
+
+    public void hideRed(boolean visible) {
+        if(visible)
+        {
+            mButtonDialogRed.setVisibility(View.GONE);
+        }
+    }
+
+    public void hideGreen(boolean visible) {
+        if(visible)
+        {
+            mButtonDialogGreen.setVisibility(View.GONE);
+        }
+    }
+
+    public void hideBlue(boolean visible) {
+        if(visible)
+        {
+            mButtonDialogBlue.setVisibility(View.GONE);
+        }
+    }
+
+    public void hideYellow(boolean visible) {
+        if(visible)
+        {
+            mButtonDialogYellow.setVisibility(View.GONE);
+        }
+    }
+
+    public void hideBlack(boolean visible) {
+        if(visible)
+        {
+            mButtonDialogBlack.setVisibility(View.GONE);
+        }
+    }
+
+    public void updateGameList() {
+
+    }
+
+    public void joinGameSuccess(boolean success) {
+        if(success) {
+            Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
+            mAdapter.cancelSelected();
+            mJoinGameButton.setEnabled(false);
+            startActivity(i);
+        } else {
+
+        }
+    }
+
+    public void createGameSuccess(boolean success) {
+        if(success) {
+            Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
+            mAdapter.cancelSelected();
+            mJoinGameButton.setEnabled(false);
+            startActivity(i);
+        } else {
+
+        }
     }
 }
