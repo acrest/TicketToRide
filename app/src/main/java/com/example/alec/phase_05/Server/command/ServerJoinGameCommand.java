@@ -18,9 +18,9 @@ public class ServerJoinGameCommand  extends AbstractJoinGameCommand {
     public Result execute() {
         ServerFacade sf = ServerFacade.get_instance();
         Player player = sf.getPlayerByName(getUserName());
-        String gameName = sf.joinGame(player, getGameID());
+        //String gameName = sf.joinGame(player, getGameID());
         Result result = new ServerResult();
-        result.setResultObject(gameName);
+        //result.setResultObject(gameName);
         return result;
     }
 }
