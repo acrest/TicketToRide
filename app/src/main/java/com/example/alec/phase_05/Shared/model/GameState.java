@@ -12,20 +12,44 @@ import java.util.Set;
  */
 
 public class GameState {
-    private GameDescription gameDescription;
+    private int ID;
+    private String name;
+    private int maxPlayers;
     private Map<String, Player> playerColors;
 
-    public GameState(GameDescription gameDescription) {
-        this.gameDescription = gameDescription;
+    public GameState(int id, String name, int maxPlayers) {
+        ID = id;
+        this.name = name;
+        this.maxPlayers = maxPlayers;
         playerColors = new HashMap<>();
     }
 
-    public GameDescription getGameDescription() {
-        return gameDescription;
+    public GameState(GameDescription gameDescription) {
+        this(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers());
     }
 
-    public void setGameDescription(GameDescription gameDescription) {
-        this.gameDescription = gameDescription;
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public void setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
     }
 
     public Collection<Player> getCurrentPlayers() {
@@ -40,7 +64,7 @@ public class GameState {
     }
 
     public boolean hasPlayer(Player player) {
-        return playerColors.containsKey(player);
+        return playerColors.containsValue(player);
     }
 
     public boolean hasPlayer(String playerName) {
@@ -60,4 +84,11 @@ public class GameState {
     public Set<String> getAllUsedColors() {
         return playerColors.keySet();
     }
+
+    public GameDescription getGameDescription() {
+        //TODO: set up the gameDesciption's player list
+        GameDescription gameDescription = new GameDescription(ID, name, maxPlayers);
+        return gameDescription;
+    }
+
 }

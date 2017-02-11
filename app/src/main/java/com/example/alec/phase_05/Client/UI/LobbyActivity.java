@@ -7,10 +7,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.example.alec.phase_05.Client.Presenter.ILobbyListener;
+import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
+import com.example.alec.phase_05.Client.Presenter.PresenterLobby;
 import com.example.alec.phase_05.R;
 
-public class LobbyActivity extends Activity {
+public class LobbyActivity extends Activity implements ILobbyListener {
     private Button mStartGameButton;
+    private IPresenterLobby presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,5 +30,7 @@ public class LobbyActivity extends Activity {
                 //to set visibility of button to game host        mStartGameButton.setVisibility(View.VISIBLE); //To set visible
             }
         });
+
+        presenter = new PresenterLobby(this);
     }
 }

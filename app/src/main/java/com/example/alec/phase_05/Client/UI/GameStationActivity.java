@@ -20,16 +20,20 @@ import android.widget.TextView;
 
 import com.example.alec.phase_05.Client.Model.ListItem;
 import com.example.alec.phase_05.Client.Model.DerpData;
+import com.example.alec.phase_05.Client.Presenter.IGameStationListener;
+import com.example.alec.phase_05.Client.Presenter.IPresenterGameStation;
+import com.example.alec.phase_05.Client.Presenter.PresenterGameStation;
 import com.example.alec.phase_05.R;
 
 import java.util.List;
 
-public class GameStationActivity extends Activity {
+public class GameStationActivity extends Activity implements IGameStationListener {
     private RecyclerView mGameRecView;
     private DerpAdapter mAdapter;
     private Button mCreateGameButton, mJoinGameButton;
-    Button mButtonDialogRed, mButtonDialogBlue, mButtonDialogYellow, mButtonDialogGreen, mButtonDialogBlack;
-    View selectedColor = null;
+    private Button mButtonDialogRed, mButtonDialogBlue, mButtonDialogYellow, mButtonDialogGreen, mButtonDialogBlack;
+    private View selectedColor = null;
+    private IPresenterGameStation presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +181,8 @@ public class GameStationActivity extends Activity {
                 });
             }
         });
+
+        presenter = new PresenterGameStation(this);
     }
 
 
@@ -290,6 +296,7 @@ public class GameStationActivity extends Activity {
         startActivity(i);
     }
 
+    @Override
     public void hideRed(boolean visible) {
         if(visible)
         {
@@ -297,6 +304,7 @@ public class GameStationActivity extends Activity {
         }
     }
 
+    @Override
     public void hideGreen(boolean visible) {
         if(visible)
         {
@@ -304,6 +312,7 @@ public class GameStationActivity extends Activity {
         }
     }
 
+    @Override
     public void hideBlue(boolean visible) {
         if(visible)
         {
@@ -311,6 +320,7 @@ public class GameStationActivity extends Activity {
         }
     }
 
+    @Override
     public void hideYellow(boolean visible) {
         if(visible)
         {
@@ -318,6 +328,7 @@ public class GameStationActivity extends Activity {
         }
     }
 
+    @Override
     public void hideBlack(boolean visible) {
         if(visible)
         {
@@ -325,10 +336,12 @@ public class GameStationActivity extends Activity {
         }
     }
 
+    @Override
     public void updateGameList() {
 
     }
 
+    @Override
     public void joinGameSuccess(boolean success) {
         if(success) {
             Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
@@ -340,6 +353,7 @@ public class GameStationActivity extends Activity {
         }
     }
 
+    @Override
     public void createGameSuccess(boolean success) {
         if(success) {
             Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
