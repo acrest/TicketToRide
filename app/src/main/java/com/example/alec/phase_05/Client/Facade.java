@@ -53,7 +53,7 @@ public class Facade {
         ClientFacade.getInstance().updateGameList(gameList);
     }
 
-    public void getGame(int gameID) {
-        GameState game = proxy.getGame(gameID);
+    public void getGame(Player player, int gameID) {
+        GameState game = proxy.getGame(player.getName(), player.getPassword(), gameID);
     }
 }
