@@ -20,7 +20,7 @@ public class SerDes
     {
         Gson gson = new Gson();
         JsonObject jsonObj = gson.fromJson(json, JsonObject.class);
-        String commandName = jsonObj.get("name").getAsString();
+        String commandName = jsonObj.get("commandName").getAsString();
 
         String classname = prefix + commandName + suffix;
 

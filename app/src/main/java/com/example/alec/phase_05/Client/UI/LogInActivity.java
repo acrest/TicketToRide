@@ -30,6 +30,8 @@ public class LogInActivity extends Activity implements ILogInListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_log_in);
 
+        presenter = new PresenterLogIn(this);
+
         mLogInUserNameEditText = (EditText) findViewById(R.id.sign_in_username_edit);
         mLogInPasswordEditText = (EditText) findViewById(R.id.sign_in_password_edit);
         mRegisterUserNameEditText = (EditText) findViewById(R.id.register_username_edit);
@@ -46,19 +48,19 @@ public class LogInActivity extends Activity implements ILogInListener {
                 {
                     if(isValidLogin())
                     {
-                        mLogInUserNameEditText.setText("");
-                        mLogInPasswordEditText.setText("");
+                        resetLogIn();
                         Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
                         startActivity(i);
                     }
                     else
                     {
+                        resetLogIn();
                         Toast.makeText(LogInActivity.this, "Only letters, numbers, * ^ _ allowed", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else
                 {
-                    mLogInPasswordEditText.setText("");
+                    resetLogIn();
                     Toast.makeText(LogInActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -75,34 +77,35 @@ public class LogInActivity extends Activity implements ILogInListener {
                     {
                         if(mRegisterPasswordEditText.getText().toString().equals(mRegisterConfirmEditText.getText().toString()))
                         {
-                            mRegisterUserNameEditText.setText("");
-                            mRegisterPasswordEditText.setText("");
-                            mRegisterConfirmEditText.setText("");
+                            //resetRegister();
+
+                            String word = "word";
+                            String something = "something";
+
+                            presenter.register(mRegisterUserNameEditText.getText().toString(), mRegisterPasswordEditText.getText().toString());
+
                             Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
                             startActivity(i);
                         }
                         else
                         {
                             Toast.makeText(LogInActivity.this, "Confirmed password did not match.", Toast.LENGTH_SHORT).show();
-                            mRegisterPasswordEditText.setText("");
-                            mRegisterConfirmEditText.setText("");
+                            resetRegister();
                         }
                     }
                     else
                     {
+                        resetRegister();
                         Toast.makeText(LogInActivity.this, "Only letters, numbers, * ^ _ allowed", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else
                 {
                     Toast.makeText(LogInActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
-                    mRegisterPasswordEditText.setText("");
-                    mRegisterConfirmEditText.setText("");
+                    resetRegister();
                 }
             }
         });
-
-        presenter = new PresenterLogIn(this);
     }
 
     private boolean isValidLogin()
@@ -138,5 +141,18 @@ public class LogInActivity extends Activity implements ILogInListener {
         }
 
         return true;
+    }
+
+    private void resetLogIn()
+    {
+        mLogInUserNameEditText.setText("");
+        mLogInPasswordEditText.setText("");
+    }
+
+    private void resetRegister()
+    {
+        mRegisterUserNameEditText.setText("");
+        mRegisterPasswordEditText.setText("");
+        mRegisterConfirmEditText.setText("");
     }
 }
