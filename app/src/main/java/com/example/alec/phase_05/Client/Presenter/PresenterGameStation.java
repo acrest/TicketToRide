@@ -1,6 +1,8 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Facade;
+import com.example.alec.phase_05.Client.UI.GameStationActivity;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -9,19 +11,34 @@ import java.util.Observer;
  * Created by Andrew on 2/9/2017.
  */
 
-public class PresenterGameStation implements Observer {
+public class PresenterGameStation implements IPresenterGameStation {
 
-    public void joinGame(String color) {
-        Facade f = Facade.getInstance();
-        //f.joinGame();
+    private IGameStationListener listener;
+
+    public PresenterGameStation(IGameStationListener listener) {
+        this.listener = listener;
+        ClientModel.getInstance().addObserver(this);
     }
 
-    public void createGame(String color, String gameName, int numberOfPlayers) {
+    @Override
+    public void joinGame(int gameID, String color) {
+        Facade.getInstance().joinGame(gameID, color);
+    }
 
+    @Override
+    public void createGame(String hostColor, String gameName, int numberOfPlayers) {
+        Facade.getInstance().createGame(numberOfPlayers, gameName, hostColor);
     }
 
     @Override
     public void update(Observable observable, Object o) {
-
+        if(!(o instanceof UpdateIndicator)) {
+            throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
+        }
+        UpdateIndicator u = (UpdateIndicator) o;
+        if(u.needUpdate(ClientModel.GAME_LIST)) {
+            listener.updateGameList(ClientModel.getInstance().getGameList());
+        }
+        //TODO: check for available color updates
     }
 }

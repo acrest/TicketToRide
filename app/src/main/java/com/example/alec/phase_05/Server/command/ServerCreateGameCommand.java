@@ -11,16 +11,16 @@ import com.example.alec.phase_05.Shared.command.*;
 
 public class ServerCreateGameCommand extends AbstractCreateGameCommand
 {
-    public ServerCreateGameCommand(String username, String password, String gameName, int numberOfPlayers)
+    public ServerCreateGameCommand(String username, String password, String gameName, int numberOfPlayers, String hostColor)
     {
-        super(username, password, gameName, numberOfPlayers);
+        super(username, password, gameName, numberOfPlayers, hostColor);
     }
 
     public Result execute()
     {
         ServerFacade sf = ServerFacade.get_instance();
         Player hostPlayer = sf.getPlayerByName(getUserName());
-        GameDescription game = sf.createGame(hostPlayer, getNumberOfPlayers(), getGameName());
+        GameDescription game = sf.createGame(hostPlayer, getNumberOfPlayers(), getGameName(), getHostColor());
         Result result = new ServerResult();
         result.setResultObject(game);
         return result;

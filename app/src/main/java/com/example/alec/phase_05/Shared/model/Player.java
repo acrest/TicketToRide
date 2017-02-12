@@ -17,6 +17,7 @@ public class Player {
         return password;
     }
 
+    @Override
     public boolean equals(Object other) {
         if(other instanceof Player) {
             return getName().equals(((Player) other).getName());
@@ -24,5 +25,10 @@ public class Player {
             return getName().equals((String) other);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }

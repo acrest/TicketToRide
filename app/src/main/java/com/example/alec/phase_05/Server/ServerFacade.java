@@ -1,6 +1,5 @@
 package com.example.alec.phase_05.Server;
 
-import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -40,21 +39,22 @@ public class ServerFacade {
         return model.addPlayer(player);
     }
 
-    public GameDescription createGame(Player hostPLayer, int numOfPlayers, String gameName) {
+    public GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
         ServerModel model = ServerModel.get_instance();
-        GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers);
+        GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, null, null);
         if(!model.addGame(newGame))
             return null;
+        joinGame(hostPlayer, newGame.getID(), hostColor);
         return newGame;
     }
 
-    public String joinGame(Player newPlayer, String color, int gameID) {
+    public String joinGame(Player newPlayer, int gameID, String color) {
         ServerModel model = ServerModel.get_instance();
         GameState game = model.getGame(gameID);
         if(game == null) return null;
-        if(game.hasPlayer(newPlayer.getName())) return null;
-        //game.addPlayer(newPlayer);
-        return game.getGameDescription().getName();
+        if(game.hasPlayer(newPlayer)) return null;
+        game.addPlayer(newPlayer);
+        return game.getName();
     }
 
     public List<GameDescription> getGames(String username, String password) {

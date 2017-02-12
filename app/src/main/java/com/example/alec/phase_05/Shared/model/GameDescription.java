@@ -2,16 +2,21 @@ package com.example.alec.phase_05.Shared.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameDescription {
-    private Integer ID;
+    private int ID;
     private String name;
-    private Integer maxPlayers;
+    private int maxPlayers;
+    private List<Player> players;
+    private Map<Player, String> playerColors;
 
-    public GameDescription(int ID, String name, int maxPlayers) {
+    public GameDescription(int ID, String name, int maxPlayers, List<Player> players, Map<Player, String> playerColors) {
         this.ID = ID;
         this.name = name;
         this.maxPlayers = maxPlayers;
+        this.players = players;
+        this.playerColors = playerColors;
     }
 
     public String getName() {
@@ -22,7 +27,7 @@ public class GameDescription {
         this.name = name;
     }
 
-    public Integer getID() {
+    public int getID() {
         return ID;
     }
 
@@ -30,12 +35,28 @@ public class GameDescription {
         this.ID = ID;
     }
 
-    public Integer getMaxPlayers() {
+    public int getMaxPlayers() {
         return maxPlayers;
     }
 
     public void setMaxPlayers(Integer maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public Map<Player, String> getPlayerColors() {
+        return playerColors;
+    }
+
+    public void setPlayerColors(Map<Player, String> playerColors) {
+        this.playerColors = playerColors;
     }
 
     public boolean equals(Object other) {

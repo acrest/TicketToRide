@@ -28,32 +28,62 @@ public class Facade {
         return _instance;
     }
 
-    public void login(String username, String password) {
-        Player player = proxy.login(username, password);
-        ClientModel.getInstance().setCurrentPlayer(player);
+    public void login(final String username, final String password) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player player = proxy.login(username, password);
+                ClientModel.getInstance().setCurrentPlayer(player);
+            }
+        }).start();
     }
 
-    public void registerUser(String username, String password) {
-        Player player = proxy.registerUser(username, password);
-        ClientModel.getInstance().setCurrentPlayer(player);
+    public void registerUser(final String username, final String password) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player player = proxy.registerUser(username, password);
+                ClientModel.getInstance().setCurrentPlayer(player);
+            }
+        }).start();
     }
 
-    public void createGame(int numOfPlayers, String gameName) {
-        Player player = ClientModel.getInstance().getCurrentPlayer();
-        GameDescription newGame = proxy.createGame(player, numOfPlayers, gameName);
+    public void createGame(final int numOfPlayers, final String gameName, final String hostColor) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player player = ClientModel.getInstance().getCurrentPlayer();
+                GameDescription newGame = proxy.createGame(player, numOfPlayers, gameName, hostColor);
+            }
+        }).start();
     }
 
-    public void joinGame(int gameID) {
-        Player player = ClientModel.getInstance().getCurrentPlayer();
-        String joinedGame = proxy.joinGame(player, gameID);
+    public void joinGame(final int gameID, final String color) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player player = ClientModel.getInstance().getCurrentPlayer();
+                String joinedGame = proxy.joinGame(player, gameID, color);
+            }
+        }).start();
     }
 
-    public void getGames(Player player) {
-        List<GameDescription> gameList = proxy.getGames(player.getName(), player.getPassword());
-        ClientFacade.getInstance().updateGameList(gameList);
+    public void getGames(final Player player) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<GameDescription> gameList = proxy.getGames(player.getName(), player.getPassword());
+                ClientFacade.getInstance().updateGameList(gameList);
+            }
+        }).start();
     }
 
-    public void getGame(Player player, int gameID) {
-        GameState game = proxy.getGame(player.getName(), player.getPassword(), gameID);
+    public void getGame(final Player player, final int gameID) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                GameState game = proxy.getGame(player.getName(), player.getPassword(), gameID);
+            }
+        }).start();
     }
 }

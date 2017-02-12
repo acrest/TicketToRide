@@ -37,13 +37,13 @@ public class ServerProxy implements IServer {
     public ServerProxy(String serverHost, String serverPort) {
 //        myHost = serverHost;
 //        myPort = serverPort;
-        myCC = myCC.getInstance();
-        if (serverHost.equals(null)) {
+        myCC = ClientCommunicator.getInstance();
+        if (serverHost == null) {
             myCC.setServerIP(DEFAULT_HOST);
         } else {
             myCC.setServerIP(serverHost);
         }
-        if (serverPort.equals(null)) {
+        if (serverPort == null) {
             myCC.setServerPort(DEFAULT_PORT);
         } else {
             myCC.setServerPort(serverPort);
@@ -86,20 +86,20 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName) {
+    public GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
         //List<GameDescription> gameList = getGames(hostPlayer.getName(), hostPlayer.getPassword());
         //int gameID = gameList.size() + 1;
 
 //        baseCMD = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers);
-        ICommand cmd = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers);
+        ICommand cmd = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers, hostColor);
         Result result = myCC.executeCommandOnServer(cmd);
         return (GameDescription) result.toClass(GameDescription.class);
     }
 
     @Override
-    public String joinGame(Player newPlayer, int gameID) {
+    public String joinGame(Player newPlayer, int gameID, String color) {
 //        baseCMD = new ClientJoinGameCommand(newPlayer.getName(), newPlayer.getPassword(), gameID);
-        ICommand cmd = new ClientJoinGameCommand(newPlayer.getName(), newPlayer.getPassword(), gameID);
+        ICommand cmd = new ClientJoinGameCommand(newPlayer.getName(), newPlayer.getPassword(), gameID, color);
         Result result = myCC.executeCommandOnServer(cmd);
         return result.toString();
     }
