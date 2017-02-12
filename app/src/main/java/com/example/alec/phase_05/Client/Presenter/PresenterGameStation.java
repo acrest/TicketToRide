@@ -18,12 +18,14 @@ public class PresenterGameStation implements IPresenterGameStation {
         this.listener = listener;
     }
 
+    @Override
     public void joinGame(String color) {
         Facade f = Facade.getInstance();
         //f.joinGame();
     }
 
-    public void createGame(String color, String gameName, int numberOfPlayers) {
+    @Override
+    public void createGame(String color, String gameName, int numberOfPlayers, String hostColor) {
 
     }
 

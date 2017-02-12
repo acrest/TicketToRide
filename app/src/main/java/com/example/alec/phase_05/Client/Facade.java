@@ -38,14 +38,14 @@ public class Facade {
         ClientModel.getInstance().setCurrentPlayer(player);
     }
 
-    public void createGame(int numOfPlayers, String gameName) {
+    public void createGame(int numOfPlayers, String gameName, String hostColor) {
         Player player = ClientModel.getInstance().getCurrentPlayer();
-        GameDescription newGame = proxy.createGame(player, numOfPlayers, gameName);
+        GameDescription newGame = proxy.createGame(player, numOfPlayers, gameName, hostColor);
     }
 
-    public void joinGame(int gameID) {
+    public void joinGame(int gameID, String color) {
         Player player = ClientModel.getInstance().getCurrentPlayer();
-        String joinedGame = proxy.joinGame(player, gameID);
+        String joinedGame = proxy.joinGame(player, gameID, color);
     }
 
     public void getGames(Player player) {

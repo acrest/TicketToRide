@@ -23,10 +23,11 @@ public class MockPresenterGameStation implements IPresenterGameStation {
     }
 
     @Override
-    public void createGame(String color, String gameName, int numberOfPlayers) {
+    public void createGame(String color, String gameName, int numberOfPlayers, String hostColor) {
         Log.d("MockPresenter", "called createGame with color = " + color
                 + ", gameName = " + gameName
-                + ", numberOfPlayers = " + numberOfPlayers);
+                + ", numberOfPlayers = " + numberOfPlayers
+                + ", hostColor = " + hostColor);
         listener.createGameSuccess(true);
     }
 

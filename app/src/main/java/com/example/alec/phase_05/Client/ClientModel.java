@@ -56,7 +56,7 @@ public class ClientModel extends Observable {
     }
 
     public boolean hasGameInList(int gameID) {
-        GameDescription dummyGame = new GameDescription(gameID, null, 0);
+        GameDescription dummyGame = new GameDescription(gameID, null, 0, null, null);
         return gameList.contains(dummyGame );
     }
 
@@ -65,7 +65,7 @@ public class ClientModel extends Observable {
     }
 
     public void removeGameFromList(int gameID) {
-        GameDescription dummyGame = new GameDescription(gameID, null, 0);
+        GameDescription dummyGame = new GameDescription(gameID, null, 0, null, null);
         removeGameFromList(dummyGame);
     }
 

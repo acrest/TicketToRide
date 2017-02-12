@@ -2,10 +2,10 @@ package com.example.alec.phase_05.Shared.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by samuel on 2/9/17.
@@ -15,12 +15,14 @@ public class GameState {
     private int ID;
     private String name;
     private int maxPlayers;
-    private Map<String, Player> playerColors;
+    private List<Player> players;
+    private Map<Player, String> playerColors;
 
     public GameState(int id, String name, int maxPlayers) {
         ID = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
+        players = new ArrayList<>(maxPlayers);
         playerColors = new HashMap<>();
     }
 
@@ -52,43 +54,52 @@ public class GameState {
         this.maxPlayers = maxPlayers;
     }
 
-    public Collection<Player> getCurrentPlayers() {
-        return playerColors.values();
+    public int getNumberPlayers() {
+        return players.size();
     }
 
-    public boolean addPlayer(Player newPlayer, String color){
-        if(playerColors.containsKey(color))
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
+    public boolean addPlayer(Player newPlayer){
+        if(hasPlayer(newPlayer))
             return false;
-        playerColors.put(color, newPlayer);
+        players.add(newPlayer);
         return true;
     }
 
     public boolean hasPlayer(Player player) {
-        return playerColors.containsValue(player);
+        return players.contains(player);
     }
 
     public boolean hasPlayer(String playerName) {
-        return playerColors.containsKey(playerName);
+        return players.contains(playerName);
     }
 
     public Player getPlayerByColor(String color) {
-        if(!playerColors.containsKey(color))
-            return null;
-        return playerColors.get(color);
+        for(Map.Entry<Player, String> entry : playerColors.entrySet()) {
+            if(entry.getValue().equals(color))
+                return entry.getKey();
+        }
+        return null;
+    }
+
+    public String getPlayerColor(Player player) {
+        return playerColors.get(player);
     }
 
     public void setPlayerColor(Player player, String color) {
-        playerColors.put(color, player);
+        playerColors.put(player, color);
     }
 
-    public Set<String> getAllUsedColors() {
-        return playerColors.keySet();
+    public Collection<String> getAllUsedColors() {
+        return playerColors.values();
     }
 
     public GameDescription getGameDescription() {
-        //TODO: set up the gameDesciption's player list
-        GameDescription gameDescription = new GameDescription(ID, name, maxPlayers);
-        return gameDescription;
+        return new GameDescription(ID, name, maxPlayers,
+                Collections.unmodifiableList(players),
+                Collections.unmodifiableMap(playerColors));
     }
-
 }

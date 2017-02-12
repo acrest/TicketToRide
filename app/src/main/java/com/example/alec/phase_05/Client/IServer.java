@@ -13,8 +13,8 @@ import java.util.List;
 public interface IServer {
     Player login(String username, String password);
     Player registerUser(String username, String password);
-    GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName);
-    String joinGame(Player newPlayer, int gameID);
+    GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor);
+    String joinGame(Player newPlayer, int gameID, String color);
     List<GameDescription> getGames(String username, String password);
 
 

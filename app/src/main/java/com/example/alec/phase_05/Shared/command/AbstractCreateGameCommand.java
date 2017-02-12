@@ -5,19 +5,22 @@ package com.example.alec.phase_05.Shared.command;
  */
 
 public abstract class AbstractCreateGameCommand extends AuthorizedCommand {
-
     private String gameName;
     private int numberOfPlayers;
+    private String hostColor;
+
     /**
      * @param userName          username of client
      * @param password          password of client
      * @param gameName          name of game to be created
      * @param numberOfPlayers   number of players in game to be created
+     * @param hostColor
      */
-    public AbstractCreateGameCommand(String userName, String password, String gameName, int numberOfPlayers) {
+    public AbstractCreateGameCommand(String userName, String password, String gameName, int numberOfPlayers, String hostColor) {
         super("CreateGame", userName, password);
-        setGameName(gameName);
-        setNumberOfPlayers(numberOfPlayers);
+        this.hostColor = hostColor;
+        this.gameName = gameName;
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     public String getGameName() {
@@ -34,5 +37,13 @@ public abstract class AbstractCreateGameCommand extends AuthorizedCommand {
 
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public String getHostColor() {
+        return hostColor;
+    }
+
+    public void setHostColor(String hostColor) {
+        this.hostColor = hostColor;
     }
 }

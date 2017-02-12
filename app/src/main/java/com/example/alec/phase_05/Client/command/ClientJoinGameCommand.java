@@ -15,8 +15,8 @@ public class ClientJoinGameCommand extends AbstractJoinGameCommand {
      * @param password    password of client
      * @param gameID      id of the game for which this command operates
      */
-    public ClientJoinGameCommand(String userName, String password, int gameID) {
-        super(userName, password, gameID);
+    public ClientJoinGameCommand(String userName, String password, int gameID, String color) {
+        super(userName, password, gameID, color);
     }
 
     /**

@@ -10,6 +10,6 @@ public interface IPresenterGameStation extends Observer {
 
     void joinGame(String color);
 
-    void createGame(String color, String gameName, int numberOfPlayers);
+    void createGame(String color, String gameName, int numberOfPlayers, String hostColor);
 
 }
