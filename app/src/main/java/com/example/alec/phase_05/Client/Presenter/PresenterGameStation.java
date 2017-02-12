@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.UI.GameStationActivity;
 
@@ -16,17 +17,17 @@ public class PresenterGameStation implements IPresenterGameStation {
 
     public PresenterGameStation(IGameStationListener listener) {
         this.listener = listener;
+        ClientModel.getInstance().addObserver(this);
     }
 
     @Override
-    public void joinGame(String color) {
-        Facade f = Facade.getInstance();
-        //f.joinGame();
+    public void joinGame(int gameID, String color) {
+        Facade.getInstance().joinGame(gameID, color);
     }
 
     @Override
-    public void createGame(String color, String gameName, int numberOfPlayers, String hostColor) {
-
+    public void createGame(String hostColor, String gameName, int numberOfPlayers) {
+        Facade.getInstance().createGame(numberOfPlayers, gameName, hostColor);
     }
 
     @Override

@@ -8,8 +8,8 @@ import java.util.Observer;
 
 public interface IPresenterGameStation extends Observer {
 
-    void joinGame(String color);
+    void joinGame(int gameID, String color);
 
-    void createGame(String color, String gameName, int numberOfPlayers, String hostColor);
+    void createGame(String hostColor, String gameName, int numberOfPlayers);
 
 }

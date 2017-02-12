@@ -17,17 +17,16 @@ public class MockPresenterGameStation implements IPresenterGameStation {
     }
 
     @Override
-    public void joinGame(String color) {
+    public void joinGame(int gameID, String color) {
         Log.d("MockPresenter", "called joinGame with color = " + color);
         listener.joinGameSuccess(true);
     }
 
     @Override
-    public void createGame(String color, String gameName, int numberOfPlayers, String hostColor) {
-        Log.d("MockPresenter", "called createGame with color = " + color
+    public void createGame(String hostColor, String gameName, int numberOfPlayers) {
+        Log.d("MockPresenter", "called createGame with hostColor = " + hostColor
                 + ", gameName = " + gameName
-                + ", numberOfPlayers = " + numberOfPlayers
-                + ", hostColor = " + hostColor);
+                + ", numberOfPlayers = " + numberOfPlayers);
         listener.createGameSuccess(true);
     }
 

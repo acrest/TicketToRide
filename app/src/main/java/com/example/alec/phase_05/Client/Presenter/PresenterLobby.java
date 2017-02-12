@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.UI.LobbyActivity;
 
 import java.util.Observable;
@@ -13,10 +14,11 @@ public class PresenterLobby implements IPresenterLobby {
 
     public PresenterLobby(ILobbyListener listener) {
         this.listener = listener;
+        ClientModel.getInstance().addObserver(this);
     }
 
     @Override
     public void update(Observable observable, Object o) {
-
+        ClientModel model = ClientModel.getInstance();
     }
 }

@@ -189,7 +189,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
     public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder> {
         private List<ListItem> listData;
         private LayoutInflater inflater;
-        View selected = null;
+        private View selected = null;
 
         public void cancelSelected()
         {
