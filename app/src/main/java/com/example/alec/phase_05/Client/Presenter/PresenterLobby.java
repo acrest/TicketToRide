@@ -19,6 +19,9 @@ public class PresenterLobby implements IPresenterLobby {
 
     @Override
     public void update(Observable observable, Object o) {
-        ClientModel model = ClientModel.getInstance();
+        if(!(o instanceof UpdateIndicator)) {
+            throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
+        }
+        UpdateIndicator u = (UpdateIndicator) o;
     }
 }

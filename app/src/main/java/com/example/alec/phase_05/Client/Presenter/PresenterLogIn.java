@@ -31,6 +31,9 @@ public class PresenterLogIn implements IPresenterLogIn {
 
     @Override
     public void update(Observable observable, Object o) {
-
+        if(!(o instanceof UpdateIndicator)) {
+            throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
+        }
+        UpdateIndicator u = (UpdateIndicator) o;
     }
 }

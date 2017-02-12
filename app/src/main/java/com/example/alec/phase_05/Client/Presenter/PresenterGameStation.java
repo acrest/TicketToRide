@@ -32,6 +32,13 @@ public class PresenterGameStation implements IPresenterGameStation {
 
     @Override
     public void update(Observable observable, Object o) {
-
+        if(!(o instanceof UpdateIndicator)) {
+            throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
+        }
+        UpdateIndicator u = (UpdateIndicator) o;
+        if(u.needUpdate(ClientModel.GAME_LIST)) {
+            listener.updateGameList(ClientModel.getInstance().getGameList());
+        }
+        //TODO: check for available color updates
     }
 }

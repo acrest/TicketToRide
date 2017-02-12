@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Client;
 
+import com.example.alec.phase_05.Client.Presenter.UpdateIndicator;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -13,6 +14,9 @@ import java.util.Observable;
  */
 
 public class ClientModel extends Observable {
+
+    public static String GAME_LIST = "game list";
+
     private static ClientModel instance = null;
 
     public static ClientModel getInstance() {
@@ -49,6 +53,7 @@ public class ClientModel extends Observable {
 
     public void addGameToList(GameDescription game) {
         gameList.add(game);
+        notifyPropertyChanges(GAME_LIST);
     }
 
     public boolean hasGameInList(GameDescription game) {
@@ -62,6 +67,7 @@ public class ClientModel extends Observable {
 
     public void removeGameFromList(GameDescription game) {
         gameList.remove(game);
+        notifyPropertyChanges(GAME_LIST);
     }
 
     public void removeGameFromList(int gameID) {
@@ -69,7 +75,20 @@ public class ClientModel extends Observable {
         removeGameFromList(dummyGame);
     }
 
+    public List<GameDescription> getGameList() {
+        return gameList;
+    }
+
     public void setGameList(List<GameDescription> gameList) {
-        this.gameList = gameList ;
+        this.gameList = gameList;
+        notifyPropertyChanges(GAME_LIST);
+    }
+
+    private void notifyPropertyChanges(String... properties) {
+        UpdateIndicator u = new UpdateIndicator();
+        for(String property : properties) {
+            u.addProperty(property);
+        }
+        notifyObservers(u);
     }
 }
