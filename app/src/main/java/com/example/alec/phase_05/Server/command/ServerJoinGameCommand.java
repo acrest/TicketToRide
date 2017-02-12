@@ -11,16 +11,16 @@ import com.example.alec.phase_05.Shared.command.Result;
 
 public class ServerJoinGameCommand  extends AbstractJoinGameCommand {
 
-    public ServerJoinGameCommand(String username, String password, int gameID) {
-        super(username, password, gameID);
+    public ServerJoinGameCommand(String username, String password, int gameID, String color) {
+        super(username, password, gameID, color);
     }
 
     public Result execute() {
         ServerFacade sf = ServerFacade.get_instance();
         Player player = sf.getPlayerByName(getUserName());
-        //String gameName = sf.joinGame(player, getGameID());
+        String gameName = sf.joinGame(player, getGameID(), getColor());
         Result result = new ServerResult();
-        //result.setResultObject(gameName);
+        result.setResultObject(gameName);
         return result;
     }
 }

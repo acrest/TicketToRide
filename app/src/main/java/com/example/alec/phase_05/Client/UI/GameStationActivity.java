@@ -24,6 +24,7 @@ import com.example.alec.phase_05.Client.Presenter.IGameStationListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterGameStation;
 import com.example.alec.phase_05.Client.Presenter.PresenterGameStation;
 import com.example.alec.phase_05.R;
+import com.example.alec.phase_05.Shared.model.GameDescription;
 
 import java.util.List;
 
@@ -189,7 +190,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
     public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder> {
         private List<ListItem> listData;
         private LayoutInflater inflater;
-        View selected = null;
+        private View selected = null;
 
         public void cancelSelected()
         {
@@ -337,7 +338,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
     }
 
     @Override
-    public void updateGameList() {
+    public void updateGameList(List<GameDescription> gameDescriptions) {
 
     }
 

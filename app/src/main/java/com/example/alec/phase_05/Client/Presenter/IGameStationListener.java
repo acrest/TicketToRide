@@ -1,5 +1,9 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import com.example.alec.phase_05.Shared.model.GameDescription;
+
+import java.util.List;
+
 /**
  * Created by samuel on 2/11/17.
  */
@@ -15,7 +19,7 @@ public interface IGameStationListener {
 
     void hideBlack(boolean visible);
 
-    void updateGameList();
+    void updateGameList(List<GameDescription> gameDescriptions);
 
     void joinGameSuccess(boolean success);
 
