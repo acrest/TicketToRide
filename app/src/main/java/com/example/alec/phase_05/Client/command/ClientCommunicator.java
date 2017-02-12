@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Client.command;
 
+import android.os.AsyncTask;
+
 import com.example.alec.phase_05.Shared.command.*;
 import java.net.*;
 import java.io.*;
@@ -34,7 +36,7 @@ public class ClientCommunicator
         serverPort = null;
     }
 
-    /**
+/**
      * @param s server ip
      */
     public void setServerIP(String s)
@@ -73,6 +75,7 @@ public class ClientCommunicator
     {
         try
         {
+            //andrew's ip "192.168.1.118"
             URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
