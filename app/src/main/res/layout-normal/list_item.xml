@@ -8,20 +8,34 @@
     android:paddingLeft="16dp"
     android:id="@+id/cont_item_root">
 
-    <ImageView
-        android:id="@+id/im_item_icon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@android:drawable/ic_menu_edit"
-        android:tint="@color/colorPrimary"/>
+    <TextView
+        android:id="@+id/lbl_game_name_text"
+        android:layout_width="0dp"
+        android:layout_weight="0.2"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="7sp"
+        android:text="Derp Derpson"
+        android:textColor="#66CC00"
+        android:textSize="17sp"/>
 
     <TextView
-        android:id="@+id/lbl_item_text"
-        android:layout_width="wrap_content"
+        android:id="@+id/lbl_players_text"
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:paddingLeft="8dp"
         android:text="Derp Derpson"
-        android:textColor="#66CC00"/>
+        android:textColor="#66CC00"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/lbl_in_game_text"
+        android:layout_width="0dp"
+        android:layout_weight="0.2"
+        android:layout_height="match_parent"
+        android:paddingLeft="8dp"
+        android:text="Derp Derpson"
+        android:textColor="#66CC00"
+        android:textSize="17sp"/>
 
 </LinearLayout>

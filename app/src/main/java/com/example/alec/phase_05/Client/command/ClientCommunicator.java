@@ -77,8 +77,7 @@ public class ClientCommunicator
 
         try
         {
-            //andrew's ip "192.168.1.118"
-            URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
+            URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
             http.setRequestMethod("POST");

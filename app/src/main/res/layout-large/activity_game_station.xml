@@ -39,6 +39,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
+                    android:layout_marginLeft="7sp"
                     android:text="@string/game_name_tab"
                     android:textColor="#FFFF"
                     android:textStyle="bold"
