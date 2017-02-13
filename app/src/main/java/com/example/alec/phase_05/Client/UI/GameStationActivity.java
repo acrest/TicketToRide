@@ -121,6 +121,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
                     @Override
                     public void onClick(View view) {
 
+                        presenter.createGame(getColor(selectedColor, mView, dialog), mGameName.getText().toString(), mNoPicker.getValue());
 
                         dialog.dismiss();
                         Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
@@ -300,6 +301,34 @@ public class GameStationActivity extends Activity implements IGameStationListene
         mJoinGameButton.setEnabled(false);
         dialog.dismiss();
         startActivity(i);
+    }
+
+    private String getColor(View colorView, View mView, AlertDialog alertDialog)
+    {
+        String color = null;
+
+        if(mView.findViewById(R.id.new_game_container_red) == colorView)
+        {
+            color = "red";
+        }
+        if(mView.findViewById(R.id.new_game_container_blue) == colorView)
+        {
+            color = "blue";
+        }
+        if(mView.findViewById(R.id.new_game_container_yellow) == colorView)
+        {
+            color = "yellow";
+        }
+        if(mView.findViewById(R.id.new_game_container_green) == colorView)
+        {
+            color = "green";
+        }
+        if(mView.findViewById(R.id.new_game_container_black) == colorView)
+        {
+            color = "black";
+        }
+
+        return color;
     }
 
     @Override

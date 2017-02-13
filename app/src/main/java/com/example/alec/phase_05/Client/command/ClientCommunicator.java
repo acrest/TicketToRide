@@ -73,8 +73,6 @@ public class ClientCommunicator
      */
     public String sendAndGetResponse(String requestBody, String handler)
     {
-
-
         try
         {
             URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
