@@ -78,6 +78,11 @@ public class ServerProxy implements IServer {
 
         Player player = null;
 
+        if(result == null)
+        {
+            return null;
+        }
+
         if(!result.getRawSerializedResult().equals("null"))
         {
             player = new Player(username, password);
@@ -93,6 +98,11 @@ public class ServerProxy implements IServer {
         Result result = myCC.executeCommandOnServer(cmd);
 
         Player player = null;
+
+        if(result == null)
+        {
+            return null;
+        }
 
         if(result.getRawSerializedResult().equals("true"))
         {

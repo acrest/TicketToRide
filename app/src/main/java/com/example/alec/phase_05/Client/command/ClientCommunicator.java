@@ -73,14 +73,18 @@ public class ClientCommunicator
      */
     public String sendAndGetResponse(String requestBody, String handler)
     {
+
+
         try
         {
             //andrew's ip "192.168.1.118"
-            URL url = new URL("http://" + "192.168.1.118" + ":" + serverPort + handler);
+            URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
             http.setRequestMethod("POST");
             http.setDoOutput(true);
+
+            http.setConnectTimeout(7000);
 
             http.connect();
 
@@ -93,6 +97,10 @@ public class ClientCommunicator
                 InputStream respBody = http.getInputStream();
                 return readString(respBody);
             }
+        }
+        catch (java.net.SocketTimeoutException e)
+        {
+            return null;
         }
         catch (IOException e)
         {
