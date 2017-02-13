@@ -15,6 +15,7 @@ public class ServerJoinGameCommand  extends AbstractJoinGameCommand {
         super(username, password, gameID, color);
     }
 
+    @Override
     public Result execute() {
         ServerFacade sf = ServerFacade.get_instance();
         Player player = sf.getPlayerByName(getUserName());

@@ -20,6 +20,7 @@ public class ClientFacade {
     public void updateGameList(List<GameDescription> games)
     {
         ClientModel.getInstance().setGameList(games);
+
     }
 
 }

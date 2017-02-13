@@ -16,6 +16,7 @@ public class ServerGetGameListCommand extends AbstractGetGameListCommand {
         super(username, password);
     }
 
+    @Override
     public Result execute() {
         ServerFacade sf = ServerFacade.get_instance();
         List<GameDescription> games = sf.getGames(getUserName(), getPassword());
