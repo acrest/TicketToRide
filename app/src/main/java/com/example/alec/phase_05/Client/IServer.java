@@ -18,6 +18,6 @@ public interface IServer {
     List<GameDescription> getGames(String username, String password);
 
 
-    void getLatestPlayers(String username, String password);
+    List<Player> getLatestPlayers(String username, String password, int gameID);
     GameState getGame(String username, String password, int gameID);
 }

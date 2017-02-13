@@ -67,7 +67,8 @@ public class Poller {
                         break;
                     case 2:
 
-                        server.getLatestPlayers(currentPlayer.getName(), currentPlayer.getPassword());
+                        server.getLatestPlayers(currentPlayer.getName(), currentPlayer.getPassword(),
+                                ClientModel.getInstance().getCurrentGame().getGameDescription().getID());
                         break;
                     case 3:
 
