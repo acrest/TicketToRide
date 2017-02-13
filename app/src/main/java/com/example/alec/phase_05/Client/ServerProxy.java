@@ -114,8 +114,12 @@ public class ServerProxy implements IServer {
 
 
     @Override
-    public void getLatestPlayers(String username, String password) {
+    public List<Player> getLatestPlayers(String username, String password, int gameID) {
 
+        ICommand cmd = new ClientGetGameCommand(username, password, gameID);
+        Result result = myCC.executeCommandOnServer(cmd);
+        GameState currentGame = (GameState) result.toClass(GameState.class);
+        return currentGame.getPlayers();
     }
 
     @Override

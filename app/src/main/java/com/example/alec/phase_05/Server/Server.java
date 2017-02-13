@@ -47,6 +47,7 @@ public class Server {
             System.exit(1);
         }
         String port = args[0];
+        //System.out.println("SERVER MAIN " + args[0]);
         new Server().run(port);
     }
 }
