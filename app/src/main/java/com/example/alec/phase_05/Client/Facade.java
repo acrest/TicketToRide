@@ -15,12 +15,13 @@ public class Facade {
 
     private static Facade _instance;
     private ServerProxy proxy = null;
-    boolean set = false;
-    Poller poller = null;
+    private boolean set = false;
+    private Poller poller = null;
 
 
     public Facade() {
         proxy = new ServerProxy(null, null);
+        poller = Poller.getInstance();
     }
 
     public static Facade getInstance() {
@@ -44,7 +45,6 @@ public class Facade {
         thread.start();
         try {
             thread.join();
-            poller.getInstance();
             poller.setListGamePolling();
 
         } catch (InterruptedException e) {
@@ -75,7 +75,6 @@ public class Facade {
         thread.start();
         try {
             thread.join();
-            poller.getInstance();
             poller.setListGamePolling();
 
         } catch (InterruptedException e) {
