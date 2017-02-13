@@ -16,6 +16,7 @@ public class ServerCreateGameCommand extends AbstractCreateGameCommand
         super(username, password, gameName, numberOfPlayers, hostColor);
     }
 
+    @Override
     public Result execute()
     {
         ServerFacade sf = ServerFacade.get_instance();

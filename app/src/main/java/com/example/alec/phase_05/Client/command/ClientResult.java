@@ -18,6 +18,7 @@ public class ClientResult extends Result
      * Deserializes using the correct prefix and suffix for the command class.
      * @return deserialized command
      */
+    @Override
     public ICommand toCommand()
     {
         return SerDes.deserializeCommand(getRawSerializedResult(), CLIENT_COMMAND_PREFIX, CLIENT_COMMAND_SUFFIX);
