@@ -15,6 +15,7 @@ public class Facade {
 
     private static Facade _instance;
     private ServerProxy proxy = null;
+    boolean set = false;
 
 
     public Facade() {
@@ -28,24 +29,59 @@ public class Facade {
         return _instance;
     }
 
-    public void login(final String username, final String password) {
-        new Thread(new Runnable() {
+    public boolean login(final String username, final String password) {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Player player = proxy.login(username, password);
-                ClientModel.getInstance().setCurrentPlayer(player);
+                if(setCurrentPlayer(player))
+                {
+                    setSet(true);
+                }
             }
-        }).start();
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(set == true)
+        {
+            setSet(false);
+            return true;
+        }
+
+        return false;
     }
 
-    public void registerUser(final String username, final String password) {
-        new Thread(new Runnable() {
+    public boolean registerUser(final String username, final String password) {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Player player = proxy.registerUser(username, password);
-                ClientModel.getInstance().setCurrentPlayer(player);
+
+                if(setCurrentPlayer(player))
+                {
+                    setSet(true);
+                }
             }
-        }).start();
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(set == true)
+        {
+            setSet(false);
+            return true;
+        }
+
+        return false;
     }
 
     public void createGame(final int numOfPlayers, final String gameName, final String hostColor) {
@@ -85,5 +121,21 @@ public class Facade {
                 GameState game = proxy.getGame(player.getName(), player.getPassword(), gameID);
             }
         }).start();
+    }
+
+    private boolean setCurrentPlayer(Player player)
+    {
+        if(player != null)
+        {
+            ClientModel.getInstance().setCurrentPlayer(player);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void setSet(boolean switchTo)
+    {
+        this.set = switchTo;
     }
 }
