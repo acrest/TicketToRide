@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Shared.command;
 
+import com.example.alec.phase_05.Client.command.ClientResult;
 import com.google.gson.*;
 
 /**
@@ -61,6 +62,12 @@ public class SerDes
     public static Result deserializeResult(String json)
     {
         return (Result) deserializeToClass(json, Result.class);
+    }
+
+    public static ClientResult deserializeClientResult(String json)
+    {
+        Object obj = deserializeToClass(json, ClientResult.class);
+        return (ClientResult) obj;
     }
 
     /**

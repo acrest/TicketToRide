@@ -61,7 +61,7 @@ public class ClientCommunicator
     {
         String serializedCommand = SerDes.serialize(cmd);
         String responseBody = sendAndGetResponse(serializedCommand, "/command");
-        Result result = SerDes.deserializeResult(responseBody);
+        Result result = SerDes.deserializeClientResult(responseBody);
         return (ClientResult) result;
     }
 
@@ -73,6 +73,8 @@ public class ClientCommunicator
      */
     public String sendAndGetResponse(String requestBody, String handler)
     {
+
+
         try
         {
             //andrew's ip "192.168.1.118"
@@ -83,6 +85,8 @@ public class ClientCommunicator
 
             http.setRequestMethod("POST");
             http.setDoOutput(true);
+
+            http.setConnectTimeout(7000);
 
             http.connect();
 
@@ -95,6 +99,10 @@ public class ClientCommunicator
                 InputStream respBody = http.getInputStream();
                 return readString(respBody);
             }
+        }
+        catch (java.net.SocketTimeoutException e)
+        {
+            return null;
         }
         catch (IOException e)
         {

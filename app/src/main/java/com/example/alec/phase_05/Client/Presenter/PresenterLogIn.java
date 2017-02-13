@@ -20,13 +20,13 @@ public class PresenterLogIn implements IPresenterLogIn {
     }
 
     @Override
-    public void logIn(String username, String password) {
-        Facade.getInstance().login(username, password);
+    public boolean logIn(String username, String password) {
+        return Facade.getInstance().login(username, password);
     }
 
     @Override
-    public void register(String username, String password) {
-        Facade.getInstance().registerUser(username, password);
+    public boolean register(String username, String password) {
+        return Facade.getInstance().registerUser(username, password);
     }
 
     @Override

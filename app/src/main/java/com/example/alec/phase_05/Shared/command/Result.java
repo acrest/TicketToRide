@@ -7,17 +7,17 @@ package com.example.alec.phase_05.Shared.command;
  */
 public abstract class Result
 {
-    private String serializedResult;
-    private String errorMessage;
+    private String serializedResult = null;
+    private String errorMessage = null;
 
     /**
      * Creates of Result object with all instance variables set to null.
      */
-    public Result()
-    {
-        serializedResult = null;
-        errorMessage = null;
-    }
+    //public Result()
+    //{
+        //serializedResult = null;
+        //errorMessage = null;
+    //}
 
     /**
      * @return serialized object represented by this Result
