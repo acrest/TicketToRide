@@ -14,6 +14,7 @@ public class ServerRegisterCommand extends AbstractRegisterCommand {
         super(username, password);
     }
 
+    @Override
     public Result execute() {
         ServerFacade sf = ServerFacade.get_instance();
         boolean success = sf.registerUser(getUserName(), getPassword());
