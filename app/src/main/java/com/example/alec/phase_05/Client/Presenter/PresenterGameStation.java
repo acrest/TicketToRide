@@ -38,7 +38,7 @@ public class PresenterGameStation implements IPresenterGameStation {
         UpdateIndicator u = (UpdateIndicator) o;
         if(u.needUpdate(ClientModel.GAME_LIST)) {
             listener.updateGameList(ClientModel.getInstance().getGameList());
+            //TODO: check game id and update colors for that game id
         }
-        //TODO: check for available color updates
     }
 }

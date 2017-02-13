@@ -24,4 +24,6 @@ public interface IGameStationListener {
     void joinGameSuccess(boolean success);
 
     void createGameSuccess(boolean success);
+
+    int getCurrentGameID();
 }
