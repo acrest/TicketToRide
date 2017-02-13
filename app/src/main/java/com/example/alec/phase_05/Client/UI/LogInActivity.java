@@ -48,9 +48,18 @@ public class LogInActivity extends Activity implements ILogInListener {
                 {
                     if(isValidLogin())
                     {
-                        resetLogIn();
-                        Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
-                        startActivity(i);
+                        if(presenter.logIn(mLogInUserNameEditText.getText().toString(), mLogInPasswordEditText.getText().toString()))
+                        {
+                            resetLogIn();
+                            Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
+                            startActivity(i);
+                        }
+                        else
+                        {
+                            resetLogIn();
+                            Toast.makeText(LogInActivity.this, "Failed to log in.", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                     else
                     {
@@ -77,15 +86,17 @@ public class LogInActivity extends Activity implements ILogInListener {
                     {
                         if(mRegisterPasswordEditText.getText().toString().equals(mRegisterConfirmEditText.getText().toString()))
                         {
-                            //resetRegister();
-
-                            String word = "word";
-                            String something = "something";
-
-                            presenter.register(mRegisterUserNameEditText.getText().toString(), mRegisterPasswordEditText.getText().toString());
-
-                            Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
-                            startActivity(i);
+                            if(presenter.register(mRegisterUserNameEditText.getText().toString(), mRegisterPasswordEditText.getText().toString()))
+                            {
+                                resetRegister();
+                                Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
+                                startActivity(i);
+                            }
+                            else
+                            {
+                                resetRegister();
+                                Toast.makeText(LogInActivity.this, "Failed to register", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else
                         {

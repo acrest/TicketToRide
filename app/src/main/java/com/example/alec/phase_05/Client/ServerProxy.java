@@ -7,6 +7,7 @@ import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
+import com.example.alec.phase_05.Client.command.ClientResult;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
@@ -74,7 +75,15 @@ public class ServerProxy implements IServer {
 //        baseCMD = new ClientLoginCommand(username, password);
         ICommand cmd = new ClientLoginCommand(username, password);
         Result result = myCC.executeCommandOnServer(cmd);
-        return (Player) result.toClass(Player.class);
+
+        Player player = null;
+
+        if(!result.getRawSerializedResult().equals("null"))
+        {
+            player = new Player(username, password);
+        }
+
+        return player;
     }
 
     @Override
@@ -82,7 +91,15 @@ public class ServerProxy implements IServer {
 //        baseCMD = new ClientRegisterCommand(username, password);
         ICommand cmd = new ClientRegisterCommand(username, password);
         Result result = myCC.executeCommandOnServer(cmd);
-        return (Player) result.toClass(Player.class);
+
+        Player player = null;
+
+        if(result.getRawSerializedResult().equals("true"))
+        {
+            player = new Player(username, password);
+        }
+
+        return player;
     }
 
     @Override

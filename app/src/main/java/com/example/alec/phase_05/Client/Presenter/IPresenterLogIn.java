@@ -8,8 +8,8 @@ import java.util.Observer;
 
 public interface IPresenterLogIn extends Observer {
 
-    void logIn(String username, String password);
+    boolean logIn(String username, String password);
 
-    void register(String username, String password);
+    boolean register(String username, String password);
 
 }

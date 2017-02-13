@@ -61,7 +61,7 @@ public class ClientCommunicator
     {
         String serializedCommand = SerDes.serialize(cmd);
         String responseBody = sendAndGetResponse(serializedCommand, "/command");
-        Result result = SerDes.deserializeResult(responseBody);
+        Result result = SerDes.deserializeClientResult(responseBody);
         return (ClientResult) result;
     }
 
@@ -76,7 +76,7 @@ public class ClientCommunicator
         try
         {
             //andrew's ip "192.168.1.118"
-            URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
+            URL url = new URL("http://" + "192.168.1.118" + ":" + serverPort + handler);
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
             http.setRequestMethod("POST");
