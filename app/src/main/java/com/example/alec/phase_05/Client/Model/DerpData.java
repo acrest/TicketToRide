@@ -12,23 +12,24 @@ import java.util.List;
  */
 
 public class DerpData {
-    public static final String[] titles = {"Nothingness cannot be defined", "The softest thing cannot be snapped",
-            "Be like water, my friend."};
-    public static final int[] icons = {android.R.drawable.ic_popup_reminder, android.R.drawable.ic_menu_add,
-            android.R.drawable.ic_menu_delete};
+    public static final String[] players = {"Harry", "Ron", "Hermione", "Neville"};
+    public static final String[] inGame = {"1/5"};
 
     public static List<ListItem> getListData()
     {
         List<ListItem> data = new ArrayList<>();
+        int count = 1;
 
         for(int x = 0; x < 4; x++)
         {
-            for(int i = 0; i < titles.length && i < icons.length; i++)
+            for(int i = 0; i < players.length; i++)
             {
                 ListItem item = new ListItem();
-                item.setImageResId(icons[i]);
-                item.setTitle(titles[i]);
+                item.setTitle(Integer.toString(count));
+                item.setPlayers(players[i]);
+                item.setInGame(inGame[0]);
                 data.add(item);
+                count++;
             }
         }
 

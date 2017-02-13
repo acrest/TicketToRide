@@ -120,6 +120,8 @@ public class GameStationActivity extends Activity implements IGameStationListene
                 mButtonDialogOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+
                         dialog.dismiss();
                         Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
                         startActivity(i);
@@ -214,8 +216,9 @@ public class GameStationActivity extends Activity implements IGameStationListene
         @Override
         public void onBindViewHolder(DerpHolder holder, int position) {
             ListItem item = listData.get(position);
-            holder.title.setText(item.getTitle());
-            holder.icon.setImageResource(item.getImageResId());
+            holder.titleLabel.setText(item.getTitle());
+            holder.playersLabel.setText(item.getPlayers());
+            holder.inGameLabel.setText(item.getInGame());
         }
 
         @Override
@@ -224,8 +227,9 @@ public class GameStationActivity extends Activity implements IGameStationListene
         }
 
         class DerpHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            private TextView title;
-            private ImageView icon;
+            private TextView titleLabel;
+            private TextView playersLabel;
+            private TextView inGameLabel;
             private View container;
 
 
@@ -233,8 +237,9 @@ public class GameStationActivity extends Activity implements IGameStationListene
                 super(itemView);
                 itemView.setOnClickListener(this);
 
-                title = (TextView)itemView.findViewById(R.id.lbl_item_text);
-                icon = (ImageView)itemView.findViewById(R.id.im_item_icon);
+                titleLabel = (TextView)itemView.findViewById(R.id.lbl_game_name_text);
+                playersLabel = (TextView)itemView.findViewById(R.id.lbl_players_text);
+                inGameLabel = (TextView)itemView.findViewById(R.id.lbl_in_game_text);
                 container = itemView.findViewById(R.id.cont_item_root);
             }
 

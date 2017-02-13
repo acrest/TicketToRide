@@ -7,7 +7,8 @@ package com.example.alec.phase_05.Client.Model;
 public class ListItem
 {
     private String title;
-    private int imageResId;
+    private String players;
+    private String inGame;
 
     public String getTitle() {
         return title;
@@ -17,11 +18,19 @@ public class ListItem
         this.title = title;
     }
 
-    public int getImageResId() {
-        return imageResId;
+    public String getPlayers() {
+        return players;
     }
 
-    public void setImageResId(int imageResId) {
-        this.imageResId = imageResId;
+    public void setPlayers(String players) {
+        this.players = players;
+    }
+
+    public String getInGame() {
+        return inGame;
+    }
+
+    public void setInGame(String inGame) {
+        this.inGame = inGame;
     }
 }
