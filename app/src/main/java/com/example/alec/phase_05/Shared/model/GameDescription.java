@@ -1,8 +1,10 @@
 package com.example.alec.phase_05.Shared.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class GameDescription {
     private int ID;
@@ -57,6 +59,10 @@ public class GameDescription {
 
     public void setPlayerColors(Map<Player, String> playerColors) {
         this.playerColors = playerColors;
+    }
+
+    public Collection<String> getAllUsedColors() {
+        return playerColors.values();
     }
 
     public boolean equals(Object other) {

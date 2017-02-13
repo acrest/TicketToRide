@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Model.DerpData;
@@ -25,6 +26,8 @@ import com.example.alec.phase_05.Client.Presenter.IPresenterGameStation;
 import com.example.alec.phase_05.Client.Presenter.PresenterGameStation;
 import com.example.alec.phase_05.R;
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
 
@@ -241,9 +244,19 @@ public class GameStationActivity extends Activity implements IGameStationListene
             } else {
                 holder.setSelected(false);
             }
-            //TODO: update the holder's views with the game name and number of players
-            holder.title.setText(gameDescription.getName());
-            holder.icon.setImageResource(android.R.drawable.ic_menu_add); //place holder
+            holder.titleLabel.setText(gameDescription.getName());
+            GameState currentGame = ClientModel.getInstance().getCurrentGame();
+            if(currentGame != null && currentGame.getID() == gameDescription.getID()) {
+                holder.inGameLabel.setText("YES");
+            } else {
+                holder.inGameLabel.setText("NO");
+            }
+            List<Player> playersInGame = gameDescription.getPlayers();
+            if(playersInGame != null) {
+                holder.playersLabel.setText(Integer.toString(gameDescription.getPlayers().size()));
+            } else {
+                holder.playersLabel.setText("0");
+            }
         }
 
         @Override
@@ -395,8 +408,8 @@ public class GameStationActivity extends Activity implements IGameStationListene
     }
 
     @Override
-    public void hideRed(boolean visible) {
-        if(visible)
+    public void hideRed(boolean notVisible) {
+        if(notVisible)
         {
             mButtonDialogRed.setVisibility(View.GONE);
         }
@@ -407,8 +420,8 @@ public class GameStationActivity extends Activity implements IGameStationListene
     }
 
     @Override
-    public void hideGreen(boolean visible) {
-        if(visible)
+    public void hideGreen(boolean notVisible) {
+        if(notVisible)
         {
             mButtonDialogGreen.setVisibility(View.GONE);
         }
@@ -419,8 +432,8 @@ public class GameStationActivity extends Activity implements IGameStationListene
     }
 
     @Override
-    public void hideBlue(boolean visible) {
-        if(visible)
+    public void hideBlue(boolean notVisible) {
+        if(notVisible)
         {
             mButtonDialogBlue.setVisibility(View.GONE);
         }
@@ -431,8 +444,8 @@ public class GameStationActivity extends Activity implements IGameStationListene
     }
 
     @Override
-    public void hideYellow(boolean visible) {
-        if(visible)
+    public void hideYellow(boolean notVisible) {
+        if(notVisible)
         {
             mButtonDialogYellow.setVisibility(View.GONE);
         }
@@ -443,8 +456,8 @@ public class GameStationActivity extends Activity implements IGameStationListene
     }
 
     @Override
-    public void hideBlack(boolean visible) {
-        if(visible)
+    public void hideBlack(boolean notVisible) {
+        if(notVisible)
         {
             mButtonDialogBlack.setVisibility(View.GONE);
         }
@@ -467,8 +480,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
             mJoinGameButton.setEnabled(false);
             startActivity(i);
         } else {
-
-
+            Toast.makeText(this, "Failed to join game", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -480,7 +492,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
             mJoinGameButton.setEnabled(false);
             startActivity(i);
         } else {
-
+            Toast.makeText(this, "Failed to create game", Toast.LENGTH_SHORT).show();
         }
     }
 
