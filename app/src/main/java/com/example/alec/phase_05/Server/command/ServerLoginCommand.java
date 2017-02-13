@@ -23,6 +23,7 @@ public class ServerLoginCommand extends AbstractLoginCommand
      * Submits a login request to the server facade.
      * @return Result object containing a ServerLoginResponseCommand
      */
+    @Override
     public Result execute()
     {
         Player player = ServerFacade.get_instance().login(getUserName(), getPassword());

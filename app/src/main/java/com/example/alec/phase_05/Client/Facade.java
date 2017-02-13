@@ -16,6 +16,7 @@ public class Facade {
     private static Facade _instance;
     private ServerProxy proxy = null;
     boolean set = false;
+    Poller poller = null;
 
 
     public Facade() {
@@ -43,6 +44,9 @@ public class Facade {
         thread.start();
         try {
             thread.join();
+            poller.getInstance();
+            poller.setListGamePolling();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -71,6 +75,9 @@ public class Facade {
         thread.start();
         try {
             thread.join();
+            poller.getInstance();
+            poller.setListGamePolling();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -95,6 +102,8 @@ public class Facade {
         thread.start();
         try {
             thread.join();
+            poller.getInstance();
+            poller.setPlayerWatingPolling();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -111,6 +120,8 @@ public class Facade {
         thread.start();
         try {
             thread.join();
+            poller.getInstance();
+            poller.setPlayerWatingPolling();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

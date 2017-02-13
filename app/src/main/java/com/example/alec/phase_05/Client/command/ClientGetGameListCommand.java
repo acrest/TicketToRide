@@ -22,6 +22,7 @@ public class ClientGetGameListCommand extends AbstractGetGameListCommand {
      * It is only here to make the class non-abstract.
      * @return null
      */
+    @Override
     public Result execute()
     {
         return null;
