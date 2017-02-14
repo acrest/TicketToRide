@@ -24,7 +24,7 @@ public class ServerCreateGameCommand extends AbstractCreateGameCommand
         Player hostPlayer = sf.getPlayerByName(getUserName());
         GameDescription game = sf.createGame(hostPlayer, getNumberOfPlayers(), getGameName(), getHostColor());
         Result result = new ServerResult();
-        result.setResultObject(game, new TypeToken<GameDescription>(){}.getType());
+        result.setResultObject(game);
         return result;
     }
 }

@@ -49,8 +49,8 @@ public class ClientModel extends Observable {
     }
 
     public void addPlayerToGame(Player player, String color) {
-        currentGame.addPlayer(player);
-        currentGame.setPlayerColor(player, color);
+//        currentGame.addPlayer(player);
+//        currentGame.setPlayerColor(player, color);
         notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
     }
 

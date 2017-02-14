@@ -94,7 +94,7 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         String name = generateRandomAlphabeticString();
         int max = random.nextInt(4) + 2;
         List<Player> players = generateRandomPlayers();
-        Map<Player, String> playerColors = generateRandomPlayerColors(players);
+        List<String> playerColors = generateRandomPlayerColors(players);
         return new GameDescription(id, name, max, players, playerColors);
     }
 
@@ -128,12 +128,12 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         return new Player(generateRandomAlphabeticString(), generateRandomAlphabeticString());
     }
 
-    private Map<Player, String> generateRandomPlayerColors(List<Player> players) {
-        Map<Player, String> playerColors = new HashMap<>();
-        for(Player player : players) {
-            playerColors.put(player, generateRandomColor());
-        }
-        return playerColors;
+    private List<String> generateRandomPlayerColors(List<Player> players) {
+//        List<String> playerColors = new ArrayList<>();
+//        for(Player player : players) {
+//            playerColors.put(player, generateRandomColor());
+//        }
+        return null;
     }
 
     private String generateRandomColor() {

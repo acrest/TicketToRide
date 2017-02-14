@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Client;
 
+import com.example.alec.phase_05.Shared.command.CommandHolder;
+import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
@@ -16,11 +18,11 @@ public interface IServer {
     Player registerUser(String username, String password);
     GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor);
     String joinGame(Player newPlayer, int gameID, String color);
-    List<GameDescription> getGames(String username, String password);
+    GameDescriptionHolder getGames(String username, String password);
 
 
     List<Player> getLatestPlayers(String username, String password, int gameID);
     GameState getGame(String username, String password, int gameID);
 
-    List<ICommand> getGameCommands(Player player, int gameID, int lastUpdate);
+    CommandHolder getGameCommands(Player player, int gameID, int lastUpdate);
 }

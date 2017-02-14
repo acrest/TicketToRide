@@ -16,14 +16,14 @@ public class GameState {
     private String name;
     private int maxPlayers;
     private List<Player> players;
-    private Map<Player, String> playerColors;
+    private List<String> playerColors;
 
-    public GameState(int id, String name, int maxPlayers, List<Player> playerList, Map<Player,String> playerMap) {
+    public GameState(int id, String name, int maxPlayers, List<Player> playerList, List<String> playerColors) {
         ID = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
         players = playerList;
-        playerColors = playerMap;
+        this.playerColors = playerColors;
     }
 
     public GameState(GameDescription gameDescription) {
@@ -77,29 +77,29 @@ public class GameState {
         return players.contains(playerName);
     }
 
-    public Player getPlayerByColor(String color) {
-        for(Map.Entry<Player, String> entry : playerColors.entrySet()) {
-            if(entry.getValue().equals(color))
-                return entry.getKey();
-        }
-        return null;
-    }
+//    public Player getPlayerByColor(String color) {
+//        for(Map.Entry<Player, String> entry : playerColors.entrySet()) {
+//            if(entry.getValue().equals(color))
+//                return entry.getKey();
+//        }
+//        return null;
+//    }
 
-    public String getPlayerColor(Player player) {
-        return playerColors.get(player);
-    }
+//    public String getPlayerColor(Player player) {
+//        return playerColors.get(player);
+//    }
 
-    public void setPlayerColor(Player player, String color) {
-        playerColors.put(player, color);
-    }
+//    public void setPlayerColor(Player player, String color) {
+//        playerColors.put(player, color);
+//    }
 
-    public Collection<String> getAllUsedColors() {
-        return playerColors.values();
-    }
+//    public Collection<String> getAllUsedColors() {
+//        return playerColors.values();
+//    }
 
     public GameDescription getGameDescription() {
         return new GameDescription(ID, name, maxPlayers,
                 Collections.unmodifiableList(players),
-                Collections.unmodifiableMap(playerColors));
+                Collections.unmodifiableList(playerColors));
     }
 }
