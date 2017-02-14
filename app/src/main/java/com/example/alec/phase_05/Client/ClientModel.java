@@ -113,6 +113,7 @@ public class ClientModel extends Observable {
         for(String property : properties) {
             u.addProperty(property);
         }
+        setChanged();
         notifyObservers(u);
     }
 }
