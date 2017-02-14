@@ -95,6 +95,7 @@ public class Facade {
             public void run() {
                 Player player = ClientModel.getInstance().getCurrentPlayer();
                 GameDescription newGame = proxy.createGame(player, numOfPlayers, gameName, hostColor);
+                ClientModel.getInstance().createGame(newGame);
             }
         });
         thread.start();
@@ -112,6 +113,7 @@ public class Facade {
             public void run() {
                 Player player = ClientModel.getInstance().getCurrentPlayer();
                 String joinedGame = proxy.joinGame(player, gameID, color);
+                ClientModel.getInstance().joinGame(joinedGame);
             }
         });
         thread.start();

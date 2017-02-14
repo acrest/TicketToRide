@@ -16,6 +16,10 @@ import java.util.Observable;
 public class ClientModel extends Observable {
 
     public static String GAME_LIST = "game list";
+    public static String CREATE_GAME_SUCCESS = "create game success";
+    public static String CREATE_GAME_FAILURE = "create game failure";
+    public static String JOIN_GAME_SUCCESS = "join game success";
+    public static String JOIN_GAME_FAILURE = "join game failure";
 
     private static ClientModel instance = null;
 
@@ -82,6 +86,26 @@ public class ClientModel extends Observable {
     public void setGameList(List<GameDescription> gameList) {
         this.gameList = gameList;
         notifyPropertyChanges(GAME_LIST);
+    }
+
+    public void createGame(GameDescription gameDescription) {
+        //TODO: implement this method
+
+        if(gameDescription != null) {
+            notifyPropertyChanges(CREATE_GAME_SUCCESS);
+        } else {
+            notifyPropertyChanges(CREATE_GAME_FAILURE);
+        }
+    }
+
+    public void joinGame(String gameName) {
+        //TODO: implements this method
+
+        if(gameName != null) {
+            notifyPropertyChanges(JOIN_GAME_SUCCESS);
+        } else {
+            notifyPropertyChanges(JOIN_GAME_FAILURE);
+        }
     }
 
     private void notifyPropertyChanges(String... properties) {
