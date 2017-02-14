@@ -44,12 +44,12 @@ public class PresenterGameStation implements IPresenterGameStation {
             listener.updateGameList(ClientModel.getInstance().getGameList());
             GameDescription gameDescription = findGameByID(listener.getCurrentGameID());
             if(gameDescription != null) {
-                Collection<String> usedColors = gameDescription.getAllUsedColors();
-                listener.hideRed(usedColors.contains("red"));
-                listener.hideBlue(usedColors.contains("blue"));
-                listener.hideYellow(usedColors.contains("yellow"));
-                listener.hideGreen(usedColors.contains("green"));
-                listener.hideBlack(usedColors.contains("black"));
+//                Collection<String> usedColors = gameDescription.getAllUsedColors();
+//                listener.hideRed(usedColors.contains("red"));
+//                listener.hideBlue(usedColors.contains("blue"));
+//                listener.hideYellow(usedColors.contains("yellow"));
+//                listener.hideGreen(usedColors.contains("green"));
+//                listener.hideBlack(usedColors.contains("black"));
             }
         }
         if(u.needUpdate(ClientModel.CREATE_GAME_SUCCESS)) {

@@ -58,11 +58,6 @@ public class SerDes
         return gson.toJson(obj);
     }
 
-    public static String serialize(Object obj, Type type) {
-        Gson gson = new Gson();
-        return gson.toJson(obj, type);
-    }
-
     /**
      * Deserialize the given json string into a Result
      * @param json json string to deserialize
@@ -91,8 +86,4 @@ public class SerDes
         return gson.fromJson(json, type);
     }
 
-    public static Object deserializeToType(String json, Type type) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, type);
-    }
 }

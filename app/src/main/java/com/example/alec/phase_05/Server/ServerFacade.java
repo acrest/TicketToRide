@@ -53,10 +53,11 @@ public class ServerFacade {
         playerList.add(hostPlayer);
         playerMap.put(hostPlayer,hostColor);
 
-        GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, playerList, playerMap);
-        if(!model.addGame(newGame))
-            return null;
-        return newGame;
+        //GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, playerList, playerMap);
+//        if(!model.addGame(newGame))
+//            return null;
+//        return newGame;
+        return null;
     }
 
     public String joinGame(Player newPlayer, int gameID, String color) {
