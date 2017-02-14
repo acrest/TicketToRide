@@ -17,14 +17,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.alec.phase_05.Client.Model.ListItem;
+import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Model.DerpData;
 import com.example.alec.phase_05.Client.Presenter.IGameStationListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterGameStation;
+import com.example.alec.phase_05.Client.Presenter.MockPresenterGameStation;
 import com.example.alec.phase_05.Client.Presenter.PresenterGameStation;
 import com.example.alec.phase_05.R;
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
 
@@ -34,6 +38,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
     private Button mCreateGameButton, mJoinGameButton;
     private Button mButtonDialogRed, mButtonDialogBlue, mButtonDialogYellow, mButtonDialogGreen, mButtonDialogBlack;
     private View selectedColor = null;
+    private int selectedGameID = -1;
     private IPresenterGameStation presenter;
 
     @Override
@@ -45,7 +50,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
         mGameRecView = (RecyclerView) findViewById(R.id.rec_game_list);
         mGameRecView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new DerpAdapter(DerpData.getListData(), this);
+        mAdapter = new DerpAdapter(ClientModel.getInstance().getGameList(), this);
         mGameRecView.setAdapter(mAdapter);
 
         mCreateGameButton = (Button) findViewById(R.id.create_game_button);
@@ -136,14 +141,20 @@ public class GameStationActivity extends Activity implements IGameStationListene
         mJoinGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                selectedGameID = mAdapter.getSelectedGameID();
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(GameStationActivity.this);
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_join_game, null);
 
-                final Button mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
-                final Button mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);
-                final Button mButtonDialogYellow = (Button) mView.findViewById(R.id.join_game_button_yellow);
-                final Button mButtonDialogGreen = (Button) mView.findViewById(R.id.join_game_button_green);
-                final Button mButtonDialogBlack = (Button) mView.findViewById(R.id.join_game_button_black);
+                mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
+                mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);
+                mButtonDialogYellow = (Button) mView.findViewById(R.id.join_game_button_yellow);
+                mButtonDialogGreen = (Button) mView.findViewById(R.id.join_game_button_green);
+                mButtonDialogBlack = (Button) mView.findViewById(R.id.join_game_button_black);
+//                final Button mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
+//                final Button mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);
+//                final Button mButtonDialogYellow = (Button) mView.findViewById(R.id.join_game_button_yellow);
+//                final Button mButtonDialogGreen = (Button) mView.findViewById(R.id.join_game_button_green);
+//                final Button mButtonDialogBlack = (Button) mView.findViewById(R.id.join_game_button_black);
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
@@ -191,22 +202,42 @@ public class GameStationActivity extends Activity implements IGameStationListene
 
 
     public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder> {
-        private List<ListItem> listData;
+        private static final int INVALID_INDEX = -1;
+
+        private List<GameDescription> listData;
         private LayoutInflater inflater;
-        private View selected = null;
+        private RecyclerView recyclerView;
+        private int selectedIndex;
 
         public void cancelSelected()
         {
-            selected.setBackgroundColor(Color.TRANSPARENT);
-            selected = null;
+            DerpHolder holder = getSelectedHolder();
+            if(holder != null) {
+                holder.setSelected(false);
+            }
+            selectedIndex = INVALID_INDEX;
+            mJoinGameButton.setEnabled(false);
         }
 
-        public DerpAdapter(List<ListItem> listData, Context c)
+        public DerpAdapter(List<GameDescription> listData, Context c)
         {
             this.inflater = LayoutInflater.from(c);
             this.listData = listData;
+            selectedIndex = INVALID_INDEX;
+            recyclerView = null;
         }
 
+        @Override
+        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
+            this.recyclerView = recyclerView;
+        }
+
+        @Override
+        public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+            super.onDetachedFromRecyclerView(recyclerView);
+            this.recyclerView = null;
+        }
 
         @Override
         public DerpHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -216,15 +247,90 @@ public class GameStationActivity extends Activity implements IGameStationListene
 
         @Override
         public void onBindViewHolder(DerpHolder holder, int position) {
-            ListItem item = listData.get(position);
-            holder.titleLabel.setText(item.getTitle());
-            holder.playersLabel.setText(item.getPlayers());
-            holder.inGameLabel.setText(item.getInGame());
+            GameDescription gameDescription = listData.get(position);
+            if(selectedIndex == position) {
+                holder.setSelected(true);
+            } else {
+                holder.setSelected(false);
+            }
+            holder.titleLabel.setText(gameDescription.getName());
+            GameState currentGame = ClientModel.getInstance().getCurrentGame();
+            if(currentGame != null && currentGame.getID() == gameDescription.getID()) {
+                holder.inGameLabel.setText("YES");
+            } else {
+                holder.inGameLabel.setText("NO");
+            }
+            List<Player> playersInGame = gameDescription.getPlayers();
+            if(playersInGame != null) {
+                holder.playersLabel.setText(Integer.toString(gameDescription.getPlayers().size()));
+            } else {
+                holder.playersLabel.setText("0");
+            }
         }
 
         @Override
         public int getItemCount() {
             return listData.size();
+        }
+
+        public DerpHolder getSelectedHolder() {
+            if(selectedIndex != INVALID_INDEX) {
+                return (DerpHolder) recyclerView.findViewHolderForAdapterPosition(selectedIndex);
+            }
+            return null;
+        }
+
+        public int getSelectedGameID() {
+            if(selectedIndex != INVALID_INDEX) {
+                return listData.get(selectedIndex).getID();
+            }
+            return INVALID_INDEX;
+        }
+
+        private void selectGameOfID(int gameID) {
+            boolean foundSelected = false;
+            for(int i = 0; i < getItemCount(); ++i) {
+                DerpHolder holder = (DerpHolder) recyclerView.findViewHolderForAdapterPosition(i);
+                if(holder != null) {
+                    if(listData.get(i).getID() == gameID) {
+                        holder.setSelected(true);
+                        foundSelected = true;
+                    } else {
+                        holder.setSelected(false);
+                    }
+                }
+            }
+            if(!foundSelected) {
+                cancelSelected();
+            }
+        }
+
+        public void updateListData(List<GameDescription> newListData) {
+            //remember the selected game's id
+            int selectedGameID = getSelectedGameID();
+            List<GameDescription> oldList = listData;
+            listData = newListData;
+//            int minLength = Math.min(oldList.size(), newListData.size());
+//            for(int i = 0; i < minLength; ++i) {
+//                if(oldList.get(i).getID() != newListData.get(i).getID()) {
+//                    //something has changed, so we need to do some updating
+//                    notifyItemChanged(i);
+//                }
+//            }
+//            int maxLength = Math.max(oldList.size(), newListData.size());
+//            //this loop deletes / adds extrea items
+//            for(int i = minLength; i < maxLength; ++i) {
+//                if(oldList.size() >= minLength) {
+//                    //oldList is larger, so delete extra items
+//                    notifyItemRemoved(i);
+//                } else {
+//                    //newList is larger, so add extra items
+//                    notifyItemInserted(i);
+//                }
+//            }
+            notifyDataSetChanged();
+            //reselect the item with the correct id
+            selectGameOfID(selectedGameID);
         }
 
         class DerpHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -246,17 +352,26 @@ public class GameStationActivity extends Activity implements IGameStationListene
 
             @Override
             public void onClick(View view) {
-                if(selected == null)
+                if(selectedIndex == INVALID_INDEX)
                 {
                     mJoinGameButton.setEnabled(true);
                 }
                 else
                 {
-                    selected.setBackgroundColor(Color.TRANSPARENT);
+                    DerpHolder holder = getSelectedHolder();
+                    holder.setSelected(false);
                 }
 
-                selected = view;
-                view.setBackgroundColor(Color.parseColor("#8866B2FF"));
+                selectedIndex = getAdapterPosition();
+                setSelected(true);
+            }
+
+            public void setSelected(boolean selected) {
+                if(selected) {
+                    container.setBackgroundColor(Color.parseColor("#8866B2FF"));
+                } else {
+                    container.setBackgroundColor(Color.TRANSPARENT);
+                }
             }
         }
 
@@ -296,11 +411,12 @@ public class GameStationActivity extends Activity implements IGameStationListene
             color = "black";
         }
 
-        Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
-        mAdapter.cancelSelected();
-        mJoinGameButton.setEnabled(false);
         dialog.dismiss();
-        startActivity(i);
+        presenter.joinGame(selectedGameID, color);
+//        Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
+//        mAdapter.cancelSelected();
+//        mJoinGameButton.setEnabled(false);
+//        startActivity(i);
     }
 
     private String getColor(View colorView, View mView, AlertDialog alertDialog)
@@ -332,48 +448,67 @@ public class GameStationActivity extends Activity implements IGameStationListene
     }
 
     @Override
-    public void hideRed(boolean visible) {
-        if(visible)
-        {
-            mButtonDialogRed.setVisibility(View.GONE);
+    public void hideRed(boolean notVisible) {
+        if(mButtonDialogRed != null) {
+            if(notVisible)
+            {
+                mButtonDialogRed.setVisibility(View.GONE);
+            }
+            else
+            {
+                mButtonDialogRed.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
-    public void hideGreen(boolean visible) {
-        if(visible)
-        {
-            mButtonDialogGreen.setVisibility(View.GONE);
+    public void hideGreen(boolean notVisible) {
+        if(mButtonDialogGreen != null) {
+            if(notVisible) {
+                mButtonDialogGreen.setVisibility(View.GONE);
+            }
+            else {
+                mButtonDialogGreen.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
-    public void hideBlue(boolean visible) {
-        if(visible)
-        {
-            mButtonDialogBlue.setVisibility(View.GONE);
+    public void hideBlue(boolean notVisible) {
+        if(mButtonDialogBlue != null) {
+            if (notVisible) {
+                mButtonDialogBlue.setVisibility(View.GONE);
+            } else {
+                mButtonDialogBlue.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
-    public void hideYellow(boolean visible) {
-        if(visible)
-        {
-            mButtonDialogYellow.setVisibility(View.GONE);
+    public void hideYellow(boolean notVisible) {
+        if(mButtonDialogYellow != null) {
+            if (notVisible) {
+                mButtonDialogYellow.setVisibility(View.GONE);
+            } else {
+                mButtonDialogYellow.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
-    public void hideBlack(boolean visible) {
-        if(visible)
-        {
-            mButtonDialogBlack.setVisibility(View.GONE);
+    public void hideBlack(boolean notVisible) {
+        if(mButtonDialogBlack != null) {
+            if (notVisible) {
+                mButtonDialogBlack.setVisibility(View.GONE);
+            } else {
+                mButtonDialogBlack.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
     public void updateGameList(List<GameDescription> gameDescriptions) {
-
+        mAdapter.updateListData(gameDescriptions);
     }
 
     @Override
@@ -384,7 +519,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
             mJoinGameButton.setEnabled(false);
             startActivity(i);
         } else {
-
+            Toast.makeText(this, "Failed to join game", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -396,7 +531,12 @@ public class GameStationActivity extends Activity implements IGameStationListene
             mJoinGameButton.setEnabled(false);
             startActivity(i);
         } else {
-
+            Toast.makeText(this, "Failed to create game", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public int getCurrentGameID() {
+        return selectedGameID;
     }
 }
