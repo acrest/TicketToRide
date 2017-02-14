@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import android.util.Log;
+
 import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.UI.GameStationActivity;
