@@ -1,7 +1,11 @@
 package com.example.alec.phase_05.Shared.command;
 
 import com.example.alec.phase_05.Client.command.ClientResult;
+import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.google.gson.*;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * Utility class containing methods to serialize and deserialize object to and from json strings.
@@ -54,6 +58,11 @@ public class SerDes
         return gson.toJson(obj);
     }
 
+    public static String serialize(Object obj, Type type) {
+        Gson gson = new Gson();
+        return gson.toJson(obj, type);
+    }
+
     /**
      * Deserialize the given json string into a Result
      * @param json json string to deserialize
@@ -78,6 +87,11 @@ public class SerDes
      */
     public static Object deserializeToClass(String json, Class<?> type)
     {
+        Gson gson = new Gson();
+        return gson.fromJson(json, type);
+    }
+
+    public static Object deserializeToType(String json, Type type) {
         Gson gson = new Gson();
         return gson.fromJson(json, type);
     }
