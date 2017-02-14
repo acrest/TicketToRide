@@ -50,6 +50,18 @@ public class PresenterGameStation implements IPresenterGameStation {
                 listener.hideBlack(usedColors.contains("black"));
             }
         }
+        if(u.needUpdate(ClientModel.CREATE_GAME_SUCCESS)) {
+            listener.createGameSuccess(true);
+        }
+        if(u.needUpdate(ClientModel.CREATE_GAME_FAILURE)) {
+            listener.createGameSuccess(false);
+        }
+        if(u.needUpdate(ClientModel.JOIN_GAME_SUCCESS)) {
+            listener.joinGameSuccess(true);
+        }
+        if(u.needUpdate(ClientModel.JOIN_GAME_FAILURE)) {
+            listener.joinGameSuccess(false);
+        }
     }
 
     private GameDescription findGameByID(int id) {

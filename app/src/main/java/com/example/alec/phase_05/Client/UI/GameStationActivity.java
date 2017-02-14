@@ -527,8 +527,6 @@ public class GameStationActivity extends Activity implements IGameStationListene
     public void createGameSuccess(boolean success) {
         if(success) {
             Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
-            mAdapter.cancelSelected();
-            mJoinGameButton.setEnabled(false);
             startActivity(i);
         } else {
             Toast.makeText(this, "Failed to create game", Toast.LENGTH_SHORT).show();
