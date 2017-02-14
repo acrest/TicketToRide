@@ -11,9 +11,9 @@ public class GameDescription {
     private String name;
     private int maxPlayers;
     private List<Player> players;
-    private Map<Player, String> playerColors;
+    private List<String> playerColors;
 
-    public GameDescription(int ID, String name, int maxPlayers, List<Player> players, Map<Player, String> playerColors) {
+    public GameDescription(int ID, String name, int maxPlayers, List<Player> players, List<String> playerColors) {
         this.ID = ID;
         this.name = name;
         this.maxPlayers = maxPlayers;
@@ -53,16 +53,12 @@ public class GameDescription {
         this.players = players;
     }
 
-    public Map<Player, String> getPlayerColors() {
+    public List<String> getPlayerColors() {
         return playerColors;
     }
 
-    public void setPlayerColors(Map<Player, String> playerColors) {
+    public void setPlayerColors(List<String> playerColors) {
         this.playerColors = playerColors;
-    }
-
-    public Collection<String> getAllUsedColors() {
-        return playerColors.values();
     }
 
     public boolean equals(Object other) {

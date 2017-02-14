@@ -73,7 +73,7 @@ public class Poller {
                         break;
                     case 3:
 
-                        List<GameDescription> games = server.getGames(currentPlayer.getName(), currentPlayer.getPassword());
+                        List<GameDescription> games = server.getGames(currentPlayer.getName(), currentPlayer.getPassword()).getGameDescriptions();
                         break;
                     default:
 

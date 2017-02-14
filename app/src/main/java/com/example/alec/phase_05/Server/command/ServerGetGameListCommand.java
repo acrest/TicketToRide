@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Server.command;
 
 import com.example.alec.phase_05.Server.ServerFacade;
+import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.command.AbstractGetGameListCommand;
 import com.example.alec.phase_05.Shared.command.Result;
@@ -22,7 +23,7 @@ public class ServerGetGameListCommand extends AbstractGetGameListCommand {
         ServerFacade sf = ServerFacade.get_instance();
         List<GameDescription> games = sf.getGames(getUserName(), getPassword());
         Result result = new ServerResult();
-        result.setResultObject(games, new TypeToken<List<GameDescription>>(){}.getType());
+        result.setResultObject(new GameDescriptionHolder(games));
         return result;
     }
 }

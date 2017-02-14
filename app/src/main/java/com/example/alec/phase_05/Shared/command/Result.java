@@ -38,10 +38,6 @@ public abstract class Result
         serializedResult = SerDes.serialize(obj);
     }
 
-    public void setResultObject(Object obj, Type type) {
-        serializedResult = SerDes.serialize(obj, type);
-    }
-
     /**
      * @param serialized serialized object represented by this Result
      */
@@ -74,10 +70,6 @@ public abstract class Result
     public Object toClass(Class<?> type)
     {
         return SerDes.deserializeToClass(serializedResult, type);
-    }
-
-    public Object toType(Type type) {
-        return SerDes.deserializeToType(serializedResult, type);
     }
 
     /**

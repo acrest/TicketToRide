@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
+import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -136,8 +137,8 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                List<GameDescription> gameList = proxy.getGames(player.getName(), player.getPassword());
-                ClientFacade.getInstance().updateGameList(gameList);
+                GameDescriptionHolder holder = proxy.getGames(player.getName(), player.getPassword());
+                ClientFacade.getInstance().updateGameList(holder.getGameDescriptions());
             }
         });
         thread.start();
