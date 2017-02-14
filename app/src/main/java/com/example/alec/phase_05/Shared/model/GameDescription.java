@@ -10,10 +10,10 @@ public class GameDescription {
     private int ID;
     private String name;
     private int maxPlayers;
-    private List<Player> players;
-    private List<String> playerColors;
+    private Player[] players;
+    private String[] playerColors;
 
-    public GameDescription(int ID, String name, int maxPlayers, List<Player> players, List<String> playerColors) {
+    public GameDescription(int ID, String name, int maxPlayers, Player[] players, String[] playerColors) {
         this.ID = ID;
         this.name = name;
         this.maxPlayers = maxPlayers;
@@ -45,20 +45,30 @@ public class GameDescription {
         this.maxPlayers = maxPlayers;
     }
 
-    public List<Player> getPlayers() {
+    public Player[] getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(Player[] players) {
         this.players = players;
     }
 
-    public List<String> getPlayerColors() {
+    public String[] getPlayerColors() {
         return playerColors;
     }
 
-    public void setPlayerColors(List<String> playerColors) {
+    public void setPlayerColors(String[] playerColors) {
         this.playerColors = playerColors;
+    }
+
+    public int getNumberPlayers() {
+        int count = 0;
+        for(Player player : players) {
+            if(player != null) {
+                ++count;
+            }
+        }
+        return count;
     }
 
     public boolean equals(Object other) {

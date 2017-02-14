@@ -27,7 +27,7 @@ public class PresenterLobby implements IPresenterLobby {
         if(u.needUpdate(ClientModel.NUM_PLAYERS_IN_GAME)) {
             GameState currentGame = ClientModel.getInstance().getCurrentGame();
             int max = currentGame.getMaxPlayers();
-            int num = currentGame.getPlayers().size();
+            int num = currentGame.getNumberPlayers();
             listener.updateNumberOfPlayers(num, max);
         }
     }

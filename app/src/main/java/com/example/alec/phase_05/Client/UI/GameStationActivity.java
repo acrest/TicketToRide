@@ -260,12 +260,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
             } else {
                 holder.inGameLabel.setText("NO");
             }
-            List<Player> playersInGame = gameDescription.getPlayers();
-            if(playersInGame != null) {
-                holder.playersLabel.setText(Integer.toString(gameDescription.getPlayers().size()));
-            } else {
-                holder.playersLabel.setText("0");
-            }
+            holder.playersLabel.setText(Integer.toString(gameDescription.getNumberPlayers()));
         }
 
         @Override
