@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Client.command.ClientCommunicator;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
+import com.example.alec.phase_05.Client.command.ClientGetGameUpdatesCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
@@ -14,6 +15,7 @@ import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.Result;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
@@ -104,7 +106,7 @@ public class ServerProxy implements IServer {
             return null;
         }
 
-        if(result.getRawSerializedResult().equals("true"))
+        if(result.toBoolean())
         {
             player = new Player(username, password);
         }
@@ -120,7 +122,7 @@ public class ServerProxy implements IServer {
 //        baseCMD = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers);
         ICommand cmd = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers, hostColor);
         Result result = myCC.executeCommandOnServer(cmd);
-        return (GameDescription) result.toClass(GameDescription.class);
+        return (GameDescription) result.toType(new TypeToken<GameDescription>(){}.getType());
     }
 
     @Override
@@ -136,7 +138,7 @@ public class ServerProxy implements IServer {
 //        baseCMD = new ClientGetGameListCommand(username, password);
         ICommand cmd = new ClientGetGameListCommand(username, password);
         Result result = myCC.executeCommandOnServer(cmd);
-        return (List<GameDescription>) result.toClass(List.class);
+        return (List<GameDescription>) result.toType(new TypeToken<List<GameDescription>>(){}.getType());
     }
 
 
@@ -145,7 +147,7 @@ public class ServerProxy implements IServer {
 
         ICommand cmd = new ClientGetGameCommand(username, password, gameID);
         Result result = myCC.executeCommandOnServer(cmd);
-        GameState currentGame = (GameState) result.toClass(GameState.class);
+        GameState currentGame = (GameState) result.toType(new TypeToken<GameState>(){}.getType());
         return currentGame.getPlayers();
     }
 
@@ -154,6 +156,13 @@ public class ServerProxy implements IServer {
 
         ICommand cmd = new ClientGetGameCommand(username, password, gameID);
         Result result = myCC.executeCommandOnServer(cmd);
-        return (GameState) result.toClass(GameState.class);
+        return (GameState) result.toType(new TypeToken<GameState>(){}.getType());
+    }
+
+    @Override
+    public List<ICommand> getGameCommands(Player player, int gameID, int lastUpdate) {
+        ICommand cmd = new ClientGetGameUpdatesCommand(player.getName(), player.getPassword(), gameID, lastUpdate);
+        Result result = myCC.executeCommandOnServer(cmd);
+        return (List<ICommand>) result.toType(new TypeToken<List<ICommand>>(){}.getType());
     }
 }

@@ -16,6 +16,7 @@ public class Facade {
     private static Facade _instance;
     private ServerProxy proxy = null;
     boolean set = false;
+    boolean pollerStarted = false;
     Poller poller = Poller.getInstance();
 
 
@@ -37,6 +38,7 @@ public class Facade {
                 Player player = proxy.login(username, password);
                 if(setCurrentPlayer(player))
                 {
+                    poller.setListGamePolling();
                     setSet(true);
                 }
             }
@@ -44,7 +46,9 @@ public class Facade {
         thread.start();
         try {
             thread.join();
-            poller.setListGamePolling();
+            if(!pollerStarted) {
+                poller.start();
+            }
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -67,6 +71,7 @@ public class Facade {
 
                 if(setCurrentPlayer(player))
                 {
+                    poller.setListGamePolling();
                     setSet(true);
                 }
             }
@@ -74,7 +79,9 @@ public class Facade {
         thread.start();
         try {
             thread.join();
-            poller.setListGamePolling();
+            if(!pollerStarted) {
+                poller.start();
+            }
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -153,6 +160,15 @@ public class Facade {
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void updateGameChanges() {
+        ClientModel cl = ClientModel.getInstance();
+        GameState game = cl.getCurrentGame();
+        if(game != null) {
+            //TODO: implement this
+            //proxy.getGameCommands(cl.getCurrentPlayer(), game.getID(), cl.getLastUpdate());
         }
     }
 

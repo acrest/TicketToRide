@@ -1,10 +1,15 @@
 package com.example.alec.phase_05.Server;
 
+import com.example.alec.phase_05.Client.ClientModel;
+import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServerFacade {
     private static ServerFacade _instance;
@@ -34,18 +39,23 @@ public class ServerFacade {
     }
 
     public boolean registerUser(String username, String password) {
-        System.out.println("TEST RESGISTER USER");
+
         ServerModel model = ServerModel.get_instance();
         Player player = new Player(username, password);
+        System.out.println("TEST RESGISTER USER "+player.getName()+" "+player.getPassword());
         return model.addPlayer(player);
     }
 
     public GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
         ServerModel model = ServerModel.get_instance();
-        GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, null, null);
+        List<Player> playerList = new ArrayList<>();
+        Map<Player,String> playerMap = new HashMap<>();
+        playerList.add(hostPlayer);
+        playerMap.put(hostPlayer,hostColor);
+
+        GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, playerList, playerMap);
         if(!model.addGame(newGame))
             return null;
-        joinGame(hostPlayer, newGame.getID(), hostColor);
         return newGame;
     }
 
@@ -61,6 +71,10 @@ public class ServerFacade {
     public List<GameDescription> getGames(String username, String password) {
         ServerModel model = ServerModel.get_instance();
         return model.getGameDescriptions();
+    }
+
+    public List<ICommand> getGameUpdates(Player client, int gameID, int lastUpdate) {
+        return ServerModel.get_instance().getGameUpdates(client, gameID, lastUpdate);
     }
 
     public boolean validateAuthentication(String username, String password) {

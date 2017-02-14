@@ -20,6 +20,7 @@ public class ClientModel extends Observable {
     public static String CREATE_GAME_FAILURE = "create game failure";
     public static String JOIN_GAME_SUCCESS = "join game success";
     public static String JOIN_GAME_FAILURE = "join game failure";
+    public static String NUM_PLAYERS_IN_GAME = "num players in game";
 
     private static ClientModel instance = null;
 
@@ -45,6 +46,12 @@ public class ClientModel extends Observable {
 
     public void setCurrentGame(GameState currentGame) {
         this.currentGame = currentGame;
+    }
+
+    public void addPlayerToGame(Player player, String color) {
+        currentGame.addPlayer(player);
+        currentGame.setPlayerColor(player, color);
+        notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
     }
 
     public Player getCurrentPlayer() {
@@ -89,7 +96,8 @@ public class ClientModel extends Observable {
     }
 
     public void createGame(GameDescription gameDescription) {
-        //TODO: implement this method
+
+        currentGame = new GameState(gameDescription);
 
         if(gameDescription != null) {
             notifyPropertyChanges(CREATE_GAME_SUCCESS);

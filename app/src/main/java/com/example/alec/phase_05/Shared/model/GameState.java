@@ -18,16 +18,16 @@ public class GameState {
     private List<Player> players;
     private Map<Player, String> playerColors;
 
-    public GameState(int id, String name, int maxPlayers) {
+    public GameState(int id, String name, int maxPlayers, List<Player> playerList, Map<Player,String> playerMap) {
         ID = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
-        players = new ArrayList<>(maxPlayers);
-        playerColors = new HashMap<>();
+        players = playerList;
+        playerColors = playerMap;
     }
 
     public GameState(GameDescription gameDescription) {
-        this(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers());
+        this(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers(), gameDescription.getPlayers(),gameDescription.getPlayerColors());
     }
 
     public int getID() {

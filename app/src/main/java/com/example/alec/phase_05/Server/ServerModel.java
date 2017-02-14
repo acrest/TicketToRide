@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server;
 
+import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -71,9 +72,14 @@ public class ServerModel {
 
     public List<GameDescription> getGameDescriptions() {
         List<GameDescription> gameDescriptions = new ArrayList<>();
-        for(GameState gameState : gamesMap.values()) {
+        for (GameState gameState : gamesMap.values()) {
             gameDescriptions.add(gameState.getGameDescription());
         }
         return gameDescriptions;
+    }
+
+    public List<ICommand> getGameUpdates(Player player, int gameID, int lastUpdate) {
+        //TODO: implement this
+        return null;
     }
 }

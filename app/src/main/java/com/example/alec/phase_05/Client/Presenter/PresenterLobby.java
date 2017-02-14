@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.Presenter;
 
 import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.UI.LobbyActivity;
+import com.example.alec.phase_05.Shared.model.GameState;
 
 import java.util.Observable;
 
@@ -23,5 +24,11 @@ public class PresenterLobby implements IPresenterLobby {
             throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
         }
         UpdateIndicator u = (UpdateIndicator) o;
+        if(u.needUpdate(ClientModel.NUM_PLAYERS_IN_GAME)) {
+            GameState currentGame = ClientModel.getInstance().getCurrentGame();
+            int max = currentGame.getMaxPlayers();
+            int num = currentGame.getPlayers().size();
+            listener.updateNumberOfPlayers(num, max);
+        }
     }
 }
