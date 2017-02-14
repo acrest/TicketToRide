@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Server;
 
+import com.example.alec.phase_05.Client.ClientModel;
+import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -61,6 +63,10 @@ public class ServerFacade {
     public List<GameDescription> getGames(String username, String password) {
         ServerModel model = ServerModel.get_instance();
         return model.getGameDescriptions();
+    }
+
+    public List<ICommand> getGameUpdates(Player client, int gameID, int lastUpdate) {
+        return ServerModel.get_instance().getGameUpdates(client, gameID, lastUpdate);
     }
 
     public boolean validateAuthentication(String username, String password) {

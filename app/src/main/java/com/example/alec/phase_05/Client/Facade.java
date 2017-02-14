@@ -156,6 +156,15 @@ public class Facade {
         }
     }
 
+    public void updateGameChanges() {
+        ClientModel cl = ClientModel.getInstance();
+        GameState game = cl.getCurrentGame();
+        if(game != null) {
+            //TODO: implement this
+            //proxy.getGameCommands(cl.getCurrentPlayer(), game.getID(), cl.getLastUpdate());
+        }
+    }
+
     private boolean setCurrentPlayer(Player player)
     {
         if(player != null)

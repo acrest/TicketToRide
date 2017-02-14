@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.alec.phase_05.Client.Presenter.ILobbyListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
@@ -14,6 +15,7 @@ import com.example.alec.phase_05.R;
 
 public class LobbyActivity extends Activity implements ILobbyListener {
     private Button mStartGameButton;
+    private TextView mNumberOfPlayers;
     private IPresenterLobby presenter;
 
     @Override
@@ -31,6 +33,13 @@ public class LobbyActivity extends Activity implements ILobbyListener {
             }
         });
 
+        mNumberOfPlayers = (TextView) findViewById(R.id.lobby_current_number_players);
+
         presenter = new PresenterLobby(this);
+    }
+
+    @Override
+    public void updateNumberOfPlayers(int num, int max) {
+        mNumberOfPlayers.setText(num + "/" + max);
     }
 }
