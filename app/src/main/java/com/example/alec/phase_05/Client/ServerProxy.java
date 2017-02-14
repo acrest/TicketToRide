@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Client.command.ClientCommunicator;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
+import com.example.alec.phase_05.Client.command.ClientGetGameUpdatesCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
@@ -104,7 +105,7 @@ public class ServerProxy implements IServer {
             return null;
         }
 
-        if(result.getRawSerializedResult().equals("true"))
+        if(result.toBoolean())
         {
             player = new Player(username, password);
         }
@@ -155,5 +156,12 @@ public class ServerProxy implements IServer {
         ICommand cmd = new ClientGetGameCommand(username, password, gameID);
         Result result = myCC.executeCommandOnServer(cmd);
         return (GameState) result.toClass(GameState.class);
+    }
+
+    @Override
+    public List<ICommand> getGameCommands(Player player, int gameID, int lastUpdate) {
+        ICommand cmd = new ClientGetGameUpdatesCommand(player.getName(), player.getPassword(), gameID, lastUpdate);
+        Result result = myCC.executeCommandOnServer(cmd);
+        return (List<ICommand>) result.toClass(List.class);
     }
 }

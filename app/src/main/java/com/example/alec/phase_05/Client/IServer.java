@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Client;
 
+import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -20,4 +21,6 @@ public interface IServer {
 
     List<Player> getLatestPlayers(String username, String password, int gameID);
     GameState getGame(String username, String password, int gameID);
+
+    List<ICommand> getGameCommands(Player player, int gameID, int lastUpdate);
 }
