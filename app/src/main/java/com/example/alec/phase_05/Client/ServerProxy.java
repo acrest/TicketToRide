@@ -19,6 +19,7 @@ import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -152,7 +153,7 @@ public class ServerProxy implements IServer {
         ICommand cmd = new ClientGetGameCommand(username, password, gameID);
         Result result = myCC.executeCommandOnServer(cmd);
         GameState currentGame = (GameState) result.toClass(GameState.class);
-        return currentGame.getPlayers();
+        return Arrays.asList(currentGame.getPlayers());
     }
 
     @Override

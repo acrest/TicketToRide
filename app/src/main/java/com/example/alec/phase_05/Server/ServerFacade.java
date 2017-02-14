@@ -48,16 +48,15 @@ public class ServerFacade {
 
     public GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
         ServerModel model = ServerModel.get_instance();
-        List<Player> playerList = new ArrayList<>();
-        Map<Player,String> playerMap = new HashMap<>();
-        playerList.add(hostPlayer);
-        playerMap.put(hostPlayer,hostColor);
+        Player[] players = new Player[numOfPlayers];
+        String[] colors = new String[numOfPlayers];
+        players[0] = hostPlayer;
+        colors[0] = hostColor;
 
-        //GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, playerList, playerMap);
-//        if(!model.addGame(newGame))
-//            return null;
-//        return newGame;
-        return null;
+        GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, players, colors);
+        if(!model.addGame(newGame))
+            return null;
+        return newGame;
     }
 
     public String joinGame(Player newPlayer, int gameID, String color) {

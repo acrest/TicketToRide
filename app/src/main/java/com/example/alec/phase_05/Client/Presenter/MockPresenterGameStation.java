@@ -93,8 +93,8 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         int id = random.nextInt(1000);
         String name = generateRandomAlphabeticString();
         int max = random.nextInt(4) + 2;
-        List<Player> players = generateRandomPlayers();
-        List<String> playerColors = generateRandomPlayerColors(players);
+        Player[] players = generateRandomPlayers();
+        String[] playerColors = generateRandomPlayerColors(players);
         return new GameDescription(id, name, max, players, playerColors);
     }
 
@@ -114,12 +114,12 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         return (char)(c + random.nextInt(26));
     }
 
-    private List<Player> generateRandomPlayers() {
-        List<Player> players = new ArrayList<>();
+    private Player[] generateRandomPlayers() {
         Random random = new Random();
         int size = random.nextInt(4) + 2;
+        Player[] players = new Player[size];
         for(int i = 0; i < size; ++i) {
-            players.add(generateRandomPlayer());
+            players[i] = generateRandomPlayer();
         }
         return players;
     }
@@ -128,11 +128,11 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         return new Player(generateRandomAlphabeticString(), generateRandomAlphabeticString());
     }
 
-    private List<String> generateRandomPlayerColors(List<Player> players) {
-//        List<String> playerColors = new ArrayList<>();
-//        for(Player player : players) {
-//            playerColors.put(player, generateRandomColor());
-//        }
+    private String[] generateRandomPlayerColors(Player[] players) {
+        String[] playerColors = new String[players.length];
+        for(int i = 0; i < playerColors.length; ++i) {
+            playerColors[i] = generateRandomColor();
+        }
         return null;
     }
 
