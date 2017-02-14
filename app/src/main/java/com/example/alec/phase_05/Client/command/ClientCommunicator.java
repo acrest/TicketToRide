@@ -73,10 +73,9 @@ public class ClientCommunicator
      */
     public String sendAndGetResponse(String requestBody, String handler)
     {
-
-
         try
         {
+            URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
             //URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
             //clark's ip "45.56.33.124"
             serverIP = "45.56.33.124";
@@ -95,6 +94,9 @@ public class ClientCommunicator
             OutputStream reqBody = http.getOutputStream();
             writeString(requestBody, reqBody);
             reqBody.close();
+
+            int code = http.getResponseCode();
+            int connection = HttpURLConnection.HTTP_OK;
 
             if (http.getResponseCode() == HttpURLConnection.HTTP_OK)
             {

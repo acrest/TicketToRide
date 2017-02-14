@@ -15,13 +15,12 @@ public class Facade {
 
     private static Facade _instance;
     private ServerProxy proxy = null;
-    private boolean set = false;
-    private Poller poller = null;
+    boolean set = false;
+    Poller poller = Poller.getInstance();
 
 
     public Facade() {
         proxy = new ServerProxy(null, null);
-        poller = Poller.getInstance();
     }
 
     public static Facade getInstance() {
@@ -91,46 +90,68 @@ public class Facade {
     }
 
     public void createGame(final int numOfPlayers, final String gameName, final String hostColor) {
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Player player = ClientModel.getInstance().getCurrentPlayer();
                 GameDescription newGame = proxy.createGame(player, numOfPlayers, gameName, hostColor);
             }
-        }).start();
-        poller.getInstance();
-        poller.setPlayerWatingPolling();
+        });
+        thread.start();
+        try {
+            thread.join();
+            poller.setPlayerWatingPolling();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void joinGame(final int gameID, final String color) {
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Player player = ClientModel.getInstance().getCurrentPlayer();
                 String joinedGame = proxy.joinGame(player, gameID, color);
             }
-        }).start();
-        poller.getInstance();
-        poller.setPlayerWatingPolling();
+        });
+        thread.start();
+        try {
+            thread.join();
+            poller.setPlayerWatingPolling();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getGames(final Player player) {
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 List<GameDescription> gameList = proxy.getGames(player.getName(), player.getPassword());
                 ClientFacade.getInstance().updateGameList(gameList);
             }
-        }).start();
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getGame(final Player player, final int gameID) {
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 GameState game = proxy.getGame(player.getName(), player.getPassword(), gameID);
             }
-        }).start();
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean setCurrentPlayer(Player player)
