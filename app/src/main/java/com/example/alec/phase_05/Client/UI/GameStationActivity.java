@@ -129,8 +129,8 @@ public class GameStationActivity extends Activity implements IGameStationListene
                         presenter.createGame(getColor(selectedColor, mView, dialog), mGameName.getText().toString(), mNoPicker.getValue());
 
                         dialog.dismiss();
-                        Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
-                        startActivity(i);
+//                        Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
+//                        startActivity(i);
                     }
                 });
             }
