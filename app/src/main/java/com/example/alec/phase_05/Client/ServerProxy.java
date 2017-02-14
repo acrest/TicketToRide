@@ -104,7 +104,7 @@ public class ServerProxy implements IServer {
             return null;
         }
 
-        if(result.getRawSerializedResult().equals("true"))
+        if(result.toBoolean())
         {
             player = new Player(username, password);
         }

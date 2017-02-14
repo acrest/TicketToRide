@@ -22,7 +22,9 @@ public class Poller {
     private static Poller instance;
     private GameDescription game;
 
-
+    public int getState() {
+        return state;
+    }
 
     /**
      * Construct a poller instance using the given server
@@ -41,7 +43,6 @@ public class Poller {
     }
 
     public boolean isRunning() {
-
         return poller != null;
     }
 
@@ -72,8 +73,10 @@ public class Poller {
                         break;
                     case 3:
 
-
                         List<GameDescription> games = server.getGames(currentPlayer.getName(), currentPlayer.getPassword());
+                        break;
+                    default:
+
                 }
             }
         }, 0, DEFAULT_POLL_INTERVAL);

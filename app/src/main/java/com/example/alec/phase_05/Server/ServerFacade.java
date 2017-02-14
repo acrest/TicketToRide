@@ -34,9 +34,10 @@ public class ServerFacade {
     }
 
     public boolean registerUser(String username, String password) {
-        System.out.println("TEST RESGISTER USER");
+
         ServerModel model = ServerModel.get_instance();
         Player player = new Player(username, password);
+        System.out.println("TEST RESGISTER USER "+player.getName()+" "+player.getPassword());
         return model.addPlayer(player);
     }
 
