@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.alec.phase_05.Client.Presenter.ILobbyListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
+import com.example.alec.phase_05.Client.Presenter.MockPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.PresenterLobby;
 import com.example.alec.phase_05.R;
 
@@ -35,7 +36,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
 
         mNumberOfPlayers = (TextView) findViewById(R.id.lobby_current_number_players);
 
-        presenter = new PresenterLobby(this);
+        presenter = new MockPresenterLobby(this);
     }
 
     @Override
