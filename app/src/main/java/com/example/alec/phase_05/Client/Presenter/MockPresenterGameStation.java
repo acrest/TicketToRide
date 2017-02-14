@@ -1,5 +1,8 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -11,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by samuel on 2/11/17.
@@ -18,6 +23,7 @@ import java.util.Random;
 
 public class MockPresenterGameStation implements IPresenterGameStation {
     private static String[] colors;
+    private static final long TIMER_DELAY = 5000;
 
     static {
         colors = new String[5];
@@ -32,6 +38,7 @@ public class MockPresenterGameStation implements IPresenterGameStation {
 
     public MockPresenterGameStation(IGameStationListener listener) {
         this.listener = listener;
+        startRandomUpdates();
     }
 
     @Override
@@ -51,11 +58,30 @@ public class MockPresenterGameStation implements IPresenterGameStation {
     @Override
     public void update(Observable observable, Object o) {
         listener.updateGameList(generateRandomDescriptions());
+        //listener.updateGameList(generateRandomDescriptions(10));
+        randomlyUpdateColors();
+    }
+
+    private void randomlyUpdateColors() {
+        Random random = new Random();
+        listener.hideRed(random.nextBoolean());
+        listener.hideBlue(random.nextBoolean());
+        listener.hideGreen(random.nextBoolean());
+        listener.hideYellow(random.nextBoolean());
+        listener.hideBlack(random.nextBoolean());
     }
 
     private List<GameDescription> generateRandomDescriptions() {
         List<GameDescription> gameDescriptions = new ArrayList<>();
         int count = new Random().nextInt(10);
+        for(int i = 0; i < count; ++i) {
+            gameDescriptions.add(generateRandomDescription());
+        }
+        return gameDescriptions;
+    }
+
+    private List<GameDescription> generateRandomDescriptions(int count) {
+        List<GameDescription> gameDescriptions = new ArrayList<>();
         for(int i = 0; i < count; ++i) {
             gameDescriptions.add(generateRandomDescription());
         }
@@ -110,7 +136,35 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         return playerColors;
     }
 
-    public String generateRandomColor() {
+    private String generateRandomColor() {
         return colors[new Random().nextInt(colors.length)];
+    }
+
+    private void startRandomUpdates() {
+        new RandomUpdateTask().execute();
+    }
+
+    private class RandomUpdateTask extends AsyncTask<Void, Void, Void> {
+        Runnable runnable;
+
+        public RandomUpdateTask() {
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    update(null, null);
+                }
+            };
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            while(true) {
+                try {
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(runnable);
+                    Thread.sleep(TIMER_DELAY);
+                } catch(InterruptedException e) {}
+            }
+        }
     }
 }

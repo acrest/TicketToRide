@@ -23,6 +23,7 @@ import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Model.DerpData;
 import com.example.alec.phase_05.Client.Presenter.IGameStationListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterGameStation;
+import com.example.alec.phase_05.Client.Presenter.MockPresenterGameStation;
 import com.example.alec.phase_05.Client.Presenter.PresenterGameStation;
 import com.example.alec.phase_05.R;
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -141,11 +142,16 @@ public class GameStationActivity extends Activity implements IGameStationListene
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(GameStationActivity.this);
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_join_game, null);
 
-                final Button mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
-                final Button mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);
-                final Button mButtonDialogYellow = (Button) mView.findViewById(R.id.join_game_button_yellow);
-                final Button mButtonDialogGreen = (Button) mView.findViewById(R.id.join_game_button_green);
-                final Button mButtonDialogBlack = (Button) mView.findViewById(R.id.join_game_button_black);
+                mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
+                mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);
+                mButtonDialogYellow = (Button) mView.findViewById(R.id.join_game_button_yellow);
+                mButtonDialogGreen = (Button) mView.findViewById(R.id.join_game_button_green);
+                mButtonDialogBlack = (Button) mView.findViewById(R.id.join_game_button_black);
+//                final Button mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
+//                final Button mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);
+//                final Button mButtonDialogYellow = (Button) mView.findViewById(R.id.join_game_button_yellow);
+//                final Button mButtonDialogGreen = (Button) mView.findViewById(R.id.join_game_button_green);
+//                final Button mButtonDialogBlack = (Button) mView.findViewById(R.id.join_game_button_black);
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
@@ -282,11 +288,13 @@ public class GameStationActivity extends Activity implements IGameStationListene
             boolean foundSelected = false;
             for(int i = 0; i < getItemCount(); ++i) {
                 DerpHolder holder = (DerpHolder) recyclerView.findViewHolderForAdapterPosition(i);
-                if(listData.get(i).getID() == gameID) {
-                    holder.setSelected(true);
-                    foundSelected = true;
-                } else {
-                    holder.setSelected(false);
+                if(holder != null) {
+                    if(listData.get(i).getID() == gameID) {
+                        holder.setSelected(true);
+                        foundSelected = true;
+                    } else {
+                        holder.setSelected(false);
+                    }
                 }
             }
             if(!foundSelected) {
@@ -299,24 +307,25 @@ public class GameStationActivity extends Activity implements IGameStationListene
             int selectedGameID = getSelectedGameID();
             List<GameDescription> oldList = listData;
             listData = newListData;
-            int minLength = Math.min(oldList.size(), newListData.size());
-            for(int i = 0; i < minLength; ++i) {
-                if(oldList.get(i).getID() != newListData.get(i).getID()) {
-                    //something has changed, so we need to do some updating
-                    notifyItemChanged(i);
-                }
-            }
-            int maxLength = Math.max(oldList.size(), newListData.size());
-            //this loop deletes / adds extrea items
-            for(int i = minLength; i < maxLength; ++i) {
-                if(oldList.size() >= minLength) {
-                    //oldList is larger, so delete extra items
-                    notifyItemRemoved(i);
-                } else {
-                    //newList is larger, so add extra items
-                    notifyItemInserted(i);
-                }
-            }
+//            int minLength = Math.min(oldList.size(), newListData.size());
+//            for(int i = 0; i < minLength; ++i) {
+//                if(oldList.get(i).getID() != newListData.get(i).getID()) {
+//                    //something has changed, so we need to do some updating
+//                    notifyItemChanged(i);
+//                }
+//            }
+//            int maxLength = Math.max(oldList.size(), newListData.size());
+//            //this loop deletes / adds extrea items
+//            for(int i = minLength; i < maxLength; ++i) {
+//                if(oldList.size() >= minLength) {
+//                    //oldList is larger, so delete extra items
+//                    notifyItemRemoved(i);
+//                } else {
+//                    //newList is larger, so add extra items
+//                    notifyItemInserted(i);
+//                }
+//            }
+            notifyDataSetChanged();
             //reselect the item with the correct id
             selectGameOfID(selectedGameID);
         }
@@ -409,61 +418,60 @@ public class GameStationActivity extends Activity implements IGameStationListene
 
     @Override
     public void hideRed(boolean notVisible) {
-        if(notVisible)
-        {
-            mButtonDialogRed.setVisibility(View.GONE);
-        }
-        else
-        {
-            mButtonDialogRed.setVisibility(View.VISIBLE);
+        if(mButtonDialogRed != null) {
+            if(notVisible)
+            {
+                mButtonDialogRed.setVisibility(View.GONE);
+            }
+            else
+            {
+                mButtonDialogRed.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
     public void hideGreen(boolean notVisible) {
-        if(notVisible)
-        {
-            mButtonDialogGreen.setVisibility(View.GONE);
-        }
-        else
-        {
-            mButtonDialogGreen.setVisibility(View.VISIBLE);
+        if(mButtonDialogGreen != null) {
+            if(notVisible) {
+                mButtonDialogGreen.setVisibility(View.GONE);
+            }
+            else {
+                mButtonDialogGreen.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
     public void hideBlue(boolean notVisible) {
-        if(notVisible)
-        {
-            mButtonDialogBlue.setVisibility(View.GONE);
-        }
-        else
-        {
-            mButtonDialogBlue.setVisibility(View.VISIBLE);
+        if(mButtonDialogBlue != null) {
+            if (notVisible) {
+                mButtonDialogBlue.setVisibility(View.GONE);
+            } else {
+                mButtonDialogBlue.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
     public void hideYellow(boolean notVisible) {
-        if(notVisible)
-        {
-            mButtonDialogYellow.setVisibility(View.GONE);
-        }
-        else
-        {
-            mButtonDialogYellow.setVisibility(View.VISIBLE);
+        if(mButtonDialogYellow != null) {
+            if (notVisible) {
+                mButtonDialogYellow.setVisibility(View.GONE);
+            } else {
+                mButtonDialogYellow.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
     public void hideBlack(boolean notVisible) {
-        if(notVisible)
-        {
-            mButtonDialogBlack.setVisibility(View.GONE);
-        }
-        else
-        {
-            mButtonDialogBlack.setVisibility(View.VISIBLE);
+        if(mButtonDialogBlack != null) {
+            if (notVisible) {
+                mButtonDialogBlack.setVisibility(View.GONE);
+            } else {
+                mButtonDialogBlack.setVisibility(View.VISIBLE);
+            }
         }
     }
 
