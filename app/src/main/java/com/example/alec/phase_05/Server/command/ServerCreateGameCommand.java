@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Server.ServerFacade;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.*;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * Created by samuel on 2/9/17.
@@ -23,7 +24,7 @@ public class ServerCreateGameCommand extends AbstractCreateGameCommand
         Player hostPlayer = sf.getPlayerByName(getUserName());
         GameDescription game = sf.createGame(hostPlayer, getNumberOfPlayers(), getGameName(), getHostColor());
         Result result = new ServerResult();
-        result.setResultObject(game);
+        result.setResultObject(game, new TypeToken<GameDescription>(){}.getType());
         return result;
     }
 }

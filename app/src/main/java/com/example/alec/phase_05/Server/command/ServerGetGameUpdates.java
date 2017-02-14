@@ -5,6 +5,8 @@ import com.example.alec.phase_05.Server.ServerFacade;
 import com.example.alec.phase_05.Shared.command.AbstractGetGameUpdatesCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
+import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class ServerGetGameUpdates extends AbstractGetGameUpdatesCommand {
         ServerFacade sf = ServerFacade.get_instance();
         List<ICommand> commands = sf.getGameUpdates(sf.getPlayerByName(getUserName()), getGameID(), getLastUpdate());
         Result r = new ServerResult();
-        r.setResultObject(commands);
+        r.setResultObject(commands, new TypeToken<List<ICommand>>(){}.getType());
         return r;
     }
 }

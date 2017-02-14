@@ -6,7 +6,10 @@ import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServerFacade {
     private static ServerFacade _instance;
@@ -45,10 +48,14 @@ public class ServerFacade {
 
     public GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
         ServerModel model = ServerModel.get_instance();
-        GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, null, null);
+        List<Player> playerList = new ArrayList<>();
+        Map<Player,String> playerMap = new HashMap<>();
+        playerList.add(hostPlayer);
+        playerMap.put(hostPlayer,hostColor);
+
+        GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, playerList, playerMap);
         if(!model.addGame(newGame))
             return null;
-        joinGame(hostPlayer, newGame.getID(), hostColor);
         return newGame;
     }
 

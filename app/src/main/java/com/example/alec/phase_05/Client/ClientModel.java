@@ -96,6 +96,9 @@ public class ClientModel extends Observable {
     }
 
     public void createGame(GameDescription gameDescription) {
+
+        currentGame = new GameState(gameDescription);
+
         if(gameDescription != null) {
             notifyPropertyChanges(CREATE_GAME_SUCCESS);
         } else {
