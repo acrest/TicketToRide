@@ -19,6 +19,7 @@ public interface IServer {
     GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor);
     String joinGame(Player newPlayer, int gameID, String color);
     GameDescriptionHolder getGames(String username, String password);
+    GameDescription getGameDescription(String username, String password, int gameID);
 
 
     List<Player> getLatestPlayers(String username, String password, int gameID);
