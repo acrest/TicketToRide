@@ -201,7 +201,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
     }
 
 
-    public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder> {
+    public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>   {
         private static final int INVALID_INDEX = -1;
 
         private List<GameDescription> listData;
@@ -419,8 +419,8 @@ public class GameStationActivity extends Activity implements IGameStationListene
             color = "black";
         }
 
-        dialog.dismiss();
         presenter.joinGame(selectedGameID, color);
+        dialog.dismiss();
 //        Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
 //        mAdapter.cancelSelected();
 //        mJoinGameButton.setEnabled(false);
