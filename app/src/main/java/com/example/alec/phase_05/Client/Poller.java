@@ -74,6 +74,9 @@ public class Poller {
                     case 3:
 
                         List<GameDescription> games = server.getGames(currentPlayer.getName(), currentPlayer.getPassword()).getGameDescriptions();
+                        if(games != null) {
+                            ClientModel.getInstance().setGameList(games);
+                        }
                         break;
                     default:
 
