@@ -529,7 +529,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
     @Override
     public void joinGameSuccess(boolean success) {
         if(success) {
-            Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);
+            Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);  //Poller is causing crash here.
             mAdapter.cancelSelected();
             mJoinGameButton.setEnabled(false);
             startActivity(i);

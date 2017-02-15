@@ -8,6 +8,7 @@ import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.UI.GameStationActivity;
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.Collection;
 import java.util.Observable;

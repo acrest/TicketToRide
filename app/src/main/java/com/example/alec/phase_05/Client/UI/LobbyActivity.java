@@ -10,16 +10,21 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Presenter.ILobbyListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.MockPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.PresenterLobby;
 import com.example.alec.phase_05.R;
+import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Player;
 
 public class LobbyActivity extends Activity implements ILobbyListener {
     private Button mStartGameButton;
     private TextView mNumberOfPlayers;
     private IPresenterLobby presenter;
+    private GameState currentGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +33,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
         setContentView(R.layout.activity_lobby);
 
         mStartGameButton = (Button) findViewById(R.id.lobby_start_button);
-        mStartGameButton.setEnabled(true);
+        mStartGameButton.setVisibility(View.INVISIBLE);
         mStartGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,6 +44,13 @@ public class LobbyActivity extends Activity implements ILobbyListener {
         mNumberOfPlayers = (TextView) findViewById(R.id.lobby_current_number_players);
 
         presenter = new PresenterLobby(this);
+        currentGame = ClientModel.getInstance().getCurrentGame();
+        mNumberOfPlayers.setText(currentGame.getNumberPlayers() + "/" + currentGame.getMaxPlayers());
+
+        if(currentGame.getPlayers()[0].getName().equals(ClientModel.getInstance().getCurrentPlayer().getName()))
+        {
+            mStartGameButton.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -47,7 +59,9 @@ public class LobbyActivity extends Activity implements ILobbyListener {
     }
 
     @Override
-    public void onBackPressed() {
-        // Do Here what ever you want do on back press;
+    public void onBackPressed()
+    {
+        //remove player from game;
+        super.onBackPressed();
     }
 }
