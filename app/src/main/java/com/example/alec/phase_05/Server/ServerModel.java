@@ -73,7 +73,10 @@ public class ServerModel {
     public List<GameDescription> getGameDescriptions() {
         List<GameDescription> gameDescriptions = new ArrayList<>();
         for (GameState gameState : gamesMap.values()) {
-            gameDescriptions.add(gameState.getGameDescription());
+            if (gameState.getMaxPlayers() != gameState.getNumberPlayers()){
+                gameDescriptions.add(gameState.getGameDescription());
+            }
+
         }
         return gameDescriptions;
     }
