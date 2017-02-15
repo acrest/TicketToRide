@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Shared.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -69,6 +70,16 @@ public class GameDescription {
             }
         }
         return count;
+    }
+
+    public Set<String> getAllUsedColors() {
+        Set<String> used = new HashSet<>();
+        for(String color : playerColors) {
+            if(color != null) {
+                used.add(color);
+            }
+        }
+        return used;
     }
 
     public boolean equals(Object other) {

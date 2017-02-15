@@ -1,5 +1,8 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.UI.LogInActivity;
@@ -35,6 +38,18 @@ public class PresenterLogIn implements IPresenterLogIn {
         if(!(o instanceof UpdateIndicator)) {
             throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
         }
-        UpdateIndicator u = (UpdateIndicator) o;
+        final UpdateIndicator u = (UpdateIndicator) o;
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                update(u);
+            }
+        };
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(runnable);
+    }
+
+    private void update(UpdateIndicator u) {
+
     }
 }

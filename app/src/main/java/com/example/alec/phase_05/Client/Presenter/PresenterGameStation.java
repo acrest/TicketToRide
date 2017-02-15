@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.example.alec.phase_05.Client.ClientModel;
@@ -39,17 +41,28 @@ public class PresenterGameStation implements IPresenterGameStation {
         if(!(o instanceof UpdateIndicator)) {
             throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
         }
-        UpdateIndicator u = (UpdateIndicator) o;
+        final UpdateIndicator u = (UpdateIndicator) o;
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                update(u);
+            }
+        };
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(runnable);
+}
+
+    private void update(UpdateIndicator u) {
         if(u.needUpdate(ClientModel.GAME_LIST)) {
             listener.updateGameList(ClientModel.getInstance().getGameList());
             GameDescription gameDescription = findGameByID(listener.getCurrentGameID());
             if(gameDescription != null) {
-//                Collection<String> usedColors = gameDescription.getAllUsedColors();
-//                listener.hideRed(usedColors.contains("red"));
-//                listener.hideBlue(usedColors.contains("blue"));
-//                listener.hideYellow(usedColors.contains("yellow"));
-//                listener.hideGreen(usedColors.contains("green"));
-//                listener.hideBlack(usedColors.contains("black"));
+                Collection<String> usedColors = gameDescription.getAllUsedColors();
+                listener.hideRed(usedColors.contains("red"));
+                listener.hideBlue(usedColors.contains("blue"));
+                listener.hideYellow(usedColors.contains("yellow"));
+                listener.hideGreen(usedColors.contains("green"));
+                listener.hideBlack(usedColors.contains("black"));
             }
         }
         if(u.needUpdate(ClientModel.CREATE_GAME_SUCCESS)) {
