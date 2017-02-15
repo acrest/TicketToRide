@@ -308,7 +308,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
                 }
             }
             if(!foundSelected) {
-                cancelSelected();
+                //cancelSelected();
             }
         }
 
