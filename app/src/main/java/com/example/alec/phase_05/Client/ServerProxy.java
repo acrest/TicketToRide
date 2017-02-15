@@ -147,6 +147,11 @@ public class ServerProxy implements IServer {
         return (GameDescriptionHolder) result.toClass(GameDescriptionHolder.class);
     }
 
+//    @Override
+//    public void removeGame(int gameID){
+//        ICommand cmd = new ClientRemoveGameCommand(GameID)
+//    }
+
     @Override
     public GameDescription getGameDescription(String username, String password, int gameID) {
         ICommand cmd = new ClientGetGameDescriptionCommand(username, password, gameID);

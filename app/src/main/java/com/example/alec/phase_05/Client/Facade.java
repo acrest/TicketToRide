@@ -164,6 +164,22 @@ public class Facade {
         }
     }
 
+//    public void removeGame(final int gameID){
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                proxy.removeGame(gameID);
+//            }
+//        });
+//        thread.start();
+//        try {
+//            thread.join();
+//            poller.setPlayerWatingPolling(); //I don't really know.
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     public void updateGameChanges() {
         ClientModel cl = ClientModel.getInstance();
         GameState game = cl.getCurrentGame();
