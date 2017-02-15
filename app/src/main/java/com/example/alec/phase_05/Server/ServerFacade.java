@@ -53,10 +53,10 @@ public class ServerFacade {
         players[0] = hostPlayer;
         colors[0] = hostColor;
 
-        GameDescription newGame = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, players, colors);
-        if(!model.addGame(newGame))
+        GameDescription newGameInfo = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, players, colors);
+        if(!model.createGame(newGameInfo))
             return null;
-        return newGame;
+        return newGameInfo;
     }
 
     public String joinGame(Player newPlayer, int gameID, String color) {
@@ -73,8 +73,16 @@ public class ServerFacade {
         return model.getGameDescriptions();
     }
 
+    public GameState getGame(String username, String password, int gameID) {
+        return ServerModel.get_instance().getGame(gameID);
+    }
+
     public List<ICommand> getGameUpdates(Player client, int gameID, int lastUpdate) {
         return ServerModel.get_instance().getGameUpdates(client, gameID, lastUpdate);
+    }
+
+    public GameDescription getGameDescription(String username, String password, int gameID) {
+        return ServerModel.get_instance().getGameDescription(gameID);
     }
 
     public boolean validateAuthentication(String username, String password) {

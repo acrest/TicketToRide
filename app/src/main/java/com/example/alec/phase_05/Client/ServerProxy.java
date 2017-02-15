@@ -3,6 +3,7 @@ package com.example.alec.phase_05.Client;
 import com.example.alec.phase_05.Client.command.ClientCommunicator;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
+import com.example.alec.phase_05.Client.command.ClientGetGameDescriptionCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameUpdatesCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
@@ -146,14 +147,20 @@ public class ServerProxy implements IServer {
         return (GameDescriptionHolder) result.toClass(GameDescriptionHolder.class);
     }
 
+    @Override
+    public GameDescription getGameDescription(String username, String password, int gameID) {
+        ICommand cmd = new ClientGetGameDescriptionCommand(username, password, gameID);
+        Result result = myCC.executeCommandOnServer(cmd);
+        return (GameDescription) result.toClass(GameDescription.class);
+    }
 
     @Override
     public List<Player> getLatestPlayers(String username, String password, int gameID) {
 
-        ICommand cmd = new ClientGetGameCommand(username, password, gameID);
+        ICommand cmd = new ClientGetGameDescriptionCommand(username, password, gameID);
         Result result = myCC.executeCommandOnServer(cmd);
-        GameState currentGame = (GameState) result.toClass(GameState.class);
-        return Arrays.asList(currentGame.getPlayers());
+        GameDescription gameDescription = (GameDescription) result.toClass(GameState.class);
+        return Arrays.asList(gameDescription.getPlayers());
     }
 
     @Override

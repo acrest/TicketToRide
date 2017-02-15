@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client.command;
 
 import com.example.alec.phase_05.Shared.command.AbstractGetGameCommand;
+import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 
 /**

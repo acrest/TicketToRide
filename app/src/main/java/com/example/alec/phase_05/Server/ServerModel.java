@@ -43,12 +43,12 @@ public class ServerModel {
         return true;
     }
 
-    public boolean addGame(GameDescription newGame){
-        Integer gameID = newGame.getID();
+    public boolean createGame(GameDescription gameInfo){
+        int gameID = gameInfo.getID();
         if(gamesMap.containsKey(gameID))
-            return false;
-        gamesMap.put(gameID,new GameState(newGame));
-        return true;
+            return true;
+        gamesMap.put(gameID,new GameState(gameInfo));
+        return false;
     }
 
     public GameState getGame(Integer gameID){
@@ -76,6 +76,13 @@ public class ServerModel {
             gameDescriptions.add(gameState.getGameDescription());
         }
         return gameDescriptions;
+    }
+
+    public GameDescription getGameDescription(int gameID) {
+        if(!gamesMap.containsKey(gameID)) {
+            return null;
+        }
+        return gamesMap.get(gameID).getGameDescription();
     }
 
     public List<ICommand> getGameUpdates(Player player, int gameID, int lastUpdate) {
