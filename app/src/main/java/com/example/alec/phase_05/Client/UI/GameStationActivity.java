@@ -315,7 +315,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
 //                }
             }
             if(!foundSelected) {
-                //cancelSelected();
+                cancelSelected();
             }
         }
 
@@ -332,6 +332,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
 //                    notifyItemChanged(i);
 //                }
 //            }
+//            int maxLength = Math.max(oldList.size(), newListData.size());
 //            int maxLength = Math.max(oldList.size(), newListData.size());
 //            //this loop deletes / adds extrea items
 //            for(int i = minLength; i < maxLength; ++i) {
