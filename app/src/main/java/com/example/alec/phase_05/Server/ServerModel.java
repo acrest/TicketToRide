@@ -46,9 +46,9 @@ public class ServerModel {
     public boolean createGame(GameDescription gameInfo){
         int gameID = gameInfo.getID();
         if(gamesMap.containsKey(gameID))
-            return true;
+            return false;
         gamesMap.put(gameID,new GameState(gameInfo));
-        return false;
+        return true;
     }
 
     public GameState getGame(Integer gameID){
