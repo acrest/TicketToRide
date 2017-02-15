@@ -21,6 +21,11 @@ public class MockPresenterLobby implements IPresenterLobby {
     }
 
     @Override
+    public void onStartGameButtonPressed() {
+
+    }
+
+    @Override
     public void update(Observable observable, Object o) {
         randomlyUpdatePlayerNumbers();
     }

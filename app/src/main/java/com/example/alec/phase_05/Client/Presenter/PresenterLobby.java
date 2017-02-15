@@ -22,6 +22,11 @@ public class PresenterLobby implements IPresenterLobby {
     }
 
     @Override
+    public void onStartGameButtonPressed() {
+        listener.onStartGame();
+    }
+
+    @Override
     public void update(Observable observable, Object o) {
         if(!(o instanceof UpdateIndicator)) {
             throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
@@ -43,6 +48,7 @@ public class PresenterLobby implements IPresenterLobby {
             int max = currentGame.getMaxPlayers();
             int num = currentGame.getNumberPlayers();
             listener.updateNumberOfPlayers(num, max);
+            if(num == max) listener.onStartGame();
         }
     }
 }

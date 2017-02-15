@@ -8,4 +8,5 @@ import java.util.Observer;
 
 public interface IPresenterLobby extends Observer {
 
+    void onStartGameButtonPressed();
 }

@@ -6,4 +6,5 @@ package com.example.alec.phase_05.Client.Presenter;
 
 public interface ILobbyListener {
     void updateNumberOfPlayers(int num, int max);
+    void onStartGame();
 }
