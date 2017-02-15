@@ -57,25 +57,32 @@ public class Poller {
         poller.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                Player currentPlayer = ClientModel.getInstance().getCurrentPlayer();
+                ClientModel model = ClientModel.getInstance();
+                Player currentPlayer = model.getCurrentPlayer();
+                GameState currentGame = model.getCurrentGame();
                 switch (state) {
                     case 1:
 
-                        GameState currentGame = server.getGame(currentPlayer.getName(), currentPlayer.getPassword(),
-                                ClientModel.getInstance().getCurrentGame().getGameDescription().getID());
+//                        GameState currentGame = server.getGame(currentPlayer.getName(), currentPlayer.getPassword(),
+//                                ClientModel.getInstance().getCurrentGame().getGameDescription().getID());
                         //server.getCurrentModel(Facade.getInstance().getGame().getVersion());
 
                         break;
                     case 2:
 
-                        server.getLatestPlayers(currentPlayer.getName(), currentPlayer.getPassword(),
-                                ClientModel.getInstance().getCurrentGame().getGameDescription().getID());
+                        if(currentGame != null) {
+                            GameDescription currentGameDescription = server.getGameDescription(currentPlayer.getName(),
+                                    currentPlayer.getPassword(), currentGame.getID());
+                            if(currentGameDescription != null) {
+                                model.updateGameToDescription(currentGameDescription);
+                            }
+                        }
                         break;
                     case 3:
 
                         List<GameDescription> games = server.getGames(currentPlayer.getName(), currentPlayer.getPassword()).getGameDescriptions();
                         if(games != null) {
-                            ClientModel.getInstance().setGameList(games);
+                            model.setGameList(games);
                         }
                         break;
                     default:
