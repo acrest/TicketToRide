@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:gravity="center|left"
     android:layout_height="60dp"
-    android:paddingLeft="16dp"
     android:id="@+id/cont_item_root">
 
     <TextView
@@ -14,31 +13,26 @@
         android:layout_weight="0.2"
         android:layout_height="match_parent"
         android:layout_marginLeft="7sp"
-        android:text="Derp Derpson"
-        android:gravity="center"
+        android:text="Final Fantasy"
         android:textColor="#66CC00"
-        android:textSize="27sp"/>
+        android:textSize="19sp"/>
 
     <TextView
         android:id="@+id/lbl_players_text"
         android:layout_width="0dp"
         android:layout_weight="0.6"
         android:layout_height="match_parent"
-        android:paddingLeft="8dp"
         android:text="myNameIsAndrew myNameIsSam myNameIsMolly myNameIsAlec myNameIsClark"
-        android:gravity="center"
         android:textColor="#66CC00"
-        android:textSize="27sp"/>
+        android:textSize="19sp"/>
 
     <TextView
         android:id="@+id/lbl_in_game_text"
         android:layout_width="0dp"
         android:layout_weight="0.2"
         android:layout_height="match_parent"
-        android:paddingLeft="8dp"
         android:text="Derp Derpson"
-        android:gravity="center"
         android:textColor="#66CC00"
-        android:textSize="27sp"/>
+        android:textSize="19sp"/>
 
 </LinearLayout>

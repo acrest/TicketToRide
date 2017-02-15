@@ -255,12 +255,21 @@ public class GameStationActivity extends Activity implements IGameStationListene
             }
             holder.titleLabel.setText(gameDescription.getName());
             GameState currentGame = ClientModel.getInstance().getCurrentGame();
-            if(currentGame != null && currentGame.getID() == gameDescription.getID()) {
-                holder.inGameLabel.setText("YES");
-            } else {
-                holder.inGameLabel.setText("NO");
+
+            holder.inGameLabel.setText(gameDescription.getNumberPlayers() + "/" + gameDescription.getMaxPlayers());
+
+            StringBuilder sb = new StringBuilder();
+            if(gameDescription.getNumberPlayers() != 0) {
+                for(int i = 0; i < gameDescription.getNumberPlayers(); i++)
+                {
+                    sb.append(gameDescription.getPlayers()[i].getName() + ", ");
+                }
             }
-            holder.playersLabel.setText(Integer.toString(gameDescription.getNumberPlayers()));
+            else {
+                sb.append("<players>");
+            }
+            holder.playersLabel.setText(sb.toString());
+
         }
 
         @Override
