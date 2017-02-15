@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -548,5 +551,12 @@ public class GameStationActivity extends Activity implements IGameStationListene
     @Override
     public int getCurrentGameID() {
         return selectedGameID;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        // Do Here what ever you want do on back press;
+        System.out.println("Back button pressed");
     }
 }
