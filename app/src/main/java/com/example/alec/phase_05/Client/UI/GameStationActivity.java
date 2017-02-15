@@ -285,18 +285,22 @@ public class GameStationActivity extends Activity implements IGameStationListene
         private void selectGameOfID(int gameID) {
             boolean foundSelected = false;
             for(int i = 0; i < getItemCount(); ++i) {
-                DerpHolder holder = (DerpHolder) recyclerView.findViewHolderForAdapterPosition(i);
-                if(holder != null) {
-                    System.out.println("holder not null");
-                    if(listData.get(i).getID() == gameID) {
-                        System.out.println("found selected");
-                        holder.setSelected(true);
-                        selectedIndex = i;
-                        foundSelected = true;
-                    } else {
-                        holder.setSelected(false);
-                    }
+                if(listData.get(i).getID() == gameID) {
+                    selectedIndex = i;
+                    foundSelected = true;
                 }
+//                DerpHolder holder = (DerpHolder) recyclerView.findViewHolderForAdapterPosition(i);
+//                if(holder != null) {
+//                    System.out.println("holder not null");
+//                    if(listData.get(i).getID() == gameID) {
+//                        System.out.println("found selected");
+//                        holder.setSelected(true);
+//                        selectedIndex = i;
+//                        foundSelected = true;
+//                    } else {
+//                        holder.setSelected(false);
+//                    }
+//                }
             }
             if(!foundSelected) {
                 cancelSelected();
@@ -327,9 +331,9 @@ public class GameStationActivity extends Activity implements IGameStationListene
 //                    notifyItemInserted(i);
 //                }
 //            }
-            notifyDataSetChanged();
             //reselect the item with the correct id
             selectGameOfID(selectedGameID);
+            notifyDataSetChanged();
         }
 
         class DerpHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
