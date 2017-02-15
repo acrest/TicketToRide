@@ -60,14 +60,14 @@ public class ServerFacade {
         return newGameInfo;
     }
 
-    public String joinGame(Player newPlayer, int gameID, String color) {
+    public GameDescription joinGame(Player newPlayer, int gameID, String color) {
         ServerModel model = ServerModel.get_instance();
         GameState game = model.getGame(gameID);
         if(game == null) return null;
         if(game.hasPlayer(newPlayer)) return null;
         game.addPlayer(newPlayer);
         game.setPlayerColor(newPlayer, color);
-        return game.getName();
+        return game.getGameDescription();
     }
 
     public List<GameDescription> getGames(String username, String password) {
