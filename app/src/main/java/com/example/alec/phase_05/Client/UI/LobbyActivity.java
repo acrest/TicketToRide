@@ -3,6 +3,8 @@ package com.example.alec.phase_05.Client.UI;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -42,5 +44,10 @@ public class LobbyActivity extends Activity implements ILobbyListener {
     @Override
     public void updateNumberOfPlayers(int num, int max) {
         mNumberOfPlayers.setText(num + "/" + max);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Do Here what ever you want do on back press;
     }
 }
