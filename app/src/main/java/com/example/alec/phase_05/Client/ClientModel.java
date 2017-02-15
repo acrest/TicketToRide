@@ -112,9 +112,9 @@ public class ClientModel extends Observable {
     public void joinGame(GameDescription gameDescription) {
         if(gameDescription != null) {
             currentGame = new GameState(gameDescription);
-            notifyPropertyChanges(CREATE_GAME_SUCCESS);
+            notifyPropertyChanges(JOIN_GAME_SUCCESS);
         } else {
-            notifyPropertyChanges(CREATE_GAME_FAILURE);
+            notifyPropertyChanges(JOIN_GAME_FAILURE);
         }
     }
 

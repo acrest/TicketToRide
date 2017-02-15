@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client.UI;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
             @Override
             public void onClick(View view) {
                 //to set visibility of button to game host        mStartGameButton.setVisibility(View.VISIBLE); //To set visible
+                presenter.onStartGameButtonPressed();
             }
         });
 
@@ -57,6 +59,12 @@ public class LobbyActivity extends Activity implements ILobbyListener {
     @Override
     public void updateNumberOfPlayers(int num, int max) {
         mNumberOfPlayers.setText(num + "/" + max);
+    }
+
+    @Override
+    public void onStartGame() {
+        Intent i = new Intent(LobbyActivity.this, TicketToRideActivity.class);
+        startActivity(i);
     }
 
     @Override
