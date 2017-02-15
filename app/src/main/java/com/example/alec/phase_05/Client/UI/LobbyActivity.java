@@ -63,7 +63,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
     public void onBackPressed()
     {
         //remove player from game;
-        Poller.getInstance().setListGamePolling();
-        super.onBackPressed();
+        //Poller.getInstance().setListGamePolling();
+        //super.onBackPressed();
     }
 }
