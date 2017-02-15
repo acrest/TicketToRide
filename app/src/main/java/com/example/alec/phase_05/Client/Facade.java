@@ -120,7 +120,7 @@ public class Facade {
             @Override
             public void run() {
                 Player player = ClientModel.getInstance().getCurrentPlayer();
-                String joinedGame = proxy.joinGame(player, gameID, color);
+                GameDescription joinedGame = proxy.joinGame(player, gameID, color);
                 ClientModel.getInstance().joinGame(joinedGame);
             }
         });

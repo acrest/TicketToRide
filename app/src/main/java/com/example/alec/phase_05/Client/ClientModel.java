@@ -104,13 +104,12 @@ public class ClientModel extends Observable {
         }
     }
 
-    public void joinGame(String gameName) {
-        //TODO: implements this method
-
-        if(gameName != null) {
-            notifyPropertyChanges(JOIN_GAME_SUCCESS);
+    public void joinGame(GameDescription gameDescription) {
+        if(gameDescription != null) {
+            currentGame = new GameState(gameDescription);
+            notifyPropertyChanges(CREATE_GAME_SUCCESS);
         } else {
-            notifyPropertyChanges(JOIN_GAME_FAILURE);
+            notifyPropertyChanges(CREATE_GAME_FAILURE);
         }
     }
 
