@@ -54,6 +54,11 @@ public class ClientModel extends Observable {
         notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
     }
 
+    public void updateGameToDescription(GameDescription gameDescription) {
+        currentGame.updateToDescription(gameDescription);
+        notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
+    }
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }

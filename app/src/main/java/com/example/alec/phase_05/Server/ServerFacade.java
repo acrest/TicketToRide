@@ -66,6 +66,7 @@ public class ServerFacade {
         if(game == null) return null;
         if(game.hasPlayer(newPlayer)) return null;
         game.addPlayer(newPlayer);
+        game.setPlayerColor(newPlayer, color);
         return game.getName();
     }
 

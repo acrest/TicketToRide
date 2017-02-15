@@ -140,4 +140,11 @@ public class GameState {
     public GameDescription getGameDescription() {
         return new GameDescription(ID, name, maxPlayers, players, playerColors);
     }
+
+    public void updateToDescription(GameDescription gameDescription) {
+        if(gameDescription != null) {
+            players = gameDescription.getPlayers();
+            playerColors = gameDescription.getPlayerColors();
+        }
+    }
 }

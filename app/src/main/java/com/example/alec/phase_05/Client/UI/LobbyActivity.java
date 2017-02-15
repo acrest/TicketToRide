@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.alec.phase_05.Client.ClientModel;
+import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Client.Presenter.ILobbyListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.MockPresenterLobby;
@@ -62,6 +63,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
     public void onBackPressed()
     {
         //remove player from game;
+        Poller.getInstance().setListGamePolling();
         super.onBackPressed();
     }
 }
