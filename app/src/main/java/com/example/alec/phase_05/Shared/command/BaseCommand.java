@@ -7,9 +7,13 @@ package com.example.alec.phase_05.Shared.command;
 public abstract class BaseCommand implements ICommand
 {
     private String commandName;
+    private static int commandId;
+    private int id;
 
     public BaseCommand(String commandName)
     {
+        id = commandId;
+        commandId++;
         this.commandName = commandName;
     }
 
@@ -29,5 +33,9 @@ public abstract class BaseCommand implements ICommand
     public void setCommandName(String c)
     {
         commandName = c;
+    }
+
+    public int getId() {
+        return id;
     }
 }
