@@ -110,9 +110,4 @@ public class Poller {
         state = 3;
     }
 
-
-
-
-
-
 }
