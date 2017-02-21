@@ -10,10 +10,27 @@ public class City {
 
     private String name;
     private Point point;
+    private Integer id;
 
     public City(String _name, Point _point){
         name = _name;
         point = _point;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public double getXCord(){
+        return point.x;
+    }
+
+    public double getYCord(){
+        return point.y;
     }
 
     public String getName() {
