@@ -555,9 +555,9 @@ public class GameStationActivity extends Activity implements IGameStationListene
     }
 
 
-    @Override
-    public void onBackPressed() {
-        // Do Here what ever you want do on back press;
-        System.out.println("Back button pressed");
-    }
+//    @Override
+//    public void onBackPressed() {
+//        // Do Here what ever you want do on back press;
+//        System.out.println("Back button pressed");
+//    }
 }
