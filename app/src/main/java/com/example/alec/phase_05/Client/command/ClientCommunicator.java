@@ -10,6 +10,7 @@ import java.io.*;
  * Handles client requests to the server.
  * Created by samuel on 2/4/17.
  */
+
 public class ClientCommunicator
 {
     private static ClientCommunicator instance;
