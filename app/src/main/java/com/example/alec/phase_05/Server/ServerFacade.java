@@ -3,7 +3,7 @@ package com.example.alec.phase_05.Server;
 import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class ServerFacade {
 
     public GameDescription joinGame(Player newPlayer, int gameID, String color) {
         ServerModel model = ServerModel.get_instance();
-        GameState game = model.getGame(gameID);
+        Game game = model.getGame(gameID);
         if(game == null) return null;
         if(game.hasPlayer(newPlayer)) return null;
         game.addPlayer(newPlayer);
@@ -76,7 +76,7 @@ public class ServerFacade {
         return model.getGameDescriptions();
     }
 
-    public GameState getGame(String username, String password, int gameID) {
+    public Game getGame(String username, String password, int gameID) {
         return ServerModel.get_instance().getGame(gameID);
     }
 

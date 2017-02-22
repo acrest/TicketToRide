@@ -1,7 +1,7 @@
 package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
@@ -59,11 +59,11 @@ public class Poller {
             public void run() {
                 ClientModel model = ClientModel.getInstance();
                 Player currentPlayer = model.getCurrentPlayer();
-                GameState currentGame = model.getCurrentGame();
+                Game currentGame = model.getCurrentGame();
                 switch (state) {
                     case 1:
 
-//                        GameState currentGame = server.getGame(currentPlayer.getName(), currentPlayer.getPassword(),
+//                        Game currentGame = server.getGame(currentPlayer.getName(), currentPlayer.getPassword(),
 //                                ClientModel.getInstance().getCurrentGame().getGameDescription().getID());
                         //server.getCurrentModel(Facade.getInstance().getGame().getVersion());
 

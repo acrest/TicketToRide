@@ -13,14 +13,14 @@ import java.util.Set;
  * Created by samuel on 2/9/17.
  */
 
-public class GameState {
+public class Game {
     private int ID;
     private String name;
     private int maxPlayers;
     private Player[] players;
     private String[] playerColors;
 
-    public GameState(int id, String name, int maxPlayers, Player[] players, String[] playerColors) {
+    public Game(int id, String name, int maxPlayers, Player[] players, String[] playerColors) {
         ID = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
@@ -28,7 +28,7 @@ public class GameState {
         this.playerColors = playerColors;
     }
 
-    public GameState(GameDescription gameDescription) {
+    public Game(GameDescription gameDescription) {
         this(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers(), gameDescription.getPlayers(),gameDescription.getPlayerColors());
     }
 

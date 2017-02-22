@@ -6,7 +6,7 @@ import android.os.Looper;
 import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.UI.LogInActivity;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Game;
 
 import java.util.Observable;
 import java.util.Observer;
