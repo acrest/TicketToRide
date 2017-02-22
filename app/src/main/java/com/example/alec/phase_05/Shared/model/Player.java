@@ -75,3 +75,9 @@ public class Player {
         return name.hashCode();
     }
 }
+
+
+/*+getTrainCardNumber() : Int
+        +getInitialDestinationCards():Array<DestinationCard>
++returnInitialDestCard(DestCard dc): void
+        +getDestinationCard():DesinationCard*/
