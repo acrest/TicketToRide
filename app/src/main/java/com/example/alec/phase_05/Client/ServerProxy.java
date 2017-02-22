@@ -66,7 +66,8 @@ public class ServerProxy implements IServer {
 
 
     /** If the user excists, and the password matches the server's user password, return that player. Else return null.
-     * @pre Username is not null. Username is characters restricted to letters, numbers,
+     * @pre Username is not null. Username is characters restricted to letters, numbers, ^, *, _
+     * @pre Password is not null. Password is characters restricted to letters, numbers, ^, *, _
      * @param username The name of the user to check for login.
      * @param password The password of the user to check for login.
      * @return A player reference to the user.
@@ -93,6 +94,8 @@ public class ServerProxy implements IServer {
     }
 
     /** Registers a new user into the server.
+     * @pre Username is not null. Username is characters restricted to letters, numbers, ^, *, _
+     * @pre Password is not null. Password is characters restricted to letters, numbers, ^, *, _
      * @param username The name of the user to be registered to the user.
      * @param password The password of the user to be registered to the user.
      * @return A player reference to the newly registered user.
@@ -119,6 +122,10 @@ public class ServerProxy implements IServer {
     }
 
     /** Creates a new game to add to the list of games.
+     * @pre hostPlayer is valid player.
+     * @pre numOfPlayers is an int between 2 and 5.
+     * @pre game name is 15 characters or less.
+     * @pre host color is either "red", "blue", "yellow", "Black", or "green".
      * @param hostPlayer The person creating/hosting the game.
      * @param numOfPlayers The maximum amount of players allowed to be in this game.
      * @param gameName The name for the game.
@@ -139,6 +146,9 @@ public class ServerProxy implements IServer {
     }
 
     /** Join a player into a game that is already created.
+     * @pre newPlayer is a valid player.
+     * @pre gameId is a non negative int.
+     * @pre host color is either "red", "blue", "yellow", "Black", or "green".
      * @param newPlayer The player to be added to the game.
      * @param gameID the id of the game to add the player to.
      * @param color the color to assign to the player in the game.
@@ -155,6 +165,8 @@ public class ServerProxy implements IServer {
     }
 
     /** Returns a list of games that a specified player is currently in. If the person doesn't excist, or wrong password, return null.
+     * @pre Username is not null. Username is characters restricted to letters, numbers, ^, *, _
+     * @pre Password is not null. Password is characters restricted to letters, numbers, ^, *, _
      * @param username The username of the person we wish to view games for.
      * @param password The password of the person we wish to view games for.
      * @return A list of games for the specified person.
@@ -169,6 +181,9 @@ public class ServerProxy implements IServer {
     }
 
     /** Returns a game description given a user in the game and the id.
+     * @pre Username is not null. Username is characters restricted to letters, numbers, ^, *, _
+     * @pre Password is not null. Password is characters restricted to letters, numbers, ^, *, _
+     * @pre gameId is a non negative int.
      * @param username The person inside the game.
      * @param password The password of the person inside the game.
      * @param gameID The game description id that is to be viewed.
@@ -182,6 +197,9 @@ public class ServerProxy implements IServer {
     }
 
     /** Returns a list of players that are currently inside a game.
+     * @pre Username is not null. Username is characters restricted to letters, numbers, ^, *, _
+     * @pre Password is not null. Password is characters restricted to letters, numbers, ^, *, _
+     * @pre gameId is a non negative int.
      * @param username The user of a game.
      * @param password The password of the user.
      * @param gameID The id of a game we are to view.
@@ -197,6 +215,9 @@ public class ServerProxy implements IServer {
     }
 
     /** Returns a game given a user and an id.
+     * @pre Username is not null. Username is characters restricted to letters, numbers, ^, *, _
+     * @pre Password is not null. Password is characters restricted to letters, numbers, ^, *, _
+     * @pre gameId is a non negative int.
      * @param username A person inside the game.
      * @param password The password of person inisde the game.
      * @param gameID The game id that is to be viewed.
@@ -211,6 +232,9 @@ public class ServerProxy implements IServer {
     }
 
     /** Returns a list of current commands on the game back to the user.
+     * @pre player is a valid player.
+     * @pre gameId is a non negative int.
+     * @pre LastUpdate is a non negative int.
      * @param player The player iside the game.
      * @param gameID The id of the game the player is in.
      * @param lastUpdate An index of the last command that the player executed.

@@ -14,16 +14,11 @@ import java.util.TreeMap;
  * Created by Andrew on 2/20/2017.
  */
 public class CommandManager {
-    private static CommandManager ourInstance = new CommandManager();
     Map<String, Integer> playerIndex = new TreeMap<>();
     private List<BaseCommand> commands = new ArrayList<>();
 
 
-    public static CommandManager getInstance() {
-        return ourInstance;
-    }
-
-    private CommandManager() {
+    public CommandManager() {
     }
 
     public void addCommand(BaseCommand command){
