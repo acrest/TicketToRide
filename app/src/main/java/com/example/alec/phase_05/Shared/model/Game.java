@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Shared.model;
 
+import com.example.alec.phase_05.Server.CommandManager;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -19,6 +21,7 @@ public class Game {
     private int maxPlayers;
     private Player[] players;
     private String[] playerColors;
+    private CommandManager commandManager;
 
     public Game(int id, String name, int maxPlayers, Player[] players, String[] playerColors) {
         ID = id;

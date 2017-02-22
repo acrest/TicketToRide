@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.alec.phase_05.Client.ClientModel;
+import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Client.UI.LobbyActivity;
 import com.example.alec.phase_05.Shared.model.Game;
 
@@ -24,6 +25,8 @@ public class PresenterLobby implements IPresenterLobby {
     @Override
     public void onStartGameButtonPressed() {
         listener.onStartGame();
+        Poller poller = Poller.getInstance();
+        poller.setModelPolling();
     }
 
     @Override
