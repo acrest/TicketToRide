@@ -3,7 +3,7 @@ package com.example.alec.phase_05.Client;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
@@ -212,7 +212,7 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                GameState game = proxy.getGame(player.getName(), player.getPassword(), gameID);
+                Game game = proxy.getGame(player.getName(), player.getPassword(), gameID);
             }
         });
         thread.start();
@@ -245,7 +245,7 @@ public class Facade {
      */
     public void updateGameChanges() {
         ClientModel cl = ClientModel.getInstance();
-        GameState game = cl.getCurrentGame();
+        Game game = cl.getCurrentGame();
         if(game != null) {
             //TODO: implement this
             //proxy.getGameCommands(cl.getCurrentPlayer(), game.getID(), cl.getLastUpdate());

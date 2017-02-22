@@ -4,7 +4,7 @@ import com.example.alec.phase_05.Server.ServerFacade;
 import com.example.alec.phase_05.Shared.command.AbstractGetGameCommand;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.Result;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Game;
 
 /**
  * Created by samuel on 2/14/17.
@@ -23,7 +23,7 @@ public class ServerGetGameCommand extends AbstractGetGameCommand {
     @Override
     public Result execute() {
         ServerFacade facade = ServerFacade.get_instance();
-        GameState gameState = facade.getGame(getUserName(), getPassword(), getGameID());
+        Game gameState = facade.getGame(getUserName(), getPassword(), getGameID());
         Result result = new ServerResult();
         result.setResultObject(gameState);
         return result;

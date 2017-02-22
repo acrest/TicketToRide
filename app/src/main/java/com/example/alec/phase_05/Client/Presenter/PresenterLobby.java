@@ -5,7 +5,7 @@ import android.os.Looper;
 
 import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.UI.LobbyActivity;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Game;
 
 import java.util.Observable;
 
@@ -44,7 +44,7 @@ public class PresenterLobby implements IPresenterLobby {
 
     private void update(UpdateIndicator u) {
         if(u.needUpdate(ClientModel.NUM_PLAYERS_IN_GAME)) {
-            GameState currentGame = ClientModel.getInstance().getCurrentGame();
+            Game currentGame = ClientModel.getInstance().getCurrentGame();
             int max = currentGame.getMaxPlayers();
             int num = currentGame.getNumberPlayers();
             listener.updateNumberOfPlayers(num, max);

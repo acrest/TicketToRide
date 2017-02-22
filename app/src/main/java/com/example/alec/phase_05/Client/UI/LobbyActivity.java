@@ -19,14 +19,14 @@ import com.example.alec.phase_05.Client.Presenter.MockPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.PresenterLobby;
 import com.example.alec.phase_05.R;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.Player;
 
 public class LobbyActivity extends Activity implements ILobbyListener {
     private Button mStartGameButton;
     private TextView mNumberOfPlayers;
     private IPresenterLobby presenter;
-    private GameState currentGame;
+    private Game currentGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

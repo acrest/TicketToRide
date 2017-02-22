@@ -2,7 +2,7 @@ package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.Presenter.UpdateIndicator;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class ClientModel extends Observable {
     }
 
     private List<GameDescription> gameList;
-    private GameState currentGame;
+    private Game currentGame;
     private Player currentPlayer;
 
     public ClientModel() {
@@ -40,11 +40,11 @@ public class ClientModel extends Observable {
         gameList = new ArrayList<>();
     }
 
-    public GameState getCurrentGame() {
+    public Game getCurrentGame() {
         return currentGame;
     }
 
-    public void setCurrentGame(GameState currentGame) {
+    public void setCurrentGame(Game currentGame) {
         this.currentGame = currentGame;
     }
 
@@ -102,7 +102,7 @@ public class ClientModel extends Observable {
 
     public void createGame(GameDescription gameDescription) {
         if(gameDescription != null) {
-            currentGame = new GameState(gameDescription);
+            currentGame = new Game(gameDescription);
             notifyPropertyChanges(CREATE_GAME_SUCCESS);
         } else {
             notifyPropertyChanges(CREATE_GAME_FAILURE);
@@ -111,7 +111,7 @@ public class ClientModel extends Observable {
 
     public void joinGame(GameDescription gameDescription) {
         if(gameDescription != null) {
-            currentGame = new GameState(gameDescription);
+            currentGame = new Game(gameDescription);
             notifyPropertyChanges(JOIN_GAME_SUCCESS);
         } else {
             notifyPropertyChanges(JOIN_GAME_FAILURE);
