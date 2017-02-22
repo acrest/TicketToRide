@@ -16,6 +16,9 @@ import java.util.TreeMap;
 public class CommandManager {
     private static CommandManager ourInstance = new CommandManager();
     Map<String, Integer> playerIndex = new TreeMap<>();
+    private List<BaseCommand> commands = new ArrayList<>();
+
+
     public static CommandManager getInstance() {
         return ourInstance;
     }
@@ -27,15 +30,13 @@ public class CommandManager {
         commands.add(command);
     }
 
-    private List<BaseCommand> commands = new ArrayList<>();
-
     public List<BaseCommand> recentCommands(Player player){
         List<BaseCommand> recCommands = new ArrayList<>();
         int commandIndex = getCommandIndex(player);
 
         for(int i = commandIndex; i < commands.size(); i++)
         {
-            if(commands.get(i).getId() == player.getId() || commands.get(i).getId() == -1)    //Command id and player id aren't the same.
+            if(commands.get(i).getId() == player.getId() || commands.get(i).getId() == -1)    //Command id and player id aren't the same. Command id should be stamped by player from.
             {
                 recCommands.add(commands.get(i));
             }
