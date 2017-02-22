@@ -98,9 +98,7 @@ public class Poller {
         poller = null;
     }
 
-    public void setModelPolling() {
-        state = 1;
-    }
+    public void setModelPolling() { state = 1; }
 
     public void setPlayerWatingPolling() {
         state = 2;
