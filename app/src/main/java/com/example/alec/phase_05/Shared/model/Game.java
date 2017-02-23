@@ -10,55 +10,96 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
 
 /**
  * Created by samuel on 2/9/17.
  */
 
-public class Game {
-    private int ID;
+public class Game implements IGame {
+    private int id;
     private String name;
     private int maxPlayers;
-    private Player[] players;
-    private String[] playerColors;
+    private List<Player> players;
     private CommandManager commandManager;
+    private IChatManager chatManager;
+    private IBank bank;
 
-    public Game(int id, String name, int maxPlayers, Player[] players, String[] playerColors) {
-        ID = id;
+    public Game(int id, String name, int maxPlayers, CommandManager commandManager, IChatManager chatManager, IBank bank) {
+        this.id = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
-        this.players = players;
-        this.playerColors = playerColors;
+        this.commandManager = commandManager;
+        this.chatManager = chatManager;
+        this.bank = bank;
+        players = new ArrayList<>();
     }
 
-    public Game(GameDescription gameDescription) {
-        this(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers(), gameDescription.getPlayers(),gameDescription.getPlayerColors());
+    public Game(int id, String name, int maxPlayers) {
+        this(id, name, maxPlayers, new CommandManager(), null, null); //TODO: change null to real objects
     }
+
+//    public Game(GameDescription gameDescription) {
+//        this(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers(), gameDescription.getPlayers(),gameDescription.getPlayerColors());
+//    }
 
     public int getID() {
-        return ID;
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
+//    public void setID(int ID) {
+//        this.ID = ID;
+//    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public Player getPlayer(int position) {
+        if(position < players.size()) {
+            return players.get(position);
+        }
+        return null;
     }
 
+    @Override
+    public void setPlayer(int position, Player player) {
+        while(position >= players.size()) {
+            players.add(null);
+        }
+        players.set(position, player);
+    }
+
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+
+    @Override
     public int getMaxPlayers() {
         return maxPlayers;
     }
 
-    public void setMaxPlayers(int maxPlayers) {
-        this.maxPlayers = maxPlayers;
+    @Override
+    public IChatManager getChatManager() {
+        return chatManager;
     }
 
+    @Override
+    public CommandManager getCommandManager() {
+        return null;
+    }
+
+    @Override
+    public IBank getBank() {
+        return bank;
+    }
+
+//    public void setMaxPlayers(int maxPlayers) {
+//        this.maxPlayers = maxPlayers;
+//    }
+
+    @Override
     public int getNumberPlayers() {
         int count = 0;
         for(Player player : players) {
@@ -69,85 +110,98 @@ public class Game {
         return count;
     }
 
-    public Player[] getPlayers() {
+//    public Player[] getPlayers() {
+//        return players;
+//    }
+
+    @Override
+    public int addPlayerAtNextPosition(Player player){
+        if(hasPlayer(player))
+            return -1;
+        for(int i = 0; i < players.size(); ++i) {
+            if(players.get(i) == null) {
+                players.set(i, player);
+                return i;
+            }
+        }
+        if(players.size() < getMaxPlayers()) {
+            players.add(player);
+            return players.size() - 1;
+        }
+        return -1;
+    }
+
+    private boolean hasPlayer(Player player) {
+        for(Player p : players) {
+            if(player.equals(p)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+//    public boolean hasPlayer(String playerName) {
+//        for(Player player : players) {
+//            if(player.getName().equals(playerName)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+//    public Player getPlayerByColor(String color) {
+//        for(int i = 0; i < playerColors.length; ++i) {
+//            if(playerColors[i].equals(color)) {
+//                return players[i];
+//            }
+//        }
+//        return null;
+//    }
+
+//    public String getPlayerColor(Player player) {
+//        for(int i = 0; i < players.length; ++i) {
+//            if(players[i].equals(player)) {
+//                return playerColors[i];
+//            }
+//        }
+//        return null;
+//    }
+
+//    public void setPlayerColor(Player player, String color) {
+//        for(int i = 0; i < players.length; ++i) {
+//            if(players[i].equals(player)) {
+//                playerColors[i] = color;
+//                return;
+//            }
+//        }
+//    }
+
+//    public Set<String> getAllUsedColors() {
+//        Set<String> used = new HashSet<>();
+//        for(String color : playerColors) {
+//            if(color != null) {
+//                used.add(color);
+//            }
+//        }
+//        return used;
+//    }
+
+    public GameDescription getGameDescription() {
+        return new GameDescription(id, name, maxPlayers, players);
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public List<Player> getPlayers() {
         return players;
     }
 
-    public boolean addPlayer(Player newPlayer){
-        if(hasPlayer(newPlayer))
-            return false;
-        for(int i = 0; i < players.length; ++i) {
-            if(players[i] == null) {
-                players[i] = newPlayer;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasPlayer(Player player) {
-        for(Player p : players) {
-            if(player.equals(p)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasPlayer(String playerName) {
-        for(Player player : players) {
-            if(player.getName().equals(playerName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Player getPlayerByColor(String color) {
-        for(int i = 0; i < playerColors.length; ++i) {
-            if(playerColors[i].equals(color)) {
-                return players[i];
-            }
-        }
-        return null;
-    }
-
-    public String getPlayerColor(Player player) {
-        for(int i = 0; i < players.length; ++i) {
-            if(players[i].equals(player)) {
-                return playerColors[i];
-            }
-        }
-        return null;
-    }
-
-    public void setPlayerColor(Player player, String color) {
-        for(int i = 0; i < players.length; ++i) {
-            if(players[i].equals(player)) {
-                playerColors[i] = color;
-                return;
-            }
-        }
-    }
-
-    public Set<String> getAllUsedColors() {
-        Set<String> used = new HashSet<>();
-        for(String color : playerColors) {
-            if(color != null) {
-                used.add(color);
-            }
-        }
-        return used;
-    }
-
-    public GameDescription getGameDescription() {
-        return new GameDescription(ID, name, maxPlayers, players, playerColors);
-    }
-
-    public void updateToDescription(GameDescription gameDescription) {
-        if(gameDescription != null) {
-            players = gameDescription.getPlayers();
-            playerColors = gameDescription.getPlayerColors();
-        }
-    }
+//    public void updateToDescription(GameDescription gameDescription) {
+//        if(gameDescription != null) {
+//            players = gameDescription.getPlayers();
+//            playerColors = gameDescription.getPlayerColors();
+//        }
+//    }
 }

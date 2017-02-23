@@ -49,13 +49,13 @@ public class ClientModel extends Observable {
     }
 
     public void addPlayerToGame(Player player, String color) {
-        currentGame.addPlayer(player);
-        currentGame.setPlayerColor(player, color);
+        player.setColor(color);
+        currentGame.addPlayerAtNextPosition(player);
         notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
     }
 
-    public void updateGameToDescription(GameDescription gameDescription) {
-        currentGame.updateToDescription(gameDescription);
+    public void setPlayersInGame(List<Player> players) {
+        currentGame.setPlayers(players);
         notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
     }
 
@@ -77,7 +77,7 @@ public class ClientModel extends Observable {
     }
 
     public boolean hasGameInList(int gameID) {
-        GameDescription dummyGame = new GameDescription(gameID, null, 0, null, null);
+        GameDescription dummyGame = new GameDescription(gameID, null, 0, null);
         return gameList.contains(dummyGame );
     }
 
@@ -87,7 +87,7 @@ public class ClientModel extends Observable {
     }
 
     public void removeGameFromList(int gameID) {
-        GameDescription dummyGame = new GameDescription(gameID, null, 0, null, null);
+        GameDescription dummyGame = new GameDescription(gameID, null, 0, null);
         removeGameFromList(dummyGame);
     }
 
@@ -102,7 +102,8 @@ public class ClientModel extends Observable {
 
     public void createGame(GameDescription gameDescription) {
         if(gameDescription != null) {
-            currentGame = new Game(gameDescription);
+            currentGame = new Game(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers());
+            currentGame.setPlayers(gameDescription.getPlayers());
             notifyPropertyChanges(CREATE_GAME_SUCCESS);
         } else {
             notifyPropertyChanges(CREATE_GAME_FAILURE);
@@ -111,7 +112,8 @@ public class ClientModel extends Observable {
 
     public void joinGame(GameDescription gameDescription) {
         if(gameDescription != null) {
-            currentGame = new Game(gameDescription);
+            currentGame = new Game(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers());
+            currentGame.setPlayers(gameDescription.getPlayers());
             notifyPropertyChanges(JOIN_GAME_SUCCESS);
         } else {
             notifyPropertyChanges(JOIN_GAME_FAILURE);

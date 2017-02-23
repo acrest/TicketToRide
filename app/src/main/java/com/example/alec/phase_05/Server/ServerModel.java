@@ -58,12 +58,10 @@ public class ServerModel {
      * @param gameInfo GameDesciription object of new game created
      * @return boolean if the game was added successfully
      */
-    public boolean createGame(GameDescription gameInfo){
-        int gameID = gameInfo.getID();
-        if(gamesMap.containsKey(gameID))
-            return false;
-        gamesMap.put(gameID,new Game(gameInfo));
-        return true;
+    public Game createGame(String name, int maxPlayers){
+        int gameID = nextValidGameID++;
+        gamesMap.put(gameID,new Game(gameID, name, maxPlayers));
+        return gamesMap.get(gameID);
     }
 
     /**

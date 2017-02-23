@@ -29,8 +29,8 @@ import com.example.alec.phase_05.Client.Presenter.IPresenterGameStation;
 import com.example.alec.phase_05.Client.Presenter.MockPresenterGameStation;
 import com.example.alec.phase_05.Client.Presenter.PresenterGameStation;
 import com.example.alec.phase_05.R;
+import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
@@ -257,7 +257,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
                 holder.setSelected(false);
             }
             holder.titleLabel.setText(gameDescription.getName());
-            GameState currentGame = ClientModel.getInstance().getCurrentGame();
+            Game currentGame = ClientModel.getInstance().getCurrentGame();
 
             holder.inGameLabel.setText(gameDescription.getNumberPlayers() + "/" + gameDescription.getMaxPlayers());
 
@@ -265,7 +265,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
             if(gameDescription.getNumberPlayers() != 0) {
                 for(int i = 0; i < gameDescription.getNumberPlayers(); i++)
                 {
-                    sb.append(gameDescription.getPlayers()[i].getName() + ", ");
+                    sb.append(gameDescription.getPlayers().get(i).getName() + ", ");
                 }
             }
             else {

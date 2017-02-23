@@ -10,6 +10,7 @@ public class Player {
     private int trainCount;
     private int pointCount;
     boolean longestRoute;
+    private String color;
     ArrayList<TrainCard> trainCards = new ArrayList<>();
     ArrayList<DestinationCard> destinationCards = new ArrayList<>();
 
@@ -21,6 +22,7 @@ public class Player {
         trainCount = 45;
         pointCount = 0;
         longestRoute = false;
+        color = null;
     }
 
     public String getName(){
@@ -58,6 +60,14 @@ public class Player {
 
     public int getId() {
         return id;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     @Override

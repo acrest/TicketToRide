@@ -74,7 +74,7 @@ public class Poller {
                             GameDescription currentGameDescription = server.getGameDescription(currentPlayer.getName(),
                                     currentPlayer.getPassword(), currentGame.getID());
                             if(currentGameDescription != null) {
-                                model.updateGameToDescription(currentGameDescription);
+                                model.setPlayersInGame(currentGameDescription.getPlayers());
                             }
                         }
                         break;
