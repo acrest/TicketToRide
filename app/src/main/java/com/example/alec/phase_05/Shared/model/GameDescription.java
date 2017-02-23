@@ -8,61 +8,69 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameDescription {
-    private int ID;
+    private int id;
     private String name;
     private int maxPlayers;
-    private Player[] players;
-    private String[] playerColors;
+    private List<Player> players;
 
-    public GameDescription(int ID, String name, int maxPlayers, Player[] players, String[] playerColors) {
-        this.ID = ID;
+    public GameDescription(int id, String name, int maxPlayers, List<Player> players) {
+        this.id = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
         this.players = players;
-        this.playerColors = playerColors;
+//        this.numPlayers = numPlayers;
+//        this.players = players;
+//        this.playerColors = playerColors;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     public int getID() {
-        return ID;
+        return id;
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
+//    public void setID(Integer id) {
+//        this.id = id;
+//    }
 
     public int getMaxPlayers() {
         return maxPlayers;
     }
 
-    public void setMaxPlayers(Integer maxPlayers) {
-        this.maxPlayers = maxPlayers;
-    }
+//    public void setMaxPlayers(Integer maxPlayers) {
+//        this.maxPlayers = maxPlayers;
+//    }
 
-    public Player[] getPlayers() {
+//    public Player[] getPlayers() {
+//        return players;
+//    }
+//
+//    public void setPlayers(Player[] players) {
+//        this.players = players;
+//    }
+//
+//    public String[] getPlayerColors() {
+//        return playerColors;
+//    }
+//
+//    public void setPlayerColors(String[] playerColors) {
+//        this.playerColors = playerColors;
+//    }
+
+    public List<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(Player[] players) {
-        this.players = players;
-    }
-
-    public String[] getPlayerColors() {
-        return playerColors;
-    }
-
-    public void setPlayerColors(String[] playerColors) {
-        this.playerColors = playerColors;
-    }
-
     public int getNumberPlayers() {
+        if(players == null) {
+            return 0;
+        }
         int count = 0;
         for(Player player : players) {
             if(player != null) {
@@ -74,9 +82,9 @@ public class GameDescription {
 
     public Set<String> getAllUsedColors() {
         Set<String> used = new HashSet<>();
-        for(String color : playerColors) {
-            if(color != null) {
-                used.add(color);
+        for(Player player : players) {
+            if(player != null) {
+                used.add(player.getColor());
             }
         }
         return used;

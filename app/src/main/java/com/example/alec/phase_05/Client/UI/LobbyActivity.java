@@ -50,7 +50,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
         currentGame = ClientModel.getInstance().getCurrentGame();
         mNumberOfPlayers.setText(currentGame.getNumberPlayers() + "/" + currentGame.getMaxPlayers());
 
-        if(currentGame.getPlayers()[0].getName().equals(ClientModel.getInstance().getCurrentPlayer().getName()))
+        if(currentGame.getPlayers().get(0).getName().equals(ClientModel.getInstance().getCurrentPlayer().getName()))
         {
             mStartGameButton.setVisibility(View.VISIBLE);
         }

@@ -93,9 +93,8 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         int id = random.nextInt(1000);
         String name = generateRandomAlphabeticString();
         int max = random.nextInt(4) + 2;
-        Player[] players = generateRandomPlayers();
-        String[] playerColors = generateRandomPlayerColors(players);
-        return new GameDescription(id, name, max, players, playerColors);
+        List<Player> players = generateRandomPlayers();
+        return new GameDescription(id, name, max, players);
     }
 
     private String generateRandomAlphabeticString() {
@@ -114,12 +113,12 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         return (char)(c + random.nextInt(26));
     }
 
-    private Player[] generateRandomPlayers() {
+    private List<Player> generateRandomPlayers() {
         Random random = new Random();
         int size = random.nextInt(4) + 2;
-        Player[] players = new Player[size];
+        List<Player> players = new ArrayList<>();
         for(int i = 0; i < size; ++i) {
-            players[i] = generateRandomPlayer();
+            players.add(generateRandomPlayer());
         }
         return players;
     }

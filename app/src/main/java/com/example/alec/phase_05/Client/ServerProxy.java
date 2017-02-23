@@ -211,7 +211,7 @@ public class ServerProxy implements IServer {
         ICommand cmd = new ClientGetGameDescriptionCommand(username, password, gameID);
         Result result = myCC.executeCommandOnServer(cmd);
         GameDescription gameDescription = (GameDescription) result.toClass(GameDescription.class);
-        return Arrays.asList(gameDescription.getPlayers());
+        return gameDescription.getPlayers();
     }
 
     /** Returns a game given a user and an id.
