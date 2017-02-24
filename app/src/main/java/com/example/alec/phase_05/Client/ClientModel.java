@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.Presenter.UpdateIndicator;
+import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -102,7 +103,7 @@ public class ClientModel extends Observable {
 
     public void createGame(GameDescription gameDescription) {
         if(gameDescription != null) {
-            currentGame = new Game(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers());
+            currentGame = GameComponentFactory.createGame(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers());
             currentGame.setPlayers(gameDescription.getPlayers());
             notifyPropertyChanges(CREATE_GAME_SUCCESS);
         } else {
@@ -112,7 +113,7 @@ public class ClientModel extends Observable {
 
     public void joinGame(GameDescription gameDescription) {
         if(gameDescription != null) {
-            currentGame = new Game(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers());
+            currentGame = GameComponentFactory.createGame(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers());
             currentGame.setPlayers(gameDescription.getPlayers());
             notifyPropertyChanges(JOIN_GAME_SUCCESS);
         } else {
