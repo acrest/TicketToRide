@@ -46,7 +46,8 @@ public class LobbyActivity extends Activity implements ILobbyListener {
 
         mNumberOfPlayers = (TextView) findViewById(R.id.lobby_current_number_players);
 
-        presenter = new PresenterLobby(this);
+        presenter = new MockPresenterLobby(this);
+        //presenter = new PresenterLobby(this);
         currentGame = ClientModel.getInstance().getCurrentGame();
         mNumberOfPlayers.setText(currentGame.getNumberPlayers() + "/" + currentGame.getMaxPlayers());
 
