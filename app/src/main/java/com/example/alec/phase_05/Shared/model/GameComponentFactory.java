@@ -18,19 +18,19 @@ public final class GameComponentFactory {
     private GameComponentFactory() {}
 
     public static Game createGame(int id, String name, int maxPlayers) {
-        GameMap map = createGameMap();
-        Bank bank = createBank();
-        Game game = new Game(id, name, maxPlayers, bank, map);
-    }
-
-    public static Bank createBank() {
-        Bank bank = new Bank();
-    }
-
-    public static GameMap createGameMap() {
         Map<String, City> cities = createCities();
-        List<Route> routes = createRoute();
-        GameMap map = new GameMap(cities, routes);
+        List<Route> routes = createRoute(cities);
+        GameMap map = createGameMap(cities, routes);
+        Bank bank = createBank(cities);
+        return new Game(id, name, maxPlayers, bank, map);
+    }
+
+    public static Bank createBank(Map<String, City> cities) {
+        return new Bank(createTrainCardDeck(), createDestinationCardDeck(cities));
+    }
+
+    public static GameMap createGameMap(Map<String, City> cities, List<Route> routes) {
+        return new GameMap(cities, routes);
     }
 
     public static List<TrainCard> createTrainCardDeck() {
@@ -53,7 +53,37 @@ public final class GameComponentFactory {
 
     public static List<DestinationCard> createDestinationCardDeck(Map<String, City> cities) {
         List<DestinationCard> deck = new ArrayList<>();
-        deck.add(new DestinationCard());
+        deck.add(new DestinationCard(cities.get("Denver"), cities.get("El Paso"), 4));
+        deck.add(new DestinationCard(cities.get("Kansas City"), cities.get("Houston"), 5));
+        deck.add(new DestinationCard(cities.get("New York"), cities.get("Atlanta"), 6));
+        deck.add(new DestinationCard(cities.get("Chicago"), cities.get("New Orleans"), 7));
+        deck.add(new DestinationCard(cities.get("Calgary"), cities.get("Salt Lake City"), 7));
+        deck.add(new DestinationCard(cities.get("Helena"), cities.get("Los Angeles"), 8));
+        deck.add(new DestinationCard(cities.get("Duluth"), cities.get("Houston"), 8));
+        deck.add(new DestinationCard(cities.get("Sault Ste Marie"), cities.get("Nashville"), 8));
+        deck.add(new DestinationCard(cities.get("Montreal"), cities.get("Atlanta"), 9));
+        deck.add(new DestinationCard(cities.get("Sault Ste Marie"), cities.get("Oklahoma City"), 9));
+        deck.add(new DestinationCard(cities.get("Seattle"), cities.get("Los Angeles"), 9));
+        deck.add(new DestinationCard(cities.get("Chicago"), cities.get("Santa Fe"), 9));
+        deck.add(new DestinationCard(cities.get("Duluth"), cities.get("El Paso"), 10));
+        deck.add(new DestinationCard(cities.get("Toronto"), cities.get("Miami"), 10));
+        deck.add(new DestinationCard(cities.get("Portland"), cities.get("Phoenix"), 11));
+        deck.add(new DestinationCard(cities.get("Dallas"), cities.get("New York City"), 11));
+        deck.add(new DestinationCard(cities.get("Denver"), cities.get("Pittsburgh"), 11));
+        deck.add(new DestinationCard(cities.get("Winnipeg"), cities.get("Little Rock"), 11));
+        deck.add(new DestinationCard(cities.get("Winnipeg"), cities.get("Houston"), 12));
+        deck.add(new DestinationCard(cities.get("Boston"), cities.get("Miami"), 12));
+        deck.add(new DestinationCard(cities.get("Vancouver"), cities.get("Santa Fe"), 13));
+        deck.add(new DestinationCard(cities.get("Calgary"), cities.get("Phoenix"), 13));
+        deck.add(new DestinationCard(cities.get("Montreal"), cities.get("New Orleans"), 13));
+        deck.add(new DestinationCard(cities.get("Los Angeles"), cities.get("Chicago"), 16));
+        deck.add(new DestinationCard(cities.get("San Francisco"), cities.get("Atlanta"), 17));
+        deck.add(new DestinationCard(cities.get("Portland"), cities.get("Nashville"), 17));
+        deck.add(new DestinationCard(cities.get("Vancouver"), cities.get("Montreal"), 20));
+        deck.add(new DestinationCard(cities.get("Los Angeles"), cities.get("Miami"), 20));
+        deck.add(new DestinationCard(cities.get("Los Angeles"), cities.get("New York City"), 21));
+        deck.add(new DestinationCard(cities.get("Seattle"), cities.get("New York City"), 22));
+        return deck;
     }
 
     public static Map<String, City> createCities() {
@@ -117,12 +147,12 @@ public final class GameComponentFactory {
         routes.add(new Route(cities.get("San Francisco"), cities.get("Los Angeles"), 3, null, BOX));
         routes.add(new Route(cities.get("Los Angeles"), cities.get("Las Vegas"), 2, null, ANY));
         routes.add(new Route(cities.get("Las Vegas"), cities.get("Salt Lake City"), 3, null, FREIGHT));
-        routes.add(new Route(cities.get("Los Angeles"), cities.get("Pheonix"), 3, null, ANY));
+        routes.add(new Route(cities.get("Los Angeles"), cities.get("Phoenix"), 3, null, ANY));
         routes.add(new Route(cities.get("Los Angeles"), cities.get("El Paso"), 6, null, HOPPER));
-        routes.add(new Route(cities.get("Pheonix"), cities.get("El Paso"), 3, null, ANY));
-        routes.add(new Route(cities.get("Pheonix"), cities.get("Santa Fe"), 3, null, ANY));
+        routes.add(new Route(cities.get("Phoenix"), cities.get("El Paso"), 3, null, ANY));
+        routes.add(new Route(cities.get("Phoenix"), cities.get("Santa Fe"), 3, null, ANY));
         routes.add(new Route(cities.get("Santa Fe"), cities.get("El Paso"), 2, null, ANY));
-        routes.add(new Route(cities.get("Pheonix"), cities.get("Denver"), 5, null, PASSENGER));
+        routes.add(new Route(cities.get("Phoenix"), cities.get("Denver"), 5, null, PASSENGER));
         routes.add(new Route(cities.get("Salt Lake City"), cities.get("Denver"), 3, null, REEFER));
         routes.add(new Route(cities.get("Salt Lake City"), cities.get("Denver"), 3, null, COAL));
         routes.add(new Route(cities.get("Salt Lake City"), cities.get("Helena"), 3, null, BOX));
