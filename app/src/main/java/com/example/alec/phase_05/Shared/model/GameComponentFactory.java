@@ -2,6 +2,8 @@ package com.example.alec.phase_05.Shared.model;
 
 import android.graphics.Point;
 
+import com.example.alec.phase_05.Server.CommandManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +24,17 @@ public final class GameComponentFactory {
         List<Route> routes = createRoute(cities);
         GameMap map = createGameMap(cities, routes);
         Bank bank = createBank(cities);
-        return new Game(id, name, maxPlayers, bank, map);
+        CommandManager commandManager = createCommandManager();
+        IChatManager chatManager = createChatManager();
+        return new Game(id, name, maxPlayers, commandManager, chatManager, bank, map);
+    }
+
+    public static CommandManager createCommandManager() {
+        return new CommandManager();
+    }
+
+    public static IChatManager createChatManager() {
+        return null; //TODO: create a real chat manager
     }
 
     public static Bank createBank(Map<String, City> cities) {

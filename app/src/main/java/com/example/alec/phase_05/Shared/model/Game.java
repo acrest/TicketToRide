@@ -37,10 +37,6 @@ public class Game implements IGame {
         players = new ArrayList<>();
     }
 
-    public Game(int id, String name, int maxPlayers, IBank bank, GameMap gameMap) {
-        this(id, name, maxPlayers, new CommandManager(), null, bank, gameMap); //TODO: change null to real objects
-    }
-
 //    public Game(GameDescription gameDescription) {
 //        this(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers(), gameDescription.getPlayers(),gameDescription.getPlayerColors());
 //    }

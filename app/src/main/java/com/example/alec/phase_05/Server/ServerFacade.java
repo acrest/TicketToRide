@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server;
 
+import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
@@ -85,6 +86,15 @@ public class ServerFacade {
 
     public GameDescription getGameDescription(String username, String password, int gameID) {
         return ServerModel.get_instance().getGameDescription(gameID);
+    }
+
+    public void executeCommand(ICommand command) {
+        ServerModel model = ServerModel.get_instance();
+        if(command instanceof GameCommand) {
+            GameCommand gameCommand = (GameCommand)  command;
+            Game game = model.getGame(gameCommand.getGameID());
+            game.getCommandManager().addCommand(gameCommand);
+        }
     }
 
     public boolean validateAuthentication(String username, String password) {
