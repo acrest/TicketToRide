@@ -24,19 +24,21 @@ public class Game implements IGame {
     private CommandManager commandManager;
     private IChatManager chatManager;
     private IBank bank;
+    private GameMap gameMap;
 
-    public Game(int id, String name, int maxPlayers, CommandManager commandManager, IChatManager chatManager, IBank bank) {
+    public Game(int id, String name, int maxPlayers, CommandManager commandManager, IChatManager chatManager, IBank bank, GameMap gameMap) {
         this.id = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
         this.commandManager = commandManager;
         this.chatManager = chatManager;
         this.bank = bank;
+        this.gameMap = gameMap;
         players = new ArrayList<>();
     }
 
-    public Game(int id, String name, int maxPlayers) {
-        this(id, name, maxPlayers, new CommandManager(), null, null); //TODO: change null to real objects
+    public Game(int id, String name, int maxPlayers, IBank bank, GameMap gameMap) {
+        this(id, name, maxPlayers, new CommandManager(), null, bank, gameMap); //TODO: change null to real objects
     }
 
 //    public Game(GameDescription gameDescription) {
@@ -93,6 +95,11 @@ public class Game implements IGame {
     @Override
     public IBank getBank() {
         return bank;
+    }
+
+    @Override
+    public GameMap getMap() {
+        return gameMap;
     }
 
 //    public void setMaxPlayers(int maxPlayers) {

@@ -9,14 +9,14 @@ public class Route {
     private City city1, city2;
     private int length;
     private Player owner;
-    private String color;
+    private TrainType type;
 
-    public Route(City city1, City city2, int length, Player owner, String color) {
+    public Route(City city1, City city2, int length, Player owner, TrainType type) {
         this.city1 = city1;
         this.city2 = city2;
         this.length = length;
         this.owner = owner;
-        this.color = color;
+        this.type = type;
     }
 
     public City getCity1() {
@@ -51,11 +51,23 @@ public class Route {
         this.owner = owner;
     }
 
-    public String getColor() {
-        return color;
+    public TrainType getType() {
+        return type;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setType(TrainType type) {
+        this.type = type;
+    }
+
+    public int getPoints() {
+        switch(length) {
+            case 1: return 1;
+            case 2: return 2;
+            case 3: return 4;
+            case 4: return 7;
+            case 5: return 10;
+            case 6: return 15;
+        }
+        return 0;
     }
 }
