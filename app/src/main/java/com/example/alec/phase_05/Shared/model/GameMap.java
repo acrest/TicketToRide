@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Shared.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by samuel on 2/23/17.
@@ -9,15 +10,15 @@ import java.util.List;
 
 public class GameMap {
 
-    private List<City> cities;
+    private Map<String, City> cities;
     private List<Route> routes;
 
-    public GameMap(List<City> cities, List<Route> routes) {
+    public GameMap(Map<String, City> cities, List<Route> routes) {
         this.cities = cities;
         this.routes = routes;
     }
 
-    public List<City> getCities() {
+    public Map<String, City> getCities() {
         return cities;
     }
 

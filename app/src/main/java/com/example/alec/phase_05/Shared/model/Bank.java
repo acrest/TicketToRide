@@ -13,10 +13,10 @@ public class Bank implements IBank {
     private List<TrainCard> visibleTrainCards;
     private List<DestinationCard> destinationCardDeck;
 
-    public Bank() {
-        trainCardDeck = new ArrayList<>();
+    public Bank(List<TrainCard> trainCardDeck, List<DestinationCard> destinationCardDeck) {
+        this.trainCardDeck = trainCardDeck;
+        this.destinationCardDeck = destinationCardDeck;
         visibleTrainCards = new ArrayList<>();
-        destinationCardDeck = new ArrayList<>();
     }
 
     public void initCards() {
