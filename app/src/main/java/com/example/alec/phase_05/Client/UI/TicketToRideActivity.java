@@ -10,11 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 import com.example.alec.phase_05.R;
+
 
 public class TicketToRideActivity extends Activity {
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
+
+
+public class TicketToRideActivity extends Activity implements ITicketToRideListener {
 
 
     @Override
