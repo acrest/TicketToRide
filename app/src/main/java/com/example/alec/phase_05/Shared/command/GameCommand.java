@@ -7,6 +7,7 @@ package com.example.alec.phase_05.Shared.command;
 public abstract class GameCommand extends AuthorizedCommand
 {
     private int gameID;
+    private int playerId;
 
     /**
      * @param commandName command name from BaseCommand
@@ -35,5 +36,13 @@ public abstract class GameCommand extends AuthorizedCommand
     public void setGameID(int g)
     {
         gameID = g;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Server;
 
 import com.example.alec.phase_05.Shared.command.BaseCommand;
+import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.Player;
 
@@ -15,23 +16,23 @@ import java.util.TreeMap;
  */
 public class CommandManager {
     Map<String, Integer> playerIndex = new TreeMap<>();
-    private List<BaseCommand> commands = new ArrayList<>();
+    private List<GameCommand> commands = new ArrayList<>();
 
 
     public CommandManager() {
     }
 
-    public void addCommand(BaseCommand command){
+    public void addCommand(GameCommand command){
         commands.add(command);
     }
 
-    public List<BaseCommand> recentCommands(Player player){
-        List<BaseCommand> recCommands = new ArrayList<>();
+    public List<GameCommand> recentCommands(Player player){
+        List<GameCommand> recCommands = new ArrayList<>();
         int commandIndex = getCommandIndex(player);
 
         for(int i = commandIndex; i < commands.size(); i++)
         {
-            if(commands.get(i).getId() == player.getId() || commands.get(i).getId() == -1)    //Command id and player id aren't the same. Command id should be stamped by player from.
+            if(commands.get(i).getPlayerId() == player.getId() || commands.get(i).getId() == -1)
             {
                 recCommands.add(commands.get(i));
             }
