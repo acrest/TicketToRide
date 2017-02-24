@@ -1,11 +1,15 @@
 package com.example.alec.phase_05.Server;
 
+import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.Game;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServerFacade {
     private static ServerFacade _instance;
@@ -45,27 +49,24 @@ public class ServerFacade {
     public GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
         //    {"gameName":"Hillary Clinton","hostColor":"green","numberOfPlayers":4,"password":"55","userName":"andrew","commandName":"CreateGame"}     example requestbody. Used for fake client.
         ServerModel model = ServerModel.get_instance();
-//        Player[] players = new Player[numOfPlayers];
-//        String[] colors = new String[numOfPlayers];
-//        players[0] = hostPlayer;
-//        colors[0] = hostColor;
+        Player[] players = new Player[numOfPlayers];
+        String[] colors = new String[numOfPlayers];
+        players[0] = hostPlayer;
+        colors[0] = hostColor;
 
-        Game game = model.createGame(gameName, numOfPlayers);
-        int position = game.addPlayerAtNextPosition(hostPlayer);
-        if(position == -1)
+        GameDescription newGameInfo = new GameDescription(ServerModel.getNextValidGameID(), gameName, numOfPlayers, players, colors);
+        if(!model.createGame(newGameInfo))
             return null;
-        hostPlayer.setColor(hostColor);
-        return game.getGameDescription();
+        return newGameInfo;
     }
 
     public GameDescription joinGame(Player newPlayer, int gameID, String color) {
         ServerModel model = ServerModel.get_instance();
-        Game game = model.getGame(gameID);
-        newPlayer.setColor(color);
+        GameState game = model.getGame(gameID);
         if(game == null) return null;
-        int playerPosition = game.addPlayerAtNextPosition(newPlayer);
-        //check to see of the player was added successfully
-        if(playerPosition == -1) return null;
+        if(game.hasPlayer(newPlayer)) return null;
+        game.addPlayer(newPlayer);
+        game.setPlayerColor(newPlayer, color);
         return game.getGameDescription();
     }
 
@@ -75,7 +76,7 @@ public class ServerFacade {
         return model.getGameDescriptions();
     }
 
-    public Game getGame(String username, String password, int gameID) {
+    public GameState getGame(String username, String password, int gameID) {
         return ServerModel.get_instance().getGame(gameID);
     }
 
