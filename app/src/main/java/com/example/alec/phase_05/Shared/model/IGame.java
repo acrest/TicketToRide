@@ -20,4 +20,5 @@ public interface IGame {
     IChatManager getChatManager();
     CommandManager getCommandManager();
     IBank getBank();
+    GameMap getMap();
 }

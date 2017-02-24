@@ -5,14 +5,13 @@ package com.example.alec.phase_05.Shared.model;
  */
 
 public class TrainCard {
-    private String color;
+    private TrainType type;
 
-    public TrainCard(String color)
-    {
-        this.color = color;
+    public TrainCard(TrainType type) {
+        this.type = type;
     }
 
-    public String getColor() {
-        return color;
+    public TrainType getType() {
+        return type;
     }
 }
