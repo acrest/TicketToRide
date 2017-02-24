@@ -4,7 +4,7 @@
     android:id="@+id/activity_ticket_to_ride"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/cupcake"
+    android:background="@mipmap/ticketToRideMap"
     tools:context="com.example.alec.phase_05.Client.UI.TicketToRideActivity">
 
 </RelativeLayout>
