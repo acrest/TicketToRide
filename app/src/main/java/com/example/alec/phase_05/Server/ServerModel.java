@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Server;
 
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -60,7 +61,7 @@ public class ServerModel {
      */
     public Game createGame(String name, int maxPlayers){
         int gameID = nextValidGameID++;
-        gamesMap.put(gameID,new Game(gameID, name, maxPlayers));
+        gamesMap.put(gameID, GameComponentFactory.createGame(gameID, name, maxPlayers));
         return gamesMap.get(gameID);
     }
 
