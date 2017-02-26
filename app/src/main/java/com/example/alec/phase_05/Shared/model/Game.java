@@ -16,22 +16,18 @@ import java.util.List;
  * Created by samuel on 2/9/17.
  */
 
-public class Game implements IGame {
+public abstract class Game implements IGame {
     private int id;
     private String name;
     private int maxPlayers;
     private List<Player> players;
-    private CommandManager commandManager;
-    private IChatManager chatManager;
     private IBank bank;
     private GameMap gameMap;
 
-    public Game(int id, String name, int maxPlayers, CommandManager commandManager, IChatManager chatManager, IBank bank, GameMap gameMap) {
+    public Game(int id, String name, int maxPlayers, IBank bank, GameMap gameMap) {
         this.id = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
-        this.commandManager = commandManager;
-        this.chatManager = chatManager;
         this.bank = bank;
         this.gameMap = gameMap;
         players = new ArrayList<>();
@@ -41,6 +37,7 @@ public class Game implements IGame {
 //        this(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers(), gameDescription.getPlayers(),gameDescription.getPlayerColors());
 //    }
 
+    @Override
     public int getID() {
         return id;
     }
@@ -76,16 +73,6 @@ public class Game implements IGame {
     @Override
     public int getMaxPlayers() {
         return maxPlayers;
-    }
-
-    @Override
-    public IChatManager getChatManager() {
-        return chatManager;
-    }
-
-    @Override
-    public CommandManager getCommandManager() {
-        return null;
     }
 
     @Override

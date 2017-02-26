@@ -5,10 +5,10 @@ package com.example.alec.phase_05.Shared.model;
  */
 
 public class Chat {
-    Integer ID;
-    String name;
-    Integer gameID;
-    String message;
+    private Integer ID;
+    private String name;
+    private Integer gameID;
+    private String message;
 
     public Chat(String name, Integer gameID, String message) {
         this.ID = null;

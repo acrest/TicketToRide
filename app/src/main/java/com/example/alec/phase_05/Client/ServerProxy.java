@@ -140,8 +140,6 @@ public class ServerProxy implements IServer {
 //        baseCMD = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers);
         ICommand cmd = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers, hostColor);
         Result result = myCC.executeCommandOnServer(cmd);
-        System.out.println("in create game:");
-        System.out.println(result.getRawSerializedResult());
         return (GameDescription) result.toClass(GameDescription.class);
     }
 
