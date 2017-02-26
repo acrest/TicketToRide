@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.Presenter.UpdateIndicator;
+import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;

@@ -3,6 +3,9 @@ package com.example.alec.phase_05.Shared.model;
 import android.graphics.Point;
 
 import com.example.alec.phase_05.Server.CommandManager;
+import com.example.alec.phase_05.Server.model.IServerBank;
+import com.example.alec.phase_05.Server.model.ServerBank;
+import com.example.alec.phase_05.Server.model.ServerGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,14 +22,14 @@ public final class GameComponentFactory {
 
     private GameComponentFactory() {}
 
-    public static Game createGame(int id, String name, int maxPlayers) {
+    public static ServerGame createGame(int id, String name, int maxPlayers) {
         Map<String, City> cities = createCities();
         List<Route> routes = createRoute(cities);
         GameMap map = createGameMap(cities, routes);
-        Bank bank = createBank(cities);
+        IServerBank bank = createBank(cities);
         CommandManager commandManager = createCommandManager();
         IChatManager chatManager = createChatManager();
-        return new Game(id, name, maxPlayers, commandManager, chatManager, bank, map);
+        return new ServerGame(id, name, maxPlayers, commandManager, chatManager, bank, map);
     }
 
     public static CommandManager createCommandManager() {
@@ -37,8 +40,8 @@ public final class GameComponentFactory {
         return null; //TODO: create a real chat manager
     }
 
-    public static Bank createBank(Map<String, City> cities) {
-        return new Bank(createTrainCardDeck(), createDestinationCardDeck(cities));
+    public static IServerBank createBank(Map<String, City> cities) {
+        return new ServerBank(createTrainCardDeck(), createDestinationCardDeck(cities));
     }
 
     public static GameMap createGameMap(Map<String, City> cities, List<Route> routes) {
