@@ -1,7 +1,10 @@
 package com.example.alec.phase_05.Server;
 
+import com.example.alec.phase_05.Server.command.ServerResult;
+import com.example.alec.phase_05.Server.model.ServerGame;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -88,13 +91,22 @@ public class ServerFacade {
         return ServerModel.get_instance().getGameDescription(gameID);
     }
 
-    public void executeCommand(ICommand command) {
+    public Result executeCommand(ICommand command) {
         ServerModel model = ServerModel.get_instance();
-        if(command instanceof GameCommand) {
-            GameCommand gameCommand = (GameCommand)  command;
-            Game game = model.getGame(gameCommand.getGameID());
-            game.getCommandManager().addCommand(gameCommand);
+        Result r;
+        if(command == null) {
+            r = new ServerResult();
+            r.setErrorMessage("no server command to match command sent to server");
         }
+        if(command instanceof GameCommand) {
+            GameCommand gameCommand = (GameCommand) command;
+            ServerGame game = model.getGame(gameCommand.getGameID());
+            game.getCommandManager().addCommand(gameCommand);
+            r = gameCommand.execute();
+        } else {
+            r = command.execute();
+        }
+        return r;
     }
 
     public boolean validateAuthentication(String username, String password) {

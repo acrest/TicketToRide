@@ -17,8 +17,6 @@ public interface IGame {
     int getNumberPlayers();
     int getMaxPlayers();
 
-    IChatManager getChatManager();
-    CommandManager getCommandManager();
     IBank getBank();
     GameMap getMap();
 }

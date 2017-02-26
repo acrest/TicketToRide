@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server;
 
+import com.example.alec.phase_05.Server.model.ServerGame;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -14,7 +15,7 @@ import java.util.Map;
 public class ServerModel {
     private static int nextValidGameID = 0;
 
-    private Map<Integer,Game> gamesMap;
+    private Map<Integer,ServerGame> gamesMap;
     private Map<String,Player> playerMap;
 
     private static ServerModel _instance;
@@ -59,7 +60,7 @@ public class ServerModel {
      * @param gameInfo GameDesciription object of new game created
      * @return boolean if the game was added successfully
      */
-    public Game createGame(String name, int maxPlayers){
+    public ServerGame createGame(String name, int maxPlayers){
         int gameID = nextValidGameID++;
         gamesMap.put(gameID, GameComponentFactory.createGame(gameID, name, maxPlayers));
         return gamesMap.get(gameID);
@@ -70,7 +71,7 @@ public class ServerModel {
      * @param gameID of Game object to be returned
      * @return Game object with the ID given in the parameter
      */
-    public Game getGame(Integer gameID){
+    public ServerGame getGame(Integer gameID){
         return gamesMap.get(gameID);
     }
 
@@ -108,11 +109,10 @@ public class ServerModel {
      */
     public List<GameDescription> getGameDescriptions() {
         List<GameDescription> gameDescriptions = new ArrayList<>();
-        for (Game gameState : gamesMap.values()) {
-            if (gameState.getMaxPlayers() != gameState.getNumberPlayers()){
-                gameDescriptions.add(gameState.getGameDescription());
+        for (ServerGame game : gamesMap.values()) {
+            if (game.getMaxPlayers() != game.getNumberPlayers()){
+                gameDescriptions.add(game.getGameDescription());
             }
-
         }
         return gameDescriptions;
     }
