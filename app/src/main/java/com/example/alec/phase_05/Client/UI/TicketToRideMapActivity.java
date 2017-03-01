@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TabHost;
 
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 
@@ -26,5 +27,9 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
         //setContentView(R.layout.activity_ticket_to_ride);
 
         //mDrawerList = (ListView) findViewById(R.id.navList);
+
+        TabHost tabHost = getTabHost();
     }
+
+    
 }
