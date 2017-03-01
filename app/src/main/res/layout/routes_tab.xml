@@ -5,7 +5,7 @@
     <!-- When selected, use grey -->
     <TextView
         android:text="ROUTES"
-        android:textColor="color:GRAY"
+        android:textColor="@android:color/darker_gray"
         android:state_selected="true"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
      - When not selected, use white-->
     <TextView
         android:text="ROUTES"
-        android:textColor="color:WHITE"
+        android:textColor="@android:color/white"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         />

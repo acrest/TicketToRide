@@ -28,7 +28,7 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
 
         //mDrawerList = (ListView) findViewById(R.id.navList);
 
-        TabHost tabHost = getTabHost();
+//        TabHost tabHost = getTabHost();
     }
 
     
