@@ -5,7 +5,7 @@
     <!-- When selected, use grey -->
     <TextView
         android:text="GAME HISTORY"
-        android:textColor="color:GRAY"
+        android:textColor="@android:color/darker_gray"
         android:state_selected="true"
         />
     <!-- <item android:drawable="@drawable/photos_gray"
@@ -13,6 +13,6 @@
      - When not selected, use white-->
     <TextView
         android:text="GAME HISTORY"
-        android:textColor="color:WHITE"
+        android:textColor="@android:color/white"
         />
 </selector>
