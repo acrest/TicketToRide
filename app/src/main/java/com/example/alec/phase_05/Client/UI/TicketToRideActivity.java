@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.UI;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.TabActivity;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,6 +17,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
@@ -26,21 +28,29 @@ import com.example.alec.phase_05.R;
 
 
 
-public class TicketToRideActivity extends AppCompatActivity  implements ITicketToRideListener {
+public class TicketToRideActivity extends TabActivity {
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
     ViewPager vpager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(new TicketToRideView(this));
-        //setContentView(R.layout.activity_ticket_to_ride);
+        setContentView(R.layout.activity_main);
 
-        //mDrawerList = (ListView) findViewById(R.id.navList);
+        TabHost mTabHost = getTabHost();
+
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("Player Info").setContent(R.id.player_info));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("Routes").setContent(R.id.routes));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("Game History").setContent(R.id.game_history));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test4").setIndicator("Bank").setContent(R.id.bank));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test5").setIndicator("Map").setContent(R.id.map));
+
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test6").setIndicator("Chat").setContent(R.id.chat));
+
+        mTabHost.setCurrentTab(0);
+
     }
-
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
