@@ -5,6 +5,7 @@ import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface IServer {
     Game getGame(String username, String password, int gameID);
 
     CommandHolder getGameCommands(Player player, int gameID, int lastUpdate);
+
+    GameState getGameState(String username, String password, int gameID);
 }

@@ -5,6 +5,7 @@ import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameDescriptionCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
+import com.example.alec.phase_05.Client.command.ClientGetGameStateCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameUpdatesCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
@@ -15,6 +16,7 @@ import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.Result;
@@ -242,6 +244,13 @@ public class ServerProxy implements IServer {
     public CommandHolder getGameCommands(Player player, int gameID, int lastUpdate) {
         ICommand cmd = new ClientGetGameUpdatesCommand(player.getName(), player.getPassword(), gameID, lastUpdate);
         Result result = myCC.executeCommandOnServer(cmd);
-        return (CommandHolder) result.toClass(CommandHolder.class); //TODO: fix
+        return (CommandHolder) result.toClass(CommandHolder.class);
+    }
+
+    @Override
+    public GameState getGameState(String username, String password, int gameID) {
+        ICommand command = new ClientGetGameStateCommand(username, password, gameID);
+        Result result = myCC.executeCommandOnServer(command);
+        return (GameState) result.toClass(GameState.class);
     }
 }

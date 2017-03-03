@@ -1,18 +1,10 @@
 package com.example.alec.phase_05.Client.Presenter;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-
-import com.example.alec.phase_05.Client.ClientModel;
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Facade;
-import com.example.alec.phase_05.Client.UI.GameStationActivity;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.Collection;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by Andrew on 2/9/2017.

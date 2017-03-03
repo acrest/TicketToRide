@@ -8,30 +8,23 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alec.phase_05.Client.ClientModel;
-import com.example.alec.phase_05.Client.Model.DerpData;
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Presenter.IGameStationListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterGameStation;
-import com.example.alec.phase_05.Client.Presenter.MockPresenterGameStation;
 import com.example.alec.phase_05.Client.Presenter.PresenterGameStation;
 import com.example.alec.phase_05.R;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
 
@@ -257,7 +250,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
                 holder.setSelected(false);
             }
             holder.titleLabel.setText(gameDescription.getName());
-            Game currentGame = ClientModel.getInstance().getCurrentGame();
+            GameDescription currentGame = ClientModel.getInstance().getCurrentGameDescription();
 
             holder.inGameLabel.setText(gameDescription.getNumberPlayers() + "/" + gameDescription.getMaxPlayers());
 

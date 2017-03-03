@@ -1,6 +1,8 @@
 package com.example.alec.phase_05.Server;
 
 import com.example.alec.phase_05.Server.command.ServerResult;
+import com.example.alec.phase_05.Server.model.GameStateFactory;
+import com.example.alec.phase_05.Server.model.IServerGame;
 import com.example.alec.phase_05.Server.model.ServerGame;
 import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.GameCommand;
@@ -8,6 +10,7 @@ import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
@@ -97,6 +100,11 @@ public class ServerFacade {
         ServerGame game = model.getGame(gameID);
         List<ICommand> commands = game.getCommandManager().recentCommands(new Player(username, password));
         return new CommandHolder(commands);
+    }
+
+    public GameState getGameState(String username, String password, int gameID) {
+        IServerGame game = ServerModel.get_instance().getGame(gameID);
+        return GameStateFactory.gameToGameState(game);
     }
 
     public Result executeCommand(ICommand command) {

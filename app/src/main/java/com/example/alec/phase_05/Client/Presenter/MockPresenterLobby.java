@@ -11,7 +11,7 @@ import java.util.Random;
  * Created by samuel on 2/13/17.
  */
 
-public class MockPresenterLobby implements IPresenterLobby {
+public class MockPresenterLobby extends Presenter implements IPresenterLobby {
     private static final long TIMER_DELAY = 1000;
     private ILobbyListener listener;
 
@@ -26,7 +26,7 @@ public class MockPresenterLobby implements IPresenterLobby {
     }
 
     @Override
-    public void update(Observable observable, Object o) {
+    public void update(UpdateIndicator updateIndicator) {
         randomlyUpdatePlayerNumbers();
     }
 
