@@ -454,6 +454,12 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="Chat with the other players" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rec_chat_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:background="#AAE0E0E0">
+                    </android.support.v7.widget.RecyclerView>
                     <EditText
                         android:id="@+id/myeditfield"
                         android:layout_width="fill_parent"

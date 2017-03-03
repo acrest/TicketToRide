@@ -49,7 +49,7 @@ public class ServerFacade {
 
     public GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
         //    {"gameName":"Hillary Clinton","hostColor":"green","numberOfPlayers":4,"password":"55","userName":"andrew","commandName":"CreateGame"}     example requestbody. Used for fake client.
-        ServerModel model = ServerModel.get_instance();
+          ServerModel model = ServerModel.get_instance();
 //        Player[] players = new Player[numOfPlayers];
 //        String[] colors = new String[numOfPlayers];
 //        players[0] = hostPlayer;

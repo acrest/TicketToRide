@@ -9,10 +9,10 @@ import android.graphics.Point;
 public class City {
 
     private String name;
-    private Point point;
+    private MyPoint point;
     private Integer id;
 
-    public City(String _name, Point _point){
+    public City(String _name, MyPoint _point){
         name = _name;
         point = _point;
     }
@@ -41,11 +41,11 @@ public class City {
         this.name = name;
     }
 
-    public Point getPoint() {
+    public MyPoint getPoint() {
         return point;
     }
 
-    public void setPoint(Point point) {
+    public void setPoint(MyPoint point) {
         this.point = point;
     }
 }
