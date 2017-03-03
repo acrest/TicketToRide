@@ -15,7 +15,7 @@ import com.example.alec.phase_05.Client.ClientModel;
 import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Client.Presenter.ILobbyListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
-//import com.example.alec.phase_05.Client.Presenter.MockPresenterLobby;
+import com.example.alec.phase_05.Client.Presenter.MockPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.PresenterLobby;
 import com.example.alec.phase_05.R;
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -46,7 +46,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
 
         mNumberOfPlayers = (TextView) findViewById(R.id.lobby_current_number_players);
 
-        //presenter = new MockPresenterLobby(this);
+        presenter = new MockPresenterLobby(this);
         presenter = new PresenterLobby(this);
         currentGame = ClientModel.getInstance().getCurrentGame();
         mNumberOfPlayers.setText(currentGame.getNumberPlayers() + "/" + currentGame.getMaxPlayers());
