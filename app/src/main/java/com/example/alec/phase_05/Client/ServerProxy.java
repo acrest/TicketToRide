@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.command.ClientCommunicator;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
+import com.example.alec.phase_05.Client.command.ClientGetCommandListCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameDescriptionCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
@@ -135,14 +136,14 @@ public class ServerProxy implements IServer {
      * @return An instance of a game, with the specified fields.
      */
     @Override
-    public GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
+    public GameState createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
         //List<GameDescription> gameList = getGames(hostPlayer.getName(), hostPlayer.getPassword());
         //int gameID = gameList.size() + 1;
 
 //        baseCMD = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers);
         ICommand cmd = new ClientCreateGameCommand(hostPlayer.getName(), hostPlayer.getPassword(), gameName, numOfPlayers, hostColor);
         Result result = myCC.executeCommandOnServer(cmd);
-        return (GameDescription) result.toClass(GameDescription.class);
+        return (GameState) result.toClass(GameState.class);
     }
 
     /** Join a player into a game that is already created.
@@ -155,13 +156,13 @@ public class ServerProxy implements IServer {
      * @return An instance of a game, with the specified fields.
      */
     @Override
-    public GameDescription joinGame(Player newPlayer, int gameID, String color) {
+    public GameState joinGame(Player newPlayer, int gameID, String color) {
 //        baseCMD = new ClientJoinGameCommand(newPlayer.getName(), newPlayer.getPassword(), gameID);
         ICommand cmd = new ClientJoinGameCommand(newPlayer.getName(), newPlayer.getPassword(), gameID, color);
         Result result = myCC.executeCommandOnServer(cmd);
         System.out.println("in join game:");
         System.out.println(result.getRawSerializedResult());
-        return (GameDescription) result.toClass(GameDescription.class);
+        return (GameState) result.toClass(GameState.class);
     }
 
     /** Returns a list of games that a specified player is currently in. If the person doesn't excist, or wrong password, return null.
@@ -241,8 +242,8 @@ public class ServerProxy implements IServer {
      * @return A list of commands.
      */
     @Override
-    public CommandHolder getGameCommands(Player player, int gameID, int lastUpdate) {
-        ICommand cmd = new ClientGetGameUpdatesCommand(player.getName(), player.getPassword(), gameID, lastUpdate);
+    public CommandHolder getGameCommands(Player player, int gameID) {
+        ICommand cmd = new ClientGetCommandListCommand(player.getName(), player.getPassword(), gameID);
         Result result = myCC.executeCommandOnServer(cmd);
         return (CommandHolder) result.toClass(CommandHolder.class);
     }

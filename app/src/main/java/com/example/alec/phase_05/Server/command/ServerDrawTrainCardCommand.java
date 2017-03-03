@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Server.command;
 
+import com.example.alec.phase_05.Server.Server;
+import com.example.alec.phase_05.Server.ServerFacade;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.command.DrawTrainCardCommand;
 import com.example.alec.phase_05.Shared.model.TrainCard;
@@ -18,6 +20,10 @@ public class ServerDrawTrainCardCommand extends DrawTrainCardCommand {
 
     @Override
     public Result execute() {
-        return null; //TODO
+        ServerFacade facade = ServerFacade.get_instance();
+        TrainCard card = facade.drawTrainCard(getUserName(), getPassword(), getGameID(), getCardIndex());
+        Result result = new ServerResult();
+        result.setResultObject(card);
+        return result;
     }
 }

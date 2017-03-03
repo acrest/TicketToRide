@@ -17,8 +17,8 @@ import java.util.List;
 public interface IServer {
     Player login(String username, String password);
     Player registerUser(String username, String password);
-    GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor);
-    GameDescription joinGame(Player newPlayer, int gameID, String color);
+    GameState createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor);
+    GameState joinGame(Player newPlayer, int gameID, String color);
     GameDescriptionHolder getGames(String username, String password);
     GameDescription getGameDescription(String username, String password, int gameID);
 
@@ -26,7 +26,7 @@ public interface IServer {
     List<Player> getLatestPlayers(String username, String password, int gameID);
     Game getGame(String username, String password, int gameID);
 
-    CommandHolder getGameCommands(Player player, int gameID, int lastUpdate);
+    CommandHolder getGameCommands(Player player, int gameID);
 
     GameState getGameState(String username, String password, int gameID);
 }

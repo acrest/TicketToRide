@@ -37,7 +37,7 @@ public final class GameComponentFactory {
     }
 
     public static IChatManager createChatManager() {
-        return null; //TODO: create a real chat manager
+        return new ChatManager();
     }
 
     public static IServerBank createBank(Map<String, City> cities) {

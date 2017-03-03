@@ -2,9 +2,11 @@ package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Model.IClientGame;
+import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
 /**
@@ -140,7 +142,7 @@ public class Facade {
             @Override
             public void run() {
                 Player player = ClientModel.getInstance().getCurrentPlayer();
-                GameDescription newGame = proxy.createGame(player, numOfPlayers, gameName, hostColor);
+                GameState newGame = proxy.createGame(player, numOfPlayers, gameName, hostColor);
                 ClientFacade.getInstance().createGame(newGame);
             }
         });
@@ -167,7 +169,7 @@ public class Facade {
             @Override
             public void run() {
                 Player player = ClientModel.getInstance().getCurrentPlayer();
-                GameDescription joinedGame = proxy.joinGame(player, gameID, color);
+                GameState joinedGame = proxy.joinGame(player, gameID, color);
                 ClientFacade.getInstance().joinGame(joinedGame);
             }
         });
@@ -243,11 +245,24 @@ public class Facade {
      * and then will update the changes once implemented.
      */
     public void updateGameChanges() {
-        ClientModel cl = ClientModel.getInstance();
-        IClientGame game = cl.getCurrentGame();
-        if(game != null) {
-            //TODO: implement this
-            //proxy.getGameCommands(cl.getCurrentPlayer(), game.getID(), cl.getLastUpdate());
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                IClientGame game = model.getCurrentGame();
+                if(game != null) {
+                    ClientFacade facade = ClientFacade.getInstance();
+                    Player player = model.getCurrentPlayer();
+                    CommandHolder commands = proxy.getGameCommands(player, game.getID());
+                    facade.executeCommands(commands.getCommands());
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

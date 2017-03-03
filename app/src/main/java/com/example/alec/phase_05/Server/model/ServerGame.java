@@ -19,6 +19,8 @@ public class ServerGame extends Game implements IServerGame {
         super(id, name, maxPlayers, bank, gameMap);
         this.commandManager = commandManager;
         this.chatManager = chatManager;
+
+        commandManager.setGame(this);
     }
 
     @Override
