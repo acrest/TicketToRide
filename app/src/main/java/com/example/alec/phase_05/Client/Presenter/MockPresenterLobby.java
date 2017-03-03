@@ -1,3 +1,4 @@
+/*
 package com.example.alec.phase_05.Client.Presenter;
 
 import android.os.AsyncTask;
@@ -7,9 +8,11 @@ import android.os.Looper;
 import java.util.Observable;
 import java.util.Random;
 
+*/
 /**
  * Created by samuel on 2/13/17.
- */
+ *//*
+
 
 public class MockPresenterLobby implements IPresenterLobby {
     private static final long TIMER_DELAY = 1000;
@@ -70,3 +73,4 @@ public class MockPresenterLobby implements IPresenterLobby {
         }
     }
 }
+*/

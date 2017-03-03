@@ -1,3 +1,4 @@
+/*
 package com.example.alec.phase_05.Client.Presenter;
 
 import android.os.AsyncTask;
@@ -17,9 +18,11 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+*/
 /**
  * Created by samuel on 2/11/17.
- */
+ *//*
+
 
 public class MockPresenterGameStation implements IPresenterGameStation {
     private static String[] colors;
@@ -172,3 +175,4 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         }
     }
 }
+*/
