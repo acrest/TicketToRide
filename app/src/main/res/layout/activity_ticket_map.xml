@@ -5,7 +5,7 @@ android:id="@+id/activity_ticket_map"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="horizontal"
-android:background="@mipmap/oldmap"
+android:background="@mipmap/old_map"
 tools:context="com.example.alec.phase_05.Client.UI.TicketToRideMapActivity">
 
 <LinearLayout

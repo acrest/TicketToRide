@@ -27,17 +27,18 @@
         </activity>
         <activity
             android:name=".Client.UI.LobbyActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Client.UI.GameStationActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Client.UI.TicketToRideActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".TicketMapActivity"
             android:label="@string/title_activity_ticket_map"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Client.UI.TestActivity"></activity>
     </application>
 
 </manifest>
