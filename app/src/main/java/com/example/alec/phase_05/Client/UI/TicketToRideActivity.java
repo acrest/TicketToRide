@@ -20,7 +20,9 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRide;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
+import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRide;
 import com.example.alec.phase_05.R;
 
 
@@ -28,10 +30,11 @@ import com.example.alec.phase_05.R;
 
 
 
-public class TicketToRideActivity extends TabActivity {
+public class TicketToRideActivity extends TabActivity implements ITicketToRideListener {
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
     ViewPager vpager;
+    private IPresenterTicketToRide presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class TicketToRideActivity extends TabActivity {
 
         mTabHost.setCurrentTab(0);
 
+        presenter = new PresenterTicketToRide(this);
     }
 /*
     @Override

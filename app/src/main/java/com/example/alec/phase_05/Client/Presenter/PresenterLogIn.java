@@ -15,7 +15,7 @@ import java.util.Observer;
  * Created by Andrew on 2/9/2017.
  */
 
-public class PresenterLogIn implements IPresenterLogIn {
+public class PresenterLogIn extends Presenter implements IPresenterLogIn {
     private ILogInListener listener;
 
     public PresenterLogIn(ILogInListener listener) {
@@ -49,7 +49,8 @@ public class PresenterLogIn implements IPresenterLogIn {
         handler.post(runnable);
     }
 
-    private void update(UpdateIndicator u) {
+    @Override
+    public void update(UpdateIndicator u) {
 
     }
 }

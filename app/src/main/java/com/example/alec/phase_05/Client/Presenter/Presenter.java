@@ -3,42 +3,13 @@ package com.example.alec.phase_05.Client.Presenter;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.example.alec.phase_05.Client.ClientModel;
-import com.example.alec.phase_05.Shared.model.Game;
-
 import java.util.Observable;
 
 /**
- * Created by Molly on 2/23/2017.
+ * Created by samuel on 3/2/17.
  */
 
-public class PresenterTicketToRide extends Presenter implements IPresenterTicketToRide {
-
-    private ITicketToRideListener listener;
-
-    public PresenterTicketToRide(ITicketToRideListener listener) {
-        this.listener = listener;
-    }
-
-    @Override
-    public void drawTrainCard(int index) {
-
-    }
-
-    @Override
-    public void claimRoute() {
-
-    }
-
-    @Override
-    public void drawDestinationCards() {
-
-    }
-
-    @Override
-    public void endTurn() {
-
-    }
+public abstract class Presenter implements IPresenter {
 
     @Override
     public void update(Observable observable, Object o) {
@@ -54,9 +25,5 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         };
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(runnable);
-    }
-
-    @Override
-    public void update(UpdateIndicator u) {
     }
 }

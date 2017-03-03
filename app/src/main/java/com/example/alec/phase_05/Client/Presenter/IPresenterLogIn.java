@@ -6,7 +6,7 @@ import java.util.Observer;
  * Created by samuel on 2/11/17.
  */
 
-public interface IPresenterLogIn extends Observer {
+public interface IPresenterLogIn extends IPresenter {
 
     boolean logIn(String username, String password);
 

@@ -6,7 +6,7 @@ import java.util.Observer;
  * Created by samuel on 2/11/17.
  */
 
-public interface IPresenterLobby extends Observer {
+public interface IPresenterLobby extends IPresenter {
 
     void onStartGameButtonPressed();
 }
