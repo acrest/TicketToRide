@@ -14,7 +14,7 @@ import java.util.Observable;
  * Created by Andrew on 2/9/2017.
  */
 
-public class PresenterLobby implements IPresenterLobby {
+public class PresenterLobby extends Presenter implements IPresenterLobby {
     private ILobbyListener listener;
 
     public PresenterLobby(ILobbyListener listener) {
@@ -45,7 +45,8 @@ public class PresenterLobby implements IPresenterLobby {
         handler.post(runnable);
     }
 
-    private void update(UpdateIndicator u) {
+    @Override
+    public void update(UpdateIndicator u) {
         if(u.needUpdate(ClientModel.NUM_PLAYERS_IN_GAME)) {
             Game currentGame = ClientModel.getInstance().getCurrentGame();
             int max = currentGame.getMaxPlayers();

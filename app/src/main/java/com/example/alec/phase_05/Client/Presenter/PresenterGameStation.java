@@ -18,7 +18,7 @@ import java.util.Observer;
  * Created by Andrew on 2/9/2017.
  */
 
-public class PresenterGameStation implements IPresenterGameStation {
+public class PresenterGameStation extends Presenter implements IPresenterGameStation {
 
     private IGameStationListener listener;
 
@@ -38,22 +38,7 @@ public class PresenterGameStation implements IPresenterGameStation {
     }
 
     @Override
-    public void update(Observable observable, Object o) {
-        if(!(o instanceof UpdateIndicator)) {
-            throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
-        }
-        final UpdateIndicator u = (UpdateIndicator) o;
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                update(u);
-            }
-        };
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(runnable);
-}
-
-    private void update(UpdateIndicator u) {
+    public void update(UpdateIndicator u) {
         if(u.needUpdate(ClientModel.GAME_LIST)) {
             listener.updateGameList(ClientModel.getInstance().getGameList());
             GameDescription gameDescription = findGameByID(listener.getCurrentGameID());

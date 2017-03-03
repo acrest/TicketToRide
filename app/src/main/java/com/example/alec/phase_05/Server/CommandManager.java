@@ -26,8 +26,8 @@ public class CommandManager {
         commands.add(command);
     }
 
-    public List<GameCommand> recentCommands(Player player){
-        List<GameCommand> recCommands = new ArrayList<>();
+    public List<ICommand> recentCommands(Player player){
+        List<ICommand> recCommands = new ArrayList<>();
         int commandIndex = getCommandIndex(player);
 
         for(int i = commandIndex; i < commands.size(); i++)

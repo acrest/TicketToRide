@@ -6,7 +6,7 @@ import java.util.Observer;
  * Created by samuel on 2/11/17.
  */
 
-public interface IPresenterGameStation extends Observer {
+public interface IPresenterGameStation extends IPresenter {
 
     void joinGame(int gameID, String color);
 
