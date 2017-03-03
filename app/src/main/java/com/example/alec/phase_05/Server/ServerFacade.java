@@ -1,14 +1,21 @@
 package com.example.alec.phase_05.Server;
 
 import com.example.alec.phase_05.Server.command.ServerResult;
+import com.example.alec.phase_05.Server.model.GameStateFactory;
+import com.example.alec.phase_05.Server.model.IServerBank;
+import com.example.alec.phase_05.Server.model.IServerGame;
 import com.example.alec.phase_05.Server.model.ServerGame;
 import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
+import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
+import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.IBank;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
 
@@ -47,7 +54,7 @@ public class ServerFacade {
         return model.addPlayer(player);
     }
 
-    public GameDescription createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
+    public GameState createGame(Player hostPlayer, int numOfPlayers, String gameName, String hostColor) {
         //    {"gameName":"Hillary Clinton","hostColor":"green","numberOfPlayers":4,"password":"55","userName":"andrew","commandName":"CreateGame"}     example requestbody. Used for fake client.
           ServerModel model = ServerModel.get_instance();
 //        Player[] players = new Player[numOfPlayers];
@@ -55,23 +62,23 @@ public class ServerFacade {
 //        players[0] = hostPlayer;
 //        colors[0] = hostColor;
 
-        Game game = model.createGame(gameName, numOfPlayers);
+        IServerGame game = model.createGame(gameName, numOfPlayers);
         int position = game.addPlayerAtNextPosition(hostPlayer);
         if(position == -1)
             return null;
         hostPlayer.setColor(hostColor);
-        return game.getGameDescription();
+        return GameStateFactory.gameToGameState(game);
     }
 
-    public GameDescription joinGame(Player newPlayer, int gameID, String color) {
+    public GameState joinGame(Player newPlayer, int gameID, String color) {
         ServerModel model = ServerModel.get_instance();
-        Game game = model.getGame(gameID);
+        IServerGame game = model.getGame(gameID);
         newPlayer.setColor(color);
         if(game == null) return null;
         int playerPosition = game.addPlayerAtNextPosition(newPlayer);
         //check to see of the player was added successfully
         if(playerPosition == -1) return null;
-        return game.getGameDescription();
+        return GameStateFactory.gameToGameState(game);
     }
 
     public List<GameDescription> getGames(String username, String password) {
@@ -84,8 +91,8 @@ public class ServerFacade {
         return ServerModel.get_instance().getGame(gameID);
     }
 
-    public List<ICommand> getGameUpdates(Player client, int gameID, int lastUpdate) {
-        return ServerModel.get_instance().getGameUpdates(client, gameID, lastUpdate);
+    public List<ICommand> getGameUpdates(Player client, int gameID) {
+        return ServerModel.get_instance().getGameUpdates(client, gameID);
     }
 
     public GameDescription getGameDescription(String username, String password, int gameID) {
@@ -97,6 +104,27 @@ public class ServerFacade {
         ServerGame game = model.getGame(gameID);
         List<ICommand> commands = game.getCommandManager().recentCommands(new Player(username, password));
         return new CommandHolder(commands);
+    }
+
+    public GameState getGameState(String username, String password, int gameID) {
+        IServerGame game = ServerModel.get_instance().getGame(gameID);
+        return GameStateFactory.gameToGameState(game);
+    }
+
+    public TrainCard drawTrainCard(String username, String password, int gameID, int index) {
+        ServerModel model = ServerModel.get_instance();
+        IServerGame game = model.getGame(gameID);
+        if(game == null) return null;
+        IServerBank bank = (IServerBank) game.getBank();
+        return bank.drawTrainCard();
+    }
+
+    public DestinationCard drawDestinationCard(String username, String password, int gameID) {
+        ServerModel model = ServerModel.get_instance();
+        IServerGame game = model.getGame(gameID);
+        if(game == null) return null;
+        IServerBank bank = (IServerBank) game.getBank();
+        return bank.drawDestinationCard();
     }
 
     public Result executeCommand(ICommand command) {

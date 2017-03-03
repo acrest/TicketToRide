@@ -42,8 +42,8 @@ public class ServerBank implements IServerBank {
     }
 
     @Override
-    public List<TrainCard> getVisibleCards() {
-        return visibleTrainCards;
+    public TrainCard getVisibleCard(int index) {
+        return visibleTrainCards.get(index);
     }
 
     @Override

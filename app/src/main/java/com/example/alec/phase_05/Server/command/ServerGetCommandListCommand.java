@@ -11,8 +11,8 @@ import com.example.alec.phase_05.Shared.command.Result;
 
 public class ServerGetCommandListCommand extends GetCommandListCommand {
 
-    public ServerGetCommandListCommand(String commandName, String userName, String password, int gameID) {
-        super(commandName, userName, password, gameID);
+    public ServerGetCommandListCommand(String userName, String password, int gameID) {
+        super(userName, password, gameID);
     }
 
     @Override

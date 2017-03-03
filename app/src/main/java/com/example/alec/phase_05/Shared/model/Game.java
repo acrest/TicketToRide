@@ -85,7 +85,12 @@ public abstract class Game implements IGame {
         return gameMap;
     }
 
-//    public void setMaxPlayers(int maxPlayers) {
+    @Override
+    public void setMap(GameMap map) {
+        gameMap = map;
+    }
+
+    //    public void setMaxPlayers(int maxPlayers) {
 //        this.maxPlayers = maxPlayers;
 //    }
 

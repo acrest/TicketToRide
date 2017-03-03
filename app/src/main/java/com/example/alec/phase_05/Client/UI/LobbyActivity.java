@@ -2,31 +2,27 @@ package com.example.alec.phase_05.Client.UI;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.alec.phase_05.Client.ClientModel;
-import com.example.alec.phase_05.Client.Poller;
+import com.example.alec.phase_05.Client.ClientFacade;
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Presenter.ILobbyListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
-import com.example.alec.phase_05.Client.Presenter.MockPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.PresenterLobby;
 import com.example.alec.phase_05.R;
-import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
-import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.IGame;
 
 public class LobbyActivity extends Activity implements ILobbyListener {
     private Button mStartGameButton;
     private TextView mNumberOfPlayers;
     private IPresenterLobby presenter;
-    private Game currentGame;
+    private GameDescription currentGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +44,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
 
         presenter = new MockPresenterLobby(this);
         presenter = new PresenterLobby(this);
-        currentGame = ClientModel.getInstance().getCurrentGame();
+        currentGame = ClientModel.getInstance().getCurrentGameDescription();
         mNumberOfPlayers.setText(currentGame.getNumberPlayers() + "/" + currentGame.getMaxPlayers());
 
         if(currentGame.getPlayers().get(0).getName().equals(ClientModel.getInstance().getCurrentPlayer().getName()))

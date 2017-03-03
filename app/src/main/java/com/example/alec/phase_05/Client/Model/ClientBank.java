@@ -22,8 +22,8 @@ public class ClientBank implements IClientBank {
     }
 
     @Override
-    public List<TrainCard> getVisibleCards() {
-        return visibleTrainCards;
+    public TrainCard getVisibleCard(int index) {
+        return visibleTrainCards.get(index);
     }
 
     @Override
@@ -36,15 +36,24 @@ public class ClientBank implements IClientBank {
         return numberOfDestinationCards;
     }
 
-    public void setVisibleTrainCards(List<TrainCard> visibleTrainCards) {
-        this.visibleTrainCards = visibleTrainCards;
+    @Override
+    public void setVisibleCard(int index, TrainCard card) {
+        while(index >= visibleTrainCards.size()) {
+            visibleTrainCards.add(null);
+        }
+        visibleTrainCards.set(index, card);
     }
 
-    public void setNumberOfTrainCards(int numberOfTrainCards) {
-        this.numberOfTrainCards = numberOfTrainCards;
+    @Override
+    public void decNumberOfDestinationCards() {
+        numberOfTrainCards--;
     }
 
-    public void setNumberOfDestinationCards(int numberOfDestinationCards) {
-        this.numberOfDestinationCards = numberOfDestinationCards;
-    }
+//    public void setNumberOfTrainCards(int numberOfTrainCards) {
+//        this.numberOfTrainCards = numberOfTrainCards;
+//    }
+
+//    public void setNumberOfDestinationCards(int numberOfDestinationCards) {
+//        this.numberOfDestinationCards = numberOfDestinationCards;
+//    }
 }

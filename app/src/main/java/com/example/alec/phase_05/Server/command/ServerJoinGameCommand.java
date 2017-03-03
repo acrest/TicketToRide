@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Server.command;
 
 import com.example.alec.phase_05.Server.ServerFacade;
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.AbstractJoinGameCommand;
 import com.example.alec.phase_05.Shared.command.Result;
@@ -20,7 +21,7 @@ public class ServerJoinGameCommand  extends AbstractJoinGameCommand {
     public Result execute() {
         ServerFacade sf = ServerFacade.get_instance();
         Player player = sf.getPlayerByName(getUserName());
-        GameDescription game = sf.joinGame(player, getGameID(), getColor());
+        GameState game = sf.joinGame(player, getGameID(), getColor());
         //String gameName = sf.joinGame(player, getGameID(), getColor());
         Result result = new ServerResult();
         result.setResultObject(game);
