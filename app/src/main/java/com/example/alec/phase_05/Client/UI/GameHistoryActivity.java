@@ -2,7 +2,7 @@ package com.example.alec.phase_05.Client.UI;
 
 import android.app.Activity;
 import android.os.Bundle;
-
+//import android.provider.Contacts.Intents.UI.R;
 import com.example.alec.phase_05.R;
 
 /**

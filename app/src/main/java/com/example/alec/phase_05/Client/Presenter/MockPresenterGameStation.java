@@ -143,6 +143,11 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         new RandomUpdateTask().execute();
     }
 
+    @Override
+    public void update(UpdateIndicator updateIndicator) {
+
+    }
+
     private class RandomUpdateTask extends AsyncTask<Void, Void, Void> {
         Runnable runnable;
 
