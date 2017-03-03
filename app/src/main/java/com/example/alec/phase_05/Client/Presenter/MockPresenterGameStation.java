@@ -1,4 +1,3 @@
-/*
 package com.example.alec.phase_05.Client.Presenter;
 
 import android.os.AsyncTask;
@@ -18,10 +17,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-*/
 /**
  * Created by samuel on 2/11/17.
- *//*
+ */
 
 
 public class MockPresenterGameStation implements IPresenterGameStation {
@@ -146,6 +144,11 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         new RandomUpdateTask().execute();
     }
 
+    @Override
+    public void update(UpdateIndicator updateIndicator) {
+
+    }
+
     private class RandomUpdateTask extends AsyncTask<Void, Void, Void> {
         Runnable runnable;
 
@@ -170,4 +173,3 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         }
     }
 }
-*/

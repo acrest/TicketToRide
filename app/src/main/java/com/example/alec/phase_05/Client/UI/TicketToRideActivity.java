@@ -51,7 +51,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_ticket_to_ride);
 
         mGameRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
         mGameRecView.setLayoutManager(new LinearLayoutManager(this));
