@@ -23,24 +23,34 @@
         </activity>
         <activity
             android:name=".Client.UI.LobbyActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity
             android:name=".Client.UI.GameStationActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape">
+        </activity>
         <activity
             android:name=".Client.UI.TicketToRideActivity"
 <<<<<<< HEAD
+<<<<<<< HEAD
             android:screenOrientation="landscape">
 
+=======
+            android:screenOrientation="landscape">
+>>>>>>> cc444ff2034ff76455252bb5b08f9a97c6ada412
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
 
 =======
             android:screenOrientation="landscape" />
+=======
+>>>>>>> cc444ff2034ff76455252bb5b08f9a97c6ada412
         <activity
             android:name=".TicketMapActivity"
             android:label="@string/title_activity_ticket_map"

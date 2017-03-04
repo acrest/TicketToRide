@@ -1,4 +1,3 @@
-/*
 package com.example.alec.phase_05.Client.Presenter;
 
 import android.os.AsyncTask;
@@ -18,13 +17,11 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-*/
 /**
  * Created by samuel on 2/11/17.
- *//*
+ */
 
-
-public class MockPresenterGameStation implements IPresenterGameStation {
+public class MockPresenterGameStation extends Presenter implements IPresenterGameStation {
     private static String[] colors;
     private static final long TIMER_DELAY = 5000;
 
@@ -59,7 +56,7 @@ public class MockPresenterGameStation implements IPresenterGameStation {
     }
 
     @Override
-    public void update(Observable observable, Object o) {
+    public void update(UpdateIndicator updateIndicator) {
         listener.updateGameList(generateRandomDescriptions());
         //listener.updateGameList(generateRandomDescriptions(10));
         randomlyUpdateColors();
@@ -175,4 +172,3 @@ public class MockPresenterGameStation implements IPresenterGameStation {
         }
     }
 }
-*/

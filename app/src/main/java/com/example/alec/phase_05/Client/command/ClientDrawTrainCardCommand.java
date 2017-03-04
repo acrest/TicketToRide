@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Client.command;
 
+import com.example.alec.phase_05.Client.ClientFacade;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.command.DrawTrainCardCommand;
 import com.example.alec.phase_05.Shared.model.TrainCard;
@@ -17,6 +18,6 @@ public class ClientDrawTrainCardCommand extends DrawTrainCardCommand {
     }
 
     public Result execute() {
-        return null; //TODO
+        return null;
     }
 }

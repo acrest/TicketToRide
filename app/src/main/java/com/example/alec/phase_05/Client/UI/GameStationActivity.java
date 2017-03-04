@@ -18,7 +18,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alec.phase_05.Client.ClientModel;
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Presenter.IGameStationListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterGameStation;
 import com.example.alec.phase_05.Client.Presenter.PresenterGameStation;
@@ -250,7 +250,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
                 holder.setSelected(false);
             }
             holder.titleLabel.setText(gameDescription.getName());
-            Game currentGame = ClientModel.getInstance().getCurrentGame();
+            GameDescription currentGame = ClientModel.getInstance().getCurrentGameDescription();
 
             holder.inGameLabel.setText(gameDescription.getNumberPlayers() + "/" + gameDescription.getMaxPlayers());
 

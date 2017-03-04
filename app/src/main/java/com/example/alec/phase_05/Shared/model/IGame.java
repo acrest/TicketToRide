@@ -8,6 +8,8 @@ import com.example.alec.phase_05.Server.CommandManager;
 
 public interface IGame {
 
+    static final int NUM_VISIBLE_CARDS = 5;
+
     int getID();
     String getName();
 
@@ -19,4 +21,5 @@ public interface IGame {
 
     IBank getBank();
     GameMap getMap();
+    void setMap(GameMap map);
 }

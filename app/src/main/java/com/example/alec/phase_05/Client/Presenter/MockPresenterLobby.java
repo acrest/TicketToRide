@@ -1,4 +1,3 @@
-/*
 package com.example.alec.phase_05.Client.Presenter;
 
 import android.os.AsyncTask;
@@ -8,13 +7,11 @@ import android.os.Looper;
 import java.util.Observable;
 import java.util.Random;
 
-*/
 /**
  * Created by samuel on 2/13/17.
- *//*
+ */
 
-
-public class MockPresenterLobby implements IPresenterLobby {
+public class MockPresenterLobby extends Presenter implements IPresenterLobby {
     private static final long TIMER_DELAY = 1000;
     private ILobbyListener listener;
 
@@ -28,8 +25,13 @@ public class MockPresenterLobby implements IPresenterLobby {
 
     }
 
+<<<<<<< HEAD
 
     public void update(Observable observable, Object o) {
+=======
+    @Override
+    public void update(UpdateIndicator updateIndicator) {
+>>>>>>> cc444ff2034ff76455252bb5b08f9a97c6ada412
         randomlyUpdatePlayerNumbers();
     }
 
@@ -73,4 +75,3 @@ public class MockPresenterLobby implements IPresenterLobby {
         }
     }
 }
-*/

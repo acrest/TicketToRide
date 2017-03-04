@@ -21,11 +21,10 @@ public class ServerGetGameUpdates extends AbstractGetGameUpdatesCommand {
         super(username, password, gameID, lastUpdate);
     }
 
-    //TODO: implements this
     @Override
     public Result execute() {
         ServerFacade sf = ServerFacade.get_instance();
-        List<ICommand> commands = sf.getGameUpdates(sf.getPlayerByName(getUserName()), getGameID(), getLastUpdate());
+        List<ICommand> commands = sf.getGameUpdates(sf.getPlayerByName(getUserName()), getGameID());
         Result r = new ServerResult();
         r.setResultObject(new CommandHolder(commands));
         return r;
