@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.alec.phase_05.Client.ClientFacade;
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Client.Model.IClientGame;
 import com.example.alec.phase_05.Client.Presenter.ILobbyListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.PresenterLobby;
@@ -22,7 +23,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
     private Button mStartGameButton;
     private TextView mNumberOfPlayers;
     private IPresenterLobby presenter;
-    private GameDescription currentGame;
+    private IClientGame currentGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +43,11 @@ public class LobbyActivity extends Activity implements ILobbyListener {
 
         mNumberOfPlayers = (TextView) findViewById(R.id.lobby_current_number_players);
 
-        presenter = new MockPresenterLobby(this);
         presenter = new PresenterLobby(this);
-        currentGame = ClientModel.getInstance().getCurrentGameDescription();
+        currentGame = ClientModel.getInstance().getCurrentGame();
         mNumberOfPlayers.setText(currentGame.getNumberPlayers() + "/" + currentGame.getMaxPlayers());
 
-        if(currentGame.getPlayers().get(0).getName().equals(ClientModel.getInstance().getCurrentPlayer().getName()))
+        if(currentGame.getPlayer(0).getName().equals(ClientModel.getInstance().getCurrentPlayer().getName()))
         {
             mStartGameButton.setVisibility(View.VISIBLE);
         }

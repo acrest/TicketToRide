@@ -25,13 +25,8 @@ public class MockPresenterLobby extends Presenter implements IPresenterLobby {
 
     }
 
-<<<<<<< HEAD
-
-    public void update(Observable observable, Object o) {
-=======
     @Override
     public void update(UpdateIndicator updateIndicator) {
->>>>>>> cc444ff2034ff76455252bb5b08f9a97c6ada412
         randomlyUpdatePlayerNumbers();
     }
 
@@ -44,11 +39,6 @@ public class MockPresenterLobby extends Presenter implements IPresenterLobby {
 
     private void startRandomUpdates() {
         new RandomUpdateTask().execute();
-    }
-
-    @Override
-    public void update(UpdateIndicator updateIndicator) {
-
     }
 
     private class RandomUpdateTask extends AsyncTask<Void, Void, Void> {

@@ -20,7 +20,7 @@ public abstract class HandlerBase implements HttpHandler
         try
         {
             InputStream in = t.getRequestBody();
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
             StringBuilder sb = new StringBuilder();
             char[] buf = new char[128];
             int r;
@@ -53,7 +53,7 @@ public abstract class HandlerBase implements HttpHandler
                 String ser = SerDes.serialize(r);
                 t.sendResponseHeaders(HttpURLConnection.HTTP_OK, ser.length());
                 OutputStream resBody = t.getResponseBody();
-                resBody.write(ser.getBytes());
+                resBody.write(ser.getBytes("UTF-8"));
                 resBody.close();
             }
             else
