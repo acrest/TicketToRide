@@ -43,6 +43,9 @@ public class ServerBank implements IServerBank {
 
     @Override
     public TrainCard getVisibleCard(int index) {
+        while(index >= visibleTrainCards.size()) {
+            visibleTrainCards.add(null);
+        }
         return visibleTrainCards.get(index);
     }
 

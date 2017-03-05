@@ -250,7 +250,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
                 holder.setSelected(false);
             }
             holder.titleLabel.setText(gameDescription.getName());
-            GameDescription currentGame = ClientModel.getInstance().getCurrentGameDescription();
+//            GameDescription currentGame = ClientModel.getInstance().getCurrentGameDescription();
 
             holder.inGameLabel.setText(gameDescription.getNumberPlayers() + "/" + gameDescription.getMaxPlayers());
 
@@ -270,6 +270,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
 
         @Override
         public int getItemCount() {
+            if(listData == null) return 0;
             return listData.size();
         }
 
@@ -281,6 +282,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
         }
 
         public int getSelectedGameID() {
+            if(listData == null) return INVALID_INDEX;
             if(selectedIndex != INVALID_INDEX) {
                 return listData.get(selectedIndex).getID();
             }
@@ -288,6 +290,9 @@ public class GameStationActivity extends Activity implements IGameStationListene
         }
 
         private void selectGameOfID(int gameID) {
+            if(listData == null) {
+                return;
+            }
             boolean foundSelected = false;
             for(int i = 0; i < getItemCount(); ++i) {
                 if(listData.get(i).getID() == gameID) {
@@ -316,7 +321,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
             //remember the selected game's id
             int selectedGameID = getSelectedGameID();
 //            System.out.println("selected game id = " + selectedGameID);
-            List<GameDescription> oldList = listData;
+//            List<GameDescription> oldList = listData;
             listData = newListData;
 //            int minLength = Math.min(oldList.size(), newListData.size());
 //            for(int i = 0; i < minLength; ++i) {
