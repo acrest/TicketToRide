@@ -27,12 +27,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alec.phase_05.Client.Model.Chat_Item;
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Model.Derpness;
+import com.example.alec.phase_05.Client.Model.IClientGame;
+import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRide;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
+import com.example.alec.phase_05.Client.Presenter.PresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRide;
 
-<<<<<<< HEAD
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -55,10 +58,11 @@ import android.app.TabActivity;
 import android.os.Bundle;
 import android.widget.TabHost;
 import com.example.alec.phase_05.R;
-=======
-import java.util.List;
+import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
->>>>>>> 1e1065bcde634357009c8de20eb3d1fff7581ec0
+import java.util.ArrayList;
+import java.util.List;
 
 //public class TicketToRideActivity extends Activity {
 
@@ -71,11 +75,16 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private IPresenterTicketToRide presenter;
     private RecyclerView mGameRecView;
     private DerpAdapter mRecyclerAdapter;
+    private IClientGame currentGame;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_to_ride);
+
+        presenter = new PresenterTicketToRide(this);
+        currentGame = ClientModel.getInstance().getCurrentGame();
 
         mGameRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
         mGameRecView.setLayoutManager(new LinearLayoutManager(this));
@@ -94,6 +103,74 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mTabHost.addTab(mTabHost.newTabSpec("tab_test6").setIndicator("Chat").setContent(R.id.chat));
 
         mTabHost.setCurrentTab(0);
+
+        TextView redCard;
+        TextView orangeCard;
+        TextView yellowCard;
+        TextView greenCard;
+        TextView blueCard;
+        TextView purpleCard;
+        TextView whiteCard;
+        TextView blackCard;
+        TextView goldCard;
+        TextView rainbowCard;
+
+        redCard = (TextView) findViewById(R.id.red_cards);
+        orangeCard = (TextView) findViewById(R.id.orange_cards);
+        yellowCard = (TextView) findViewById(R.id.yellow_cards);
+        greenCard = (TextView) findViewById(R.id.green_cards);
+        blueCard = (TextView) findViewById(R.id.blue_cards);
+        purpleCard = (TextView) findViewById(R.id.purple_cards);
+        whiteCard = (TextView) findViewById(R.id.white_cards);
+        blackCard = (TextView) findViewById(R.id.black_cards);
+        rainbowCard = (TextView) findViewById(R.id.rainbow_cards);
+
+
+        ArrayList<TrainCard> cardList = currentGame.getPlayer(1).getTrainCards();
+        int red_coal = 0;
+        int orange_tanker = 0;
+        int yellow_boxcar = 0;
+        int green_caboose = 0;
+        int blue_passenger = 0;
+        int purple_freight = 0;
+        int white_reefer = 0;
+        int black_hopper = 0;
+        int rainbow_any = 0;
+        for (int i = 0; i < cardList.size(); i++) {
+            TrainType trainType = cardList.get(i).getType();
+            switch (trainType) {
+                case COAL: red_coal++;
+                    break;
+                case TANKER: orange_tanker++;
+                    break;
+                case BOX: yellow_boxcar++;
+                    break;
+                case CABOOSE: green_caboose++;
+                    break;
+                case PASSENGER: blue_passenger++;
+                    break;
+                case FREIGHT: purple_freight++;
+                    break;
+                case REEFER: white_reefer++;
+                    break;
+                case HOPPER: black_hopper++;
+                    break;
+                case ANY: rainbow_any++;
+            }
+
+        }
+
+        redCard.setText(Integer.toString(red_coal));
+        orangeCard.setText(Integer.toString(orange_tanker));
+        yellowCard.setText(Integer.toString(yellow_boxcar));
+        greenCard.setText(Integer.toString(green_caboose));
+        blueCard.setText(Integer.toString(blue_passenger));
+        purpleCard.setText(Integer.toString(purple_freight));
+        whiteCard.setText(Integer.toString(white_reefer));
+        blackCard.setText(Integer.toString(black_hopper));
+        rainbowCard.setText(Integer.toString(rainbow_any));
+
+
 
         presenter = new PresenterTicketToRide(this);
     }
