@@ -60,7 +60,14 @@ public class ClientFacade {
     }
 
     public void setCurrentGameDescription(GameDescription description) {
-        ClientModel.getInstance().setCurrentGameDescription(description);
+        IClientGame game = ClientModel.getInstance().getCurrentGame();
+        List<Player> players = description.getPlayers();
+        for(int i = 0; i < game.getMaxPlayers(); ++i) {
+            game.setPlayer(i, null);
+        }
+        for(int i = 0; i < players.size(); ++i) {
+            game.setPlayer(i, players.get(i));
+        }
     }
 
     public void drawDestinationCard(String playerName, DestinationCard card) {

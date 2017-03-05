@@ -16,7 +16,7 @@ public class ClientBank implements IClientBank {
     private int numberOfDestinationCards;
 
     public ClientBank() {
-        visibleTrainCards = null;
+        visibleTrainCards = new ArrayList<>();
         numberOfTrainCards = 0;
         numberOfDestinationCards = 0;
     }

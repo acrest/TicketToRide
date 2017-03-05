@@ -79,13 +79,14 @@ public class ClientCommunicator
             //URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
             //clark's ip "45.56.33.124"
             //serverIP = "192.168.1.118";
-            serverIP = "192.168.1.111";
+            serverIP = "192.168.122.1";
             URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
             System.out.println(url.toString());
 
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
             http.setRequestMethod("POST");
+            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             http.setDoOutput(true);
 
             http.setConnectTimeout(7000);
@@ -117,9 +118,18 @@ public class ClientCommunicator
         return null;
     }
 
+//    private String sendAndGetResponse(String requestBody, String handler, int remainingAttempts) {
+//        while(remainingAttempts > 0) {
+//            String response = sendAndGetResponse(requestBody, handler);
+//            if(response != null) return response;
+//            --remainingAttempts;
+//        }
+//        return null;
+//    }
+
     private static String readString(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
-        InputStreamReader sr = new InputStreamReader(is);
+        InputStreamReader sr = new InputStreamReader(is, "UTF-8");
         char[] buf = new char[1024];
         int len;
         while ((len = sr.read(buf)) > 0)
@@ -130,8 +140,9 @@ public class ClientCommunicator
     }
 
     private static void writeString(String str, OutputStream os) throws IOException {
-        OutputStreamWriter sw = new OutputStreamWriter(os);
-        sw.write(str);
-        sw.flush();
+        os.write(str.getBytes("UTF-8"));
+//        OutputStreamWriter sw = new OutputStreamWriter(os);
+//        sw.write(str);
+//        sw.flush();
     }
 }

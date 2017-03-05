@@ -29,7 +29,6 @@ public class ClientModel extends Observable {
     }
 
     private List<GameDescription> gameList;
-    private GameDescription currentGameDescription;
     private IClientGame currentGame;
     private Player currentPlayer;
 
@@ -53,14 +52,14 @@ public class ClientModel extends Observable {
 //        notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
 //    }
 
-    public GameDescription getCurrentGameDescription() {
-        return currentGameDescription;
-    }
+//    public GameDescription getCurrentGameDescription() {
+//        return currentGameDescription;
+//    }
 
-    public void setCurrentGameDescription(GameDescription gameDescription) {
-        currentGameDescription = gameDescription;
-        notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
-    }
+//    public void setCurrentGameDescription(GameDescription gameDescription) {
+//        currentGameDescription = gameDescription;
+//        notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
+//    }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
