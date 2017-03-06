@@ -249,11 +249,10 @@ public class Facade {
             @Override
             public void run() {
                 ClientModel model = ClientModel.getInstance();
-                IClientGame game = model.getCurrentGame();
-                if(game != null) {
+                if(model.hasCurrentGame()) {
                     ClientFacade facade = ClientFacade.getInstance();
                     Player player = model.getCurrentPlayer();
-                    CommandHolder commands = proxy.getGameCommands(player, game.getID());
+                    CommandHolder commands = proxy.getGameCommands(player, model.getGameID());
                     facade.executeCommands(commands.getCommands());
                 }
             }

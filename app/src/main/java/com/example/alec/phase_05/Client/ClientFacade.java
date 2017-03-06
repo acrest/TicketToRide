@@ -60,55 +60,48 @@ public class ClientFacade {
     }
 
     public void setCurrentGameDescription(GameDescription description) {
-        IClientGame game = ClientModel.getInstance().getCurrentGame();
+        ClientModel model = ClientModel.getInstance();
         List<Player> players = description.getPlayers();
-        for(int i = 0; i < game.getMaxPlayers(); ++i) {
-            game.setPlayer(i, null);
+        for(int i = 0; i < model.getGameMaxPlayers(); ++i) {
+            model.setPlayer(i, null);
         }
         for(int i = 0; i < players.size(); ++i) {
-            game.setPlayer(i, players.get(i));
+            model.setPlayer(i, players.get(i));
         }
     }
 
     public void drawDestinationCard(String playerName, DestinationCard card) {
         ClientModel model = ClientModel.getInstance();
-        IClientGame game = model.getCurrentGame();
-        IClientBank bank = (IClientBank) game.getBank();
-        bank.decNumberOfDestinationCards();
-        Player player = game.findPlayerByName(playerName);
-        player.addDestinationCard(card);
+        model.decNumOfDestinationCards();
+        model.addDestinationCard(playerName, card);
     }
 
     public void drawTrainCard(String playerName, int index, TrainCard card, TrainCard nextCardInDeck) {
         ClientModel model = ClientModel.getInstance();
-        IClientGame game = model.getCurrentGame();
-        IClientBank bank = (IClientBank) game.getBank();
-        bank.setVisibleCard(index, nextCardInDeck);
-        Player player = game.findPlayerByName(playerName);
-        player.addTrainCard(card);
+        model.setVisibleCard(index, nextCardInDeck);
+        model.addTrainCard(playerName, card);
     }
 
     public void setGameState(GameState gameState) {
-        IClientGame game = ClientModel.getInstance().getCurrentGame();
-        if(game == null) {
+        ClientModel model = ClientModel.getInstance();
+        if(!model.hasCurrentGame()) {
             ClientModel.getInstance().setCurrentGame(ClientGameFactory.createGame(gameState));
             return;
         }
-        if(game.getID() != gameState.getId() ||
-                !game.getName().equals(gameState.getName()) ||
-                game.getMaxPlayers() != gameState.getMaxPlayers()) {
+        if(model.getGameID() != gameState.getId() ||
+                !model.getGameName().equals(gameState.getName()) ||
+                model.getGameMaxPlayers() != gameState.getMaxPlayers()) {
             throw new IllegalArgumentException("gameState must have the same name, id, and max players as the current game");
         }
-        IClientBank bank = (IClientBank) game.getBank();
         Player[] players = gameState.getPlayers();
         for(int i = 0; i < players.length; ++i) {
-            game.setPlayer(i, players[i]);
+            model.setPlayer(i, players[i]);
         }
         TrainCard[] visibleTrainCards = gameState.getVisibleTrainCards();
         for(int i = 0; i < players.length; ++i) {
-            bank.setVisibleCard(i,visibleTrainCards[i]);
+            model.setVisibleCard(i,visibleTrainCards[i]);
         }
-        game.setMap(gameState.getMap());
+        model.setMap(gameState.getMap());
     }
 
     public void executeCommands(List<ICommand> commands) {
