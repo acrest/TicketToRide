@@ -19,7 +19,6 @@
         <activity
             android:name=".Client.UI.LogInActivity"
             android:screenOrientation="landscape">
-
         </activity>
         <activity
             android:name=".Client.UI.LobbyActivity"
@@ -32,8 +31,6 @@
         </activity>
         <activity
             android:name=".Client.UI.TicketToRideActivity"
-            android:screenOrientation="landscape">
-
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
