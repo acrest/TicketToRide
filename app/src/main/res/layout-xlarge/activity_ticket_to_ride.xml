@@ -449,24 +449,29 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp">
-                    <TextView
-                        android:id="@+id/textview4"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Chat with the other players" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rec_chat_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp">
+                    </android.support.v7.widget.RecyclerView>
                     <EditText
                         android:id="@+id/myeditfield"
+                        android:background="#E0E0E0"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="25dp"
+                        android:hint="@string/chat_message"
+                        android:textColorHint="@android:color/black"
 
-                    <LinearLayout
+                        android:textAlignment="center"/>
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:orientation="horizontal">
 
 
                         <Button
-                            android:id="@+id/create_game_button"
+                            android:id="@+id/post_message_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
@@ -474,7 +479,7 @@
                             android:text="Post message"
                             android:textSize="13dp"/>
 
-                    </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>

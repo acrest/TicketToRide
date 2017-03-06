@@ -1,24 +1,15 @@
 package com.example.alec.phase_05.Client.UI;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.TabActivity;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -26,8 +17,8 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alec.phase_05.Client.Model.Chat_Item;
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Shared.model.Chat_Item;
 import com.example.alec.phase_05.Client.Model.Derpness;
 import com.example.alec.phase_05.Client.Model.IClientGame;
 import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
@@ -64,6 +55,7 @@ import com.example.alec.phase_05.Shared.model.TrainType;
 import java.util.ArrayList;
 import java.util.List;
 
+
 //public class TicketToRideActivity extends Activity {
 
 
@@ -73,8 +65,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private ArrayAdapter<String> mAdapter;
     ViewPager vpager;
     private IPresenterTicketToRide presenter;
-    private RecyclerView mGameRecView;
-    private DerpAdapter mRecyclerAdapter;
+    private RecyclerView mChatRecView;
+    private RecyclerView mRoutesRecView;
+    private RecyclerView mGameHistoryRecView;
+    private DerpAdapter mChatRecyclerAdapter;
+    private DerpAdapter mRoutesRecyclerAdapter;
+    private DerpAdapter mGameHistoryRecyclerAdapter;
     private IClientGame currentGame;
 
 
@@ -86,11 +82,19 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         presenter = new PresenterTicketToRide(this);
         currentGame = ClientModel.getInstance().getCurrentGame();
 
-        mGameRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
-        mGameRecView.setLayoutManager(new LinearLayoutManager(this));
+        mChatRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
+        mRoutesRecView = (RecyclerView) findViewById(R.id.routes_list);
+        mGameHistoryRecView = (RecyclerView) findViewById(R.id.games_history_list);
+        mChatRecView.setLayoutManager(new LinearLayoutManager(this));
+        mRoutesRecView.setLayoutManager(new LinearLayoutManager(this));
+        mGameHistoryRecView .setLayoutManager(new LinearLayoutManager(this));
 
-        mRecyclerAdapter = new DerpAdapter(Derpness.getInstance().generateFakeChat(), this);
-        mGameRecView.setAdapter(mRecyclerAdapter);
+        mChatRecyclerAdapter = new DerpAdapter(Derpness.getInstance().generateFakeChat(), this);
+        mRoutesRecyclerAdapter = new DerpAdapter(Derpness.getInstance().generateFakeChat(), this);
+        mGameHistoryRecyclerAdapter = new DerpAdapter(Derpness.getInstance().generateFakeChat(), this);
+        mChatRecView.setAdapter(mChatRecyclerAdapter);
+        mRoutesRecView.setAdapter(mRoutesRecyclerAdapter);
+        mGameHistoryRecView.setAdapter(mGameHistoryRecyclerAdapter);
 
         TabHost mTabHost = getTabHost();
 
@@ -222,13 +226,33 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         @Override
         public DerpHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = inflater.inflate(R.layout.list_chat_message, parent, false);
+            View v = inflater.inflate(R.layout.list_simple_view, parent, false);
             return new DerpHolder(v);
         }
 
         @Override
         public void onBindViewHolder(DerpHolder holder, int position) {
             Chat_Item message = listData.get(position);
+
+            holder.message.setText(message.getMessage());
+
+            switch (message.getColor()){
+                case("blue"):
+                    holder.message.setTextColor(Color.BLUE);
+                    break;
+                case("red"):
+                    holder.message.setTextColor(Color.RED);
+                    break;
+                case("yellow"):
+                    holder.message.setTextColor(Color.YELLOW);
+                    break;
+                case("black"):
+                    holder.message.setTextColor(Color.BLACK);
+                    break;
+                case("green"):
+                    holder.message.setTextColor(Color.GREEN);
+                    break;
+            }
         }
 
         @Override
@@ -244,9 +268,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
 
         class DerpHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            private TextView titleLabel;
-            private TextView playersLabel;
-            private TextView inGameLabel;
+            private TextView message;
             private View container;
 
 
@@ -254,9 +276,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 super(itemView);
                 itemView.setOnClickListener(this);
 
-                titleLabel = (TextView)itemView.findViewById(R.id.lbl_game_name_text);
-                playersLabel = (TextView)itemView.findViewById(R.id.lbl_players_text);
-                inGameLabel = (TextView)itemView.findViewById(R.id.lbl_in_game_text);
+                message = (TextView)itemView.findViewById(R.id.lbl_simple_view);
                 container = itemView.findViewById(R.id.cont_item_root);
             }
 
