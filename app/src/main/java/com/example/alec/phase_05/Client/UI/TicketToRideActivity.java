@@ -49,6 +49,7 @@ import android.app.TabActivity;
 import android.os.Bundle;
 import android.widget.TabHost;
 import com.example.alec.phase_05.R;
+import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
@@ -111,21 +112,30 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         setTrainCards();
         setPlayersStats();
-
-
-
-
-
+        setRoutes();
 
 
 
 
         presenter = new PresenterTicketToRide(this);
+        presenter = new PresenterTicketToRide(this);
 
+    }
 
+    private void setRoutes() {
+        Player curr_player = currentGame.getPlayer(1);
+        ArrayList<DestinationCard> routes = curr_player.getDestinationCards();
 
+        TextView route_List = (TextView) findViewById(R.id.routes_cards);
 
+        StringBuilder builder = new StringBuilder();
+        for (DestinationCard card : routes) {
+            String info = card.getCity1() + " to " + card.getCity2() + " for " + card.getValue() + " points";
+            builder.append(info + "\n");
 
+        }
+
+        route_List.setText(builder.toString());
     }
 
     private void setPlayersStats() {
@@ -158,6 +168,19 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     }
 
+
+    private void populatePlayerListView(ArrayList<String> playerInfo) {
+        TextView playersStats = (TextView) findViewById(R.id.player_stats);
+
+        StringBuilder builder = new StringBuilder();
+        for (String a_player : playerInfo) {
+            builder.append(a_player + "\n");
+        }
+
+        playersStats.setText(builder.toString());
+
+    }
+
     private void setTrainCards() {
         TextView redCard = (TextView) findViewById(R.id.red_cards);
         TextView orangeCard = (TextView) findViewById(R.id.orange_cards);
@@ -169,7 +192,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         TextView blackCard = (TextView) findViewById(R.id.black_cards);
         TextView rainbowCard = (TextView) findViewById(R.id.rainbow_cards);
 
-        ListView playerInfoList = (ListView) findViewById(R.id.players_stats);
+        ListView playerInfoList = (ListView) findViewById(R.id.player_stats);
 
 
         ArrayList<TrainCard> cardList = currentGame.getPlayer(1).getTrainCards();
@@ -218,17 +241,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     }
 
-    private void populatePlayerListView(ArrayList<String> playerInfo) {
-        TextView playersStats = (TextView) findViewById(R.id.player_stats);
-
-        StringBuilder builder = new StringBuilder();
-        for (String a_player : playerInfo) {
-            builder.append(a_player + "\n");
-        }
-
-        playersStats.setText(builder.toString());
-
-    }
 
     /*
         @Override
