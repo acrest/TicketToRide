@@ -49,6 +49,7 @@ import android.app.TabActivity;
 import android.os.Bundle;
 import android.widget.TabHost;
 import com.example.alec.phase_05.R;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
@@ -108,26 +109,67 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         mTabHost.setCurrentTab(0);
 
-        TextView redCard;
-        TextView orangeCard;
-        TextView yellowCard;
-        TextView greenCard;
-        TextView blueCard;
-        TextView purpleCard;
-        TextView whiteCard;
-        TextView blackCard;
-        TextView goldCard;
-        TextView rainbowCard;
+        setTrainCards();
+        setPlayersStats();
 
-        redCard = (TextView) findViewById(R.id.red_cards);
-        orangeCard = (TextView) findViewById(R.id.orange_cards);
-        yellowCard = (TextView) findViewById(R.id.yellow_cards);
-        greenCard = (TextView) findViewById(R.id.green_cards);
-        blueCard = (TextView) findViewById(R.id.blue_cards);
-        purpleCard = (TextView) findViewById(R.id.purple_cards);
-        whiteCard = (TextView) findViewById(R.id.white_cards);
-        blackCard = (TextView) findViewById(R.id.black_cards);
-        rainbowCard = (TextView) findViewById(R.id.rainbow_cards);
+
+
+
+
+
+
+
+
+        presenter = new PresenterTicketToRide(this);
+
+
+
+
+
+    }
+
+    private void setPlayersStats() {
+        int num_players = currentGame.getNumberPlayers();
+        ArrayList<TrainCard> cardList = currentGame.getPlayer(1).getTrainCards();
+        ArrayList<Player> playerList = new ArrayList<Player>();
+        ArrayList<String> playerInfo = new ArrayList<String>();
+        Player player_with_longest_route = new Player(null, null);
+
+
+        for (int i = 0; i < num_players; i++) {
+            Player temp_player = currentGame.getPlayer(i);
+            if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
+                player_with_longest_route = temp_player;
+            }
+            playerList.add(temp_player);
+            String temp = temp_player.getName() +  "                " + temp_player.getPointCount() + "                      "
+                    + temp_player.getTrainCount() + "                    " + cardList.size() + "                  " + temp_player.getDestinationCards().size();
+            playerInfo.add(temp);
+
+        }
+
+        populatePlayerListView(playerInfo);
+
+        TextView longest_route_player = (TextView) findViewById(R.id.longest_route_text);
+        String name = player_with_longest_route.getName();
+        int longest_route_size = player_with_longest_route.getPointCount();
+        longest_route_player.setText(name + " has the longest route of " + Integer.toString(longest_route_size));
+
+
+    }
+
+    private void setTrainCards() {
+        TextView redCard = (TextView) findViewById(R.id.red_cards);
+        TextView orangeCard = (TextView) findViewById(R.id.orange_cards);
+        TextView yellowCard = (TextView) findViewById(R.id.yellow_cards);
+        TextView greenCard = (TextView) findViewById(R.id.green_cards);
+        TextView blueCard = (TextView) findViewById(R.id.blue_cards);
+        TextView purpleCard = (TextView) findViewById(R.id.purple_cards);
+        TextView whiteCard = (TextView) findViewById(R.id.white_cards);
+        TextView blackCard = (TextView) findViewById(R.id.black_cards);
+        TextView rainbowCard = (TextView) findViewById(R.id.rainbow_cards);
+
+        ListView playerInfoList = (ListView) findViewById(R.id.players_stats);
 
 
         ArrayList<TrainCard> cardList = currentGame.getPlayer(1).getTrainCards();
@@ -174,16 +216,26 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         blackCard.setText(Integer.toString(black_hopper));
         rainbowCard.setText(Integer.toString(rainbow_any));
 
-
-
-        presenter = new PresenterTicketToRide(this);
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_ticket_to_ride);
+
+    private void populatePlayerListView(ArrayList<String> playerInfo) {
+        TextView playersStats = (TextView) findViewById(R.id.player_stats);
+
+        StringBuilder builder = new StringBuilder();
+        for (String a_player : playerInfo) {
+            builder.append(a_player + "\n");
+        }
+
+        playersStats.setText(builder.toString());
+
     }
-*/
+
+    /*
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            getMenuInflater().inflate(R.menu.menu_ticket_to_ride);
+        }
+    */
     private void addDrawerItems() {
         String[] osArray = { "I", "am", "a", "test", "wizard" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);

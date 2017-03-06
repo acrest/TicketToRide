@@ -297,6 +297,7 @@
                         android:layout_alignRight="@+id/orange_cards"
                         android:layout_alignEnd="@+id/orange_cards" />
 
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -333,6 +334,16 @@
                         android:layout_alignLeft="@+id/header"
                         android:layout_alignStart="@+id/header" />
 
+                    <ListView
+                        android:id="@+id/player_stats"
+                        android:layout_width="365dp"
+                        android:layout_height="75dp"
+                        android:layout_alignLeft="@+id/player"
+                        android:layout_alignStart="@+id/player"
+                        android:layout_below="@+id/train_number"
+                        android:textColor="#FFF"
+                        android:layout_marginTop="10dp" />
+
                 </RelativeLayout>
 
             </LinearLayout>
@@ -359,14 +370,20 @@
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="chat here"
+                        android:text="Your Routes:"
                         android:textColor="#FFF" />
+
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:id="@+id/routes_cards"
+
+                        />
 
                     <Button
                         android:id="@+id/draw_routes_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
                         android:layout_marginBottom="10dp"
                         android:padding="10dp"
                         android:text="Draw Route Cards"
