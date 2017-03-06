@@ -11,9 +11,9 @@ import java.util.Map;
 public class GameMap {
 
     private Map<String, City> cities;
-    private List<Route> routes;
+    private Map<Integer, Route> routes;
 
-    public GameMap(Map<String, City> cities, List<Route> routes) {
+    public GameMap(Map<String, City> cities, Map<Integer, Route> routes) {
         this.cities = cities;
         this.routes = routes;
     }
@@ -22,7 +22,7 @@ public class GameMap {
         return cities;
     }
 
-    public List<Route> getRoutes() {
+    public Map<Integer, Route> getRoutes() {
         return routes;
     }
 }

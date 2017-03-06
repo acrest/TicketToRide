@@ -10,13 +10,15 @@ public class Route {
     private int length;
     private Player owner;
     private TrainType type;
+    private int id;
 
-    public Route(City city1, City city2, int length, Player owner, TrainType type) {
+    public Route(City city1, City city2, int length, Player owner, TrainType type, int id) {
         this.city1 = city1;
         this.city2 = city2;
         this.length = length;
         this.owner = owner;
         this.type = type;
+        this.id = id;
     }
 
     public City getCity1() {
@@ -57,6 +59,14 @@ public class Route {
 
     public void setType(TrainType type) {
         this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPoints() {
