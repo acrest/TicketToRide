@@ -108,26 +108,15 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         mTabHost.setCurrentTab(0);
 
-        TextView redCard;
-        TextView orangeCard;
-        TextView yellowCard;
-        TextView greenCard;
-        TextView blueCard;
-        TextView purpleCard;
-        TextView whiteCard;
-        TextView blackCard;
-        TextView goldCard;
-        TextView rainbowCard;
-
-        redCard = (TextView) findViewById(R.id.red_cards);
-        orangeCard = (TextView) findViewById(R.id.orange_cards);
-        yellowCard = (TextView) findViewById(R.id.yellow_cards);
-        greenCard = (TextView) findViewById(R.id.green_cards);
-        blueCard = (TextView) findViewById(R.id.blue_cards);
-        purpleCard = (TextView) findViewById(R.id.purple_cards);
-        whiteCard = (TextView) findViewById(R.id.white_cards);
-        blackCard = (TextView) findViewById(R.id.black_cards);
-        rainbowCard = (TextView) findViewById(R.id.rainbow_cards);
+        TextView redCard = (TextView) findViewById(R.id.red_cards);
+        TextView orangeCard = (TextView) findViewById(R.id.orange_cards);
+        TextView yellowCard = (TextView) findViewById(R.id.yellow_cards);
+        TextView greenCard = (TextView) findViewById(R.id.green_cards);
+        TextView blueCard = (TextView) findViewById(R.id.blue_cards);
+        TextView purpleCard = (TextView) findViewById(R.id.purple_cards);
+        TextView whiteCard = (TextView) findViewById(R.id.white_cards);
+        TextView blackCard = (TextView) findViewById(R.id.black_cards);
+        TextView rainbowCard = (TextView) findViewById(R.id.rainbow_cards);
 
 
         ArrayList<TrainCard> cardList = currentGame.getPlayer(1).getTrainCards();
@@ -176,7 +165,15 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
 
 
+
+
+
         presenter = new PresenterTicketToRide(this);
+
+
+
+
+
     }
 /*
     @Override
