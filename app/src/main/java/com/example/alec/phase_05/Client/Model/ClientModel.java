@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client.Model;
 
 import com.example.alec.phase_05.Client.Presenter.UpdateIndicator;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameMap;
@@ -29,6 +30,9 @@ public class ClientModel extends Observable {
     public static String NUM_DESTINATION_CARDS = "num destination cards";
     public static String PLAYER_DESTINATION_CARDS = "player destination cards";
     public static String GAME_MAP = "game map";
+    public static String CHAT = "chat";
+    public static String PLAYER_POINTS = "player points";
+    public static String PLAYER_ROUTE = "player route";
 
     private static ClientModel instance = null;
 
@@ -179,6 +183,21 @@ public class ClientModel extends Observable {
         if(currentGame == null) return;
         currentGame.setMap(map);
         notifyPropertyChanges(GAME_MAP);
+    }
+
+    public void addChat(Chat chat) {
+        //TODO
+        notifyPropertyChanges(CHAT);
+    }
+
+    public void setPlayerPoints(String playerName, int points) {
+        //TODO
+        notifyPropertyChanges(PLAYER_POINTS);
+    }
+
+    public void setRouteOwner(String playerName, int routeId) {
+        //TODO
+        notifyPropertyChanges(PLAYER_ROUTE);
     }
 
     public void setCreateGameSuccess(boolean success) {
