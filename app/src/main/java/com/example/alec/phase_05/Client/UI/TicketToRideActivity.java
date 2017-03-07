@@ -122,19 +122,19 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     private void setRoutes() {
-        Player curr_player = ClientModel.getInstance().getCurrentPlayer();
-        ArrayList<DestinationCard> routes = curr_player.getDestinationCards();
-
-        TextView route_List = (TextView) findViewById(R.id.routes_list);
-
-        StringBuilder builder = new StringBuilder();
-        for (DestinationCard card : routes) {
-            String info = card.getCity1() + " to " + card.getCity2() + " for " + card.getValue() + " points";
-            builder.append(info + "\n");
-
-        }
-
-        route_List.setText(builder.toString());
+//        Player curr_player = ClientModel.getInstance().getCurrentPlayer();
+//        ArrayList<DestinationCard> routes = curr_player.getDestinationCards();
+//
+//        TextView route_List = (TextView) findViewById(R.id.routes_list);
+//
+//        StringBuilder builder = new StringBuilder();
+//        for (DestinationCard card : routes) {
+//            String info = card.getCity1() + " to " + card.getCity2() + " for " + card.getValue() + " points";
+//            builder.append(info + "\n");
+//
+//        }
+//
+//        route_List.setText(builder.toString());
     }
 
     private void setPlayersStats() {
@@ -175,14 +175,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
 
     private void populatePlayerListView(ArrayList<String> playerInfo) {
-        TextView playersStats = (TextView) findViewById(R.id.player_stats);
+        ListView playersStats = (ListView) findViewById(R.id.player_stats);
 
         StringBuilder builder = new StringBuilder();
         for (String a_player : playerInfo) {
             builder.append(a_player + "\n");
         }
 
-        playersStats.setText(builder.toString());
+        //playersStats.setText(builder.toString());
 
     }
 
