@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Client.Presenter;
 
+import com.example.alec.phase_05.Shared.model.Player;
+
 import java.util.Observer;
 
 /**
@@ -9,7 +11,7 @@ import java.util.Observer;
 public interface IPresenterTicketToRide extends IPresenter {
 
     void drawTrainCard(int index);
-    void claimRoute();
+    void claimRoute(Player player,Integer routID);
     void drawDestinationCards();
     void endTurn();
 }
