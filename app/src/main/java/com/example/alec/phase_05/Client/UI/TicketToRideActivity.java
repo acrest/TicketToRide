@@ -125,7 +125,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         Player curr_player = ClientModel.getInstance().getCurrentPlayer();
         ArrayList<DestinationCard> routes = curr_player.getDestinationCards();
 
-        TextView route_List = (TextView) findViewById(R.id.routes_cards);
+        TextView route_List = (TextView) findViewById(R.id.routes_list);
 
         StringBuilder builder = new StringBuilder();
         for (DestinationCard card : routes) {
@@ -158,6 +158,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         }
 
+        if (playerInfo.size() == 0) {
+
+            String noString = "You have no routes!";
+            playerInfo.add(noString);
+        }
         populatePlayerListView(playerInfo);
 
         TextView longest_route_player = (TextView) findViewById(R.id.longest_route_text);
