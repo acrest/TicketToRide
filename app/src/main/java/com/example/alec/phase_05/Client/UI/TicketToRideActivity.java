@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.Chat_Item;
 import com.example.alec.phase_05.Client.Model.Derpness;
 import com.example.alec.phase_05.Client.Model.IClientGame;
@@ -257,6 +258,41 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 Toast.makeText(TicketToRideActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void updateTrainCards(List<TrainCard> cards) {
+
+    }
+
+    @Override
+    public void updateDestinationCards(List<DestinationCard> cards) {
+
+    }
+
+    @Override
+    public void updatePlayerTrainCards(String playerName, int count) {
+
+    }
+
+    @Override
+    public void updatePlayerDestinationCards(String playerName, int count) {
+
+    }
+
+    @Override
+    public void updateChats(List<Chat> chats) {
+
+    }
+
+    @Override
+    public void updatePlayerPoints(String playerName, int points) {
+
+    }
+
+    @Override
+    public void updateRoutes() {
+
     }
 
     public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>   {
