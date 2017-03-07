@@ -18,6 +18,7 @@ public class ClientGameStartedCommand extends GameStartedCommand {
     public Result execute() {
         ClientFacade facade = ClientFacade.getInstance();
         facade.setGameState(getGameState());
+        //TODO: draw initial cards
         return null;
     }
 }
