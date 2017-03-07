@@ -357,10 +357,27 @@
 
                     <TextView
 
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:textColor="#FFF"
-                        android:text="chat here" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Routes:"
+                        android:textColor="#FFF" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/routes_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:background="#AAE0E0E0">
+                    </android.support.v7.widget.RecyclerView>
+
+                    <Button
+                        android:id="@+id/draw_routes_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="Draw Route Cards"
+                        android:textSize="10dp" />
 
                 </LinearLayout>
 
@@ -372,7 +389,6 @@
                 android:layout_height="fill_parent"
                 android:background="@mipmap/old_map"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
@@ -384,15 +400,13 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp">
 
-                    <TextView
-
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:textColor="#FFF"
-                        android:text="put the history here" />
-
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/games_history_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#AAE0E0E0">
+                    </android.support.v7.widget.RecyclerView>
                 </LinearLayout>
-
             </LinearLayout>
 
 
