@@ -190,9 +190,13 @@ public class ClientModel extends Observable {
         notifyPropertyChanges(CHAT);
     }
 
-    public void setPlayerPoints(String playerName, int points) {
+    public void addPlayerPoints(String playerName, int points) {
         //TODO
         notifyPropertyChanges(PLAYER_POINTS);
+    }
+
+    public int getPlayerPoints(String playerName) {
+        return 0;
     }
 
     public void setRouteOwner(String playerName, int routeId) {
