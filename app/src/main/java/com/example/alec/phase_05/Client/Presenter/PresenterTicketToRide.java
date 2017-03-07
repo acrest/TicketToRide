@@ -3,6 +3,7 @@ package com.example.alec.phase_05.Client.Presenter;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.model.Player;
 
@@ -15,9 +16,11 @@ import java.util.Observable;
 public class PresenterTicketToRide extends Presenter implements IPresenterTicketToRide {
 
     private ITicketToRideListener listener;
+    private Facade currentFacade;
 
     public PresenterTicketToRide(ITicketToRideListener listener) {
         this.listener = listener;
+        currentFacade = Facade.getInstance();
     }
 
     @Override
@@ -31,7 +34,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     }
 
     @Override
-    public void claimRoute(Player player, int routID) {
+    public void claimRoute(int routeID) {
 
     }
 
