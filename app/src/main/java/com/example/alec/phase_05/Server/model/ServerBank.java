@@ -6,6 +6,7 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by samuel on 2/25/17.
@@ -17,18 +18,19 @@ public class ServerBank implements IServerBank {
 
     private List<TrainCard> trainCardDeck;
     private List<TrainCard> visibleTrainCards;
-    private List<DestinationCard> destinationCardDeck;
+    private Map<Integer, DestinationCard> destinationCardDeck;
 
-    public ServerBank(List<TrainCard> trainCardDeck, List<DestinationCard> destinationCardDeck) {
+    public ServerBank(List<TrainCard> trainCardDeck, Map<Integer, DestinationCard> destinationCardDeck) {
         this.trainCardDeck = trainCardDeck;
         this.destinationCardDeck = destinationCardDeck;
         visibleTrainCards = new ArrayList<>();
         initCards();
     }
 
+
     private void initCards() {
         Collections.shuffle(trainCardDeck);
-        Collections.shuffle(destinationCardDeck);
+        //Collections.shuffle(destinationCardDeck); get random number on draw
     }
 
     private void fillVisibleTrainCards() {
@@ -68,8 +70,8 @@ public class ServerBank implements IServerBank {
     }
 
     @Override
-    public void addDestinationCardToBottom(DestinationCard card) {
-        destinationCardDeck.add(0, card);
+    public void addDestinationCardToBottom(Integer id, DestinationCard card) {
+        destinationCardDeck.put(id, card);
     }
 
     @Override

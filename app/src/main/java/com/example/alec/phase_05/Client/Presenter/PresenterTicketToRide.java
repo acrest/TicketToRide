@@ -26,7 +26,12 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     }
 
     @Override
-    public void claimRoute(Player player, int id) {
+    public void claimRoute(Player player, Integer routID) {
+
+    }
+
+    @Override
+    public void returnDestinationCard(Integer cardID){
 
     }
 
