@@ -158,7 +158,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         }
 
-        if (playerInfo != null) {
+        if (playerInfo.size() == 0) {
 
             String noString = "You have no routes!";
             playerInfo.add(noString);
