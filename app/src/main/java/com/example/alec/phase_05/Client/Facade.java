@@ -4,10 +4,13 @@ import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Model.IClientGame;
 import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
+import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.Route;
+import com.example.alec.phase_05.Shared.model.TrainCard;
 
 /**
  * Created by clarkpathakis on 2/6/17.
@@ -282,6 +285,14 @@ public class Facade {
         return false;
     }
 
+    private Player getCurrentPlayer(){
+        return ClientModel.getInstance().getCurrentPlayer();
+    }
+
+    private int getCurrentGame(){
+        return ClientModel.getInstance().getGameID();
+    }
+
     /**
      * sets the private variable 'set' to either true or false
      * @param switchTo the boolean to set the variable 'set'
@@ -290,4 +301,22 @@ public class Facade {
     {
         this.set = switchTo;
     }
+
+    private void sendTrainCardChoice(TrainCard trainCard){
+
+    }
+    private void claimRoute(Route route){
+        proxy.claimRoute(this.getCurrentPlayer().getName(),this.getCurrentGame(),route);
+    }
+    private void putDestinationCardBack(DestinationCard dCard){
+        proxy.putDestinationCardBack(dCard);
+
+    }
+    private void assignDestinationCard(DestinationCard dcard){
+
+    }
+    private void endPlayerTurn(){
+
+    }
+
 }
