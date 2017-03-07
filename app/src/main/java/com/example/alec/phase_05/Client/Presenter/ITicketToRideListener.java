@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.Presenter;
 
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public interface ITicketToRideListener {
     void updateChats(List<Chat> chats);
     void updatePlayerPoints(String playerName, int points);
 
-    void updateRoutes(); //TODO: figure out params
+    void updateMap(GameMap map);
 }

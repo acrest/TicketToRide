@@ -32,7 +32,6 @@ public class ClientModel extends Observable {
     public static String GAME_MAP = "game map";
     public static String CHAT = "chat";
     public static String PLAYER_POINTS = "player points";
-    public static String PLAYER_ROUTE = "player route";
 
     private static ClientModel instance = null;
 
@@ -43,6 +42,7 @@ public class ClientModel extends Observable {
     }
 
     private List<GameDescription> gameList;
+    private List<Chat> chats;
     private IClientGame currentGame;
     private Player currentPlayer;
 
@@ -186,22 +186,40 @@ public class ClientModel extends Observable {
     }
 
     public void addChat(Chat chat) {
-        //TODO
+        chats.add(chat);
         notifyPropertyChanges(CHAT);
     }
 
+    public List<Chat> getChats() {
+        return chats;
+    }
+
     public void addPlayerPoints(String playerName, int points) {
-        //TODO
+        if(currentGame == null) return;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return;
+        player.addPoints(points);
         notifyPropertyChanges(PLAYER_POINTS);
     }
 
     public int getPlayerPoints(String playerName) {
-        return 0;
+        if(currentGame == null) return 0;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return 0;
+        return player.getPointCount();
     }
 
     public void setRouteOwner(String playerName, int routeId) {
-        //TODO
-        notifyPropertyChanges(PLAYER_ROUTE);
+        if(currentGame == null) return;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return;
+        currentGame.getMap().getRoutes().get(routeId).setOwner(player);
+        notifyPropertyChanges(GAME_MAP);
+    }
+
+    public GameMap getGameMap() {
+        if(currentGame == null) return null;
+        return currentGame.getMap();
     }
 
     public void setCreateGameSuccess(boolean success) {
