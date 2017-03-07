@@ -21,12 +21,17 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     }
 
     @Override
-    public void drawTrainCard(int index) {
+    public void drawTrainCard() {
 
     }
 
     @Override
-    public void claimRoute(Player player, Integer routID) {
+    public void pickTrainCard(int deckID){
+
+    }
+
+    @Override
+    public void claimRoute(Player player, int routID) {
 
     }
 
