@@ -3,6 +3,8 @@ package com.example.alec.phase_05.Client.Presenter;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.alec.phase_05.Shared.model.Player;
+
 import java.util.Observable;
 
 /**
@@ -23,7 +25,12 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     }
 
     @Override
-    public void claimRoute() {
+    public void claimRoute(Player player, Integer routID) {
+
+    }
+
+    @Override
+    public void returnDestinationCard(Integer cardID){
 
     }
 

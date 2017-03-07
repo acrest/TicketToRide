@@ -13,5 +13,6 @@ public interface IPresenterTicketToRide extends IPresenter {
     void drawTrainCard(int index);
     void claimRoute(Player player,Integer routID);
     void drawDestinationCards();
+    void returnDestinationCard(Integer cardID);
     void endTurn();
 }

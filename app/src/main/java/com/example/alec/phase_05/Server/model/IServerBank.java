@@ -11,7 +11,7 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 public interface IServerBank extends IBank {
 
     DestinationCard drawDestinationCard();
-    void addDestinationCardToBottom(DestinationCard card);
+    void addDestinationCardToBottom(Integer id, DestinationCard card);
 
     TrainCard drawTrainCard();
 
