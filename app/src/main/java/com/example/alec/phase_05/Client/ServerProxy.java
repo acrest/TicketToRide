@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Client;
 
+import com.example.alec.phase_05.Client.command.ClientClaimRouteCommand;
 import com.example.alec.phase_05.Client.command.ClientCommunicator;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetCommandListCommand;
@@ -21,6 +22,7 @@ import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.Result;
+import com.example.alec.phase_05.Shared.model.Route;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.Arrays;
@@ -253,5 +255,11 @@ public class ServerProxy implements IServer {
         ICommand command = new ClientGetGameStateCommand(username, password, gameID);
         Result result = myCC.executeCommandOnServer(command);
         return (GameState) result.toClass(GameState.class);
+    }
+
+    public boolean claimRoute(String username, int gameID, Route route) {
+        ICommand command = new ClientClaimRouteCommand(username, null, gameID, route);
+        Result result = myCC.executeCommandOnServer(command);
+        return result.toBoolean();
     }
 }
