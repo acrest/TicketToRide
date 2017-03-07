@@ -11,7 +11,7 @@ import java.util.Observer;
 public interface IPresenterTicketToRide extends IPresenter {
 
     void drawTrainCard(int index);
-    void claimRoute(Player player,Integer routID);
+    void claimRoute(Player player, int routID);
     void drawDestinationCards();
     void returnDestinationCard(Integer cardID);
     void endTurn();

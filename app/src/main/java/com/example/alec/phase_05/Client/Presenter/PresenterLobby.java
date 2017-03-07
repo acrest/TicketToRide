@@ -48,9 +48,9 @@ public class PresenterLobby extends Presenter implements IPresenterLobby {
     @Override
     public void update(UpdateIndicator u) {
         if(u.needUpdate(ClientModel.NUM_PLAYERS_IN_GAME)) {
-            IClientGame game = ClientModel.getInstance().getCurrentGame();
-            int max = game.getMaxPlayers();
-            int num = game.getNumberPlayers();
+            ClientModel model = ClientModel.getInstance();
+            int max = model.getGameMaxPlayers();
+            int num = model.getNumberPlayers();
             listener.updateNumberOfPlayers(num, max);
             if(num == max) listener.onStartGame();
         }
