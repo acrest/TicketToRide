@@ -61,7 +61,6 @@ public class Poller {
             public void run() {
                 ClientModel model = ClientModel.getInstance();
                 Player currentPlayer = model.getCurrentPlayer();
-                IClientGame currentGame = model.getCurrentGame();
                 switch (state) {
                     case 1:
 
@@ -72,9 +71,9 @@ public class Poller {
                         break;
                     case 2:
 
-                        if(currentGame != null) {
+                        if(model.hasCurrentGame()) {
                             GameDescription currentGameDescription = server.getGameDescription(currentPlayer.getName(),
-                                    currentPlayer.getPassword(), currentGame.getID());
+                                    currentPlayer.getPassword(), model.getGameID());
                             if(currentGameDescription != null) {
                                 ClientFacade.getInstance().setCurrentGameDescription(currentGameDescription);
                             }

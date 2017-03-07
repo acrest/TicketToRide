@@ -23,7 +23,6 @@ public class LobbyActivity extends Activity implements ILobbyListener {
     private Button mStartGameButton;
     private TextView mNumberOfPlayers;
     private IPresenterLobby presenter;
-    private IClientGame currentGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +43,10 @@ public class LobbyActivity extends Activity implements ILobbyListener {
         mNumberOfPlayers = (TextView) findViewById(R.id.lobby_current_number_players);
 
         presenter = new PresenterLobby(this);
-        currentGame = ClientModel.getInstance().getCurrentGame();
-        mNumberOfPlayers.setText(currentGame.getNumberPlayers() + "/" + currentGame.getMaxPlayers());
+        ClientModel model = ClientModel.getInstance();
+        mNumberOfPlayers.setText(model.getNumberPlayers() + "/" + model.getGameMaxPlayers());
 
-        if(currentGame.getPlayer(0).getName().equals(ClientModel.getInstance().getCurrentPlayer().getName()))
+        if(model.getPlayer(0).getName().equals(ClientModel.getInstance().getCurrentPlayer().getName()))
         {
             mStartGameButton.setVisibility(View.VISIBLE);
         }
@@ -60,7 +59,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
 
     @Override
     public void onStartGame() {
-        if (currentGame.getNumberPlayers() > 1){
+        if (ClientModel.getInstance().getNumberPlayers() > 1){
             Intent i = new Intent(LobbyActivity.this, TicketToRideActivity.class);
             startActivity(i);
         }

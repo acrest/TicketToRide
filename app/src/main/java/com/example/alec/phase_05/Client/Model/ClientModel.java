@@ -1,8 +1,11 @@
 package com.example.alec.phase_05.Client.Model;
 
 import com.example.alec.phase_05.Client.Presenter.UpdateIndicator;
+import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
 import java.util.Observable;
@@ -19,6 +22,13 @@ public class ClientModel extends Observable {
     public static String JOIN_GAME_SUCCESS = "join game success";
     public static String JOIN_GAME_FAILURE = "join game failure";
     public static String NUM_PLAYERS_IN_GAME = "num players in game";
+    public static String CURRENT_GAME = "current game";
+    public static String PLAYER_IN_GAME = "player in game";
+    public static String PLAYER_TRAIN_CARDS = "player train cards";
+    public static String VISIBLE_TRAIN_CARDS = "visible train cards";
+    public static String NUM_DESTINATION_CARDS = "num destination cards";
+    public static String PLAYER_DESTINATION_CARDS = "player destination cards";
+    public static String GAME_MAP = "game map";
 
     private static ClientModel instance = null;
 
@@ -38,13 +48,9 @@ public class ClientModel extends Observable {
         gameList = null;
     }
 
-    public IClientGame getCurrentGame() {
-        return currentGame;
-    }
-
-    public void setCurrentGame(ClientGame currentGame) {
-        this.currentGame = currentGame;
-    }
+//    public IClientGame getCurrentGame() {
+//        return currentGame;
+//    }
 
 //    public void addPlayerToGame(Player player, String color) {
 //        player.setColor(color);
@@ -104,6 +110,75 @@ public class ClientModel extends Observable {
 
     public void setCurrentGame(IClientGame currentGame) {
         this.currentGame = currentGame;
+        notifyPropertyChanges(CURRENT_GAME);
+    }
+
+    public boolean hasCurrentGame() {
+        return currentGame != null;
+    }
+
+    public int getGameID() {
+        return currentGame.getID();
+    }
+
+    public String getGameName() {
+        return currentGame.getName();
+    }
+
+    public int getGameMaxPlayers() {
+        return currentGame.getMaxPlayers();
+    }
+
+    public void setPlayer(int index, Player player) {
+        if(currentGame == null) return;
+        currentGame.setPlayer(index, player);
+        notifyPropertyChanges(PLAYER_IN_GAME, NUM_PLAYERS_IN_GAME);
+    }
+
+    public Player getPlayer(int index) {
+        if(currentGame == null) return null;
+        return currentGame.getPlayer(index);
+    }
+
+    public void addTrainCard(String playerName, TrainCard card) {
+        if(currentGame == null) return;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return;
+        player.addTrainCard(card);
+        notifyPropertyChanges(PLAYER_TRAIN_CARDS);
+    }
+
+    public void setVisibleCard(int index, TrainCard card) {
+        if(currentGame == null) return;
+        IClientBank bank = (IClientBank) currentGame.getBank();
+        bank.setVisibleCard(index, card);
+        notifyPropertyChanges(VISIBLE_TRAIN_CARDS);
+    }
+
+    public void decNumOfDestinationCards() {
+        if(currentGame == null) return;
+        IClientBank bank = (IClientBank) currentGame.getBank();
+        bank.decNumberOfDestinationCards();
+        notifyPropertyChanges(NUM_DESTINATION_CARDS);
+    }
+
+    public void addDestinationCard(String playerName, DestinationCard card) {
+        if(currentGame == null) return;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return;
+        player.addDestinationCard(card);
+        notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
+    }
+
+    public int getNumberPlayers() {
+        if(currentGame == null) return 0;
+        return currentGame.getNumberPlayers();
+    }
+
+    public void setMap(GameMap map) {
+        if(currentGame == null) return;
+        currentGame.setMap(map);
+        notifyPropertyChanges(GAME_MAP);
     }
 
     public void setCreateGameSuccess(boolean success) {

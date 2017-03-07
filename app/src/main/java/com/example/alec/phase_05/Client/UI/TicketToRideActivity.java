@@ -73,7 +73,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private DerpAdapter mChatRecyclerAdapter;
     private DerpAdapter mRoutesRecyclerAdapter;
     private DerpAdapter mGameHistoryRecyclerAdapter;
-    private IClientGame currentGame;
 
 
     @Override
@@ -82,7 +81,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setContentView(R.layout.activity_ticket_to_ride);
 
         presenter = new PresenterTicketToRide(this);
-        currentGame = ClientModel.getInstance().getCurrentGame();
 
         mChatRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
         mRoutesRecView = (RecyclerView) findViewById(R.id.routes_list);
@@ -123,7 +121,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     private void setRoutes() {
-        Player curr_player = currentGame.getPlayer(1);
+        Player curr_player = ClientModel.getInstance().getCurrentPlayer();
         ArrayList<DestinationCard> routes = curr_player.getDestinationCards();
 
         TextView route_List = (TextView) findViewById(R.id.routes_cards);
@@ -139,15 +137,16 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     private void setPlayersStats() {
-        int num_players = currentGame.getNumberPlayers();
-        ArrayList<TrainCard> cardList = currentGame.getPlayer(1).getTrainCards();
+        ClientModel model = ClientModel.getInstance();
+        int num_players = model.getNumberPlayers();
+        ArrayList<TrainCard> cardList = model.getCurrentPlayer().getTrainCards();
         ArrayList<Player> playerList = new ArrayList<Player>();
         ArrayList<String> playerInfo = new ArrayList<String>();
         Player player_with_longest_route = new Player(null, null);
 
 
         for (int i = 0; i < num_players; i++) {
-            Player temp_player = currentGame.getPlayer(i);
+            Player temp_player = model.getPlayer(i);
             if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
                 player_with_longest_route = temp_player;
             }
@@ -195,7 +194,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         ListView playerInfoList = (ListView) findViewById(R.id.player_stats);
 
 
-        ArrayList<TrainCard> cardList = currentGame.getPlayer(1).getTrainCards();
+        ArrayList<TrainCard> cardList = ClientModel.getInstance().getCurrentPlayer().getTrainCards();
         int red_coal = 0;
         int orange_tanker = 0;
         int yellow_boxcar = 0;
