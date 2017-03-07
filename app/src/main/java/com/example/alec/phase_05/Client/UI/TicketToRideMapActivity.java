@@ -9,6 +9,11 @@ import android.widget.ListView;
 import android.widget.TabHost;
 
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
+import com.example.alec.phase_05.Shared.model.Chat;
+import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.TrainCard;
+
+import java.util.List;
 
 /**
  * Created by clarkpathakis on 2/26/17.
@@ -31,5 +36,39 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
 //        TabHost tabHost = getTabHost();
     }
 
-    
+
+    @Override
+    public void updateTrainCards(List<TrainCard> cards) {
+
+    }
+
+    @Override
+    public void updateDestinationCards(List<DestinationCard> cards) {
+
+    }
+
+    @Override
+    public void updatePlayerTrainCards(String playerName, int count) {
+
+    }
+
+    @Override
+    public void updatePlayerDestinationCards(String playerName, int count) {
+
+    }
+
+    @Override
+    public void updateChats(List<Chat> chats) {
+
+    }
+
+    @Override
+    public void updatePlayerPoints(String playerName, int points) {
+
+    }
+
+    @Override
+    public void updateRoutes() {
+
+    }
 }
