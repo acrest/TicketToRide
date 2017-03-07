@@ -238,14 +238,13 @@ public final class GameComponentFactory {
         routes.put(91, new Route(cities.get("Nashville"), cities.get("Saint Louis"), 2, null, ANY, 91));
         routes.put(92, new Route(cities.get("Nashville"), cities.get("Little Rock"), 3, null, PASSENGER, 92));
         routes.put(93, new Route(cities.get("Nashville"), cities.get("Atlanta"), 1, null, ANY, 93));
-        routes.put(94, new Route(cities.get("New Orleans"), cities.get("Houston"), 2, null, ANY, 94));
-        routes.put(95, new Route(cities.get("New Orleans"), cities.get("Little Rock"), 3, null, CABOOSE, 95));
-        routes.put(96, new Route(cities.get("New Orleans"), cities.get("Miami"), 6, null, COAL, 96));
-        routes.put(97, new Route(cities.get("New Orleans"), cities.get("Atlanta"), 4, null, REEFER, 97));
-        routes.put(98, new Route(cities.get("New Orleans"), cities.get("Atlanta"), 4, null, FREIGHT, 98));
-        routes.put(99, new Route(cities.get("Atlanta"), cities.get("Charleston"), 2, null, ANY, 99));
-        routes.put(100, new Route(cities.get("Atlanta"), cities.get("Miami"), 5, null, TANKER, 100));
-        routes.put(101, new Route(cities.get("Charleston"), cities.get("Miami"), 4, null, BOX, 101));
+        routes.put(94, new Route(cities.get("New Orleans"), cities.get("Little Rock"), 3, null, CABOOSE, 94));
+        routes.put(95, new Route(cities.get("New Orleans"), cities.get("Miami"), 6, null, COAL, 95));
+        routes.put(96, new Route(cities.get("New Orleans"), cities.get("Atlanta"), 4, null, REEFER, 96));
+        routes.put(97, new Route(cities.get("New Orleans"), cities.get("Atlanta"), 4, null, FREIGHT, 97));
+        routes.put(98, new Route(cities.get("Atlanta"), cities.get("Charleston"), 2, null, ANY, 98));
+        routes.put(99, new Route(cities.get("Atlanta"), cities.get("Miami"), 5, null, TANKER, 99));
+        routes.put(100, new Route(cities.get("Charleston"), cities.get("Miami"), 4, null, BOX, 100));
         return routes;
     }
 }
