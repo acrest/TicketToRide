@@ -42,19 +42,20 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
 
     @Override
     public void update(UpdateIndicator u) {
+        ClientModel model = ClientModel.getInstance();
         if(u.needUpdate(ClientModel.PLAYER_TRAIN_CARDS)) {
 
         }
         if(u.needUpdate(ClientModel.PLAYER_DESTINATION_CARDS)) {
 
         }
-        if(u.needUpdate(ClientModel.PLAYER_TRAIN_CARDS)) {
+        if(u.needUpdate(ClientModel.CHAT)) {
 
         }
-        if(u.needUpdate(ClientModel.PLAYER_TRAIN_CARDS)) {
+        if(u.needUpdate(ClientModel.PLAYER_POINTS)) {
 
         }
-        if(u.needUpdate(ClientModel.PLAYER_TRAIN_CARDS)) {
+        if(u.needUpdate(ClientModel.PLAYER_ROUTE)) {
 
         }
     }
