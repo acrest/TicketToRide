@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.Chat_Item;
 import com.example.alec.phase_05.Client.Model.Derpness;
@@ -86,6 +87,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_to_ride);
+        Poller.getInstance().setModelPolling();
 
         presenter = new PresenterTicketToRide(this);
 
