@@ -440,11 +440,34 @@
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/map"
+
+            <LinearLayout
+                android:id="@+id/mapview"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="map here" />
+                android:gravity = "center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id = "@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/tickettoridemap"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/placeRoute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="PLACE ROUTE"/>
+
+            </RelativeLayout>
 
 
             <LinearLayout
