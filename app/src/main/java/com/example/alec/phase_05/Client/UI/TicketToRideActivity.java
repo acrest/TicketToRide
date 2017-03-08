@@ -305,6 +305,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     @Override
+    public void updateFaceupTrainCards(List<TrainCard> cards) {
+
+    }
+
+    @Override
     public void updateMap(GameMap map) {
 
     }
