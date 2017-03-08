@@ -66,7 +66,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
 
         }
         if(u.needUpdate(ClientModel.GAME_MAP)) {
-            listener.updateMap(ClientModel.getInstance().getGame);
+            listener.updateMap(ClientModel.getInstance().getGameMap());
         }
     }
 }
