@@ -3,6 +3,7 @@ package com.example.alec.phase_05.Server.command;
 import com.example.alec.phase_05.Server.Server;
 import com.example.alec.phase_05.Server.ServerFacade;
 import com.example.alec.phase_05.Shared.command.AbstractGetGameUpdatesCommand;
+import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
@@ -24,7 +25,7 @@ public class ServerGetGameUpdates extends AbstractGetGameUpdatesCommand {
     @Override
     public Result execute() {
         ServerFacade sf = ServerFacade.get_instance();
-        List<ICommand> commands = sf.getGameUpdates(sf.getPlayerByName(getUserName()), getGameID());
+        List<BaseCommand> commands = sf.getGameUpdates(getUserName(), getGameID());
         Result r = new ServerResult();
         r.setResultObject(new CommandHolder(commands));
         return r;

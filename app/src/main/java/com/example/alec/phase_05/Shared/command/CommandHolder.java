@@ -9,17 +9,17 @@ import java.util.List;
  */
 
 public class CommandHolder {
-    private List<ICommand> commands;
+    private List<BaseCommand> commands;
 
-    public CommandHolder(List<ICommand> commands) {
+    public CommandHolder(List<BaseCommand> commands) {
         this.commands = commands;
     }
 
-    public List<ICommand> getCommands() {
+    public List<BaseCommand> getCommands() {
         return commands;
     }
 
-    public void setCommands(List<ICommand> commands) {
+    public void setCommands(List<BaseCommand> commands) {
         this.commands = commands;
     }
 }

@@ -1,10 +1,14 @@
 package com.example.alec.phase_05.Client;
 
+import android.util.Log;
+
 import com.example.alec.phase_05.Client.Model.ClientGame;
 import com.example.alec.phase_05.Client.Model.ClientGameFactory;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Model.IClientBank;
 import com.example.alec.phase_05.Client.Model.IClientGame;
+import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
+import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -104,8 +108,28 @@ public class ClientFacade {
         model.setMap(gameState.getMap());
     }
 
-    public void executeCommands(List<ICommand> commands) {
-        for(ICommand command : commands) {
+    public void startGame() {
+        Facade facade = Facade.getInstance();
+        facade.drawDestinationCard();
+        facade.drawDestinationCard();
+        facade.drawDestinationCard();
+        facade.drawTrainCard();
+        facade.drawTrainCard();
+        facade.drawTrainCard();
+        facade.drawTrainCard();
+        ClientModel.getInstance().setGameStarted();
+    }
+
+    public void addTrainCard(TrainCard card) {
+        ClientModel.getInstance().addTrainCard(card);
+    }
+
+    public void addDestinationCard(DestinationCard card) {
+        ClientModel.getInstance().addDestinationCard(card);
+    }
+
+    public void executeCommands(List<BaseCommand> commands) {
+        for(BaseCommand command : commands) {
             command.execute();
         }
     }

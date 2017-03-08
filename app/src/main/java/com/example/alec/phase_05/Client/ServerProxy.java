@@ -1,18 +1,24 @@
 package com.example.alec.phase_05.Client;
 
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.command.ClientClaimRouteCommand;
 import com.example.alec.phase_05.Client.command.ClientCommunicator;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
+import com.example.alec.phase_05.Client.command.ClientDrawDestinationCardCommand;
+import com.example.alec.phase_05.Client.command.ClientDrawTrainCardCommand;
+import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
 import com.example.alec.phase_05.Client.command.ClientGetCommandListCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameDescriptionCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
+import com.example.alec.phase_05.Client.command.ClientGetGameStartedCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameStateCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameUpdatesCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Client.command.ClientResult;
+import com.example.alec.phase_05.Client.command.ClientStartGameCommand;
 import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.command.ICommand;
@@ -24,6 +30,7 @@ import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.Route;
+import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.Arrays;
@@ -241,7 +248,6 @@ public class ServerProxy implements IServer {
      * @pre LastUpdate is a non negative int.
      * @param player The player iside the game.
      * @param gameID The id of the game the player is in.
-     * @param lastUpdate An index of the last command that the player executed.
      * @return A list of commands.
      */
     @Override
@@ -258,10 +264,55 @@ public class ServerProxy implements IServer {
         return (GameState) result.toClass(GameState.class);
     }
 
+    //temporary method
+    public ClientGameStartedCommand getGameStartedCommand() {
+        ClientModel model = ClientModel.getInstance();
+        Player player = model.getCurrentPlayer();
+        ClientGetGameStartedCommand command = new ClientGetGameStartedCommand(player.getName(), player.getPassword(), model.getGameID());
+        Result result = myCC.executeCommandOnServer(command);
+        ClientGameStartedCommand c = (ClientGameStartedCommand) result.toClass(ClientGameStartedCommand.class);
+        return c;
+    }
+
     public boolean claimRoute(String username, int gameID, Route route) {
         ICommand command = new ClientClaimRouteCommand(username, null, gameID, route);
         Result result = myCC.executeCommandOnServer(command);
         return result.toBoolean();
+    }
+
+    public TrainCard drawTrainCard() {
+        ClientModel model = ClientModel.getInstance();
+        Player player = model.getCurrentPlayer();
+        ClientDrawTrainCardCommand command = new ClientDrawTrainCardCommand(player.getName(), player.getPassword(),
+                model.getGameID(), -1);
+        Result result = myCC.executeCommandOnServer(command);
+        return (TrainCard) result.toClass(TrainCard.class);
+    }
+
+    public TrainCard pickTrainCard(int index) {
+        ClientModel model = ClientModel.getInstance();
+        Player player = model.getCurrentPlayer();
+        ClientDrawTrainCardCommand command = new ClientDrawTrainCardCommand(player.getName(), player.getPassword(),
+                model.getGameID(), index);
+        Result result = myCC.executeCommandOnServer(command);
+        return (TrainCard) result.toClass(TrainCard.class);
+    }
+
+    public DestinationCard drawDestinationCard() {
+        ClientModel model = ClientModel.getInstance();
+        Player player = model.getCurrentPlayer();
+        ClientDrawDestinationCardCommand command = new ClientDrawDestinationCardCommand(player.getName(), player.getPassword(),
+                model.getGameID());
+        Result result = myCC.executeCommandOnServer(command);
+        return (DestinationCard) result.toClass(DestinationCard.class);
+    }
+
+    public void startGame() {
+        ClientModel model = ClientModel.getInstance();
+        Player player = model.getCurrentPlayer();
+        ClientStartGameCommand command = new ClientStartGameCommand(player.getName(), player.getPassword(),
+                model.getGameID());
+        Result result = myCC.executeCommandOnServer(command);
     }
 
     public boolean putDestinationCardBack(DestinationCard dCard){
