@@ -6,7 +6,9 @@ import android.os.Looper;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.TrainCard;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -52,6 +54,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     public void endTurn() {
 
     }
+
 
     @Override
     public void update(UpdateIndicator u) {
