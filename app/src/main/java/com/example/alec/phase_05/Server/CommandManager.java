@@ -44,12 +44,10 @@ public class CommandManager {
     }
 
     public void addCommand(GameCommand command){
-        System.out.println("addCommand called");
-        System.out.println("commands size is " + commands.size());
         commands.add(command);
     }
 
-    public List<BaseCommand> recentCommands(Player player){
+    public List<BaseCommand> recentCommands(String playerName){
 //        System.out.println("called recentCommands with " + player.getName());
         List<BaseCommand> recCommands = new ArrayList<>();
 //        int commandIndex = getCommandIndex(player);
@@ -75,8 +73,16 @@ public class CommandManager {
 //        playerIndex.put(player.getName(), commands.size());
 //
 
+        System.out.println("recentCommands called");
         if(hasServerStartGame()) { //temporary code
-            recCommands.add(new ServerGameStartedCommand(GameStateFactory.gameToGameState(game)));
+            GameState state = GameStateFactory.gameToGameState(game);
+            if(state == null) {
+                System.out.println("got null game state");
+                System.out.println("game = " + game);
+            } else {
+                System.out.println("game state not null");
+            }
+            recCommands.add(new ServerGameStartedCommand(state));
         }
         return recCommands;
     }
@@ -90,19 +96,18 @@ public class CommandManager {
 
     private ICommand createNeededCommand(GameCommand command) {
         if(command instanceof ServerStartGameCommand) {
-            ServerStartGameCommand cmd = (ServerStartGameCommand) command;
             return new ServerGameStartedCommand(GameStateFactory.gameToGameState(game));
         }
 
         return null;
     }
 
-    private int getCommandIndex(Player player){
-        if(!playerIndex.containsKey(player.getName()))
+    private int getCommandIndex(String playerName){
+        if(!playerIndex.containsKey(playerName))
         {
-            playerIndex.put(player.getName(), 0);
+            playerIndex.put(playerName, 0);
         }
 
-        return playerIndex.get(player.getName());
+        return playerIndex.get(playerName);
     }
 }

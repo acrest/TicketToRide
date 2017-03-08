@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Model.IClientGame;
+import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
+import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
@@ -13,6 +15,9 @@ import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by clarkpathakis on 2/6/17.
@@ -315,6 +320,29 @@ public class Facade {
                     ClientFacade facade = ClientFacade.getInstance();
                     TrainCard card = proxy.drawTrainCard();
                     facade.addTrainCard(card);
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //temporary method
+    public void updateGameStarted() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                if(model.hasCurrentGame()) {
+                    ClientGameStartedCommand command = proxy.getGameStartedCommand();
+                    if(command == null || command.getGameState() == null) return;
+                    List<BaseCommand> commands = new ArrayList<>();
+                    commands.add(command);
+                    ClientFacade.getInstance().executeCommands(commands);
                 }
             }
         });

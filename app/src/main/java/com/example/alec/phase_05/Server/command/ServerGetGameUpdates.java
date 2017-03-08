@@ -25,7 +25,7 @@ public class ServerGetGameUpdates extends AbstractGetGameUpdatesCommand {
     @Override
     public Result execute() {
         ServerFacade sf = ServerFacade.get_instance();
-        List<BaseCommand> commands = sf.getGameUpdates(sf.getPlayerByName(getUserName()), getGameID());
+        List<BaseCommand> commands = sf.getGameUpdates(getUserName(), getGameID());
         Result r = new ServerResult();
         r.setResultObject(new CommandHolder(commands));
         return r;

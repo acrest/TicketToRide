@@ -140,9 +140,9 @@ public class ServerModel {
      * @return list of commands that haven't been executed yet for given player and game,
      * or null if there are no commands to be executed.
      */
-    public List<BaseCommand> getGameUpdates(Player player, int gameID) {
+    public List<BaseCommand> getGameUpdates(String playerName, int gameID) {
         IServerGame game = getGame(gameID);
         if(game == null) return null;
-        return game.getCommandManager().recentCommands(player);
+        return game.getCommandManager().recentCommands(playerName);
     }
 }

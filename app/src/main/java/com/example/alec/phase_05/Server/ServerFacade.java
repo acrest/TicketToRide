@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Server;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Server.command.ServerGameStartedCommand;
 import com.example.alec.phase_05.Server.command.ServerResult;
 import com.example.alec.phase_05.Server.command.ServerStartGameCommand;
 import com.example.alec.phase_05.Server.model.GameStateFactory;
@@ -94,8 +95,8 @@ public class ServerFacade {
         return ServerModel.get_instance().getGame(gameID);
     }
 
-    public List<BaseCommand> getGameUpdates(Player client, int gameID) {
-        return ServerModel.get_instance().getGameUpdates(client, gameID);
+    public List<BaseCommand> getGameUpdates(String clientName, int gameID) {
+        return ServerModel.get_instance().getGameUpdates(clientName, gameID);
     }
 
     public GameDescription getGameDescription(String username, String password, int gameID) {
@@ -105,7 +106,7 @@ public class ServerFacade {
     public CommandHolder getCommandsForClient(String username, String password, int gameID) {
         ServerModel model = ServerModel.get_instance();
         ServerGame game = model.getGame(gameID);
-        List<BaseCommand> commands = game.getCommandManager().recentCommands(new Player(username, password));
+        List<BaseCommand> commands = game.getCommandManager().recentCommands(username);
         return new CommandHolder(commands);
     }
 
@@ -158,5 +159,18 @@ public class ServerFacade {
     public boolean validateAuthentication(String username, String password) {
         Player player = ServerModel.get_instance().getPlayer(username);
         return player != null && player.getPassword().equals(password);
+    }
+
+    //temporary method
+    public ServerGameStartedCommand getGameStartedCommand(String playerName, int gameId) {
+        IServerGame game = ServerModel.get_instance().getGame(gameId);
+        if(game == null) return null;
+        List<BaseCommand> commands = game.getCommandManager().recentCommands(playerName);
+        if(commands.size() > 0) {
+            ServerGameStartedCommand command = (ServerGameStartedCommand) commands.get(0);
+            return command;
+        } else {
+            return null;
+        }
     }
 }

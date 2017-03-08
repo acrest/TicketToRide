@@ -64,7 +64,8 @@ public class Poller {
                 switch (state) {
                     case 1:
 
-                        Facade.getInstance().updateGameChanges();
+                        //updateGameChanges currently causes a crash
+                        //Facade.getInstance().updateGameChanges();
 
                         break;
                     case 2:
@@ -76,7 +77,7 @@ public class Poller {
                                 ClientFacade.getInstance().setCurrentGameDescription(currentGameDescription);
                             }
                         }
-                        Facade.getInstance().updateGameChanges(); //right now this is the only way to catch the initial start game command
+                        Facade.getInstance().updateGameStarted(); //right now this is the only way to catch the initial start game command
 
                         break;
                     case 3:

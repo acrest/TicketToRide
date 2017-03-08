@@ -6,10 +6,12 @@ import com.example.alec.phase_05.Client.command.ClientCommunicator;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawDestinationCardCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawTrainCardCommand;
+import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
 import com.example.alec.phase_05.Client.command.ClientGetCommandListCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameDescriptionCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
+import com.example.alec.phase_05.Client.command.ClientGetGameStartedCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameStateCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameUpdatesCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
@@ -246,7 +248,6 @@ public class ServerProxy implements IServer {
      * @pre LastUpdate is a non negative int.
      * @param player The player iside the game.
      * @param gameID The id of the game the player is in.
-     * @param lastUpdate An index of the last command that the player executed.
      * @return A list of commands.
      */
     @Override
@@ -261,6 +262,16 @@ public class ServerProxy implements IServer {
         ICommand command = new ClientGetGameStateCommand(username, password, gameID);
         Result result = myCC.executeCommandOnServer(command);
         return (GameState) result.toClass(GameState.class);
+    }
+
+    //temporary method
+    public ClientGameStartedCommand getGameStartedCommand() {
+        ClientModel model = ClientModel.getInstance();
+        Player player = model.getCurrentPlayer();
+        ClientGetGameStartedCommand command = new ClientGetGameStartedCommand(player.getName(), player.getPassword(), model.getGameID());
+        Result result = myCC.executeCommandOnServer(command);
+        ClientGameStartedCommand c = (ClientGameStartedCommand) result.toClass(ClientGameStartedCommand.class);
+        return c;
     }
 
     public boolean claimRoute(String username, int gameID, Route route) {

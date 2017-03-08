@@ -275,6 +275,7 @@ public class ClientModel extends Observable {
     }
 
     public void setGameStarted() {
+        System.out.println("setGameStarted called in ClientModel");
         if(currentGame == null) return;
         currentGame.setGameStarted();
         notifyPropertyChanges(GAME_START);

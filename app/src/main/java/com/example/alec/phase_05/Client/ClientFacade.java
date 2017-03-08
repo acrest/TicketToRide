@@ -125,13 +125,7 @@ public class ClientFacade {
     }
 
     public void executeCommands(List<BaseCommand> commands) {
-        if(commands.size() > 0) {
-            Log.d("ClientFacade", "execute commands with " + commands.size());
-        }
         for(BaseCommand command : commands) {
-            if(command instanceof ClientGameStartedCommand) {
-                Log.d("ClientFacade", "executed game started command");
-            }
             command.execute();
         }
     }

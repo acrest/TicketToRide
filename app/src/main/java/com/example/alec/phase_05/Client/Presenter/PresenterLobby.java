@@ -39,6 +39,7 @@ public class PresenterLobby extends Presenter implements IPresenterLobby {
     }
 
     private void requestStartGame() {
+        if(ClientModel.getInstance().getNumberPlayers() < 2) return;
         Facade.getInstance().startGame();
         gameStarted = true;
     }
@@ -55,7 +56,7 @@ public class PresenterLobby extends Presenter implements IPresenterLobby {
             }
         }
         if(u.needUpdate(ClientModel.GAME_START)) {
-            listener.onStartGame();
+            onGameStart();
         }
     }
 }

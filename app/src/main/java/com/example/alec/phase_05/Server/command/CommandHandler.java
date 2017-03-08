@@ -20,6 +20,7 @@ public class CommandHandler extends HandlerBase
     {
         String reqBody = readRequestBody(t);
         ICommand command = SerDes.deserializeCommand(reqBody, ServerResult.SERVER_COMMAND_PREFIX, ServerResult.SERVER_COMMAND_SUFFIX);
+        System.out.println("command handler " + ((BaseCommand) command).getCommandName());
         Result result = ServerFacade.get_instance().executeCommand(command);
         sendResponse(t, result);
     }

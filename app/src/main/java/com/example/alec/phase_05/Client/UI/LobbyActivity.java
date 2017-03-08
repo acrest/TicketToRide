@@ -59,11 +59,8 @@ public class LobbyActivity extends Activity implements ILobbyListener {
 
     @Override
     public void onStartGame() {
-        if (ClientModel.getInstance().getNumberPlayers() > 1){
-            Intent i = new Intent(LobbyActivity.this, TicketToRideActivity.class);
-            startActivity(i);
-        }
-
+        Intent i = new Intent(LobbyActivity.this, TicketToRideActivity.class);
+        startActivity(i);
     }
 
     @Override
