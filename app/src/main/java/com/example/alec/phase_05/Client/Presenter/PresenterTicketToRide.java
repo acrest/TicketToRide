@@ -3,6 +3,7 @@ package com.example.alec.phase_05.Client.Presenter;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.alec.phase_05.Client.Demo;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.model.IGame;
@@ -55,6 +56,11 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void endTurn() {
 
+    }
+
+    @Override
+    public void startDemo() {
+        Demo.startDemo();
     }
 
     @Override

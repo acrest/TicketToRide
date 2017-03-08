@@ -117,6 +117,7 @@ public class ClientModel extends Observable {
 
     public void setCurrentGame(IClientGame currentGame) {
         this.currentGame = currentGame;
+        currentPlayer = currentGame.findPlayerByName(currentPlayer.getName());
         notifyPropertyChanges(CURRENT_GAME);
     }
 
@@ -279,6 +280,33 @@ public class ClientModel extends Observable {
         if(currentGame == null) return;
         currentGame.setGameStarted();
         notifyPropertyChanges(GAME_START);
+    }
+
+    public void removeTrainCard(int index) {
+        if(currentPlayer == null) return;
+        currentPlayer.getTrainCards().remove(index);
+        notifyPropertyChanges(PLAYER_TRAIN_CARDS);
+    }
+
+    public void removeTrainCard(String playerName, int index) {
+        if(currentGame == null) return;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return;
+        player.getTrainCards().remove(index);
+        notifyPropertyChanges(PLAYER_TRAIN_CARDS);
+    }
+    public void removeDestinationCard(int index) {
+        if(currentPlayer == null) return;
+        currentPlayer.getDestinationCards().remove(index);
+        notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
+    }
+
+    public void removeDestinationCard(String playerName, int index) {
+        if(currentGame == null) return;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return;
+        player.getDestinationCards().remove(index);
+        notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
 
     public void setCreateGameSuccess(boolean success) {

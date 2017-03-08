@@ -113,6 +113,10 @@ public class ClientFacade {
         facade.drawDestinationCard();
         facade.drawDestinationCard();
         facade.drawDestinationCard();
+        facade.drawTrainCard();
+        facade.drawTrainCard();
+        facade.drawTrainCard();
+        facade.drawTrainCard();
         ClientModel.getInstance().setGameStarted();
     }
 
