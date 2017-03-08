@@ -16,6 +16,7 @@ import com.example.alec.phase_05.Client.command.ClientResult;
 import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameState;
@@ -261,5 +262,9 @@ public class ServerProxy implements IServer {
         ICommand command = new ClientClaimRouteCommand(username, null, gameID, route);
         Result result = myCC.executeCommandOnServer(command);
         return result.toBoolean();
+    }
+
+    public boolean putDestinationCardBack(DestinationCard dCard){
+        return true;
     }
 }
