@@ -76,7 +76,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private DerpAdapter mRoutesRecyclerAdapter;
     private DerpAdapter mGameHistoryRecyclerAdapter;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -293,6 +292,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updatePlayerPoints(String playerName, int points) {
+
+    }
+
+    @Override
+    public void updatePlayerTrainCount(String playerName, int count) {
 
     }
 

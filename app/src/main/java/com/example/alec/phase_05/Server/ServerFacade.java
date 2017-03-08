@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server;
 
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Server.command.ServerResult;
 import com.example.alec.phase_05.Server.model.GameStateFactory;
 import com.example.alec.phase_05.Server.model.IServerBank;
@@ -143,6 +144,13 @@ public class ServerFacade {
             r = command.execute();
         }
         return r;
+    }
+
+    public boolean startGameCommand(int gameId) {
+        IServerGame game = ServerModel.get_instance().getGame(gameId);
+        if(game == null) return false;
+        game.setGameStarted();
+        return true;
     }
 
     public boolean validateAuthentication(String username, String password) {

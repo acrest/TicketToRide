@@ -69,6 +69,11 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
     }
 
     @Override
+    public void updatePlayerTrainCount(String playerName, int count) {
+
+    }
+
+    @Override
     public void updateMap(GameMap map) {
 
     }

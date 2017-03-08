@@ -64,9 +64,7 @@ public class Poller {
                 switch (state) {
                     case 1:
 
-//                        Game currentGame = server.getGame(currentPlayer.getName(), currentPlayer.getPassword(),
-//                                ClientModel.getInstance().getCurrentGame().getGameDescription().getID());
-                        //server.getCurrentModel(Facade.getInstance().getGame().getVersion());
+                        Facade.getInstance().updateGameChanges();
 
                         break;
                     case 2:

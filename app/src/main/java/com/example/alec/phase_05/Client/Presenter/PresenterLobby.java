@@ -27,22 +27,7 @@ public class PresenterLobby extends Presenter implements IPresenterLobby {
         listener.onStartGame();
         Poller poller = Poller.getInstance();
         poller.setModelPolling();
-    }
-
-    @Override
-    public void update(Observable observable, Object o) {
-        if(!(o instanceof UpdateIndicator)) {
-            throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
-        }
-        final UpdateIndicator u = (UpdateIndicator) o;
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                update(u);
-            }
-        };
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(runnable);
+        ClientModel.getInstance().deleteObserver(this); //stops the ticket to ride activity from being made every time the poller activates
     }
 
     @Override

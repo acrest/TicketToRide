@@ -32,6 +32,7 @@ public class ClientModel extends Observable {
     public static String GAME_MAP = "game map";
     public static String CHAT = "chat";
     public static String PLAYER_POINTS = "player points";
+    public static String PLAYER_TRAIN_COUNT = "player train count";
 
     private static ClientModel instance = null;
 
@@ -174,6 +175,14 @@ public class ClientModel extends Observable {
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
 
+    public void setTrainCount(String playerName, int count) {
+        if(currentGame == null) return;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return;
+        player.setTrainCount(count);
+        notifyPropertyChanges(PLAYER_TRAIN_COUNT);
+    }
+
     public int getNumberPlayers() {
         if(currentGame == null) return 0;
         return currentGame.getNumberPlayers();
@@ -220,6 +229,20 @@ public class ClientModel extends Observable {
     public GameMap getGameMap() {
         if(currentGame == null) return null;
         return currentGame.getMap();
+    }
+
+    public int getNumberOfDestinationCards(String playerName) {
+        if(currentGame == null) return 0;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return 0;
+        return player.getDestinationCards().size(); //TODO: not sure if this is a good idea (requires seeing other player's destination cards
+    }
+
+    public int getNumberOfTrainCards(String playerName) {
+        if(currentGame == null) return 0;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return 0;
+        return player.getTrainCards().size(); //TODO: not sure if this is a good idea (requires seeing other player's train cards
     }
 
     public void setCreateGameSuccess(boolean success) {

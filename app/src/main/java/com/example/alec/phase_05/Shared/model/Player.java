@@ -50,6 +50,10 @@ public class Player {
 
     public int getTrainCount() { return trainCount;}
 
+    public void setTrainCount(int count) {
+        trainCount = count;
+    }
+
     public int getPointCount() { return pointCount;}
 
     public void addPoints(int points) { pointCount += points;}
