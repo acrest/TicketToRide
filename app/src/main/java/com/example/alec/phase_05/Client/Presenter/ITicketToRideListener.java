@@ -23,5 +23,7 @@ public interface ITicketToRideListener {
     void updatePlayerPoints(String playerName, int points);
     void updatePlayerTrainCount(String playerName, int count);
 
+    void updateFaceupTrainCards(List<TrainCard> cards); // faceup train cards in the bank;
+
     void updateMap(GameMap map);
 }
