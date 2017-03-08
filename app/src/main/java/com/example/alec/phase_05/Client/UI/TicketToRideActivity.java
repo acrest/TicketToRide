@@ -3,6 +3,8 @@ package com.example.alec.phase_05.Client.UI;
 import android.app.TabActivity;
 import android.content.Context;
 import android.graphics.Color;
+import android.provider.ContactsContract;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,12 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.Chat_Item;
 import com.example.alec.phase_05.Client.Model.Derpness;
@@ -50,12 +55,14 @@ import android.app.TabActivity;
 import android.os.Bundle;
 import android.widget.TabHost;
 import com.example.alec.phase_05.R;
+import com.example.alec.phase_05.Shared.model.Deck;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +87,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_to_ride);
+        Poller.getInstance().setModelPolling();
 
         presenter = new PresenterTicketToRide(this);
 
@@ -112,8 +120,64 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setTrainCards();
         setPlayersStats();
         setRoutes();
-        setBank();
 
+
+
+        final Deck deck = new Deck();
+
+
+        final ImageButton deckButton = (ImageButton) findViewById(R.id.deck);
+        final ImageButton card1Button = (ImageButton) findViewById(R.id.card1);
+        setCard(card1Button, deck);
+        final ImageButton card2Button = (ImageButton) findViewById(R.id.card2);
+        setCard(card2Button, deck);
+        final ImageButton card3Button = (ImageButton) findViewById(R.id.card3);
+        setCard(card3Button, deck);
+        final ImageButton card4Button = (ImageButton) findViewById(R.id.card4);
+        setCard(card4Button, deck);
+        final ImageButton card5Button = (ImageButton) findViewById(R.id.card5);
+        setCard(card5Button, deck);
+
+        deckButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int card = deck.drawCard();
+                //setImageButton(deckButton, card);
+            }
+        });
+        card1Button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int card = deck.drawCard();
+                setImageButton(card1Button, card);
+            }
+        });
+
+        card2Button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int card = deck.drawCard();
+                setImageButton(card2Button, card);
+            }
+        });
+
+        card3Button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int card = deck.drawCard();
+                setImageButton(card3Button, card);
+            }
+        });
+
+        card4Button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int card = deck.drawCard();
+                setImageButton(card4Button, card);
+            }
+        });
+
+        card5Button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int card = deck.drawCard();
+                setImageButton(card5Button, card);
+            }
+        });
 
 
 
@@ -122,8 +186,45 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     }
 
-    private void setBank() {
+    public void setCard(ImageButton button, Deck deck){
+        int card =  deck.drawCard();
+        setImageButton(button, card);
     }
+
+
+    public void setImageButton(ImageButton button, int id){
+        switch (id){
+            case 0:
+                button.setImageResource(R.drawable.black);
+                break;
+            case 1:
+                button.setImageResource(R.drawable.blue);
+                break;
+            case 2:
+                button.setImageResource(R.drawable.green);
+                break;
+            case 3:
+                button.setImageResource(R.drawable.orange);
+                break;
+            case 4:
+                button.setImageResource(R.drawable.purple);
+                break;
+            case 5:
+                button.setImageResource(R.drawable.red);
+                break;
+            case 6:
+                button.setImageResource(R.drawable.white);
+                break;
+            case 7:
+                button.setImageResource(R.drawable.yellow);
+                break;
+            case 8:
+                button.setImageResource(R.drawable.loco);
+                break;
+        }
+    }
+
+
 
     private void setRoutes() {
 //        Player curr_player = ClientModel.getInstance().getCurrentPlayer();
@@ -188,6 +289,93 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         //playersStats.setText(builder.toString());
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+//
+//        @Override
+//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                                 Bundle savedInstanceState) {
+//           // View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+//            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+//           // textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+//            return rootView;
+//        }
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            return PlaceholderFragment.newInstance(position + 1);
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "SECTION 1";
+                case 1:
+                    return "SECTION 2";
+                case 2:
+                    return "SECTION 3";
+            }
+            return null;
+        }
     }
 
     private void setTrainCards() {
