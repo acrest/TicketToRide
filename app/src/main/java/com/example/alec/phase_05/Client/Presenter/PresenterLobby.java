@@ -28,10 +28,19 @@ public class PresenterLobby extends Presenter implements IPresenterLobby {
 
     @Override
     public void onStartGameButtonPressed() {
+        requestStartGame();
+    }
+
+    private void onGameStart() {
         listener.onStartGame();
         Poller poller = Poller.getInstance();
         poller.setModelPolling();
         ClientModel.getInstance().deleteObserver(this); //stops the ticket to ride activity from being made every time the poller activates
+    }
+
+    private void requestStartGame() {
+        Facade.getInstance().startGame();
+        gameStarted = true;
     }
 
     @Override
@@ -42,12 +51,11 @@ public class PresenterLobby extends Presenter implements IPresenterLobby {
             int num = model.getNumberPlayers();
             listener.updateNumberOfPlayers(num, max);
             if(num == max && model.getCurrentPlayer().isHost() && !gameStarted) {
-                Facade.getInstance().startGame();
-                gameStarted = true;
+                requestStartGame();
             }
         }
         if(u.needUpdate(ClientModel.GAME_START)) {
-            onStartGameButtonPressed();
+            listener.onStartGame();
         }
     }
 }

@@ -7,6 +7,7 @@ import com.example.alec.phase_05.Server.model.GameStateFactory;
 import com.example.alec.phase_05.Server.model.IServerBank;
 import com.example.alec.phase_05.Server.model.IServerGame;
 import com.example.alec.phase_05.Server.model.ServerGame;
+import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
@@ -93,7 +94,7 @@ public class ServerFacade {
         return ServerModel.get_instance().getGame(gameID);
     }
 
-    public List<ICommand> getGameUpdates(Player client, int gameID) {
+    public List<BaseCommand> getGameUpdates(Player client, int gameID) {
         return ServerModel.get_instance().getGameUpdates(client, gameID);
     }
 
@@ -104,7 +105,7 @@ public class ServerFacade {
     public CommandHolder getCommandsForClient(String username, String password, int gameID) {
         ServerModel model = ServerModel.get_instance();
         ServerGame game = model.getGame(gameID);
-        List<ICommand> commands = game.getCommandManager().recentCommands(new Player(username, password));
+        List<BaseCommand> commands = game.getCommandManager().recentCommands(new Player(username, password));
         return new CommandHolder(commands);
     }
 

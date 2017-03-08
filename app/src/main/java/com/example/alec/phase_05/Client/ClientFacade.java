@@ -7,6 +7,8 @@ import com.example.alec.phase_05.Client.Model.ClientGameFactory;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Model.IClientBank;
 import com.example.alec.phase_05.Client.Model.IClientGame;
+import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
+import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -122,9 +124,14 @@ public class ClientFacade {
         ClientModel.getInstance().addDestinationCard(card);
     }
 
-    public void executeCommands(List<ICommand> commands) {
-        Log.d("ClientFacade", "called executeCommands with size of " + commands.size());
-        for(ICommand command : commands) {
+    public void executeCommands(List<BaseCommand> commands) {
+        if(commands.size() > 0) {
+            Log.d("ClientFacade", "execute commands with " + commands.size());
+        }
+        for(BaseCommand command : commands) {
+            if(command instanceof ClientGameStartedCommand) {
+                Log.d("ClientFacade", "executed game started command");
+            }
             command.execute();
         }
     }

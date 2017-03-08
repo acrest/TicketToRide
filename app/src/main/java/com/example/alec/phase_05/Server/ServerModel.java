@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Server;
 
 import com.example.alec.phase_05.Server.model.IServerGame;
 import com.example.alec.phase_05.Server.model.ServerGame;
+import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -139,7 +140,7 @@ public class ServerModel {
      * @return list of commands that haven't been executed yet for given player and game,
      * or null if there are no commands to be executed.
      */
-    public List<ICommand> getGameUpdates(Player player, int gameID) {
+    public List<BaseCommand> getGameUpdates(Player player, int gameID) {
         IServerGame game = getGame(gameID);
         if(game == null) return null;
         return game.getCommandManager().recentCommands(player);
