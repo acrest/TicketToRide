@@ -5,8 +5,12 @@ import android.os.Looper;
 
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.TrainCard;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 /**
@@ -95,6 +99,13 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
                     listener.updatePlayerTrainCount(player.getName(), player.getTrainCount());
                 }
             });
+        }
+        if(u.needUpdate(ClientModel.VISIBLE_TRAIN_CARDS)) {
+            List<TrainCard> cards = new ArrayList<>();
+            for(int i = 0; i < IGame.NUM_VISIBLE_CARDS; ++i) {
+                cards.add(ClientModel.getInstance().getVisibleTrainCard(i));
+            }
+            listener.updateFaceupTrainCards(cards);
         }
     }
 

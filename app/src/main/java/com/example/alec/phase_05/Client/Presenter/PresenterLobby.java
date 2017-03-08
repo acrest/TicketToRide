@@ -2,7 +2,9 @@ package com.example.alec.phase_05.Client.Presenter;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
+import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Model.IClientGame;
 import com.example.alec.phase_05.Client.Poller;
@@ -16,10 +18,12 @@ import java.util.Observable;
 
 public class PresenterLobby extends Presenter implements IPresenterLobby {
     private ILobbyListener listener;
+    private boolean gameStarted;
 
     public PresenterLobby(ILobbyListener listener) {
         this.listener = listener;
         ClientModel.getInstance().addObserver(this);
+        gameStarted = false;
     }
 
     @Override
@@ -37,7 +41,13 @@ public class PresenterLobby extends Presenter implements IPresenterLobby {
             int max = model.getGameMaxPlayers();
             int num = model.getNumberPlayers();
             listener.updateNumberOfPlayers(num, max);
-            if(num == max) listener.onStartGame();
+            if(num == max && model.getCurrentPlayer().isHost() && !gameStarted) {
+                Facade.getInstance().startGame();
+                gameStarted = true;
+            }
+        }
+        if(u.needUpdate(ClientModel.GAME_START)) {
+            onStartGameButtonPressed();
         }
     }
 }

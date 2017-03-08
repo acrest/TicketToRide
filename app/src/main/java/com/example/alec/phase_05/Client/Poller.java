@@ -76,6 +76,8 @@ public class Poller {
                                 ClientFacade.getInstance().setCurrentGameDescription(currentGameDescription);
                             }
                         }
+                        Facade.getInstance().updateGameChanges(); //right now this is the only way to catch the initial start game command
+
                         break;
                     case 3:
 

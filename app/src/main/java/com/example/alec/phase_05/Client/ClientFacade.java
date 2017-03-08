@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Client;
 
+import android.util.Log;
+
 import com.example.alec.phase_05.Client.Model.ClientGame;
 import com.example.alec.phase_05.Client.Model.ClientGameFactory;
 import com.example.alec.phase_05.Client.Model.ClientModel;
@@ -104,7 +106,24 @@ public class ClientFacade {
         model.setMap(gameState.getMap());
     }
 
+    public void startGame() {
+        Facade facade = Facade.getInstance();
+        facade.drawDestinationCard();
+        facade.drawDestinationCard();
+        facade.drawDestinationCard();
+        ClientModel.getInstance().setGameStarted();
+    }
+
+    public void addTrainCard(TrainCard card) {
+        ClientModel.getInstance().addTrainCard(card);
+    }
+
+    public void addDestinationCard(DestinationCard card) {
+        ClientModel.getInstance().addDestinationCard(card);
+    }
+
     public void executeCommands(List<ICommand> commands) {
+        Log.d("ClientFacade", "called executeCommands with size of " + commands.size());
         for(ICommand command : commands) {
             command.execute();
         }

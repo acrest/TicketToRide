@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Server;
 
+import android.util.Log;
+
 import com.example.alec.phase_05.Server.command.ServerDrawnDestinationCardCommand;
 import com.example.alec.phase_05.Server.command.ServerGameStartedCommand;
 import com.example.alec.phase_05.Server.model.GameStateFactory;
@@ -11,6 +13,7 @@ import com.example.alec.phase_05.Shared.command.DrawnDestinationCardCommand;
 import com.example.alec.phase_05.Shared.command.DrawnTrainCardCommand;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.command.StartGameCommand;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 
@@ -40,12 +43,17 @@ public class CommandManager {
     }
 
     public void addCommand(GameCommand command){
+        System.out.println("addCommand called");
+        System.out.println("commands size is " + commands.size());
         commands.add(command);
     }
 
     public List<ICommand> recentCommands(Player player){
+        System.out.println("called recentCommands with " + player.getName());
         List<ICommand> recCommands = new ArrayList<>();
         int commandIndex = getCommandIndex(player);
+        System.out.println("command index for player is " + commandIndex);
+        System.out.println("command size is " + commands.size());
 
 //        if(commandIndex == 0) {
 //            GameState gameState = GameStateFactory.gameToGameState(game);
@@ -58,21 +66,24 @@ public class CommandManager {
             if(commands.get(i).getPlayerId() == player.getId() || commands.get(i).getId() == -1)
             {
 //                recCommands.add(commands.get(i));
-//                recCommands.add(createNeededCommand(commands.get(i)));
+                System.out.println("Added COMMMMMMMMMMMMMAND");
+                recCommands.add(createNeededCommand(commands.get(i)));
             }
         }
+
+        playerIndex.put(player.getName(), commands.size());
 
         return recCommands;
     }
 
-//    private ICommand createNeededCommand(GameCommand command) {
-//        if(command instanceof DrawDestinationCardCommand) {
-//            DrawDestinationCardCommand cmd = (DrawDestinationCardCommand) command;
-//            return new ServerDrawnDestinationCardCommand(cmd.getUserName(), cmd.get);
-//        } else if(command instanceof DrawTrainCardCommand) {
-//
-//        }
-//    }
+    private ICommand createNeededCommand(GameCommand command) {
+        if(command instanceof StartGameCommand) {
+            StartGameCommand cmd = (StartGameCommand) command;
+            return new ServerGameStartedCommand(GameStateFactory.gameToGameState(game));
+        }
+
+        return null;
+    }
 
     private int getCommandIndex(Player player){
         if(!playerIndex.containsKey(player.getName()))

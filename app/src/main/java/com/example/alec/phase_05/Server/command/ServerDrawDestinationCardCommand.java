@@ -11,8 +11,8 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
 
 public class ServerDrawDestinationCardCommand extends DrawDestinationCardCommand {
 
-    public ServerDrawDestinationCardCommand(String commandName, String userName, String password, int gameID) {
-        super(commandName, userName, password, gameID);
+    public ServerDrawDestinationCardCommand(String userName, String password, int gameID) {
+        super(userName, password, gameID);
     }
 
     @Override

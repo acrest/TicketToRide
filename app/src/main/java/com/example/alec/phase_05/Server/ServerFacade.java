@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Server;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Server.command.ServerResult;
+import com.example.alec.phase_05.Server.command.ServerStartGameCommand;
 import com.example.alec.phase_05.Server.model.GameStateFactory;
 import com.example.alec.phase_05.Server.model.IServerBank;
 import com.example.alec.phase_05.Server.model.IServerGame;
@@ -146,7 +147,7 @@ public class ServerFacade {
         return r;
     }
 
-    public boolean startGameCommand(int gameId) {
+    public boolean startGame(int gameId) {
         IServerGame game = ServerModel.get_instance().getGame(gameId);
         if(game == null) return false;
         game.setGameStarted();
