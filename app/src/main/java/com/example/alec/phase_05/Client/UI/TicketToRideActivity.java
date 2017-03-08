@@ -112,6 +112,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setTrainCards();
         setPlayersStats();
         setRoutes();
+        setBank();
 
 
 
@@ -119,6 +120,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         presenter = new PresenterTicketToRide(this);
         presenter = new PresenterTicketToRide(this);
 
+    }
+
+    private void setBank() {
     }
 
     private void setRoutes() {
