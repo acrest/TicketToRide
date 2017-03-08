@@ -3,6 +3,7 @@ package com.example.alec.phase_05.Client.UI;
 import android.app.TabActivity;
 import android.content.Context;
 import android.graphics.Color;
+import android.provider.ContactsContract;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -56,6 +59,7 @@ import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,6 +127,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     private void setBank() {
+
+      /*  LinearLayout face_up_layout = (LinearLayout) findViewById(R.id.bank);
+        ImageButton card1 = (ImageButton) findViewById(R.id.card1);
+        ImageButton card2 = (ImageButton) findViewById(R.id.card2);
+        ImageButton card3 = (ImageButton) findViewById(R.id.card3);
+        ImageButton card4 = (ImageButton) findViewById(R.id.card4);
+        ImageButton card5 = (ImageButton) findViewById(R.id.card5);
+        ImageButton deck = (ImageButton) findViewById(R.id.deck);
+*/
+
+
     }
 
     private void setRoutes() {
@@ -301,6 +316,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updatePlayerTrainCount(String playerName, int count) {
+
+    }
+
+    @Override
+    public void updateFaceupTrainCards(List<TrainCard> cards) {
 
     }
 
