@@ -51,6 +51,7 @@ import android.os.Bundle;
 import android.widget.TabHost;
 import com.example.alec.phase_05.R;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
@@ -74,7 +75,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private DerpAdapter mChatRecyclerAdapter;
     private DerpAdapter mRoutesRecyclerAdapter;
     private DerpAdapter mGameHistoryRecyclerAdapter;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -296,7 +296,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     @Override
-    public void updateRoutes() {
+    public void updatePlayerTrainCount(String playerName, int count) {
+
+    }
+
+    @Override
+    public void updateMap(GameMap map) {
 
     }
 

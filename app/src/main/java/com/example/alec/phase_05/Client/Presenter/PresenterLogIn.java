@@ -31,22 +31,6 @@ public class PresenterLogIn extends Presenter implements IPresenterLogIn {
     }
 
     @Override
-    public void update(Observable observable, Object o) {
-        if(!(o instanceof UpdateIndicator)) {
-            throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
-        }
-        final UpdateIndicator u = (UpdateIndicator) o;
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                update(u);
-            }
-        };
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(runnable);
-    }
-
-    @Override
     public void update(UpdateIndicator u) {
 
     }

@@ -23,6 +23,7 @@ public abstract class Game implements IGame {
     private List<Player> players;
     private IBank bank;
     private GameMap gameMap;
+    private boolean gameStarted;
 
     public Game(int id, String name, int maxPlayers, IBank bank, GameMap gameMap) {
         this.id = id;
@@ -31,6 +32,7 @@ public abstract class Game implements IGame {
         this.bank = bank;
         this.gameMap = gameMap;
         players = new ArrayList<>();
+        gameStarted = false;
     }
 
 //    public Game(GameDescription gameDescription) {
@@ -199,4 +201,14 @@ public abstract class Game implements IGame {
 //            playerColors = gameDescription.getPlayerColors();
 //        }
 //    }
+
+    @Override
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    @Override
+    public void setGameStarted() {
+        gameStarted = true;
+    }
 }

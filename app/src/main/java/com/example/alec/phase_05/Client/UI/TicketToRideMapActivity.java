@@ -11,6 +11,7 @@ import android.widget.TabHost;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
@@ -68,7 +69,12 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
     }
 
     @Override
-    public void updateRoutes() {
+    public void updatePlayerTrainCount(String playerName, int count) {
+
+    }
+
+    @Override
+    public void updateMap(GameMap map) {
 
     }
 }

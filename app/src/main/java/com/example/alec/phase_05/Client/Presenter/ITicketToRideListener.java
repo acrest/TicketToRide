@@ -21,6 +21,7 @@ public interface ITicketToRideListener {
 
     void updateChats(List<Chat> chats);
     void updatePlayerPoints(String playerName, int points);
+    void updatePlayerTrainCount(String playerName, int count);
 
     void updateMap(GameMap map);
 }

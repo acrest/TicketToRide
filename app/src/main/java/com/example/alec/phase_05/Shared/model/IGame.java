@@ -22,4 +22,7 @@ public interface IGame {
     IBank getBank();
     GameMap getMap();
     void setMap(GameMap map);
+
+    boolean isGameStarted();
+    void setGameStarted();
 }

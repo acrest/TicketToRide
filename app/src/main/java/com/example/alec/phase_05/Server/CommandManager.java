@@ -47,17 +47,17 @@ public class CommandManager {
         List<ICommand> recCommands = new ArrayList<>();
         int commandIndex = getCommandIndex(player);
 
-        if(commandIndex == 0) {
-            GameState gameState = GameStateFactory.gameToGameState(game);
-            ServerGameStartedCommand command = new ServerGameStartedCommand(gameState);
-            recCommands.add(command);
-        }
+//        if(commandIndex == 0) {
+//            GameState gameState = GameStateFactory.gameToGameState(game);
+//            ServerGameStartedCommand command = new ServerGameStartedCommand(gameState);
+//            recCommands.add(command);
+//        }
 
         for(int i = commandIndex; i < commands.size(); i++)
         {
             if(commands.get(i).getPlayerId() == player.getId() || commands.get(i).getId() == -1)
             {
-                recCommands.add(commands.get(i));
+//                recCommands.add(commands.get(i));
 //                recCommands.add(createNeededCommand(commands.get(i)));
             }
         }
