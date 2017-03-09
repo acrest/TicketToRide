@@ -20,6 +20,8 @@ public interface IPresenterTicketToRide extends IPresenter {
     void returnDestinationCard(Integer cardID);
     void endTurn();
 
+    void updateAll();
+
     void startDemo();
 
 }

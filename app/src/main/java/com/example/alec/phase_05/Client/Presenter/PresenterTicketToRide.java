@@ -30,7 +30,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     }
 
     @Override
-    public void pickTrainCard(int deckID){
+    public void pickTrainCard(int deckID) {
         facade.pickTrainCard(deckID);
     }
 
@@ -44,7 +44,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     }
 
     @Override
-    public void returnDestinationCard(Integer cardID){
+    public void returnDestinationCard(Integer cardID) {
 
     }
 
@@ -56,6 +56,44 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void endTurn() {
 
+    }
+
+    @Override
+    public void updateAll() {
+        final ClientModel model = ClientModel.getInstance();
+        listener.updateTrainCards(model.getCurrentPlayer().getTrainCards());
+        visitAllOtherPlayers(new PlayerVisitor() {
+            @Override
+            public void visitPlayer(Player player) {
+                listener.updatePlayerTrainCards(player.getName(), model.getNumberOfTrainCards(player.getName()));
+            }
+        });
+        listener.updateDestinationCards(model.getCurrentPlayer().getDestinationCards());
+        visitAllOtherPlayers(new PlayerVisitor() {
+            @Override
+            public void visitPlayer(Player player) {
+                listener.updatePlayerDestinationCards(player.getName(), model.getNumberOfDestinationCards(player.getName()));
+            }
+        });
+        listener.updateChats(model.getChats());
+        visitAllPlayers(new PlayerVisitor() {
+            @Override
+            public void visitPlayer(Player player) {
+                listener.updatePlayerPoints(player.getName(), player.getPointCount());
+            }
+        });
+        listener.updateMap(ClientModel.getInstance().getGameMap());
+        visitAllPlayers(new PlayerVisitor() {
+            @Override
+            public void visitPlayer(Player player) {
+                listener.updatePlayerTrainCount(player.getName(), player.getTrainCount());
+            }
+        });
+        List<TrainCard> cards = new ArrayList<>();
+        for (int i = 0; i < IGame.NUM_VISIBLE_CARDS; ++i) {
+            cards.add(ClientModel.getInstance().getVisibleTrainCard(i));
+        }
+        listener.updateFaceupTrainCards(cards);
     }
 
     @Override
