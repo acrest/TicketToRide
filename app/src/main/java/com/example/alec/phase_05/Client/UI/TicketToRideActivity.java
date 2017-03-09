@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -177,6 +178,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 int card = deck.drawCard();
                 setImageButton(card5Button, card);
+            }
+        });
+
+        Button placeRoutesButton = (Button) findViewById(R.id.placeRoute);
+        placeRoutesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.startDemo();
             }
         });
 
