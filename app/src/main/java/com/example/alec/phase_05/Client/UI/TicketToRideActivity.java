@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.media.Image;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -73,6 +74,25 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private GameHistoryAdapter mGameHistoryRecyclerAdapter;
     private Button mCreateChatButton;
     private EditText mEditTextChat;
+    private TextView boxCountView;
+    private TextView passengerCountView;
+    private TextView tankerCountView;
+    private TextView reeferCountView;
+    private TextView freightCountView;
+    private TextView hopperCountView;
+    private TextView coalCountView;
+    private TextView caboosecountView;
+    private TextView locomotiveCountView;
+
+    int boxCount;
+    int passengerCount;
+    int tankerCount;
+    int reeferCount;
+    int freightCount;
+    int hopperCount;
+    int coalCount;
+    int cabooseCount;
+    int locomotiveCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,6 +130,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 }
             }
         });
+
+        setCardCountsZero();
+        boxCountView = (TextView) findViewById(R.id.yellow_cards);
+        passengerCountView = (TextView) findViewById(R.id.blue_cards);
+        tankerCountView = (TextView) findViewById(R.id.orange_cards);
+        reeferCountView = (TextView) findViewById(R.id.white_cards);
+        freightCountView = (TextView) findViewById(R.id.purple_cards);
+        hopperCountView = (TextView) findViewById(R.id.black_cards);
+        coalCountView = (TextView) findViewById(R.id.red_cards);
+        caboosecountView = (TextView) findViewById(R.id.green_cards);
+        locomotiveCountView = (TextView) findViewById(R.id.rainbow_cards);
 
         TabHost mTabHost = getTabHost();
 
@@ -264,7 +295,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 p.setColor(Color.BLUE);
                 break;
         }
-        p.setAlpha(75);
+        //p.setAlpha(75);
         PointF firstCity = convertToScreenCoordinates(imageView.getWidth(),imageView.getHeight(),(float)city1.getXCord(),(float)city1.getYCord());
         PointF secondCity = convertToScreenCoordinates(imageView.getWidth(),imageView.getHeight(),(float)city2.getXCord(),(float)city2.getYCord());
 
@@ -378,31 +409,30 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     private void setPlayersStats() {
-        ClientModel model = ClientModel.getInstance();
-        int num_players = model.getNumberPlayers();
-        ArrayList<TrainCard> cardList = model.getCurrentPlayer().getTrainCards();
-        ArrayList<Player> playerList = new ArrayList<Player>();
+
+        ArrayList<Player> playerList = presenter.getPlayers();
         ArrayList<String> playerInfo = new ArrayList<String>();
         Player player_with_longest_route = new Player(null, null);
 
+        System.out.println("WE ARE TESTING HERE");
+        System.out.println(playerList.size());
+            for (int i = 0; i < playerList.size(); i++) {
+                Player temp_player = playerList.get(i);
+                System.out.println(temp_player.getName());
+                System.out.println(i);
 
-        for (int i = 0; i < num_players; i++) {
-            Player temp_player = model.getPlayer(i);
-            if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
-                player_with_longest_route = temp_player;
+                if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
+                    player_with_longest_route = temp_player;
+                }
+
+                String temp = temp_player.getName() + "                  " + temp_player.getPointCount() + "                    "
+                        + temp_player.getTrainCount() + "                   " + temp_player.getTrainCards().size() + "                 "
+                        + temp_player.getDestinationCards().size() + "  " + temp_player.getColor();
+                playerInfo.add(temp);
+
             }
-            playerList.add(temp_player);
-            String temp = temp_player.getName() +  "                " + temp_player.getPointCount() + "                      "
-                    + temp_player.getTrainCount() + "                    " + cardList.size() + "                  " + temp_player.getDestinationCards().size();
-            playerInfo.add(temp);
 
-        }
 
-        if (playerInfo.size() == 0) {
-
-            String noString = "You have no routes!";
-            playerInfo.add(noString);
-        }
         populatePlayerListView(playerInfo);
 
         TextView longest_route_player = (TextView) findViewById(R.id.longest_route_text);
@@ -415,14 +445,15 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
 
     private void populatePlayerListView(ArrayList<String> playerInfo) {
-        ListView playersStats = (ListView) findViewById(R.id.player_stats);
+        TextView playersStats = (TextView) findViewById(R.id.player_stats);
 
         StringBuilder builder = new StringBuilder();
+
         for (String a_player : playerInfo) {
             builder.append(a_player + "\n");
         }
 
-        //playersStats.setText(builder.toString());
+        playersStats.setText(builder.toString());
 
     }
 
@@ -524,10 +555,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         TextView blackCard = (TextView) findViewById(R.id.black_cards);
         TextView rainbowCard = (TextView) findViewById(R.id.rainbow_cards);
 
-        ListView playerInfoList = (ListView) findViewById(R.id.player_stats);
+        TextView playerInfoList = (TextView) findViewById(R.id.player_stats);
 
-
-        ArrayList<TrainCard> cardList = ClientModel.getInstance().getCurrentPlayer().getTrainCards();
+        ArrayList<TrainCard> cardList = presenter.getTrainCards();
+        //ArrayList<TrainCard> cardList = ClientModel.getInstance().getCurrentPlayer().getTrainCards();
         int red_coal = 0;
         int orange_tanker = 0;
         int yellow_boxcar = 0;
@@ -556,7 +587,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     break;
                 case HOPPER: black_hopper++;
                     break;
-                case ANY: rainbow_any++;
+                case LOCOMOTIVE: rainbow_any++;
             }
 
         }
@@ -595,6 +626,47 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updateTrainCards(List<TrainCard> cards) {
         Log.d("TicketToRideActivity", "updateTrainCards called");
+        setCardCountsZero();
+        for(int i = 0; i < cards.size(); i++){
+            switch (cards.get(i).getType()){
+                case BOX:
+                    boxCount++;
+                    boxCountView.setText(Integer.toString(boxCount));
+                    break;
+                case PASSENGER:
+                    passengerCount++;
+                    passengerCountView.setText(Integer.toString(passengerCount));
+                    break;
+                case TANKER:
+                    tankerCount++;
+                    tankerCountView.setText(Integer.toString(tankerCount));
+                    break;
+                case REEFER:
+                    reeferCount++;
+                    reeferCountView.setText(Integer.toString(reeferCount));
+                    break;
+                case FREIGHT:
+                    freightCount++;
+                    freightCountView.setText(Integer.toString(freightCount));
+                    break;
+                case HOPPER:
+                    hopperCount++;
+                    hopperCountView.setText(Integer.toString(hopperCount));
+                    break;
+                case COAL:
+                    coalCount++;
+                    coalCountView.setText(Integer.toString(coalCount));
+                    break;
+                case CABOOSE:
+                    cabooseCount++;
+                    caboosecountView.setText(Integer.toString(cabooseCount));
+                    break;
+                case LOCOMOTIVE:
+                    locomotiveCount++;
+                    locomotiveCountView.setText(Integer.toString(locomotiveCount));
+                    break;
+            }
+        }
     }
 
     @Override
@@ -1013,5 +1085,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         }
 
+    }
+
+    private void setCardCountsZero(){
+        boxCount = 0;
+        passengerCount = 0;
+        tankerCount = 0;
+        reeferCount = 0;
+        freightCount = 0;
+        hopperCount = 0;
+        coalCount = 0;
+        cabooseCount = 0;
+        locomotiveCount = 0;
     }
 }
