@@ -2,7 +2,10 @@ package com.example.alec.phase_05.Client.UI;
 
 import android.app.TabActivity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.provider.ContactsContract;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -11,12 +14,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -140,44 +145,54 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         final ImageButton card5Button = (ImageButton) findViewById(R.id.card5);
         setCard(card5Button, deck);
 
+        final Toast toast = Toast.makeText(getApplicationContext(), "Card added to hand!",
+                Toast.LENGTH_SHORT);
+
+
         deckButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int card = deck.drawCard();
-                //setImageButton(deckButton, card);
+                TrainCard card = deck.drawCard();
+                toast.show();
+
             }
         });
         card1Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int card = deck.drawCard();
-                setImageButton(card1Button, card);
+                TrainCard card = deck.drawCard();
+                toast.show();
+                setImageButton(card1Button, card.getType());
             }
         });
 
         card2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int card = deck.drawCard();
-                setImageButton(card2Button, card);
+                TrainCard card = deck.drawCard();
+                toast.show();
+                setImageButton(card1Button, card.getType());
             }
         });
 
         card3Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int card = deck.drawCard();
-                setImageButton(card3Button, card);
+                TrainCard card = deck.drawCard();
+                toast.show();
+                setImageButton(card1Button, card.getType());
             }
         });
 
         card4Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int card = deck.drawCard();
-                setImageButton(card4Button, card);
+                TrainCard card = deck.drawCard();
+                toast.show();
+                setImageButton(card1Button, card.getType());
             }
         });
 
         card5Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int card = deck.drawCard();
-                setImageButton(card5Button, card);
+                TrainCard card = deck.drawCard();
+                toast.show();
+                setImageButton(card1Button, card.getType());
             }
         });
 
@@ -190,48 +205,131 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
 
 
-//        presenter = new PresenterTicketToRide(this);
-//        presenter = new PresenterTicketToRide(this);
+        presenter = new PresenterTicketToRide(this);
+        presenter = new PresenterTicketToRide(this);
+
+
+
+        //*************************************************
+        final ImageView imageView = (ImageView)findViewById(R.id.map);
+
+        imageView.setOnTouchListener(new ImageView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                convertToImageCoord(imageView.getWidth(), imageView.getHeight(),
+                        getResources().getDrawable(R.drawable.ticketmap).getMinimumWidth(),
+                        getResources().getDrawable(R.drawable.ticketmap).getMinimumHeight(),
+                        event.getX(), event.getY());
+                return true;
+            }
+        });
+
+        final Button drawRoute  = (Button)findViewById(R.id.placeRoute);
+        drawRoute.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas c = new Canvas(bmp);
+                imageView.draw(c);
+
+                Paint p = new Paint();
+                p.setStrokeWidth(8);
+                p.setColor(Color.WHITE);
+                p.setAlpha(75);
+                c.drawLine(88, 0, 188, 100, p);
+                imageView.setImageBitmap(bmp);
+            }
+        });
+
 
     }
+
+    //**************************************
+
+
+
+    public void checkIfRouteSelected(){
+        //do some things
+    }
+
+    public Float[] convertToImageCoord(float deviceWidth, float deviceHeight, float imageWidth,
+                                       float imageHeight, float xInput, float yInput){
+        Float[] coordinates = new Float[2];
+        float x;
+        float y;
+        // System.out.println(" The x and y " + xInput + " " + yInput);
+        float conversionRate = deviceHeight/imageHeight;
+        // System.out.println("The device height and image height " + deviceHeight + " " + imageHeight);
+        //System.out.println("Conversion rate: " + conversionRate + "New Image Width: " + imageWidth * conversionRate);
+        float extraSpace = (deviceWidth - (imageWidth*conversionRate))/2;
+        //System.out.println("Extra space: " + extraSpace);
+        x = ((xInput- extraSpace)/conversionRate);
+        y = (yInput)/conversionRate;
+        //System.out.println("The converted points " + x + " " + y);
+        coordinates[0] = x;
+        coordinates[1] = y;
+        return coordinates;
+    }
+
+    public Float[] convertToScreenCoordinates(float deviceWidth, float deviceHeight, float imageWidth,
+                                              float imageHeight, float xInput, float yInput){
+        Float[] coordinates = new Float[2];
+        float x;
+        float y;
+        float conversionRate = deviceHeight/imageHeight;
+        float extraSpace = (deviceWidth - (imageWidth*conversionRate))/2;
+        x = (xInput * conversionRate) + extraSpace;
+        y = yInput * conversionRate;
+        coordinates[0] = x;
+        coordinates[1] = y;
+        return coordinates;
+
+    }
+
+
+    // **************************************
+
 
     public void setCard(ImageButton button, Deck deck){
-        int card =  deck.drawCard();
-        setImageButton(button, card);
+        TrainCard card =  deck.drawCard();
+        setImageButton(button, card.getType());
     }
 
 
-    public void setImageButton(ImageButton button, int id){
+    public void setImageButton(ImageButton button, TrainType id){
         switch (id){
-            case 0:
+            case HOPPER:
                 button.setImageResource(R.drawable.black);
                 break;
-            case 1:
+            case PASSENGER:
                 button.setImageResource(R.drawable.blue);
                 break;
-            case 2:
+            case CABOOSE:
                 button.setImageResource(R.drawable.green);
                 break;
-            case 3:
+            case TANKER:
                 button.setImageResource(R.drawable.orange);
                 break;
-            case 4:
+            case FREIGHT:
                 button.setImageResource(R.drawable.purple);
                 break;
-            case 5:
+            case COAL:
                 button.setImageResource(R.drawable.red);
                 break;
-            case 6:
+            case REEFER:
                 button.setImageResource(R.drawable.white);
                 break;
-            case 7:
+            case BOX:
                 button.setImageResource(R.drawable.yellow);
                 break;
-            case 8:
+            case LOCOMOTIVE:
                 button.setImageResource(R.drawable.loco);
                 break;
         }
     }
+
+
 
 
 
