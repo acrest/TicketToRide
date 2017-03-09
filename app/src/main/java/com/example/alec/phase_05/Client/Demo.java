@@ -134,13 +134,13 @@ public final class Demo {
 
     private void testClaimRoute() {
         System.out.println("testing claim route");
-        model.setRouteOwner(model.getCurrentPlayer().getName(), 1);
+        model.setRouteOwner(model.getCurrentPlayer().getName(), 10);
         Player player = findOtherPlayer();
         if(player == null) {
             System.out.println("there are no other players to test");
             return;
         }
-        model.setRouteOwner(player.getName(), 2);
+        model.setRouteOwner(player.getName(), 95);
     }
 
     private void testPlayerPoints() {

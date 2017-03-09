@@ -2,6 +2,8 @@ package com.example.alec.phase_05.Client.UI;
 
 import android.app.TabActivity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -199,13 +201,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 presenter.startDemo();
             }
         });
-
-
-
-        presenter = new PresenterTicketToRide(this);
-        presenter = new PresenterTicketToRide(this);
-
-
 
         //*************************************************
         final ImageView imageView = (ImageView)findViewById(R.id.map);
