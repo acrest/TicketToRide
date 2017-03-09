@@ -22,7 +22,6 @@ public class PresenterLobby extends Presenter implements IPresenterLobby {
 
     public PresenterLobby(ILobbyListener listener) {
         this.listener = listener;
-        ClientModel.getInstance().addObserver(this);
         gameStarted = false;
     }
 
