@@ -6,6 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.PointF;
+import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -63,6 +66,7 @@ import android.app.TabActivity;
 import android.os.Bundle;
 import android.widget.TabHost;
 import com.example.alec.phase_05.R;
+import com.example.alec.phase_05.Shared.model.City;
 import com.example.alec.phase_05.Shared.model.Deck;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
@@ -230,7 +234,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         //*************************************************
         final ImageView imageView = (ImageView)findViewById(R.id.map);
-
+/*
         imageView.setOnTouchListener(new ImageView.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -261,8 +265,43 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //                imageView.setImageBitmap(bmp);
             }
         });
+*/
+
+    }
+
+    public void drawRouteLine(City city1, City city2, Player player){
+        final ImageView imageView = (ImageView)findViewById(R.id.map);
+        Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bmp);
+        imageView.draw(c);
+
+        Paint p = new Paint();
+        p.setStrokeWidth(8);
+        switch(player.getColor().toLowerCase()){
+            case "black":
+                p.setColor(Color.BLACK);
+                break;
+            case "yellow":
+                p.setColor(Color.YELLOW);
+                break;
+            case "red":
+                p.setColor(Color.RED);
+                break;
+            case "green":
+                p.setColor(Color.GREEN);
+                break;
+            case "blue":
+                p.setColor(Color.BLUE);
+                break;
+        }
+        p.setAlpha(75);
+        PointF firstCity = convertToScreenCoordinates(imageView.getWidth(),imageView.getHeight(),(float)city1.getXCord(),(float)city1.getYCord());
+        PointF secondCity = convertToScreenCoordinates(imageView.getWidth(),imageView.getHeight(),(float)city2.getXCord(),(float)city2.getYCord());
 
 
+
+        c.drawLine(secondCity.x, secondCity.y, firstCity.x, firstCity.y, p);
+        imageView.setImageBitmap(bmp);
     }
 
     //**************************************
@@ -272,7 +311,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     public void checkIfRouteSelected(){
         //do some things
     }
-
+/*
     public Float[] convertToImageCoord(float deviceWidth, float deviceHeight, float imageWidth,
                                        float imageHeight, float xInput, float yInput){
         Float[] coordinates = new Float[2];
@@ -291,19 +330,22 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         coordinates[1] = y;
         return coordinates;
     }
+*/
+    public PointF convertToScreenCoordinates(float deviceWidth, float deviceHeight, float xInput, float yInput){
 
-    public Float[] convertToScreenCoordinates(float deviceWidth, float deviceHeight, float imageWidth,
-                                              float imageHeight, float xInput, float yInput){
-        Float[] coordinates = new Float[2];
+        float imageWidth = getResources().getDrawable(R.drawable.tickettoridemap).getMinimumWidth();
+        float imageHeight = getResources().getDrawable(R.drawable.tickettoridemap).getMinimumHeight();
+
+        PointF newPoint = new PointF();
         float x;
         float y;
         float conversionRate = deviceHeight/imageHeight;
         float extraSpace = (deviceWidth - (imageWidth*conversionRate))/2;
         x = (xInput * conversionRate) + extraSpace;
         y = yInput * conversionRate;
-        coordinates[0] = x;
-        coordinates[1] = y;
-        return coordinates;
+        newPoint.x = x;
+        newPoint.y = y;
+        return newPoint;
 
     }
 
@@ -629,7 +671,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updateMap(GameMap map) {
         Log.d("TicketToRideActivity", "updateMap called");
-
+        for(int i = 1; i<=100;i++) {
+            if (map.getRoutes().get(i).getOwner() != null) {
+                drawRouteLine(map.getRoutes().get(i).getCity1(), map.getRoutes().get(i).getCity2(), map.getRoutes().get(i).getOwner());
+            }
+        }
     }
 
     public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder>   {
