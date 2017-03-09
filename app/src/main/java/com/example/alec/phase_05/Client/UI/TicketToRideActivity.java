@@ -527,8 +527,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         TextView playerInfoList = (TextView) findViewById(R.id.player_stats);
 
-
-        ArrayList<TrainCard> cardList = ClientModel.getInstance().getCurrentPlayer().getTrainCards();
+        ArrayList<TrainCard> cardList = presenter.getTrainCards();
+        //ArrayList<TrainCard> cardList = ClientModel.getInstance().getCurrentPlayer().getTrainCards();
         int red_coal = 0;
         int orange_tanker = 0;
         int yellow_boxcar = 0;
@@ -557,7 +557,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     break;
                 case HOPPER: black_hopper++;
                     break;
-                case ANY: rainbow_any++;
+                case LOCOMOTIVE: rainbow_any++;
             }
 
         }
