@@ -202,13 +202,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
-
-
-        presenter = new PresenterTicketToRide(this);
-        presenter = new PresenterTicketToRide(this);
-
-
-
         //*************************************************
         final ImageView imageView = (ImageView)findViewById(R.id.map);
 /*
