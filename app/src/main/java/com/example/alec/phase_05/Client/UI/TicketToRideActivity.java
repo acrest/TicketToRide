@@ -2,6 +2,8 @@ package com.example.alec.phase_05.Client.UI;
 
 import android.app.TabActivity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -269,7 +271,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 p.setColor(Color.BLUE);
                 break;
         }
-        p.setAlpha(75);
+        //p.setAlpha(75);
         PointF firstCity = convertToScreenCoordinates(imageView.getWidth(),imageView.getHeight(),(float)city1.getXCord(),(float)city1.getYCord());
         PointF secondCity = convertToScreenCoordinates(imageView.getWidth(),imageView.getHeight(),(float)city2.getXCord(),(float)city2.getYCord());
 
