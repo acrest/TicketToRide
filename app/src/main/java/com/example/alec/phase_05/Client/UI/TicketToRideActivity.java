@@ -168,7 +168,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
                 toast.show();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card2Button, card.getType());
             }
         });
 
@@ -176,7 +176,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
                 toast.show();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card3Button, card.getType());
             }
         });
 
@@ -184,7 +184,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
                 toast.show();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card4Button, card.getType());
             }
         });
 
@@ -192,7 +192,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
                 toast.show();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card5Button, card.getType());
             }
         });
 
