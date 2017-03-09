@@ -14,6 +14,7 @@ public interface IServerBank extends IBank {
     void addDestinationCardToBottom(Integer id, DestinationCard card);
 
     TrainCard drawTrainCard();
+    void discardTrainCard(TrainCard card);
 
     TrainCard drawVisibleTrainCard(int index);
 }

@@ -331,6 +331,62 @@ public class Facade {
         }
     }
 
+    public void pickTrainCard(final int index) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                if(model.hasCurrentGame()) {
+                    ClientFacade facade = ClientFacade.getInstance();
+                    TrainCard card = proxy.pickTrainCard(index);
+                    facade.addTrainCard(card);
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void discardTrainCard(final TrainCard card) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                if(model.hasCurrentGame()) {
+                    proxy.discardTrainCard(card);
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void putBackDestinationCard(final DestinationCard card) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                if(model.hasCurrentGame()) {
+                    proxy.putDestinationCardBack(card);
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     //temporary method
     public void updateGameStarted() {
         Thread thread = new Thread(new Runnable() {

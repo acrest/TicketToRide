@@ -17,6 +17,7 @@ public class ServerBank implements IServerBank {
     private static final int NUM_VISIBLE_TRAIN_CARDS = 5;
 
     private List<TrainCard> trainCardDeck;
+    private List<TrainCard> discardDeck;
     private List<TrainCard> visibleTrainCards;
     private Map<Integer, DestinationCard> destinationCardDeck;
 
@@ -24,6 +25,7 @@ public class ServerBank implements IServerBank {
         this.trainCardDeck = trainCardDeck;
         this.destinationCardDeck = destinationCardDeck;
         visibleTrainCards = new ArrayList<>();
+        discardDeck = new ArrayList<>();
         initCards();
     }
 
@@ -77,9 +79,14 @@ public class ServerBank implements IServerBank {
     @Override
     public TrainCard drawTrainCard() {
         if(trainCardDeck.isEmpty()) {
-            return null;
+            fillTrainDeck();
         }
         return trainCardDeck.remove(trainCardDeck.size() - 1);
+    }
+
+    @Override
+    public void discardTrainCard(TrainCard card) {
+        discardDeck.add(card);
     }
 
     @Override
@@ -91,5 +98,11 @@ public class ServerBank implements IServerBank {
             return card;
         }
         return null;
+    }
+
+    private void fillTrainDeck() {
+        Collections.shuffle(discardDeck);
+        trainCardDeck.addAll(discardDeck);
+        discardDeck.clear();
     }
 }

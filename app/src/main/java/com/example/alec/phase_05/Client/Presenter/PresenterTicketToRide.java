@@ -1,8 +1,5 @@
 package com.example.alec.phase_05.Client.Presenter;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import com.example.alec.phase_05.Client.Demo;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientModel;
@@ -12,7 +9,6 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * Created by Molly on 2/23/2017.
@@ -21,26 +17,30 @@ import java.util.Observable;
 public class PresenterTicketToRide extends Presenter implements IPresenterTicketToRide {
 
     private ITicketToRideListener listener;
-    private Facade currentFacade;
+    private Facade facade;
 
     public PresenterTicketToRide(ITicketToRideListener listener) {
         this.listener = listener;
-        currentFacade = Facade.getInstance();
+        facade = Facade.getInstance();
     }
 
     @Override
     public void drawTrainCard() {
-
+        facade.drawTrainCard();
     }
 
     @Override
     public void pickTrainCard(int deckID){
+        facade.pickTrainCard(deckID);
+    }
 
+    @Override
+    public void discardTrainCard(TrainCard card) {
+        facade.discardTrainCard(card);
     }
 
     @Override
     public void claimRoute(int routeID) {
-
     }
 
     @Override
