@@ -196,6 +196,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
+        Button placeRoutesButton = (Button) findViewById(R.id.placeRoute);
+        placeRoutesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.startDemo();
+            }
+        });
+
 
 
         presenter = new PresenterTicketToRide(this);
