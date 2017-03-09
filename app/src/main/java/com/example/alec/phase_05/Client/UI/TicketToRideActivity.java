@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.media.Image;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -383,16 +384,20 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         ArrayList<String> playerInfo = new ArrayList<String>();
         Player player_with_longest_route = new Player(null, null);
 
-
+        System.out.println("WE ARE TESTING HERE");
+        System.out.println(playerList.size());
             for (int i = 0; i < playerList.size(); i++) {
                 Player temp_player = playerList.get(i);
+                System.out.println(temp_player.getName());
+                System.out.println(i);
+
                 if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
                     player_with_longest_route = temp_player;
                 }
-                playerList.add(temp_player);
-                String temp = temp_player.getName() + "                " + temp_player.getPointCount() + "                      "
-                        + temp_player.getTrainCount() + "                    " + temp_player.getTrainCards().size() + "                  "
-                        + temp_player.getDestinationCards().size();
+
+                String temp = temp_player.getName() + "                  " + temp_player.getPointCount() + "                    "
+                        + temp_player.getTrainCount() + "                   " + temp_player.getTrainCards().size() + "                 "
+                        + temp_player.getDestinationCards().size() + "  " + temp_player.getColor();
                 playerInfo.add(temp);
 
             }
