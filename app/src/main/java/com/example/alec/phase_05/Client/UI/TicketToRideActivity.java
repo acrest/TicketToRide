@@ -74,6 +74,25 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private GameHistoryAdapter mGameHistoryRecyclerAdapter;
     private Button mCreateChatButton;
     private EditText mEditTextChat;
+    private TextView boxCountView;
+    private TextView passengerCountView;
+    private TextView tankerCountView;
+    private TextView reeferCountView;
+    private TextView freightCountView;
+    private TextView hopperCountView;
+    private TextView coalCountView;
+    private TextView caboosecountView;
+    private TextView locomotiveCountView;
+
+    int boxCount;
+    int passengerCount;
+    int tankerCount;
+    int reeferCount;
+    int freightCount;
+    int hopperCount;
+    int coalCount;
+    int cabooseCount;
+    int locomotiveCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,6 +130,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 }
             }
         });
+
+        setCardCountsZero();
+        boxCountView = (TextView) findViewById(R.id.yellow_cards);
+        passengerCountView = (TextView) findViewById(R.id.blue_cards);
+        tankerCountView = (TextView) findViewById(R.id.orange_cards);
+        reeferCountView = (TextView) findViewById(R.id.white_cards);
+        freightCountView = (TextView) findViewById(R.id.purple_cards);
+        hopperCountView = (TextView) findViewById(R.id.black_cards);
+        coalCountView = (TextView) findViewById(R.id.red_cards);
+        caboosecountView = (TextView) findViewById(R.id.green_cards);
+        locomotiveCountView = (TextView) findViewById(R.id.rainbow_cards);
 
         TabHost mTabHost = getTabHost();
 
@@ -603,6 +633,47 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updateTrainCards(List<TrainCard> cards) {
         Log.d("TicketToRideActivity", "updateTrainCards called");
+        setCardCountsZero();
+        for(int i = 0; i < cards.size(); i++){
+            switch (cards.get(i).getType()){
+                case BOX:
+                    boxCount++;
+                    boxCountView.setText(Integer.toString(boxCount));
+                    break;
+                case PASSENGER:
+                    passengerCount++;
+                    passengerCountView.setText(Integer.toString(passengerCount));
+                    break;
+                case TANKER:
+                    tankerCount++;
+                    tankerCountView.setText(Integer.toString(tankerCount));
+                    break;
+                case REEFER:
+                    reeferCount++;
+                    reeferCountView.setText(Integer.toString(reeferCount));
+                    break;
+                case FREIGHT:
+                    freightCount++;
+                    freightCountView.setText(Integer.toString(freightCount));
+                    break;
+                case HOPPER:
+                    hopperCount++;
+                    hopperCountView.setText(Integer.toString(hopperCount));
+                    break;
+                case COAL:
+                    coalCount++;
+                    coalCountView.setText(Integer.toString(coalCount));
+                    break;
+                case CABOOSE:
+                    cabooseCount++;
+                    caboosecountView.setText(Integer.toString(cabooseCount));
+                    break;
+                case LOCOMOTIVE:
+                    locomotiveCount++;
+                    locomotiveCountView.setText(Integer.toString(locomotiveCount));
+                    break;
+            }
+        }
     }
 
     @Override
@@ -1021,5 +1092,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         }
 
+    }
+
+    private void setCardCountsZero(){
+        boxCount = 0;
+        passengerCount = 0;
+        tankerCount = 0;
+        reeferCount = 0;
+        freightCount = 0;
+        hopperCount = 0;
+        coalCount = 0;
+        cabooseCount = 0;
+        locomotiveCount = 0;
     }
 }
