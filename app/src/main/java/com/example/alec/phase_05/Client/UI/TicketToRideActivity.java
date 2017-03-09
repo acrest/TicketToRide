@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -459,46 +460,54 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateTrainCards(List<TrainCard> cards) {
-
+        Log.d("TicketToRideActivity", "updateTrainCards called");
     }
 
     @Override
     public void updateDestinationCards(List<DestinationCard> cards) {
+        Log.d("TicketToRideActivity", "updateDestinationCards called");
 
     }
 
     @Override
     public void updatePlayerTrainCards(String playerName, int count) {
+        Log.d("TicketToRideActivity", "updatePlayerTrainCards called");
 
     }
 
     @Override
     public void updatePlayerDestinationCards(String playerName, int count) {
+        Log.d("TicketToRideActivity", "updatePlayerDestinationCards called");
 
     }
 
     @Override
     public void updateChats(List<Chat> chats) {
+        Log.d("TicketToRideActivity", "updateChats called");
 
     }
 
     @Override
     public void updatePlayerPoints(String playerName, int points) {
+        Log.d("TicketToRideActivity", "updatePlayerPoints called");
 
     }
 
     @Override
     public void updatePlayerTrainCount(String playerName, int count) {
+        Log.d("TicketToRideActivity", "updatePlayerTrainCount called");
 
     }
 
     @Override
     public void updateFaceupTrainCards(List<TrainCard> cards) {
+        Log.d("TicketToRideActivity", "updateFaceupTrainCards called");
 
     }
 
     @Override
     public void updateMap(GameMap map) {
+        Log.d("TicketToRideActivity", "updateMap called");
 
     }
 
