@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -89,6 +90,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private DerpAdapter mChatRecyclerAdapter;
     private DerpAdapter mRoutesRecyclerAdapter;
     private DerpAdapter mGameHistoryRecyclerAdapter;
+    private Button mCreateChatButton;
+    private EditText mEditTextChat;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,6 +114,21 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mChatRecView.setAdapter(mChatRecyclerAdapter);
         mRoutesRecView.setAdapter(mRoutesRecyclerAdapter);
         mGameHistoryRecView.setAdapter(mGameHistoryRecyclerAdapter);
+
+        mCreateChatButton = (Button) findViewById(R.id.create_chat_button);
+        mEditTextChat = (EditText) findViewById(R.id.EditTextChat);
+        mCreateChatButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(mEditTextChat.getText() != null){
+                    Chat chat = new Chat(ClientModel.getInstance().getCurrentPlayer().getName(), ClientModel.getInstance().getGameID(), mEditTextChat.getText().toString(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    mEditTextChat.setText("");
+                    ClientModel.getInstance().addChat(chat);
+                }
+            }
+        });
 
         TabHost mTabHost = getTabHost();
 
@@ -330,10 +348,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 break;
         }
     }
-
-
-
-
 
     private void setRoutes() {
 //        Player curr_player = ClientModel.getInstance().getCurrentPlayer();
@@ -592,7 +606,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updateChats(List<Chat> chats) {
         Log.d("TicketToRideActivity", "updateChats called");
-
+        mChatRecyclerAdapter.updateListData(chats);
     }
 
     @Override
@@ -622,12 +636,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>   {
         private static final int INVALID_INDEX = -1;
 
-        private List<Chat_Item> listData;
+        private List<Chat> listData;
         private LayoutInflater inflater;
         private RecyclerView recyclerView;
         private int selectedIndex;
 
-        public DerpAdapter(List<Chat_Item> listData, Context c)
+        public DerpAdapter(List<Chat> listData, Context c)
         {
             this.inflater = LayoutInflater.from(c);
             this.listData = listData;
@@ -655,7 +669,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         @Override
         public void onBindViewHolder(DerpHolder holder, int position) {
-            Chat_Item message = listData.get(position);
+            Chat message = listData.get(position);
 
             holder.message.setText(message.getMessage());
 
@@ -681,6 +695,36 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         @Override
         public int getItemCount() {
             return listData.size();
+        }
+
+        public void updateListData(List<Chat> newListData) {
+            //remember the selected game's id
+            //int selectedGameID = getSelectedGameID();
+//            System.out.println("selected game id = " + selectedGameID);
+//            List<GameDescription> oldList = listData;
+            listData = newListData;
+//            int minLength = Math.min(oldList.size(), newListData.size());
+//            for(int i = 0; i < minLength; ++i) {
+//                if(oldList.get(i).getID() != newListData.get(i).getID()) {
+//                    //something has changed, so we need to do some updating
+//                    notifyItemChanged(i);
+//                }
+//            }
+//            int maxLength = Math.max(oldList.size(), newListData.size());
+//            int maxLength = Math.max(oldList.size(), newListData.size());
+//            //this loop deletes / adds extrea items
+//            for(int i = minLength; i < maxLength; ++i) {
+//                if(oldList.size() >= minLength) {
+//                    //oldList is larger, so delete extra items
+//                    notifyItemRemoved(i);
+//                } else {
+//                    //newList is larger, so add extra items
+//                    notifyItemInserted(i);
+//                }
+//            }
+            //reselect the item with the correct id
+            //selectGameOfID(selectedGameID);
+            notifyDataSetChanged();
         }
 
         public DerpHolder getSelectedHolder() {

@@ -548,7 +548,7 @@
                         android:background="#AAE0E0E0">
                     </android.support.v7.widget.RecyclerView>
                     <EditText
-                        android:id="@+id/myeditfield"
+                        android:id="@+id/EditTextChat"
                         android:background="#E0E0E0"
                         android:layout_width="fill_parent"
                         android:layout_height="35dp"
@@ -563,7 +563,7 @@
 
 
                         <Button
-                            android:id="@+id/create_game_button"
+                            android:id="@+id/create_chat_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"

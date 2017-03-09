@@ -21,8 +21,9 @@ public class Derpness    //*** SIMPLY A MODEL CLASS FOR TESTING PURPOSES, RECYCL
     private Derpness() {
     }
 
-    public List<Chat_Item> generateFakeChat()
+    public List<Chat> generateFakeChat()
     {
+        List<Chat> list = new ArrayList<>();
         List<Chat_Item> messages = new ArrayList<>();
         ChatManager chats = new ChatManager();
 
@@ -67,6 +68,6 @@ public class Derpness    //*** SIMPLY A MODEL CLASS FOR TESTING PURPOSES, RECYCL
             }
         }
 
-        return messages;
+        return list;
     }
 }

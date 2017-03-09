@@ -539,7 +539,7 @@
                         android:layout_height="wrap_content"
                         android:text="Chat with the other players" />
                     <EditText
-                        android:id="@+id/myeditfield"
+                        android:id="@+id/EditTextChat"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" />
 
@@ -550,7 +550,7 @@
 
 
                         <Button
-                            android:id="@+id/create_game_button"
+                            android:id="@+id/create_chat_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
