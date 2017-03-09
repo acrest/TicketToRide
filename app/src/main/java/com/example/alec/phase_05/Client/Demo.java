@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Client.UI.TicketToRideActivity;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
@@ -155,13 +156,13 @@ public final class Demo {
 
     private void testAddChat() {
         System.out.println("testing add chat");
-        model.addChat(new Chat(model.getCurrentPlayer().getName(), 0, "test chat 2"));
+        model.addChat(new Chat(model.getCurrentPlayer().getName(), 0, "test chat 2", ClientModel.getInstance().getCurrentPlayer().getColor()));
         Player player = findOtherPlayer();
         if(player == null) {
             System.out.println("there are no other players to test");
             return;
         }
-        model.addChat(new Chat(player.getName(), 0, "test chat 1"));
+        model.addChat(new Chat(player.getName(), 0, "test chat 1", ClientModel.getInstance().getCurrentPlayer().getColor()));
     }
 
     private void testOtherAddTrainCards() {
