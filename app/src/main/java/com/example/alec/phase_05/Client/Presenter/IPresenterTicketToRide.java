@@ -25,4 +25,6 @@ public interface IPresenterTicketToRide extends IPresenter {
     ArrayList<Player> getPlayers();
 
     ArrayList<TrainCard> getTrainCards();
+
+    Player getCurrPlayer();
 }
