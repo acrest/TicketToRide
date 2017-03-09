@@ -120,7 +120,11 @@ public class ServerFacade {
         IServerGame game = model.getGame(gameID);
         if(game == null) return null;
         IServerBank bank = (IServerBank) game.getBank();
-        return bank.drawTrainCard();
+        if(index == -1) {
+            return bank.drawTrainCard();
+        } else {
+            return bank.drawVisibleTrainCard(index);
+        }
     }
 
     public DestinationCard drawDestinationCard(String username, String password, int gameID) {
@@ -159,6 +163,22 @@ public class ServerFacade {
     public boolean validateAuthentication(String username, String password) {
         Player player = ServerModel.get_instance().getPlayer(username);
         return player != null && player.getPassword().equals(password);
+    }
+
+    public boolean putBackDestinationCard(String playerName, int gameId, DestinationCard card) {
+        IServerGame game = ServerModel.get_instance().getGame(gameId);
+        if(game == null) return false;
+        IServerBank bank = (IServerBank) game;
+        //bank.addDestinationCardToBottom( , card); //TODO: not sure what the id is
+        return true;
+    }
+
+    public boolean discardTrainCard(String playerName, int gameId, TrainCard card) {
+        IServerGame game = ServerModel.get_instance().getGame(gameId);
+        if(game == null) return false;
+        IServerBank bank = (IServerBank) game;
+        //bank.d( , card); //TODO
+        return true;
     }
 
     //temporary method

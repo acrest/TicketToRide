@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.command.ClientClaimRouteCommand;
 import com.example.alec.phase_05.Client.command.ClientCommunicator;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
+import com.example.alec.phase_05.Client.command.ClientDiscardTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawDestinationCardCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
@@ -16,6 +17,7 @@ import com.example.alec.phase_05.Client.command.ClientGetGameStateCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameUpdatesCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
+import com.example.alec.phase_05.Client.command.ClientPutBackDestinationCardCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Client.command.ClientResult;
 import com.example.alec.phase_05.Client.command.ClientStartGameCommand;
@@ -316,6 +318,18 @@ public class ServerProxy implements IServer {
     }
 
     public boolean putDestinationCardBack(DestinationCard dCard){
-        return true;
+        ClientModel model = ClientModel.getInstance();
+        Player player = model.getCurrentPlayer();
+        ClientPutBackDestinationCardCommand command = new ClientPutBackDestinationCardCommand(player.getName(), player.getPassword(), model.getGameID(), dCard);
+        Result result = myCC.executeCommandOnServer(command);
+        return result.toBoolean();
+    }
+
+    public boolean discardTrainCard(TrainCard card) {
+        ClientModel model = ClientModel.getInstance();
+        Player player = model.getCurrentPlayer();
+        ClientDiscardTrainCardCommand command = new ClientDiscardTrainCardCommand(player.getName(), player.getPassword(), model.getGameID(), card);
+        Result result = myCC.executeCommandOnServer(command);
+        return result.toBoolean();
     }
 }
