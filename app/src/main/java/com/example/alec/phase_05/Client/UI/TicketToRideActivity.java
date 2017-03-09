@@ -2,8 +2,6 @@ package com.example.alec.phase_05.Client.UI;
 
 import android.app.TabActivity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -26,7 +24,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -35,36 +32,15 @@ import android.widget.Toast;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Shared.model.Chat;
-import com.example.alec.phase_05.Shared.model.Chat_Item;
 import com.example.alec.phase_05.Client.Model.Derpness;
-import com.example.alec.phase_05.Client.Model.IClientGame;
-import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRide;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
-import com.example.alec.phase_05.Client.Presenter.PresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRide;
-
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-
-import android.app.Activity;
-import android.app.TabActivity;
-import android.os.Bundle;
-import android.widget.TabHost;
 import com.example.alec.phase_05.R;
 import com.example.alec.phase_05.Shared.model.City;
 import com.example.alec.phase_05.Shared.model.Deck;
@@ -74,7 +50,6 @@ import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -709,7 +684,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         @Override
         public ChatHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = inflater.inflate(R.layout.list_simple_view, parent, false);
+            View v = inflater.inflate(R.layout.list_chat_view, parent, false);
             return new ChatHolder(v);
         }
 
@@ -831,7 +806,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         @Override
         public RouteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = inflater.inflate(R.layout.list_simple_view, parent, false);
+            View v = inflater.inflate(R.layout.list_chat_view, parent, false);
             return new RouteHolder(v);
         }
 
@@ -953,7 +928,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         @Override
         public GameHistoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = inflater.inflate(R.layout.list_simple_view, parent, false);
+            View v = inflater.inflate(R.layout.list_chat_view, parent, false);
             return new GameHistoryHolder(v);
         }
 
