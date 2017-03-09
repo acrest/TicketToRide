@@ -10,6 +10,7 @@ import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -54,6 +55,7 @@ public class ClientModel extends Observable {
         currentGame = null;
         currentPlayer = null;
         gameList = null;
+        chats = new ArrayList<>();
     }
 
 //    public IClientGame getCurrentGame() {
