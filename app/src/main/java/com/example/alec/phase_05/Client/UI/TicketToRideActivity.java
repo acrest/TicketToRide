@@ -145,15 +145,21 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         final ImageButton card5Button = (ImageButton) findViewById(R.id.card5);
         setCard(card5Button, deck);
 
+        final Toast toast = Toast.makeText(getApplicationContext(), "Card added to hand!",
+                Toast.LENGTH_SHORT);
+
+
         deckButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
-                //setImageButton(deckButton, card);
+                toast.show();
+
             }
         });
         card1Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
+                toast.show();
                 setImageButton(card1Button, card.getType());
             }
         });
@@ -161,6 +167,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
+                toast.show();
                 setImageButton(card2Button, card.getType());
             }
         });
@@ -168,6 +175,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card3Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
+                toast.show();
                 setImageButton(card3Button, card.getType());
             }
         });
@@ -175,6 +183,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card4Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
+                toast.show();
                 setImageButton(card4Button, card.getType());
             }
         });
@@ -182,7 +191,15 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card5Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
+                toast.show();
                 setImageButton(card5Button, card.getType());
+            }
+        });
+
+        Button placeRoutesButton = (Button) findViewById(R.id.placeRoute);
+        placeRoutesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.startDemo();
             }
         });
 

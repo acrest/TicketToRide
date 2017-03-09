@@ -133,13 +133,13 @@ public final class Demo {
 
     private void testClaimRoute() {
         System.out.println("testing claim route");
-        model.setRouteOwner(model.getCurrentPlayer().getName(), 0);
+        model.setRouteOwner(model.getCurrentPlayer().getName(), 1);
         Player player = findOtherPlayer();
         if(player == null) {
             System.out.println("there are no other players to test");
             return;
         }
-        model.setRouteOwner(player.getName(), 1);
+        model.setRouteOwner(player.getName(), 2);
     }
 
     private void testPlayerPoints() {
@@ -196,10 +196,10 @@ public final class Demo {
             return;
         }
         GameMap map = ClientModel.getInstance().getGameMap();
-        model.addDestinationCard(new DestinationCard(map.getCities().get("Chicago"), map.getCities().get("Santa Fe"), 9));
-        model.addDestinationCard(new DestinationCard(map.getCities().get("Chicago"), map.getCities().get("Santa Fe"), 9));
-        model.addDestinationCard(new DestinationCard(map.getCities().get("Chicago"), map.getCities().get("Santa Fe"), 9));
-        model.addDestinationCard(new DestinationCard(map.getCities().get("Chicago"), map.getCities().get("Santa Fe"), 9));
+        model.addDestinationCard(player.getName(), new DestinationCard(map.getCities().get("Chicago"), map.getCities().get("Santa Fe"), 9));
+        model.addDestinationCard(player.getName(), new DestinationCard(map.getCities().get("Chicago"), map.getCities().get("Santa Fe"), 9));
+        model.addDestinationCard(player.getName(), new DestinationCard(map.getCities().get("Chicago"), map.getCities().get("Santa Fe"), 9));
+        model.addDestinationCard(player.getName(), new DestinationCard(map.getCities().get("Chicago"), map.getCities().get("Santa Fe"), 9));
     }
 
     private void testOtherRemoveDestinationCards() {
