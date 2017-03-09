@@ -334,6 +334,16 @@
                         android:layout_alignLeft="@+id/header"
                         android:layout_alignStart="@+id/header" />
 
+                    <TextView
+                        android:id="@+id/player_stats"
+                        android:layout_width="365dp"
+                        android:layout_height="75dp"
+                        android:layout_alignLeft="@+id/player"
+                        android:layout_alignStart="@+id/player"
+                        android:layout_below="@+id/train_number"
+                        android:textColor="#FFF"
+                        android:layout_marginTop="10dp" />
+
                 </RelativeLayout>
 
             </LinearLayout>

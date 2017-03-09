@@ -334,7 +334,7 @@
                         android:layout_alignLeft="@+id/header"
                         android:layout_alignStart="@+id/header" />
 
-                    <ListView
+                    <TextView
                         android:id="@+id/player_stats"
                         android:layout_width="365dp"
                         android:layout_height="75dp"

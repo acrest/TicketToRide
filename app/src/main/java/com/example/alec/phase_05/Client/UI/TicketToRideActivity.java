@@ -383,12 +383,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         ArrayList<String> playerInfo = new ArrayList<String>();
         Player player_with_longest_route = new Player(null, null);
 
-        if (playerInfo.size() == 0) {
 
-            String noString = "You have no routes!";
-            playerInfo.add(noString);
-        }
-        else {
             for (int i = 0; i < playerList.size(); i++) {
                 Player temp_player = playerList.get(i);
                 if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
@@ -396,11 +391,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 }
                 playerList.add(temp_player);
                 String temp = temp_player.getName() + "                " + temp_player.getPointCount() + "                      "
-                        + temp_player.getTrainCount() + "                    " + temp_player.getTrainCards().size() + "                  " + temp_player.getDestinationCards().size();
+                        + temp_player.getTrainCount() + "                    " + temp_player.getTrainCards().size() + "                  "
+                        + temp_player.getDestinationCards().size();
                 playerInfo.add(temp);
 
             }
-        }
+
 
         populatePlayerListView(playerInfo);
 
@@ -414,14 +410,15 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
 
     private void populatePlayerListView(ArrayList<String> playerInfo) {
-        ListView playersStats = (ListView) findViewById(R.id.player_stats);
+        TextView playersStats = (TextView) findViewById(R.id.player_stats);
 
         StringBuilder builder = new StringBuilder();
+
         for (String a_player : playerInfo) {
             builder.append(a_player + "\n");
         }
 
-        //playersStats.setText(builder.toString());
+        playersStats.setText(builder.toString());
 
     }
 
@@ -523,7 +520,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         TextView blackCard = (TextView) findViewById(R.id.black_cards);
         TextView rainbowCard = (TextView) findViewById(R.id.rainbow_cards);
 
-        ListView playerInfoList = (ListView) findViewById(R.id.player_stats);
+        TextView playerInfoList = (TextView) findViewById(R.id.player_stats);
 
 
         ArrayList<TrainCard> cardList = ClientModel.getInstance().getCurrentPlayer().getTrainCards();
