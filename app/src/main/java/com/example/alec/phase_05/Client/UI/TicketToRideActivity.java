@@ -109,9 +109,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mRoutesRecView.setLayoutManager(new LinearLayoutManager(this));
         mGameHistoryRecView .setLayoutManager(new LinearLayoutManager(this));
 
-        mChatRecyclerAdapter = new ChatAdapter(Derpness.getInstance().generateFakeChat(), this);
+        mChatRecyclerAdapter = new ChatAdapter(new ArrayList<Chat>(), this);
         mRoutesRecyclerAdapter = new RouteAdapter(Derpness.getInstance().generateFakeChat(), this);
-        mGameHistoryRecyclerAdapter = new GameHistoryAdapter(Derpness.getInstance().generateFakeChat(), this);
+        mGameHistoryRecyclerAdapter = new GameHistoryAdapter(new ArrayList<Chat>(), this);
         mChatRecView.setAdapter(mChatRecyclerAdapter);
         mRoutesRecView.setAdapter(mRoutesRecyclerAdapter);
         mGameHistoryRecView.setAdapter(mGameHistoryRecyclerAdapter);
@@ -672,7 +672,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updateDestinationCards(List<DestinationCard> cards) {
         Log.d("TicketToRideActivity", "updateDestinationCards called");
-
+        mRoutesRecyclerAdapter.updateListData(cards);
     }
 
     @Override
@@ -846,12 +846,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteHolder>   {
         private static final int INVALID_INDEX = -1;
 
-        private List<Chat> listData;
+        private List<DestinationCard> listData;
         private LayoutInflater inflater;
         private RecyclerView recyclerView;
         private int selectedIndex;
 
-        public RouteAdapter(List<Chat> listData, Context c)
+        public RouteAdapter(List<DestinationCard> listData, Context c)
         {
             this.inflater = LayoutInflater.from(c);
             this.listData = listData;
@@ -873,33 +873,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         @Override
         public RouteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = inflater.inflate(R.layout.list_chat_view, parent, false);
+            View v = inflater.inflate(R.layout.list_destination_view, parent, false);
             return new RouteHolder(v);
         }
 
         @Override
         public void onBindViewHolder(RouteHolder holder, int position) {
-            Chat message = listData.get(position);
+            DestinationCard destinationCard = listData.get(position);
 
-            holder.message.setText(message.getMessage());
-
-            switch (message.getColor()){
-                case("blue"):
-                    holder.message.setTextColor(Color.BLUE);
-                    break;
-                case("red"):
-                    holder.message.setTextColor(Color.RED);
-                    break;
-                case("yellow"):
-                    holder.message.setTextColor(Color.YELLOW);
-                    break;
-                case("black"):
-                    holder.message.setTextColor(Color.BLACK);
-                    break;
-                case("green"):
-                    holder.message.setTextColor(Color.GREEN);
-                    break;
-            }
+            holder.city1.setText(destinationCard.getCity1().getName());
+            holder.city2.setText(destinationCard.getCity2().getName());
+            holder.destination_points.setText(Integer.toString(destinationCard.getValue()));
         }
 
         @Override
@@ -907,7 +891,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             return listData.size();
         }
 
-        public void updateListData(List<Chat> newListData) {
+        public void updateListData(List<DestinationCard> newListData) {
             //remember the selected game's id
             //int selectedGameID = getSelectedGameID();
 //            System.out.println("selected game id = " + selectedGameID);
@@ -945,7 +929,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
 
         class RouteHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            private TextView message;
+            private TextView city1;
+            private TextView city2;
+            private TextView destination_points;
             private View container;
 
 
@@ -953,7 +939,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 super(itemView);
                 itemView.setOnClickListener(this);
 
-                message = (TextView)itemView.findViewById(R.id.lbl_simple_view);
+                city1 = (TextView)itemView.findViewById(R.id.destination_city1);
+                city2 = (TextView)itemView.findViewById(R.id.destination_city2);
+                destination_points = (TextView)itemView.findViewById(R.id.destination_points);
                 container = itemView.findViewById(R.id.cont_item_root);
             }
 
