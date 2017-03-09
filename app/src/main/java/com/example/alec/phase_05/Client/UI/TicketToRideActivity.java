@@ -161,28 +161,28 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card2Button, card.getType());
             }
         });
 
         card3Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card3Button, card.getType());
             }
         });
 
         card4Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card4Button, card.getType());
             }
         });
 
         card5Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card5Button, card.getType());
             }
         });
 
