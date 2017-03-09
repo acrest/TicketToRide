@@ -271,38 +271,40 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     public void drawRouteLine(City city1, City city2, Player player){
-        final ImageView imageView = (ImageView)findViewById(R.id.map);
-        Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bmp);
-        imageView.draw(c);
+        ImageView imageView = new ImageView(this);
+        imageView = (ImageView)findViewById(R.id.map);
+        if(imageView.getWidth()>0&&imageView.getHeight()>0) {
+            Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(bmp);
+            imageView.draw(c);
 
-        Paint p = new Paint();
-        p.setStrokeWidth(8);
-        switch(player.getColor().toLowerCase()){
-            case "black":
-                p.setColor(Color.BLACK);
-                break;
-            case "yellow":
-                p.setColor(Color.YELLOW);
-                break;
-            case "red":
-                p.setColor(Color.RED);
-                break;
-            case "green":
-                p.setColor(Color.GREEN);
-                break;
-            case "blue":
-                p.setColor(Color.BLUE);
-                break;
+            Paint p = new Paint();
+            p.setStrokeWidth(8);
+            switch (player.getColor().toLowerCase()) {
+                case "black":
+                    p.setColor(Color.BLACK);
+                    break;
+                case "yellow":
+                    p.setColor(Color.YELLOW);
+                    break;
+                case "red":
+                    p.setColor(Color.RED);
+                    break;
+                case "green":
+                    p.setColor(Color.GREEN);
+                    break;
+                case "blue":
+                    p.setColor(Color.BLUE);
+                    break;
+            }
+            //p.setAlpha(75);
+            PointF firstCity = convertToScreenCoordinates(imageView.getWidth(), imageView.getHeight(), (float) city1.getXCord(), (float) city1.getYCord());
+            PointF secondCity = convertToScreenCoordinates(imageView.getWidth(), imageView.getHeight(), (float) city2.getXCord(), (float) city2.getYCord());
+
+
+            c.drawLine(secondCity.x, secondCity.y, firstCity.x, firstCity.y, p);
+            imageView.setImageBitmap(bmp);
         }
-        //p.setAlpha(75);
-        PointF firstCity = convertToScreenCoordinates(imageView.getWidth(),imageView.getHeight(),(float)city1.getXCord(),(float)city1.getYCord());
-        PointF secondCity = convertToScreenCoordinates(imageView.getWidth(),imageView.getHeight(),(float)city2.getXCord(),(float)city2.getYCord());
-
-
-
-        c.drawLine(secondCity.x, secondCity.y, firstCity.x, firstCity.y, p);
-        imageView.setImageBitmap(bmp);
     }
 
     //**************************************
@@ -672,18 +674,20 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updateDestinationCards(List<DestinationCard> cards) {
         Log.d("TicketToRideActivity", "updateDestinationCards called");
-
+        setPlayersStats();
     }
 
     @Override
     public void updatePlayerTrainCards(String playerName, int count) {
         Log.d("TicketToRideActivity", "updatePlayerTrainCards called");
+        setPlayersStats();
 
     }
 
     @Override
     public void updatePlayerDestinationCards(String playerName, int count) {
         Log.d("TicketToRideActivity", "updatePlayerDestinationCards called");
+        setPlayersStats();
 
     }
 
@@ -696,12 +700,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updatePlayerPoints(String playerName, int points) {
         Log.d("TicketToRideActivity", "updatePlayerPoints called");
+        setPlayersStats();
 
     }
 
     @Override
     public void updatePlayerTrainCount(String playerName, int count) {
         Log.d("TicketToRideActivity", "updatePlayerTrainCount called");
+        setPlayersStats();
 
     }
 
