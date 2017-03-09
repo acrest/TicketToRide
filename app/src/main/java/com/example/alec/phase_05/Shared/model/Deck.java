@@ -12,21 +12,25 @@ import java.util.List;
 
 public class Deck {
 
-    private List<Integer> cards;
-    private List<Integer> discard;
+    private List<TrainCard> cards;
+    private List<TrainCard> discard;
 
     public Deck(){
         cards = new ArrayList();
         discard = new ArrayList<>();
 
-        for (int i = 0; i < 9; i++){
-            List<Integer> cardColor;
-            if (i == 8){
-                cardColor = new ArrayList<Integer>(Collections.nCopies(14, i));
+        for (TrainType t : TrainType.values()){
+            List<TrainCard> cardColor = new ArrayList<TrainCard>();
+            if (t == TrainType.LOCOMOTIVE){
+                TrainCard card = new TrainCard(t);
+                cardColor = new ArrayList<TrainCard>(Collections.nCopies(14, card));
             }
             else
             {
-                cardColor = new ArrayList<Integer>(Collections.nCopies(12, i));
+                if (t != TrainType.ANY){
+                    TrainCard card = new TrainCard(t);
+                    cardColor = new ArrayList<TrainCard>(Collections.nCopies(12, card));
+                }
             }
             System.out.println("the deck size is now: " + cards.size());
 
@@ -35,8 +39,12 @@ public class Deck {
         shuffleDeck();
     }
 
+    public int getDeckSize(){
+        return cards.size();
+    }
+
     public void shuffleDeck(){
-        if (discard.size() != 0){
+        if (discard.size() > 0){
             Collections.shuffle(discard);
             cards = discard;
             discard.clear();
@@ -46,14 +54,14 @@ public class Deck {
         }
     }
 
-    public int drawCard(){
+    public TrainCard drawCard(){
         if (cards.size() == 1){
             shuffleDeck();
         }
        return cards.remove(0);
     }
 
-    public void discardCard(int dis){
+    public void discardCard(TrainCard dis){
         discard.add(dis);
     }
 
