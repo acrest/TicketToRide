@@ -1,7 +1,11 @@
 package com.example.alec.phase_05.Client;
 
+import android.util.Log;
+
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Model.IClientGame;
+import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
+import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
@@ -11,6 +15,9 @@ import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by clarkpathakis on 2/6/17.
@@ -205,6 +212,22 @@ public class Facade {
         }
     }
 
+    public void startGame() {
+        Log.d("Facade", "game started");
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                proxy.startGame();
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * gets the game, specifically the current game state, that the player is in
      * @param player the player class of the user. Includes their username
@@ -257,6 +280,125 @@ public class Facade {
                     Player player = model.getCurrentPlayer();
                     CommandHolder commands = proxy.getGameCommands(player, model.getGameID());
                     facade.executeCommands(commands.getCommands());
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void drawDestinationCard() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                if(model.hasCurrentGame()) {
+                    ClientFacade facade = ClientFacade.getInstance();
+                    DestinationCard card = proxy.drawDestinationCard();
+                    facade.addDestinationCard(card);
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void drawTrainCard() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                if(model.hasCurrentGame()) {
+                    ClientFacade facade = ClientFacade.getInstance();
+                    TrainCard card = proxy.drawTrainCard();
+                    facade.addTrainCard(card);
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void pickTrainCard(final int index) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                if(model.hasCurrentGame()) {
+                    ClientFacade facade = ClientFacade.getInstance();
+                    TrainCard card = proxy.pickTrainCard(index);
+                    facade.addTrainCard(card);
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void discardTrainCard(final TrainCard card) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                if(model.hasCurrentGame()) {
+                    proxy.discardTrainCard(card);
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void putBackDestinationCard(final DestinationCard card) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                if(model.hasCurrentGame()) {
+                    proxy.putDestinationCardBack(card);
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //temporary method
+    public void updateGameStarted() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ClientModel model = ClientModel.getInstance();
+                if(model.hasCurrentGame()) {
+                    ClientGameStartedCommand command = proxy.getGameStartedCommand();
+                    if(command == null || command.getGameState() == null) return;
+                    List<BaseCommand> commands = new ArrayList<>();
+                    commands.add(command);
+                    ClientFacade.getInstance().executeCommands(commands);
                 }
             }
         });

@@ -5,6 +5,7 @@ import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -33,6 +34,7 @@ public class ClientModel extends Observable {
     public static String CHAT = "chat";
     public static String PLAYER_POINTS = "player points";
     public static String PLAYER_TRAIN_COUNT = "player train count";
+    public static String GAME_START = "game start";
 
     private static ClientModel instance = null;
 
@@ -115,6 +117,7 @@ public class ClientModel extends Observable {
 
     public void setCurrentGame(IClientGame currentGame) {
         this.currentGame = currentGame;
+        currentPlayer = currentGame.findPlayerByName(currentPlayer.getName());
         notifyPropertyChanges(CURRENT_GAME);
     }
 
@@ -153,11 +156,32 @@ public class ClientModel extends Observable {
         notifyPropertyChanges(PLAYER_TRAIN_CARDS);
     }
 
+    public void addTrainCard(TrainCard card) {
+        if(currentPlayer == null) return;
+        currentPlayer.addTrainCard(card);
+        notifyPropertyChanges(PLAYER_TRAIN_CARDS);
+    }
+
     public void setVisibleCard(int index, TrainCard card) {
         if(currentGame == null) return;
         IClientBank bank = (IClientBank) currentGame.getBank();
         bank.setVisibleCard(index, card);
         notifyPropertyChanges(VISIBLE_TRAIN_CARDS);
+    }
+
+    public void setVisibleCards(List<TrainCard> cards) {
+        if(currentGame == null) return;
+        IClientBank bank = (IClientBank) currentGame.getBank();
+        for(int i = 0; i < cards.size(); ++i) {
+            bank.setVisibleCard(i, cards.get(i));
+        }
+        notifyPropertyChanges(VISIBLE_TRAIN_CARDS);
+    }
+
+    public TrainCard getVisibleTrainCard(int index) {
+        if(currentGame == null) return null;
+        IClientBank bank = (IClientBank) currentGame.getBank();
+        return bank.getVisibleCard(index);
     }
 
     public void decNumOfDestinationCards() {
@@ -172,6 +196,12 @@ public class ClientModel extends Observable {
         Player player = currentGame.findPlayerByName(playerName);
         if(player == null) return;
         player.addDestinationCard(card);
+        notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
+    }
+
+    public void addDestinationCard(DestinationCard card) {
+        if(currentPlayer == null) return;
+        currentPlayer.addDestinationCard(card);
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
 
@@ -245,8 +275,43 @@ public class ClientModel extends Observable {
         return player.getTrainCards().size(); //TODO: not sure if this is a good idea (requires seeing other player's train cards
     }
 
+    public void setGameStarted() {
+        System.out.println("setGameStarted called in ClientModel");
+        if(currentGame == null) return;
+        currentGame.setGameStarted();
+        notifyPropertyChanges(GAME_START);
+    }
+
+    public void removeTrainCard(int index) {
+        if(currentPlayer == null) return;
+        currentPlayer.getTrainCards().remove(index);
+        notifyPropertyChanges(PLAYER_TRAIN_CARDS);
+    }
+
+    public void removeTrainCard(String playerName, int index) {
+        if(currentGame == null) return;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return;
+        player.getTrainCards().remove(index);
+        notifyPropertyChanges(PLAYER_TRAIN_CARDS);
+    }
+    public void removeDestinationCard(int index) {
+        if(currentPlayer == null) return;
+        currentPlayer.getDestinationCards().remove(index);
+        notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
+    }
+
+    public void removeDestinationCard(String playerName, int index) {
+        if(currentGame == null) return;
+        Player player = currentGame.findPlayerByName(playerName);
+        if(player == null) return;
+        player.getDestinationCards().remove(index);
+        notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
+    }
+
     public void setCreateGameSuccess(boolean success) {
         if(success) {
+            currentPlayer.setHost(true);
             notifyPropertyChanges(CREATE_GAME_SUCCESS);
         } else {
             notifyPropertyChanges(CREATE_GAME_FAILURE);
@@ -254,6 +319,7 @@ public class ClientModel extends Observable {
     }
     public void setJoinGameSuccess(boolean success) {
         if(success) {
+            currentPlayer.setHost(false);
             notifyPropertyChanges(JOIN_GAME_SUCCESS);
         } else {
             notifyPropertyChanges(JOIN_GAME_FAILURE);

@@ -1,15 +1,14 @@
 package com.example.alec.phase_05.Client.Presenter;
 
-import android.os.Handler;
-import android.os.Looper;
-
+import com.example.alec.phase_05.Client.Demo;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
-import java.util.Observable;
+import java.util.List;
 
 /**
  * Created by Molly on 2/23/2017.
@@ -18,26 +17,30 @@ import java.util.Observable;
 public class PresenterTicketToRide extends Presenter implements IPresenterTicketToRide {
 
     private ITicketToRideListener listener;
-    private Facade currentFacade;
+    private Facade facade;
 
     public PresenterTicketToRide(ITicketToRideListener listener) {
         this.listener = listener;
-        currentFacade = Facade.getInstance();
+        facade = Facade.getInstance();
     }
 
     @Override
     public void drawTrainCard() {
-
+        facade.drawTrainCard();
     }
 
     @Override
     public void pickTrainCard(int deckID){
+        facade.pickTrainCard(deckID);
+    }
 
+    @Override
+    public void discardTrainCard(TrainCard card) {
+        facade.discardTrainCard(card);
     }
 
     @Override
     public void claimRoute(int routeID) {
-
     }
 
     @Override
@@ -55,6 +58,10 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
 
     }
 
+    @Override
+    public void startDemo() {
+        Demo.startDemo();
+    }
 
     @Override
     public void update(UpdateIndicator u) {
@@ -98,6 +105,13 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
                     listener.updatePlayerTrainCount(player.getName(), player.getTrainCount());
                 }
             });
+        }
+        if(u.needUpdate(ClientModel.VISIBLE_TRAIN_CARDS)) {
+            List<TrainCard> cards = new ArrayList<>();
+            for(int i = 0; i < IGame.NUM_VISIBLE_CARDS; ++i) {
+                cards.add(ClientModel.getInstance().getVisibleTrainCard(i));
+            }
+            listener.updateFaceupTrainCards(cards);
         }
     }
 

@@ -13,6 +13,7 @@ public class Player {
     private String color;
     ArrayList<TrainCard> trainCards = new ArrayList<>();
     ArrayList<DestinationCard> destinationCards = new ArrayList<>();
+    private boolean host;
 
     public Player(String name, String password) {
         this.id = PlayerId;
@@ -23,6 +24,7 @@ public class Player {
         pointCount = 0;
         longestRoute = false;
         color = null;
+        host = false;
     }
 
     public String getName(){
@@ -72,6 +74,14 @@ public class Player {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public boolean isHost() {
+        return host;
+    }
+
+    public void setHost(boolean host) {
+        this.host = host;
     }
 
     @Override

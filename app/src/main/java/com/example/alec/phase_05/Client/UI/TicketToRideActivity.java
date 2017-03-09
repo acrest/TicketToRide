@@ -186,6 +186,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         });
 
 
+
         presenter = new PresenterTicketToRide(this);
         presenter = new PresenterTicketToRide(this);
 

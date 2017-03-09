@@ -15,9 +15,8 @@ public class ServerStartGameCommand extends StartGameCommand {
 
     @Override
     public Result execute() {
-//        Result result = new ServerResult();
-//        result.setResultObject(ServerFacade.get_instance().startGame());
-//        return new ServerResult();
-        return null;
+        Result result = new ServerResult();
+        result.setResultObject(ServerFacade.get_instance().startGame(getGameID()));
+        return new ServerResult();
     }
 }
