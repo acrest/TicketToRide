@@ -264,7 +264,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 p.setColor(Color.BLUE);
                 break;
         }
-        p.setAlpha(75);
+        //p.setAlpha(75);
         PointF firstCity = convertToScreenCoordinates(imageView.getWidth(),imageView.getHeight(),(float)city1.getXCord(),(float)city1.getYCord());
         PointF secondCity = convertToScreenCoordinates(imageView.getWidth(),imageView.getHeight(),(float)city2.getXCord(),(float)city2.getYCord());
 
