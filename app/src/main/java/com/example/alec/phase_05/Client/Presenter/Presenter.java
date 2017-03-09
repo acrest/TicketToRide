@@ -19,9 +19,9 @@ public abstract class Presenter implements IPresenter {
 
     @Override
     public void update(Observable observable, Object o) {
-        if(!(o instanceof UpdateIndicator)) {
-            throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
-        }
+//        if(!(o instanceof UpdateIndicator)) {
+//            throw new IllegalArgumentException("object passed to update() must be of type UpdateIndicator");
+//        }
         final UpdateIndicator u = (UpdateIndicator) o;
         Runnable runnable = new Runnable() {
             @Override

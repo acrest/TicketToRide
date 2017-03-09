@@ -548,29 +548,30 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp">
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rec_chat_list"
                         android:layout_width="match_parent"
-                        android:layout_height="350dp">
+                        android:layout_height="330dp"
+                        android:background="#AAE0E0E0">
                     </android.support.v7.widget.RecyclerView>
                     <EditText
-                        android:id="@+id/myeditfield"
+                        android:id="@+id/EditTextChat"
                         android:background="#E0E0E0"
                         android:layout_width="fill_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="35dp"
                         android:hint="@string/chat_message"
                         android:textColorHint="@android:color/black"
-
                         android:textAlignment="center"/>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:orientation="horizontal">
 
 
                         <Button
-                            android:id="@+id/post_message_button"
+                            android:id="@+id/create_chat_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
@@ -578,7 +579,7 @@
                             android:text="Post message"
                             android:textSize="13dp"/>
 
-                    </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>

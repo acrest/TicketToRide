@@ -9,12 +9,14 @@ public class Chat {
     private String name;
     private Integer gameID;
     private String message;
+    private String color;
 
-    public Chat(String name, Integer gameID, String message) {
+    public Chat(String name, Integer gameID, String message, String color) {
         this.ID = null;
         this.name = name;
         this.gameID = gameID;
         this.message = message;
+        this.color = color;
     }
 
     public Integer getID() {
@@ -47,5 +49,13 @@ public class Chat {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }
