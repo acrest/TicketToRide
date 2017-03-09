@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -132,17 +133,35 @@ public final class Demo {
 
     private void testClaimRoute() {
         System.out.println("testing claim route");
-
+        model.setRouteOwner(model.getCurrentPlayer().getName(), 0);
+        Player player = findOtherPlayer();
+        if(player == null) {
+            System.out.println("there are no other players to test");
+            return;
+        }
+        model.setRouteOwner(player.getName(), 1);
     }
 
     private void testPlayerPoints() {
         System.out.println("testing player points");
-
+        model.addPlayerPoints(model.getCurrentPlayer().getName(), 3);
+        Player player = findOtherPlayer();
+        if(player == null) {
+            System.out.println("there are no other players to test");
+            return;
+        }
+        model.addPlayerPoints(player.getName(), 4);
     }
 
     private void testAddChat() {
         System.out.println("testing add chat");
-
+        model.addChat(new Chat(model.getCurrentPlayer().getName(), 0, "test chat 2"));
+        Player player = findOtherPlayer();
+        if(player == null) {
+            System.out.println("there are no other players to test");
+            return;
+        }
+        model.addChat(new Chat(player.getName(), 0, "test chat 1"));
     }
 
     private void testOtherAddTrainCards() {
@@ -203,5 +222,22 @@ public final class Demo {
             return player;
         }
         return null;
+    }
+
+    private Player findPlayer(String... excludeNames) {
+        for(int i = 0; i < model.getGameMaxPlayers(); ++i) {
+            Player player = model.getPlayer(i);
+            if(player == null) continue;
+            if(match(player.getName(), excludeNames)) continue;
+            return player;
+        }
+        return null;
+    }
+
+    private boolean match(String s, String[] strings) {
+        for(String str : strings) {
+            if(str.equals(s)) return true;
+        }
+        return false;
     }
 }
