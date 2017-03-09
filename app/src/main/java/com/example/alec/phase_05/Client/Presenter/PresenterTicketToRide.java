@@ -68,7 +68,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         final ClientModel model = ClientModel.getInstance();
         if(u.needUpdate(ClientModel.PLAYER_TRAIN_CARDS)) {
             listener.updateTrainCards(model.getCurrentPlayer().getTrainCards());
-            visitAllOtherPlayers(new PlayerVisitor() {
+            visitAllPlayers(new PlayerVisitor() {
                 @Override
                 public void visitPlayer(Player player) {
                     listener.updatePlayerTrainCards(player.getName(), model.getNumberOfTrainCards(player.getName()));
@@ -77,7 +77,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         }
         if(u.needUpdate(ClientModel.PLAYER_DESTINATION_CARDS)) {
             listener.updateDestinationCards(model.getCurrentPlayer().getDestinationCards());
-            visitAllOtherPlayers(new PlayerVisitor() {
+            visitAllPlayers(new PlayerVisitor() {
                 @Override
                 public void visitPlayer(Player player) {
                     listener.updatePlayerDestinationCards(player.getName(), model.getNumberOfDestinationCards(player.getName()));
