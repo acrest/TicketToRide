@@ -3,6 +3,9 @@ package com.example.alec.phase_05.Client.Model;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.ChatManager;
 import com.example.alec.phase_05.Shared.model.Chat_Item;
+import com.example.alec.phase_05.Shared.model.City;
+import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.MyPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +24,11 @@ public class Derpness    //*** SIMPLY A MODEL CLASS FOR TESTING PURPOSES, RECYCL
     private Derpness() {
     }
 
-    public List<Chat> generateFakeChat()
+    public List<DestinationCard> generateFakeChat()
     {
         List<Chat> list = new ArrayList<>();
         List<Chat_Item> messages = new ArrayList<>();
+        List<DestinationCard> destinations = new ArrayList<>();
         ChatManager chats = new ChatManager();
 
         for(int i = 0; i < 20; i++)
@@ -68,6 +72,9 @@ public class Derpness    //*** SIMPLY A MODEL CLASS FOR TESTING PURPOSES, RECYCL
             }
         }
 
-        return list;
+        destinations.add(new DestinationCard(new City("Orem", new MyPoint(0,0)), new City("Provo", new MyPoint(0,0)), 50));
+        destinations.add(new DestinationCard(new City("Orem", new MyPoint(0,0)), new City("Spanish Fork", new MyPoint(0,0)), 50));
+
+        return destinations;
     }
 }
