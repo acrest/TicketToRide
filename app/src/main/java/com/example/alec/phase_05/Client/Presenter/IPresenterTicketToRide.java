@@ -22,4 +22,7 @@ public interface IPresenterTicketToRide extends IPresenter {
 
     void startDemo();
 
+    ArrayList<Player> getPlayers();
+
+    ArrayList<TrainCard> getTrainCards();
 }
