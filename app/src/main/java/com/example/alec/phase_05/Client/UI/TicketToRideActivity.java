@@ -83,6 +83,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView coalCountView;
     private TextView caboosecountView;
     private TextView locomotiveCountView;
+    private TextView numberDestinationCardsView;
 
     int boxCount;
     int passengerCount;
@@ -93,6 +94,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     int coalCount;
     int cabooseCount;
     int locomotiveCount;
+    int numberDestinationCards;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -132,6 +134,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         });
 
         setCardCountsZero();
+        numberDestinationCards = 0;
         boxCountView = (TextView) findViewById(R.id.yellow_cards);
         passengerCountView = (TextView) findViewById(R.id.blue_cards);
         tankerCountView = (TextView) findViewById(R.id.orange_cards);
@@ -141,6 +144,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         coalCountView = (TextView) findViewById(R.id.red_cards);
         caboosecountView = (TextView) findViewById(R.id.green_cards);
         locomotiveCountView = (TextView) findViewById(R.id.rainbow_cards);
+        numberDestinationCardsView = (TextView) findViewById(R.id.number_of_destinationCards);
 
         TabHost mTabHost = getTabHost();
 
@@ -685,6 +689,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     public void updateDestinationCards(List<DestinationCard> cards) {
         Log.d("TicketToRideActivity", "updateDestinationCards called");
         mRoutesRecyclerAdapter.updateListData(cards);
+        numberDestinationCardsView.setText(Integer.toString(cards.size()) + " Destination Cards");
+        //numberDestinationCardsView.setTextColor(Color.RED);
         setPlayersStats();
     }
 

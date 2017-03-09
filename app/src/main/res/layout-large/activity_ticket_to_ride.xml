@@ -371,15 +371,28 @@
                         android:background="#AAE0E0E0">
                     </android.support.v7.widget.RecyclerView>
 
-                    <Button
-                        android:id="@+id/draw_routes_button"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:padding="10dp"
-                        android:text="Draw Route Cards"
-                        android:textSize="10dp" />
+                        android:background="@android:color/white">>
+
+                        <TextView
+                            android:id="@+id/number_of_destinationCards"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:text="#destinations"/>
+
+                        <Button
+                            android:id="@+id/draw_routes_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:padding="10dp"
+                            android:text="Draw Route Cards"
+                            android:textSize="10dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
