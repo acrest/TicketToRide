@@ -17,7 +17,6 @@ public class PresenterLogIn extends Presenter implements IPresenterLogIn {
 
     public PresenterLogIn(ILogInListener listener) {
         this.listener = listener;
-        ClientModel.getInstance().addObserver(this);
     }
 
     @Override

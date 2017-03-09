@@ -16,7 +16,6 @@ public class PresenterGameStation extends Presenter implements IPresenterGameSta
 
     public PresenterGameStation(IGameStationListener listener) {
         this.listener = listener;
-        ClientModel.getInstance().addObserver(this);
     }
 
     @Override

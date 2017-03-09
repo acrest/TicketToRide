@@ -229,16 +229,18 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         drawRoute.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
-                Canvas c = new Canvas(bmp);
-                imageView.draw(c);
+                presenter.startDemo();
 
-                Paint p = new Paint();
-                p.setStrokeWidth(8);
-                p.setColor(Color.WHITE);
-                p.setAlpha(75);
-                c.drawLine(88, 0, 188, 100, p);
-                imageView.setImageBitmap(bmp);
+//                Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
+//                Canvas c = new Canvas(bmp);
+//                imageView.draw(c);
+//
+//                Paint p = new Paint();
+//                p.setStrokeWidth(8);
+//                p.setColor(Color.WHITE);
+//                p.setAlpha(75);
+//                c.drawLine(88, 0, 188, 100, p);
+//                imageView.setImageBitmap(bmp);
             }
         });
 

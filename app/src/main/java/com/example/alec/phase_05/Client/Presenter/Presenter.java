@@ -3,6 +3,8 @@ package com.example.alec.phase_05.Client.Presenter;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.alec.phase_05.Client.Model.ClientModel;
+
 import java.util.Observable;
 
 /**
@@ -10,6 +12,10 @@ import java.util.Observable;
  */
 
 public abstract class Presenter implements IPresenter {
+
+    public Presenter() {
+        ClientModel.getInstance().addObserver(this);
+    }
 
     @Override
     public void update(Observable observable, Object o) {
