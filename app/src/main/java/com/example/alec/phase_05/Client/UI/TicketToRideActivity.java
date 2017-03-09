@@ -129,8 +129,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setRoutes();
 
 
+        presenter = new PresenterTicketToRide(this);
 
         final Deck deck = new Deck();
+        //ClientModel.getInstance().getGame().get
 
 
         final ImageButton deckButton = (ImageButton) findViewById(R.id.deck);
@@ -161,35 +163,30 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card2Button, card.getType());
             }
         });
 
         card3Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card3Button, card.getType());
             }
         });
 
         card4Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card4Button, card.getType());
             }
         });
 
         card5Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrainCard card = deck.drawCard();
-                setImageButton(card1Button, card.getType());
+                setImageButton(card5Button, card.getType());
             }
         });
-
-
-
-        presenter = new PresenterTicketToRide(this);
-        presenter = new PresenterTicketToRide(this);
 
 
 
@@ -340,7 +337,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         ArrayList<String> playerInfo = new ArrayList<String>();
         Player player_with_longest_route = new Player(null, null);
 
-
         for (int i = 0; i < num_players; i++) {
             Player temp_player = model.getPlayer(i);
             if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
@@ -350,7 +346,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             String temp = temp_player.getName() +  "                " + temp_player.getPointCount() + "                      "
                     + temp_player.getTrainCount() + "                    " + cardList.size() + "                  " + temp_player.getDestinationCards().size();
             playerInfo.add(temp);
-
         }
 
         if (playerInfo.size() == 0) {
