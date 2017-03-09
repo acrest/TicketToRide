@@ -366,31 +366,30 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     private void setPlayersStats() {
-        ClientModel model = ClientModel.getInstance();
-        int num_players = model.getNumberPlayers();
-        ArrayList<TrainCard> cardList = model.getCurrentPlayer().getTrainCards();
-        ArrayList<Player> playerList = new ArrayList<Player>();
+
+        ArrayList<Player> playerList = presenter.getPlayers();
         ArrayList<String> playerInfo = new ArrayList<String>();
         Player player_with_longest_route = new Player(null, null);
-
-
-        for (int i = 0; i < num_players; i++) {
-            Player temp_player = model.getPlayer(i);
-            if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
-                player_with_longest_route = temp_player;
-            }
-            playerList.add(temp_player);
-            String temp = temp_player.getName() +  "                " + temp_player.getPointCount() + "                      "
-                    + temp_player.getTrainCount() + "                    " + cardList.size() + "                  " + temp_player.getDestinationCards().size();
-            playerInfo.add(temp);
-
-        }
 
         if (playerInfo.size() == 0) {
 
             String noString = "You have no routes!";
             playerInfo.add(noString);
         }
+        else {
+            for (int i = 0; i < playerList.size(); i++) {
+                Player temp_player = playerList.get(i);
+                if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
+                    player_with_longest_route = temp_player;
+                }
+                playerList.add(temp_player);
+                String temp = temp_player.getName() + "                " + temp_player.getPointCount() + "                      "
+                        + temp_player.getTrainCount() + "                    " + temp_player.getTrainCards().size() + "                  " + temp_player.getDestinationCards().size();
+                playerInfo.add(temp);
+
+            }
+        }
+
         populatePlayerListView(playerInfo);
 
         TextView longest_route_player = (TextView) findViewById(R.id.longest_route_text);

@@ -135,6 +135,26 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         }
     }
 
+    public ArrayList<TrainCard> getTrainCards() {
+        ClientModel model = ClientModel.getInstance();
+        ArrayList<TrainCard> cardList = model.getCurrentPlayer().getTrainCards();
+        return cardList;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        ClientModel model = ClientModel.getInstance();
+        int num_players = model.getNumberPlayers();
+        ArrayList<Player> playerList = new ArrayList<Player>();
+
+        for (int i = 0; i < num_players; i++) {
+            Player temp_player = model.getPlayer(i);
+
+            playerList.add(temp_player);
+        }
+
+        return playerList;
+    }
+
     private interface PlayerVisitor {
         void visitPlayer(Player player);
     }
