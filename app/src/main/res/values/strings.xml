@@ -31,6 +31,9 @@
     <string name="color_black">Black</string>
     <string name="title_activity_ticket_map">TicketMapActivity</string>
     <string name="chat_message">(Enter a message)</string>
+    <string name="city1">city1</string>
+    <string name="city2">city2</string>
+    <string name="destination_points">point value</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
