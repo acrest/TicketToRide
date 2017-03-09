@@ -422,22 +422,32 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         ArrayList<Player> playerList = presenter.getPlayers();
         ArrayList<String> playerInfo = new ArrayList<String>();
         Player player_with_longest_route = new Player(null, null);
+        Player currPlayer = presenter.getCurrPlayer();
 
         System.out.println("WE ARE TESTING HERE");
         System.out.println(playerList.size());
             for (int i = 0; i < playerList.size(); i++) {
                 Player temp_player = playerList.get(i);
-                System.out.println(temp_player.getName());
-                System.out.println(i);
+               if (currPlayer.getName().equals(temp_player.getName())) {
+
+                   String temp = temp_player.getName() + "                  " + temp_player.getPointCount() + "                    "
+                           + temp_player.getTrainCount() + "                      "  + "                    "
+                            + "  " + temp_player.getColor();
+                   playerInfo.add(temp);
+
+
+               } else {
+
+                   String temp = temp_player.getName() + "                  " + temp_player.getPointCount() + "                    "
+                           + temp_player.getTrainCount() + "                   " + temp_player.getTrainCards().size() + "                 "
+                           + temp_player.getDestinationCards().size() + "  " + temp_player.getColor();
+                   playerInfo.add(temp);
+
+               }
 
                 if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
                     player_with_longest_route = temp_player;
                 }
-
-                String temp = temp_player.getName() + "                  " + temp_player.getPointCount() + "                    "
-                        + temp_player.getTrainCount() + "                   " + temp_player.getTrainCards().size() + "                 "
-                        + temp_player.getDestinationCards().size() + "  " + temp_player.getColor();
-                playerInfo.add(temp);
 
             }
 

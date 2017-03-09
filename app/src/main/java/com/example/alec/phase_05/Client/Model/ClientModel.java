@@ -147,6 +147,9 @@ public class ClientModel extends Observable {
     public void setPlayer(int index, Player player) {
         if(currentGame == null) return;
         currentGame.setPlayer(index, player);
+//        if(currentPlayer.getName().equals(player.getName())) {
+//            currentPlayer = player;
+//        }
         notifyPropertyChanges(PLAYER_IN_GAME, NUM_PLAYERS_IN_GAME);
     }
 
