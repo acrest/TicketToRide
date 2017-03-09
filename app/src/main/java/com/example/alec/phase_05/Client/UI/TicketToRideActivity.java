@@ -87,9 +87,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private RecyclerView mChatRecView;
     private RecyclerView mRoutesRecView;
     private RecyclerView mGameHistoryRecView;
-    private DerpAdapter mChatRecyclerAdapter;
-    private DerpAdapter mRoutesRecyclerAdapter;
-    private DerpAdapter mGameHistoryRecyclerAdapter;
+    private ChatAdapter mChatRecyclerAdapter;
+    private RouteAdapter mRoutesRecyclerAdapter;
+    private GameHistoryAdapter mGameHistoryRecyclerAdapter;
     private Button mCreateChatButton;
     private EditText mEditTextChat;
 
@@ -108,9 +108,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mRoutesRecView.setLayoutManager(new LinearLayoutManager(this));
         mGameHistoryRecView .setLayoutManager(new LinearLayoutManager(this));
 
-        mChatRecyclerAdapter = new DerpAdapter(Derpness.getInstance().generateFakeChat(), this);
-        mRoutesRecyclerAdapter = new DerpAdapter(Derpness.getInstance().generateFakeChat(), this);
-        mGameHistoryRecyclerAdapter = new DerpAdapter(Derpness.getInstance().generateFakeChat(), this);
+        mChatRecyclerAdapter = new ChatAdapter(Derpness.getInstance().generateFakeChat(), this);
+        mRoutesRecyclerAdapter = new RouteAdapter(Derpness.getInstance().generateFakeChat(), this);
+        mGameHistoryRecyclerAdapter = new GameHistoryAdapter(Derpness.getInstance().generateFakeChat(), this);
         mChatRecView.setAdapter(mChatRecyclerAdapter);
         mRoutesRecView.setAdapter(mRoutesRecyclerAdapter);
         mGameHistoryRecView.setAdapter(mGameHistoryRecyclerAdapter);
@@ -633,7 +633,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     }
 
-    public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>   {
+    public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder>   {
         private static final int INVALID_INDEX = -1;
 
         private List<Chat> listData;
@@ -641,7 +641,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         private RecyclerView recyclerView;
         private int selectedIndex;
 
-        public DerpAdapter(List<Chat> listData, Context c)
+        public ChatAdapter(List<Chat> listData, Context c)
         {
             this.inflater = LayoutInflater.from(c);
             this.listData = listData;
@@ -662,13 +662,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
 
         @Override
-        public DerpHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ChatHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = inflater.inflate(R.layout.list_simple_view, parent, false);
-            return new DerpHolder(v);
+            return new ChatHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(DerpHolder holder, int position) {
+        public void onBindViewHolder(ChatHolder holder, int position) {
             Chat message = listData.get(position);
 
             holder.message.setText(message.getMessage());
@@ -727,19 +727,263 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             notifyDataSetChanged();
         }
 
-        public DerpHolder getSelectedHolder() {
+        public ChatHolder getSelectedHolder() {
             if(selectedIndex != INVALID_INDEX) {
-                return (DerpHolder) recyclerView.findViewHolderForAdapterPosition(selectedIndex);
+                return (ChatHolder) recyclerView.findViewHolderForAdapterPosition(selectedIndex);
             }
             return null;
         }
 
-        class DerpHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        class ChatHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             private TextView message;
             private View container;
 
 
-            public DerpHolder(View itemView) {
+            public ChatHolder(View itemView) {
+                super(itemView);
+                itemView.setOnClickListener(this);
+
+                message = (TextView)itemView.findViewById(R.id.lbl_simple_view);
+                container = itemView.findViewById(R.id.cont_item_root);
+            }
+
+            @Override
+            public void onClick(View view) {
+
+            }
+        }
+
+    }
+
+    public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteHolder>   {
+        private static final int INVALID_INDEX = -1;
+
+        private List<Chat> listData;
+        private LayoutInflater inflater;
+        private RecyclerView recyclerView;
+        private int selectedIndex;
+
+        public RouteAdapter(List<Chat> listData, Context c)
+        {
+            this.inflater = LayoutInflater.from(c);
+            this.listData = listData;
+            selectedIndex = INVALID_INDEX;
+            recyclerView = null;
+        }
+
+        @Override
+        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
+            this.recyclerView = recyclerView;
+        }
+
+        @Override
+        public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+            super.onDetachedFromRecyclerView(recyclerView);
+            this.recyclerView = null;
+        }
+
+        @Override
+        public RouteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = inflater.inflate(R.layout.list_simple_view, parent, false);
+            return new RouteHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(RouteHolder holder, int position) {
+            Chat message = listData.get(position);
+
+            holder.message.setText(message.getMessage());
+
+            switch (message.getColor()){
+                case("blue"):
+                    holder.message.setTextColor(Color.BLUE);
+                    break;
+                case("red"):
+                    holder.message.setTextColor(Color.RED);
+                    break;
+                case("yellow"):
+                    holder.message.setTextColor(Color.YELLOW);
+                    break;
+                case("black"):
+                    holder.message.setTextColor(Color.BLACK);
+                    break;
+                case("green"):
+                    holder.message.setTextColor(Color.GREEN);
+                    break;
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return listData.size();
+        }
+
+        public void updateListData(List<Chat> newListData) {
+            //remember the selected game's id
+            //int selectedGameID = getSelectedGameID();
+//            System.out.println("selected game id = " + selectedGameID);
+//            List<GameDescription> oldList = listData;
+            listData = newListData;
+//            int minLength = Math.min(oldList.size(), newListData.size());
+//            for(int i = 0; i < minLength; ++i) {
+//                if(oldList.get(i).getID() != newListData.get(i).getID()) {
+//                    //something has changed, so we need to do some updating
+//                    notifyItemChanged(i);
+//                }
+//            }
+//            int maxLength = Math.max(oldList.size(), newListData.size());
+//            int maxLength = Math.max(oldList.size(), newListData.size());
+//            //this loop deletes / adds extrea items
+//            for(int i = minLength; i < maxLength; ++i) {
+//                if(oldList.size() >= minLength) {
+//                    //oldList is larger, so delete extra items
+//                    notifyItemRemoved(i);
+//                } else {
+//                    //newList is larger, so add extra items
+//                    notifyItemInserted(i);
+//                }
+//            }
+            //reselect the item with the correct id
+            //selectGameOfID(selectedGameID);
+            notifyDataSetChanged();
+        }
+
+        public RouteHolder getSelectedHolder() {
+            if(selectedIndex != INVALID_INDEX) {
+                return (RouteHolder) recyclerView.findViewHolderForAdapterPosition(selectedIndex);
+            }
+            return null;
+        }
+
+        class RouteHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+            private TextView message;
+            private View container;
+
+
+            public RouteHolder(View itemView) {
+                super(itemView);
+                itemView.setOnClickListener(this);
+
+                message = (TextView)itemView.findViewById(R.id.lbl_simple_view);
+                container = itemView.findViewById(R.id.cont_item_root);
+            }
+
+            @Override
+            public void onClick(View view) {
+
+            }
+        }
+
+    }
+
+    public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.GameHistoryHolder>   {
+        private static final int INVALID_INDEX = -1;
+
+        private List<Chat> listData;
+        private LayoutInflater inflater;
+        private RecyclerView recyclerView;
+        private int selectedIndex;
+
+        public GameHistoryAdapter(List<Chat> listData, Context c)
+        {
+            this.inflater = LayoutInflater.from(c);
+            this.listData = listData;
+            selectedIndex = INVALID_INDEX;
+            recyclerView = null;
+        }
+
+        @Override
+        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
+            this.recyclerView = recyclerView;
+        }
+
+        @Override
+        public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+            super.onDetachedFromRecyclerView(recyclerView);
+            this.recyclerView = null;
+        }
+
+        @Override
+        public GameHistoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = inflater.inflate(R.layout.list_simple_view, parent, false);
+            return new GameHistoryHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(GameHistoryHolder holder, int position) {
+            Chat message = listData.get(position);
+
+            holder.message.setText(message.getMessage());
+
+            switch (message.getColor()){
+                case("blue"):
+                    holder.message.setTextColor(Color.BLUE);
+                    break;
+                case("red"):
+                    holder.message.setTextColor(Color.RED);
+                    break;
+                case("yellow"):
+                    holder.message.setTextColor(Color.YELLOW);
+                    break;
+                case("black"):
+                    holder.message.setTextColor(Color.BLACK);
+                    break;
+                case("green"):
+                    holder.message.setTextColor(Color.GREEN);
+                    break;
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return listData.size();
+        }
+
+        public void updateListData(List<Chat> newListData) {
+            //remember the selected game's id
+            //int selectedGameID = getSelectedGameID();
+//            System.out.println("selected game id = " + selectedGameID);
+//            List<GameDescription> oldList = listData;
+            listData = newListData;
+//            int minLength = Math.min(oldList.size(), newListData.size());
+//            for(int i = 0; i < minLength; ++i) {
+//                if(oldList.get(i).getID() != newListData.get(i).getID()) {
+//                    //something has changed, so we need to do some updating
+//                    notifyItemChanged(i);
+//                }
+//            }
+//            int maxLength = Math.max(oldList.size(), newListData.size());
+//            int maxLength = Math.max(oldList.size(), newListData.size());
+//            //this loop deletes / adds extrea items
+//            for(int i = minLength; i < maxLength; ++i) {
+//                if(oldList.size() >= minLength) {
+//                    //oldList is larger, so delete extra items
+//                    notifyItemRemoved(i);
+//                } else {
+//                    //newList is larger, so add extra items
+//                    notifyItemInserted(i);
+//                }
+//            }
+            //reselect the item with the correct id
+            //selectGameOfID(selectedGameID);
+            notifyDataSetChanged();
+        }
+
+        public GameHistoryHolder getSelectedHolder() {
+            if(selectedIndex != INVALID_INDEX) {
+                return (GameHistoryHolder) recyclerView.findViewHolderForAdapterPosition(selectedIndex);
+            }
+            return null;
+        }
+
+        class GameHistoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+            private TextView message;
+            private View container;
+
+
+            public GameHistoryHolder(View itemView) {
                 super(itemView);
                 itemView.setOnClickListener(this);
 
