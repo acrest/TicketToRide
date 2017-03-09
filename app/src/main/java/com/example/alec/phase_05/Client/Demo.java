@@ -44,6 +44,13 @@ public final class Demo {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+                            testRemoveTrainCards();
+                        }
+                    });
+                    Thread.sleep(5000);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
                             testAddDestinationCards();
                         }
                     });
@@ -117,6 +124,12 @@ public final class Demo {
         model.addTrainCard(new TrainCard(TrainType.TANKER));
         model.addTrainCard(new TrainCard(TrainType.LOCOMOTIVE));
         model.addTrainCard(new TrainCard(TrainType.REEFER));
+    }
+
+    private void testRemoveTrainCards() {
+        System.out.println("testing add train cards");
+        model.removeTrainCard(0);
+        model.removeTrainCard(0);
     }
 
     private void testAddDestinationCards() {
