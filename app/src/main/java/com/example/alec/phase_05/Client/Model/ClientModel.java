@@ -3,6 +3,7 @@ package com.example.alec.phase_05.Client.Model;
 import com.example.alec.phase_05.Client.Presenter.UpdateIndicator;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IGame;
@@ -121,6 +122,10 @@ public class ClientModel extends Observable {
         this.currentGame = currentGame;
         currentPlayer = currentGame.findPlayerByName(currentPlayer.getName());
         notifyPropertyChanges(CURRENT_GAME);
+    }
+
+    public IGame getGame(){
+        return currentGame;
     }
 
     public boolean hasCurrentGame() {
