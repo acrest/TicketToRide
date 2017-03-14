@@ -9,8 +9,8 @@ import com.example.alec.phase_05.Shared.command.Result;
  */
 
 public class ClientDrawDestinationCardCommand extends DrawDestinationCardCommand {
-    public ClientDrawDestinationCardCommand(String userName, String password, int gameID) {
-        super(userName, password, gameID);
+    public ClientDrawDestinationCardCommand(String playerName, int gameID) {
+        super(playerName, gameID);
     }
 
     @Override

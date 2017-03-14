@@ -7,7 +7,6 @@ import com.example.alec.phase_05.Shared.model.GameState;
  */
 
 public abstract class GameStartedCommand extends BaseCommand {
-
     private GameState gameState;
 
     public GameStartedCommand(GameState gameState) {

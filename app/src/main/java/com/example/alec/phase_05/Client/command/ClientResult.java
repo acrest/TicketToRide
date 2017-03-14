@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client.command;
 
 import com.example.alec.phase_05.Shared.command.*;
+import com.example.alec.phase_05.Shared.communication.SerDes;
 
 /**
  * Client version of Result that adds in the ability to deserialize client commands.

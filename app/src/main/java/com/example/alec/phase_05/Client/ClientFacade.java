@@ -1,19 +1,14 @@
 package com.example.alec.phase_05.Client;
 
-import android.util.Log;
-
-import com.example.alec.phase_05.Client.Model.ClientGame;
 import com.example.alec.phase_05.Client.Model.ClientGameFactory;
 import com.example.alec.phase_05.Client.Model.ClientModel;
-import com.example.alec.phase_05.Client.Model.IClientBank;
-import com.example.alec.phase_05.Client.Model.IClientGame;
-import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
+import com.example.alec.phase_05.Shared.model.IPlayer;
+import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
-import com.example.alec.phase_05.Shared.model.IBank;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -24,86 +19,121 @@ import java.util.List;
  */
 
 public class ClientFacade {
-
     private static ClientFacade instance;
 
     public static ClientFacade getInstance() {
-        if(instance == null) instance = new ClientFacade();
+        if (instance == null) instance = new ClientFacade();
         return instance;
     }
 
-    public void updateGameList(List<GameDescription> games)
-    {
-        ClientModel.getInstance().setGameList(games);
+    private ClientModel model;
+
+    public ClientFacade() {
+        model = ClientModel.getInstance();
+    }
+
+    public void updateGameList(List<GameDescription> games) {
+        model.setGameList(games);
     }
 
     public void createGame(GameState gameState) {
-
-        if(gameState != null) {
-            ClientModel.getInstance().setCreateGameSuccess(true);
-            IClientGame game = ClientGameFactory.createGame(gameState);
-            ClientModel.getInstance().setCurrentGame(game);
+        if (gameState != null) {
+            model.setCreateGameSuccess(true);
+            model.setCurrentGame(ClientGameFactory.createGame(gameState));
+            model.setHost(true);
+            Poller.getInstance().setPlayerWatingPolling();
         } else {
-            ClientModel.getInstance().setCreateGameSuccess(false);
+            model.setCreateGameSuccess(false);
         }
 
     }
 
     public void joinGame(GameState gameState) {
-        if(gameState != null) {
-            ClientModel.getInstance().setJoinGameSuccess(true);
-            IClientGame game = ClientGameFactory.createGame(gameState);
-            ClientModel.getInstance().setCurrentGame(game);
+        if (gameState != null) {
+            model.setJoinGameSuccess(true);
+            model.setCurrentGame(ClientGameFactory.createGame(gameState));
+            model.setHost(false);
+            Poller.getInstance().setPlayerWatingPolling();
         } else {
-            ClientModel.getInstance().setJoinGameSuccess(false);
+            model.setJoinGameSuccess(false);
         }
-    }
-
-    public void setCurrentPlayer(Player player) {
-        ClientModel.getInstance().setCurrentPlayer(player);
     }
 
     public void setCurrentGameDescription(GameDescription description) {
-        ClientModel model = ClientModel.getInstance();
-        List<Player> players = description.getPlayers();
-        for(int i = 0; i < model.getGameMaxPlayers(); ++i) {
+        for (int i = 0; i < model.getGameMaxPlayers(); ++i) {
             model.setPlayer(i, null);
         }
-        for(int i = 0; i < players.size(); ++i) {
-            model.setPlayer(i, players.get(i));
+        List<Player> players = description.getPlayers();
+        for (int i = 0; i < players.size(); ++i) {
+            Player player = players.get(i);
+            if (player != null) {
+                if (player.getName().equals(model.getCurrentPlayerName())) {
+                    model.setPlayer(i, player);
+                } else {
+                    model.setPlayer(i, new OtherPlayer(player));
+                }
+            }
         }
     }
 
-    public void drawDestinationCard(String playerName, DestinationCard card) {
-        ClientModel model = ClientModel.getInstance();
-        model.decNumOfDestinationCards();
-        model.addDestinationCard(playerName, card);
+    public void login(String username, boolean success) {
+        model.setLoginSuccess(success);
+        if (success) {
+            model.setCurrentPlayerName(username);
+            Poller poller = Poller.getInstance();
+            poller.setListGamePolling();
+            poller.start();
+        }
     }
 
-    public void drawTrainCard(String playerName, int index, TrainCard card, TrainCard nextCardInDeck) {
-        ClientModel model = ClientModel.getInstance();
+    public void register(String username, boolean success) {
+        model.setRegisterSuccess(success);
+        if (success) {
+            model.setCurrentPlayerName(username);
+            Poller poller = Poller.getInstance();
+            poller.setListGamePolling();
+            poller.start();
+        }
+    }
+
+    public void drawDestinationCard(String playerName) {
+        model.decNumOfDestinationCards();
+        model.addDestinationCard(playerName);
+    }
+
+    public void pickTrainCard(String playerName, int index, TrainCard nextCardInDeck) {
         model.setVisibleCard(index, nextCardInDeck);
-        model.addTrainCard(playerName, card);
+        model.addTrainCard(playerName);
+    }
+
+    public void drawTrainCard(String playerName) {
+        model.addTrainCard(playerName);
     }
 
     public void setGameState(GameState gameState) {
-        ClientModel model = ClientModel.getInstance();
-        if(!model.hasCurrentGame()) {
-            ClientModel.getInstance().setCurrentGame(ClientGameFactory.createGame(gameState));
+        if (!model.hasCurrentGame()) {
+            model.setCurrentGame(ClientGameFactory.createGame(gameState));
             return;
         }
-        if(model.getGameID() != gameState.getId() ||
+        if (model.getGameID() != gameState.getId() ||
                 !model.getGameName().equals(gameState.getName()) ||
                 model.getGameMaxPlayers() != gameState.getMaxPlayers()) {
             throw new IllegalArgumentException("gameState must have the same name, id, and max players as the current game");
         }
         Player[] players = gameState.getPlayers();
-        for(int i = 0; i < players.length; ++i) {
-            model.setPlayer(i, players[i]);
+        for (int i = 0; i < players.length; ++i) {
+            Player player = players[i];
+            if (player != null) {
+                if (player.getName().equals(model.getCurrentPlayerName())) {
+                    model.setPlayer(i, player);
+                } else {
+                    model.setPlayer(i, new OtherPlayer(player));
+                }
+            }
         }
         TrainCard[] visibleTrainCards = gameState.getVisibleTrainCards();
-        for(int i = 0; i < players.length; ++i) {
-            model.setVisibleCard(i,visibleTrainCards[i]);
+        for (int i = 0; i < players.length; ++i) {
+            model.setVisibleCard(i, visibleTrainCards[i]);
         }
         model.setMap(gameState.getMap());
     }
@@ -117,19 +147,23 @@ public class ClientFacade {
         facade.drawTrainCard();
         facade.drawTrainCard();
         facade.drawTrainCard();
-        ClientModel.getInstance().setGameStarted();
+        model.setGameStarted();
     }
 
     public void addTrainCard(TrainCard card) {
-        ClientModel.getInstance().addTrainCard(card);
+        model.addTrainCard(card);
     }
 
     public void addDestinationCard(DestinationCard card) {
-        ClientModel.getInstance().addDestinationCard(card);
+        model.addDestinationCard(card);
+    }
+
+    public void executeCommand(ICommand command) {
+        command.execute();
     }
 
     public void executeCommands(List<BaseCommand> commands) {
-        for(BaseCommand command : commands) {
+        for (BaseCommand command : commands) {
             command.execute();
         }
     }

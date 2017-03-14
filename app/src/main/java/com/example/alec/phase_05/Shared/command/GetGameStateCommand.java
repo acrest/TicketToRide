@@ -4,9 +4,15 @@ package com.example.alec.phase_05.Shared.command;
  * Created by samuel on 3/1/17.
  */
 
-public abstract class GetGameStateCommand extends GameCommand {
+public abstract class GetGameStateCommand extends BaseCommand {
+    private int gameId;
 
-    public GetGameStateCommand(String userName, String password, int gameID) {
-        super("GetGameState", userName, password, gameID);
+    public GetGameStateCommand(int gameId) {
+        super("GetGameState");
+        this.gameId = gameId;
+    }
+
+    public int getGameId() {
+        return gameId;
     }
 }

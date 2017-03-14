@@ -1,6 +1,9 @@
-package com.example.alec.phase_05.Shared.command;
+package com.example.alec.phase_05.Shared.communication;
 
 import com.example.alec.phase_05.Client.command.ClientResult;
+import com.example.alec.phase_05.Shared.command.BaseCommand;
+import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.google.gson.*;
 
@@ -24,7 +27,9 @@ public class SerDes
     public static ICommand deserializeCommand(String json, String prefix, String suffix)
     {
         Gson gson = new Gson();
-        JsonObject jsonObj = gson.fromJson(json, JsonObject.class);
+        JsonElement element = gson.fromJson(json, JsonElement.class);
+        if(element instanceof JsonNull) return null;
+        JsonObject jsonObj = (JsonObject) element;
         String commandName = jsonObj.get("commandName").getAsString();
 
         String classname = prefix + commandName + suffix;

@@ -5,8 +5,7 @@ package com.example.alec.phase_05.Shared.command;
  */
 
 public abstract class FinishTurnCommand extends GameCommand {
-
-    public FinishTurnCommand(String commandName, String userName, String password, int gameID) {
-        super(commandName, userName, password, gameID);
+    public FinishTurnCommand(String playerName, int gameID) {
+        super("FinishTurn", playerName, gameID);
     }
 }

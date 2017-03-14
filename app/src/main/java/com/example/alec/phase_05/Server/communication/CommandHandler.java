@@ -1,7 +1,9 @@
-package com.example.alec.phase_05.Server.command;
+package com.example.alec.phase_05.Server.communication;
 
-import com.example.alec.phase_05.Server.ServerFacade;
+import com.example.alec.phase_05.Server.model.ServerFacade;
+import com.example.alec.phase_05.Server.command.ServerResult;
 import com.example.alec.phase_05.Shared.command.*;
+import com.example.alec.phase_05.Shared.communication.SerDes;
 import com.sun.net.httpserver.*;
 import java.io.*;
 
@@ -21,7 +23,7 @@ public class CommandHandler extends HandlerBase
         String reqBody = readRequestBody(t);
         ICommand command = SerDes.deserializeCommand(reqBody, ServerResult.SERVER_COMMAND_PREFIX, ServerResult.SERVER_COMMAND_SUFFIX);
         System.out.println("command handler " + ((BaseCommand) command).getCommandName());
-        Result result = ServerFacade.get_instance().executeCommand(command);
+        Result result = ServerFacade.getInstance().executeCommand(command);
         sendResponse(t, result);
     }
 }

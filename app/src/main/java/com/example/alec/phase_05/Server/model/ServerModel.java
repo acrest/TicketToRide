@@ -1,13 +1,12 @@
-package com.example.alec.phase_05.Server;
+package com.example.alec.phase_05.Server.model;
 
-import com.example.alec.phase_05.Server.model.IServerGame;
-import com.example.alec.phase_05.Server.model.ServerGame;
 import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.PlayerCredentials;
+import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +17,7 @@ public class ServerModel {
     private static int nextValidGameID = 0;
 
     private Map<Integer,ServerGame> gamesMap;
-    private Map<String,Player> playerMap;
+    private Map<String,PlayerCredentials> playerMap;
 
     private static ServerModel _instance;
 
@@ -35,7 +34,7 @@ public class ServerModel {
      * Gets instance of ServerModel if exists, if not creates
      * @return the instance of the ServerModel
      */
-    public static ServerModel get_instance(){
+    public static ServerModel getInstance(){
         if(_instance == null){
             _instance = new ServerModel();
         }
@@ -48,8 +47,8 @@ public class ServerModel {
      * @param newPlayer Player to be added to the server
      * @return boolean if the player was added successfully
      */
-    public boolean addPlayer(Player newPlayer){
-        String playerName = newPlayer.getName();
+    public boolean addPlayer(PlayerCredentials newPlayer){
+        String playerName = newPlayer.getUsername();
         if(playerMap.containsKey(playerName))
             return false;
         playerMap.put(playerName,newPlayer);
@@ -82,7 +81,7 @@ public class ServerModel {
      * @param playerName name of player to be returned
      * @return player object with name given in the parameter
      */
-    public Player getPlayer(String playerName){
+    public PlayerCredentials getPlayer(String playerName){
         return playerMap.get(playerName);
     }
 
@@ -94,15 +93,9 @@ public class ServerModel {
      * @return returns the player object if password and player combination are correct
      * if they are not correct, or they don't exist, it returns null.
      */
-    public Player login(String inputPass, String playerName){
-        Player player = playerMap.get(playerName);
-        if(player == null) return null;
-        if(player.getPassword().equals(inputPass)){
-            return player;
-        }
-        else{
-            return null;
-        }
+    public boolean login(String inputPass, String playerName){
+        PlayerCredentials player = playerMap.get(playerName);
+        return player != null && player.getPassword().equals(inputPass);
     }
 
     /**
@@ -140,9 +133,9 @@ public class ServerModel {
      * @return list of commands that haven't been executed yet for given player and game,
      * or null if there are no commands to be executed.
      */
-    public List<BaseCommand> getGameUpdates(String playerName, int gameID) {
+    public ICommand getNextCommand(String playerName, int gameID) {
         IServerGame game = getGame(gameID);
-        if(game == null) return null;
-        return game.getCommandManager().recentCommands(playerName);
+        if(game == null || !game.isGameStarted()) return null;
+        return game.getCommandManager().recentCommand(playerName);
     }
 }

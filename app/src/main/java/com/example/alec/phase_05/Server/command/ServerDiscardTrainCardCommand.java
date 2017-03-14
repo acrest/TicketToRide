@@ -1,6 +1,6 @@
 package com.example.alec.phase_05.Server.command;
 
-import com.example.alec.phase_05.Server.ServerFacade;
+import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.DiscardTrainCardCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.TrainCard;
@@ -10,14 +10,14 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
  */
 
 public class ServerDiscardTrainCardCommand extends DiscardTrainCardCommand {
-    public ServerDiscardTrainCardCommand(String userName, String password, int gameID, TrainCard card) {
-        super(userName, password, gameID, card);
+    public ServerDiscardTrainCardCommand(String playerName, int gameID, TrainCard card) {
+        super(playerName, gameID, card);
     }
 
     @Override
     public Result execute() {
         Result result = new ServerResult();
-        result.setResultObject(ServerFacade.get_instance().discardTrainCard(getUserName(), getGameID(), getCard()));
+        result.setResultObject(ServerFacade.getInstance().discardTrainCard(getPlayerName(), getGameId(), getCard()));
         return result;
     }
 }

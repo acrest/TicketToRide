@@ -6,15 +6,13 @@ import com.example.alec.phase_05.Shared.command.*;
  * Holds data needed by the corresponding ServerLoginCommand.
  * Created by samuel on 2/4/17.
  */
-public class ClientLoginCommand extends AbstractLoginCommand
-{
+public class ClientLoginCommand extends LoginCommand {
     /**
-     * @param userName username of client
+     * @param username username of client
      * @param password password of client
      */
-    public ClientLoginCommand(String userName, String password)
-    {
-        super(userName, password);
+    public ClientLoginCommand(String username, String password) {
+        super(username, password);
     }
 
     /**
@@ -24,8 +22,7 @@ public class ClientLoginCommand extends AbstractLoginCommand
      * @return null
      */
     @Override
-    public Result execute()
-    {
+    public Result execute() {
         return null;
     }
 }

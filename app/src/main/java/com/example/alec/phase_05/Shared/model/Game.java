@@ -1,15 +1,6 @@
 package com.example.alec.phase_05.Shared.model;
 
-import com.example.alec.phase_05.Server.CommandManager;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.List;
 
 /**
@@ -20,7 +11,7 @@ public abstract class Game implements IGame {
     private int id;
     private String name;
     private int maxPlayers;
-    private List<Player> players;
+    private List<IPlayer> players;
     private IBank bank;
     private GameMap gameMap;
     private boolean gameStarted;
@@ -35,25 +26,17 @@ public abstract class Game implements IGame {
         gameStarted = false;
     }
 
-//    public Game(GameDescription gameDescription) {
-//        this(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers(), gameDescription.getPlayers(),gameDescription.getPlayerColors());
-//    }
-
     @Override
     public int getID() {
         return id;
     }
-
-//    public void setID(int ID) {
-//        this.ID = ID;
-//    }
 
     public String getName() {
         return name;
     }
 
     @Override
-    public Player getPlayer(int position) {
+    public IPlayer getPlayer(int position) {
         if(position < players.size()) {
             return players.get(position);
         }
@@ -61,16 +44,12 @@ public abstract class Game implements IGame {
     }
 
     @Override
-    public void setPlayer(int position, Player player) {
+    public void setPlayer(int position, IPlayer player) {
         while(position >= players.size()) {
             players.add(null);
         }
         players.set(position, player);
     }
-
-//    public void setName(String name) {
-//        this.name = name;
-//    }
 
     @Override
     public int getMaxPlayers() {
@@ -92,14 +71,10 @@ public abstract class Game implements IGame {
         gameMap = map;
     }
 
-    //    public void setMaxPlayers(int maxPlayers) {
-//        this.maxPlayers = maxPlayers;
-//    }
-
     @Override
     public int getNumberPlayers() {
         int count = 0;
-        for(Player player : players) {
+        for(IPlayer player : players) {
             if(player != null) {
                 ++count;
             }
@@ -107,12 +82,9 @@ public abstract class Game implements IGame {
         return count;
     }
 
-//    public Player[] getPlayers() {
-//        return players;
-//    }
 
     @Override
-    public int addPlayerAtNextPosition(Player player){
+    public int addPlayerAtNextPosition(IPlayer player){
         if(hasPlayer(player))
             return -1;
         for(int i = 0; i < players.size(); ++i) {
@@ -128,8 +100,8 @@ public abstract class Game implements IGame {
         return -1;
     }
 
-    private boolean hasPlayer(Player player) {
-        for(Player p : players) {
+    private boolean hasPlayer(IPlayer player) {
+        for(IPlayer p : players) {
             if(player.equals(p)){
                 return true;
             }
@@ -137,70 +109,17 @@ public abstract class Game implements IGame {
         return false;
     }
 
-//    public boolean hasPlayer(String playerName) {
-//        for(Player player : players) {
-//            if(player.getName().equals(playerName)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-//    public Player getPlayerByColor(String color) {
-//        for(int i = 0; i < playerColors.length; ++i) {
-//            if(playerColors[i].equals(color)) {
-//                return players[i];
-//            }
-//        }
-//        return null;
-//    }
-
-//    public String getPlayerColor(Player player) {
-//        for(int i = 0; i < players.length; ++i) {
-//            if(players[i].equals(player)) {
-//                return playerColors[i];
-//            }
-//        }
-//        return null;
-//    }
-
-//    public void setPlayerColor(Player player, String color) {
-//        for(int i = 0; i < players.length; ++i) {
-//            if(players[i].equals(player)) {
-//                playerColors[i] = color;
-//                return;
-//            }
-//        }
-//    }
-
-//    public Set<String> getAllUsedColors() {
-//        Set<String> used = new HashSet<>();
-//        for(String color : playerColors) {
-//            if(color != null) {
-//                used.add(color);
-//            }
-//        }
-//        return used;
-//    }
-
     public GameDescription getGameDescription() {
         return new GameDescription(id, name, maxPlayers, players);
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(List<IPlayer> players) {
         this.players = players;
     }
 
-    public List<Player> getPlayers() {
+    public List<IPlayer> getPlayers() {
         return players;
     }
-
-//    public void updateToDescription(GameDescription gameDescription) {
-//        if(gameDescription != null) {
-//            players = gameDescription.getPlayers();
-//            playerColors = gameDescription.getPlayerColors();
-//        }
-//    }
 
     @Override
     public boolean isGameStarted() {

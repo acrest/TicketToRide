@@ -7,21 +7,14 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
  */
 
 public abstract class DrawnDestinationCardCommand extends BaseCommand {
-
     private String playerName;
-    private DestinationCard card;
 
-    public DrawnDestinationCardCommand(String playerName, DestinationCard card) {
+    public DrawnDestinationCardCommand(String playerName) {
         super("DrawnDestinationCard");
         this.playerName = playerName;
-        this.card = card;
     }
 
     public String getPlayerName() {
         return playerName;
-    }
-
-    public DestinationCard getCard() {
-        return card;
     }
 }

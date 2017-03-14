@@ -1,20 +1,21 @@
 package com.example.alec.phase_05.Client.command;
 
-import com.example.alec.phase_05.Shared.command.AbstractCreateGameCommand;
-import com.example.alec.phase_05.Shared.command.AbstractGetGameListCommand;
+import com.example.alec.phase_05.Shared.command.CreateGameCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 
 /**
  * Created by clarkpathakis on 2/8/17.
  */
 
-public class ClientCreateGameCommand extends AbstractCreateGameCommand {
+public class ClientCreateGameCommand extends CreateGameCommand {
     /**
-     * @param userName    username of client
-     * @param password    password of client
+     * @param gameName        name of game to be created
+     * @param numberOfPlayers number of players in game to be created
+     * @param hostName
+     * @param hostColor
      */
-    public ClientCreateGameCommand(String userName, String password, String gameName, int numberOfPlayers, String hostColor) {
-        super(userName, password, gameName, numberOfPlayers, hostColor);
+    public ClientCreateGameCommand(String gameName, int numberOfPlayers, String hostName, String hostColor) {
+        super(gameName, numberOfPlayers, hostName, hostColor);
     }
 
     /**

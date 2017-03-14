@@ -9,9 +9,8 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
  */
 
 public class ClientPutBackDestinationCardCommand extends PutBackDestinationCardCommand {
-
-    public ClientPutBackDestinationCardCommand(String userName, String password, int gameID, DestinationCard card) {
-        super(userName, password, gameID, card);
+    public ClientPutBackDestinationCardCommand(String playerName, int gameID, DestinationCard card) {
+        super(playerName, gameID, card);
     }
 
     @Override

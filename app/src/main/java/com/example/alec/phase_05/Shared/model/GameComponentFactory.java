@@ -1,8 +1,6 @@
 package com.example.alec.phase_05.Shared.model;
 
-import android.graphics.Point;
-
-import com.example.alec.phase_05.Server.CommandManager;
+import com.example.alec.phase_05.Server.model.CommandManager;
 import com.example.alec.phase_05.Server.model.IServerBank;
 import com.example.alec.phase_05.Server.model.ServerBank;
 import com.example.alec.phase_05.Server.model.ServerGame;
@@ -84,7 +82,7 @@ public final class GameComponentFactory {
         deck.put(13, new DestinationCard(cities.get("Duluth"), cities.get("El Paso"), 10));
         deck.put(14, new DestinationCard(cities.get("Toronto"), cities.get("Miami"), 10));
         deck.put(15, new DestinationCard(cities.get("Portland"), cities.get("Phoenix"), 11));
-        deck.put(16, new DestinationCard(cities.get("Dallas"), cities.get("New York City"), 11));
+        deck.put(16, new DestinationCard(cities.get("Dallas"), cities.get("New York"), 11));
         deck.put(17, new DestinationCard(cities.get("Denver"), cities.get("Pittsburgh"), 11));
         deck.put(18, new DestinationCard(cities.get("Winnipeg"), cities.get("Little Rock"), 11));
         deck.put(19, new DestinationCard(cities.get("Winnipeg"), cities.get("Houston"), 12));
@@ -97,8 +95,8 @@ public final class GameComponentFactory {
         deck.put(26, new DestinationCard(cities.get("Portland"), cities.get("Nashville"), 17));
         deck.put(27, new DestinationCard(cities.get("Vancouver"), cities.get("Montreal"), 20));
         deck.put(28, new DestinationCard(cities.get("Los Angeles"), cities.get("Miami"), 20));
-        deck.put(29, new DestinationCard(cities.get("Los Angeles"), cities.get("New York City"), 21));
-        deck.put(30, new DestinationCard(cities.get("Seattle"), cities.get("New York City"), 22));
+        deck.put(29, new DestinationCard(cities.get("Los Angeles"), cities.get("New York"), 21));
+        deck.put(30, new DestinationCard(cities.get("Seattle"), cities.get("New York"), 22));
         return deck;
     }
 

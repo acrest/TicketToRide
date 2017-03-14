@@ -7,11 +7,10 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
  */
 
 public abstract class PutBackDestinationCardCommand extends GameCommand {
-
     private DestinationCard card;
 
-    public PutBackDestinationCardCommand(String userName, String password, int gameID, DestinationCard card) {
-        super("PutBackDestinationCard", userName, password, gameID);
+    public PutBackDestinationCardCommand(String playerName, int gameID, DestinationCard card) {
+        super("PutBackDestinationCard", playerName, gameID);
         this.card = card;
     }
 

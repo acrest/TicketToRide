@@ -9,8 +9,8 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
  */
 
 public class ClientDiscardTrainCardCommand extends DiscardTrainCardCommand {
-    public ClientDiscardTrainCardCommand(String userName, String password, int gameID, TrainCard card) {
-        super(userName, password, gameID, card);
+    public ClientDiscardTrainCardCommand(String playerName, int gameID, TrainCard card) {
+        super(playerName, gameID, card);
     }
 
     @Override

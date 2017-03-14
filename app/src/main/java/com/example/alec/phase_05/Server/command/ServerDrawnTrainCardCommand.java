@@ -9,8 +9,8 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
  */
 
 public class ServerDrawnTrainCardCommand extends DrawnTrainCardCommand {
-    public ServerDrawnTrainCardCommand(String playerName, int cardIndex, TrainCard card, TrainCard nextCard) {
-        super(playerName, cardIndex, card, nextCard);
+    public ServerDrawnTrainCardCommand(String playerName) {
+        super(playerName);
     }
 
     @Override

@@ -40,36 +40,17 @@ public class LogInActivity extends Activity implements ILogInListener {
         mRegisterConfirmEditText = (EditText) findViewById(R.id.register_confirm_edit);
 
         mLogInButton = (Button) findViewById(R.id.log_in_button);
-        mLogInButton.setOnClickListener(new View.OnClickListener()
-        {
+        mLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if(!mLogInUserNameEditText.getText().toString().isEmpty() && !mLogInPasswordEditText.getText().toString().isEmpty())
-                {
-                    if(isValidLogin())
-                    {
-                        if(presenter.logIn(mLogInUserNameEditText.getText().toString(), mLogInPasswordEditText.getText().toString()))
-                        {
-                            resetLogIn();
-                            Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
-                            startActivity(i);
-                        }
-                        else
-                        {
-                            resetLogIn();
-                            Toast.makeText(LogInActivity.this, "Failed to log in.", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                    else
-                    {
+            public void onClick(View v) {
+                if (!mLogInUserNameEditText.getText().toString().isEmpty() && !mLogInPasswordEditText.getText().toString().isEmpty()) {
+                    if (isValidLogin()) {
+                        presenter.logIn(mLogInUserNameEditText.getText().toString(), mLogInPasswordEditText.getText().toString());
+                    } else {
                         resetLogIn();
                         Toast.makeText(LogInActivity.this, "Only letters, numbers, * ^ _ allowed", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else
-                {
+                } else {
                     resetLogIn();
                     Toast.makeText(LogInActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
                 }
@@ -77,42 +58,19 @@ public class LogInActivity extends Activity implements ILogInListener {
         });
 
         mRegisterButton = (Button) findViewById(R.id.register_button);
-        mRegisterButton.setOnClickListener(new View.OnClickListener(){
+        mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if(!mRegisterUserNameEditText.getText().toString().isEmpty() && !mRegisterPasswordEditText.getText().toString().isEmpty() && !mRegisterConfirmEditText.getText().toString().isEmpty())
-                {
-                    if(isValidRegister())
-                    {
-                        if(mRegisterPasswordEditText.getText().toString().equals(mRegisterConfirmEditText.getText().toString()))
-                        {
-                            if(presenter.register(mRegisterUserNameEditText.getText().toString(), mRegisterPasswordEditText.getText().toString()))
-                            {
-                                resetRegister();
-                                Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
-                                startActivity(i);
-                            }
-                            else
-                            {
-                                resetRegister();
-                                Toast.makeText(LogInActivity.this, "Failed to register", Toast.LENGTH_SHORT).show();
-                            }
+            public void onClick(View v) {
+                if (!mRegisterUserNameEditText.getText().toString().isEmpty() && !mRegisterPasswordEditText.getText().toString().isEmpty() && !mRegisterConfirmEditText.getText().toString().isEmpty()) {
+                    if (isValidRegister()) {
+                        if (mRegisterPasswordEditText.getText().toString().equals(mRegisterConfirmEditText.getText().toString())) {
+                            presenter.register(mRegisterUserNameEditText.getText().toString(), mRegisterPasswordEditText.getText().toString());
                         }
-                        else
-                        {
-                            Toast.makeText(LogInActivity.this, "Confirmed password did not match.", Toast.LENGTH_SHORT).show();
-                            resetRegister();
-                        }
-                    }
-                    else
-                    {
+                    } else {
                         resetRegister();
                         Toast.makeText(LogInActivity.this, "Only letters, numbers, * ^ _ allowed", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else
-                {
+                } else {
                     Toast.makeText(LogInActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
                     resetRegister();
                 }
@@ -120,34 +78,29 @@ public class LogInActivity extends Activity implements ILogInListener {
         });
     }
 
-    private boolean isValidLogin()
-    {
-        if(!isValidField(mLogInUserNameEditText.getText().toString())) return false;
-        if(!isValidField(mLogInPasswordEditText.getText().toString())) return false;
+    private boolean isValidLogin() {
+        if (!isValidField(mLogInUserNameEditText.getText().toString())) return false;
+        if (!isValidField(mLogInPasswordEditText.getText().toString())) return false;
 
         return true;
     }
 
-    private boolean isValidRegister()
-    {
-        if(!isValidField(mRegisterUserNameEditText.getText().toString())) return false;
-        if(!isValidField(mRegisterPasswordEditText.getText().toString())) return false;
-        if(!isValidField(mRegisterConfirmEditText.getText().toString())) return false;
+    private boolean isValidRegister() {
+        if (!isValidField(mRegisterUserNameEditText.getText().toString())) return false;
+        if (!isValidField(mRegisterPasswordEditText.getText().toString())) return false;
+        if (!isValidField(mRegisterConfirmEditText.getText().toString())) return false;
 
         return true;
     }
 
-    private boolean isValidField(String field)
-    {
-        for(int i = 0; i < field.length(); i++)
-        {
-            if(!Character.isLetter(field.charAt(i)))
-            {
+    private boolean isValidField(String field) {
+        for (int i = 0; i < field.length(); i++) {
+            if (!Character.isLetter(field.charAt(i))) {
                 char c = field.charAt(i);
 
-                if(!Character.isDigit(field.charAt(i)))
-                {
-                    if(field.charAt(i) != '^' && field.charAt(i) != '*' && field.charAt(i) != '_') return false;
+                if (!Character.isDigit(field.charAt(i))) {
+                    if (field.charAt(i) != '^' && field.charAt(i) != '*' && field.charAt(i) != '_')
+                        return false;
                 }
             }
         }
@@ -155,16 +108,38 @@ public class LogInActivity extends Activity implements ILogInListener {
         return true;
     }
 
-    private void resetLogIn()
-    {
+    private void resetLogIn() {
         mLogInUserNameEditText.setText("");
         mLogInPasswordEditText.setText("");
     }
 
-    private void resetRegister()
-    {
+    private void resetRegister() {
         mRegisterUserNameEditText.setText("");
         mRegisterPasswordEditText.setText("");
         mRegisterConfirmEditText.setText("");
+    }
+
+    @Override
+    public void onLoginResults(boolean success) {
+        if (success) {
+            resetLogIn();
+            Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
+            startActivity(i);
+        } else {
+            resetLogIn();
+            Toast.makeText(LogInActivity.this, "Failed to log in.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRegisterResults(boolean success) {
+        if (success) {
+            resetRegister();
+            Intent i = new Intent(LogInActivity.this, GameStationActivity.class);
+            startActivity(i);
+        } else {
+            resetRegister();
+            Toast.makeText(LogInActivity.this, "Failed to register", Toast.LENGTH_SHORT).show();
+        }
     }
 }

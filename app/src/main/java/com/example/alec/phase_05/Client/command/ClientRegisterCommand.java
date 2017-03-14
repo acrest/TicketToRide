@@ -6,15 +6,13 @@ import com.example.alec.phase_05.Shared.command.*;
  * Holds data needed by the corresponding ServerRegisterCommand.
  * Created by samuel on 2/4/17.
  */
-public class ClientRegisterCommand extends AbstractRegisterCommand
-{
+public class ClientRegisterCommand extends RegisterCommand {
     /**
-     * @param userName username of client
+     * @param username username of client
      * @param password password of client
      */
-    public ClientRegisterCommand(String userName, String password)
-    {
-        super(userName, password);
+    public ClientRegisterCommand(String username, String password) {
+        super(username, password);
     }
 
     /**
@@ -24,8 +22,7 @@ public class ClientRegisterCommand extends AbstractRegisterCommand
      * @return null
      */
     @Override
-    public Result execute()
-    {
+    public Result execute() {
         return null;
     }
 }

@@ -1,6 +1,7 @@
-package com.example.alec.phase_05.Server.command;
+package com.example.alec.phase_05.Server.communication;
 
 import com.example.alec.phase_05.Shared.command.*;
+import com.example.alec.phase_05.Shared.communication.SerDes;
 import com.sun.net.httpserver.*;
 import java.io.*;
 import java.net.*;

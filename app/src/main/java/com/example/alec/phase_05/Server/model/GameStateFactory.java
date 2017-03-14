@@ -24,7 +24,7 @@ public final class GameStateFactory {
         GameMap map = game.getMap();
 
         for(int i = 0; i < players.length; ++i) {
-            players[i] = game.getPlayer(i);
+            players[i] = (Player) game.getPlayer(i);
         }
         for(int i = 0; i < visibleTrainCards.length; ++i) {
             visibleTrainCards[i] = game.getBank().getVisibleCard(i);

@@ -1,9 +1,8 @@
 package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
-import com.example.alec.phase_05.Client.Model.IClientGame;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.Game;
+import com.example.alec.phase_05.Shared.model.IServer;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.List;
@@ -60,29 +59,26 @@ public class Poller {
             @Override
             public void run() {
                 ClientModel model = ClientModel.getInstance();
-                Player currentPlayer = model.getCurrentPlayer();
                 switch (state) {
                     case 1:
 
-                        //updateGameChanges currently causes a crash
-                        //Facade.getInstance().updateGameChanges();
+                        Facade.getInstance().updateGameChanges();
 
                         break;
                     case 2:
 
-                        if(model.hasCurrentGame()) {
-                            GameDescription currentGameDescription = server.getGameDescription(currentPlayer.getName(),
-                                    currentPlayer.getPassword(), model.getGameID());
-                            if(currentGameDescription != null) {
+                        if (model.hasCurrentGame()) {
+                            GameDescription currentGameDescription = server.getGameDescription(model.getGameID());
+                            if (currentGameDescription != null) {
                                 ClientFacade.getInstance().setCurrentGameDescription(currentGameDescription);
                             }
                         }
-                        Facade.getInstance().updateGameStarted(); //right now this is the only way to catch the initial start game command
+                        Facade.getInstance().updateGameChanges(); //right now this is the only way to catch the initial start game command
 
                         break;
                     case 3:
 
-                        List<GameDescription> games = server.getGames(currentPlayer.getName(), currentPlayer.getPassword()).getGameDescriptions();
+                        List<GameDescription> games = server.getGames();
                         if(games != null) {
                             model.setGameList(games);
                         }

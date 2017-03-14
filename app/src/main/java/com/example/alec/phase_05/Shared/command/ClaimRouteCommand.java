@@ -8,14 +8,14 @@ import com.example.alec.phase_05.Shared.model.Route;
 
 public abstract class ClaimRouteCommand extends GameCommand {
 
-    private Route route;
+    private int routeId;
 
-    public ClaimRouteCommand(String userName, String password, int gameID, Route route) {
-        super("ClaimRoute", userName, password, gameID);
-        this.route = route;
+    public ClaimRouteCommand(String playerName, int gameID, int routeId) {
+        super("ClaimRoute", playerName, gameID);
+        this.routeId = routeId;
     }
 
-    public Route getRoute() {
-        return route;
+    public int getRouteId() {
+        return routeId;
     }
 }
