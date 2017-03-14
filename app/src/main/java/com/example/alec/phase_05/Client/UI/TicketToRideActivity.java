@@ -652,42 +652,34 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             switch (cards.get(i).getType()) {
                 case BOX:
                     boxCount++;
-                    boxCountView.setText(Integer.toString(boxCount));
                     break;
                 case PASSENGER:
                     passengerCount++;
-                    passengerCountView.setText(Integer.toString(passengerCount));
                     break;
                 case TANKER:
                     tankerCount++;
-                    tankerCountView.setText(Integer.toString(tankerCount));
                     break;
                 case REEFER:
                     reeferCount++;
-                    reeferCountView.setText(Integer.toString(reeferCount));
                     break;
                 case FREIGHT:
                     freightCount++;
-                    freightCountView.setText(Integer.toString(freightCount));
                     break;
                 case HOPPER:
                     hopperCount++;
-                    hopperCountView.setText(Integer.toString(hopperCount));
                     break;
                 case COAL:
                     coalCount++;
-                    coalCountView.setText(Integer.toString(coalCount));
                     break;
                 case CABOOSE:
                     cabooseCount++;
-                    caboosecountView.setText(Integer.toString(cabooseCount));
                     break;
                 case LOCOMOTIVE:
                     locomotiveCount++;
-                    locomotiveCountView.setText(Integer.toString(locomotiveCount));
                     break;
             }
         }
+        updateTrainCardTextViews();
     }
 
     @Override
@@ -1153,5 +1145,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 return Color.BLUE;
         }
         return -1;
+    }
+
+    private void updateTrainCardTextViews(){
+        boxCountView.setText(Integer.toString(boxCount));
+        passengerCountView.setText(Integer.toString(passengerCount));
+        tankerCountView.setText(Integer.toString(tankerCount));
+        reeferCountView.setText(Integer.toString(reeferCount));
+        freightCountView.setText(Integer.toString(freightCount));
+        hopperCountView.setText(Integer.toString(hopperCount));
+        coalCountView.setText(Integer.toString(coalCount));
+        caboosecountView.setText(Integer.toString(cabooseCount));
+        locomotiveCountView.setText(Integer.toString(locomotiveCount));
     }
 }
