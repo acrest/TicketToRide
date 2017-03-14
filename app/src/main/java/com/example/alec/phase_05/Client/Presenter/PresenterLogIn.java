@@ -20,17 +20,28 @@ public class PresenterLogIn extends Presenter implements IPresenterLogIn {
     }
 
     @Override
-    public boolean logIn(String username, String password) {
-        return Facade.getInstance().login(username, password);
+    public void logIn(String username, String password) {
+        Facade.getInstance().login(username, password);
     }
 
     @Override
-    public boolean register(String username, String password) {
-        return Facade.getInstance().registerUser(username, password);
+    public void register(String username, String password) {
+        Facade.getInstance().registerUser(username, password);
     }
 
     @Override
     public void update(UpdateIndicator u) {
-
+        if(u.needUpdate(ClientModel.REGISTER_SUCCESS)){
+            listener.onRegisterResults(true);
+        }
+        if(u.needUpdate(ClientModel.REGISTER_FAILURE)){
+            listener.onRegisterResults(false);
+        }
+        if(u.needUpdate(ClientModel.LOGIN_SUCCESS)){
+            listener.onLoginResults(true);
+        }
+        if(u.needUpdate(ClientModel.LOGIN_FAILURE)){
+            listener.onLoginResults(false);
+        }
     }
 }

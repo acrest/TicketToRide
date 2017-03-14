@@ -1,31 +1,29 @@
 package com.example.alec.phase_05.Server.command;
 
-import com.example.alec.phase_05.Server.ServerFacade;
-import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.*;
-import com.google.gson.reflect.TypeToken;
 
 /**
  * Created by samuel on 2/9/17.
  */
 
-public class ServerCreateGameCommand extends AbstractCreateGameCommand
-{
-    public ServerCreateGameCommand(String username, String password, String gameName, int numberOfPlayers, String hostColor)
-    {
-        super(username, password, gameName, numberOfPlayers, hostColor);
+public class ServerCreateGameCommand extends CreateGameCommand {
+    /**
+     * @param gameName        name of game to be created
+     * @param numberOfPlayers number of players in game to be created
+     * @param hostName
+     * @param hostColor
+     */
+    public ServerCreateGameCommand(String gameName, int numberOfPlayers, String hostName, String hostColor) {
+        super(gameName, numberOfPlayers, hostName, hostColor);
     }
 
     @Override
-    public Result execute()
-    {
-        ServerFacade sf = ServerFacade.get_instance();
-        Player hostPlayer = sf.getPlayerByName(getUserName());
-        GameState game = sf.createGame(hostPlayer, getNumberOfPlayers(), getGameName(), getHostColor()); //doesn't get past this point
+    public Result execute() {
         Result result = new ServerResult();
-        result.setResultObject(game);
+        result.setResultObject(ServerFacade.getInstance().createGame(getHostName(), getNumberOfPlayers(), getGameName(), getHostColor()));
         return result;
     }
 }

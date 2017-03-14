@@ -8,6 +8,7 @@ import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
 import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.CommandHolder;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
+import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
@@ -26,24 +27,6 @@ import java.util.List;
 public class Facade {
 
     private static Facade _instance;
-    private ServerProxy proxy = null;
-    private boolean set = false;
-    /**
-     * lets other methods know if the poller has already started.
-     */
-    public boolean pollerStarted = false;
-    /**
-     * gets the instance of the Singleton poller if there is on, if not creates one.
-     */
-    Poller poller = Poller.getInstance();
-
-
-    /**
-     * constructor that starts with a new Server Proxy
-     */
-    public Facade() {
-        proxy = new ServerProxy(null, null);
-    }
 
     /**
      * gets singleton instance of Facade.
@@ -56,6 +39,30 @@ public class Facade {
         return _instance;
     }
 
+    private ClientModel model;
+    private ClientFacade clientFacade;
+    private ServerProxy proxy;
+//    private boolean set = false;
+    /**
+     * lets other methods know if the poller has already started.
+     */
+//    public boolean pollerStarted = false;
+    /**
+     * gets the instance of the Singleton poller if there is on, if not creates one.
+     */
+    private Poller poller;
+
+
+    /**
+     * constructor that starts with a new Server Proxy
+     */
+    public Facade() {
+        proxy = new ServerProxy(null, null);
+        model = ClientModel.getInstance();
+        clientFacade = ClientFacade.getInstance();
+        poller = Poller.getInstance();
+    }
+
     /**
      * Uses the username and password to login if valid player through ServerProxy.
      * Also starts the poller.
@@ -63,36 +70,31 @@ public class Facade {
      * @param password the password of the player that is trying to login
      * @return true if the player was successfully logged in, if not returns false.
      */
-    public boolean login(final String username, final String password) {
+    public void login(final String username, final String password) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Player player = proxy.login(username, password);
-                if(setCurrentPlayer(player))
-                {
-                    poller.setListGamePolling();
-                    setSet(true);
-                }
+                clientFacade.login(username, proxy.login(username, password));
             }
         });
         thread.start();
-        try {
-            thread.join();
-            if(!pollerStarted) {
-                poller.start();
-            }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if(set == true)
-        {
-            setSet(false);
-            return true;
-        }
-
-        return false;
+//        try {
+//            thread.join();
+//            if(!pollerStarted) {
+//                poller.start();
+//            }
+//
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if(set == true)
+//        {
+//            setSet(false);
+//            return true;
+//        }
+//
+//        return false;
     }
 
     /**
@@ -102,37 +104,31 @@ public class Facade {
      * @param password the password of the player trying to register
      * @return true if registration was successful false if not.
      */
-    public boolean registerUser(final String username, final String password) {
+    public void registerUser(final String username, final String password) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Player player = proxy.registerUser(username, password);
-
-                if(setCurrentPlayer(player))
-                {
-                    poller.setListGamePolling();
-                    setSet(true);
-                }
+                clientFacade.register(username, proxy.registerUser(username, password));
             }
         });
         thread.start();
-        try {
-            thread.join();
-            if(!pollerStarted) {
-                poller.start();
-            }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if(set == true)
-        {
-            setSet(false);
-            return true;
-        }
-
-        return false;
+//        try {
+//            thread.join();
+//            if(!pollerStarted) {
+//                poller.start();
+//            }
+//
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if(set == true)
+//        {
+//            setSet(false);
+//            return true;
+//        }
+//
+//        return false;
     }
 
     /**
@@ -151,18 +147,16 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Player player = ClientModel.getInstance().getCurrentPlayer();
-                GameState newGame = proxy.createGame(player, numOfPlayers, gameName, hostColor);
-                ClientFacade.getInstance().createGame(newGame);
+                clientFacade.createGame(proxy.createGame(model.getCurrentPlayerName(), numOfPlayers, gameName, hostColor));
             }
         });
         thread.start();
-        try {
-            thread.join();
-            poller.setPlayerWatingPolling();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//            poller.setPlayerWatingPolling();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -178,18 +172,16 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Player player = ClientModel.getInstance().getCurrentPlayer();
-                GameState joinedGame = proxy.joinGame(player, gameID, color);
-                ClientFacade.getInstance().joinGame(joinedGame);
+                clientFacade.joinGame(proxy.joinGame(model.getCurrentPlayerName(), gameID, color));
             }
         });
         thread.start();
-        try {
-            thread.join();
-            poller.setPlayerWatingPolling();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//            poller.setPlayerWatingPolling();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -200,32 +192,30 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                GameDescriptionHolder holder = proxy.getGames(player.getName(), player.getPassword());
-                ClientFacade.getInstance().updateGameList(holder.getGameDescriptions());
+                clientFacade.updateGameList(proxy.getGames());
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void startGame() {
-        Log.d("Facade", "game started");
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                proxy.startGame();
+                proxy.startGame(model.getGameID());
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -239,15 +229,15 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Game game = proxy.getGame(player.getName(), player.getPassword(), gameID);
+                Game game = proxy.getGame(gameID);
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
 //    public void removeGame(final int gameID){
@@ -274,141 +264,129 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                ClientModel model = ClientModel.getInstance();
                 if(model.hasCurrentGame()) {
-                    ClientFacade facade = ClientFacade.getInstance();
-                    Player player = model.getCurrentPlayer();
-                    CommandHolder commands = proxy.getGameCommands(player, model.getGameID());
-                    facade.executeCommands(commands.getCommands());
+                    ICommand command;
+                    while((command = proxy.getNextCommand(model.getCurrentPlayerName(), model.getGameID())) != null) {
+                        clientFacade.executeCommand(command);
+                    }
                 }
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void drawDestinationCard() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                ClientModel model = ClientModel.getInstance();
                 if(model.hasCurrentGame()) {
-                    ClientFacade facade = ClientFacade.getInstance();
-                    DestinationCard card = proxy.drawDestinationCard();
-                    facade.addDestinationCard(card);
+                    clientFacade.addDestinationCard(proxy.drawDestinationCard(model.getCurrentPlayerName(), model.getGameID()));
                 }
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void drawTrainCard() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                ClientModel model = ClientModel.getInstance();
                 if(model.hasCurrentGame()) {
-                    ClientFacade facade = ClientFacade.getInstance();
-                    TrainCard card = proxy.drawTrainCard();
-                    facade.addTrainCard(card);
+                    clientFacade.addTrainCard(proxy.drawTrainCard(model.getCurrentPlayerName(), model.getGameID()));
                 }
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void pickTrainCard(final int index) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                ClientModel model = ClientModel.getInstance();
                 if(model.hasCurrentGame()) {
-                    ClientFacade facade = ClientFacade.getInstance();
-                    TrainCard card = proxy.pickTrainCard(index);
-                    facade.addTrainCard(card);
+                    clientFacade.addTrainCard(proxy.pickTrainCard(model.getCurrentPlayerName(), model.getGameID(), index));
                 }
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void discardTrainCard(final TrainCard card) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                ClientModel model = ClientModel.getInstance();
                 if(model.hasCurrentGame()) {
-                    proxy.discardTrainCard(card);
+                    proxy.discardTrainCard(model.getCurrentPlayerName(), model.getGameID(), card);
                 }
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void putBackDestinationCard(final DestinationCard card) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                ClientModel model = ClientModel.getInstance();
                 if(model.hasCurrentGame()) {
-                    proxy.putDestinationCardBack(card);
+                    proxy.putBackDestinationCard(model.getCurrentPlayerName(), model.getGameID(), card);
                 }
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     //temporary method
-    public void updateGameStarted() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ClientModel model = ClientModel.getInstance();
-                if(model.hasCurrentGame()) {
-                    ClientGameStartedCommand command = proxy.getGameStartedCommand();
-                    if(command == null || command.getGameState() == null) return;
-                    List<BaseCommand> commands = new ArrayList<>();
-                    commands.add(command);
-                    ClientFacade.getInstance().executeCommands(commands);
-                }
-            }
-        });
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void updateGameStarted() {
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                ClientModel model = ClientModel.getInstance();
+//                if(model.hasCurrentGame()) {
+//                    ClientGameStartedCommand command = proxy.getGameStartedCommand();
+//                    if(command == null || command.getGameState() == null) return;
+//                    List<BaseCommand> commands = new ArrayList<>();
+//                    commands.add(command);
+//                    ClientFacade.getInstance().executeCommands(commands);
+//                }
+//            }
+//        });
+//        thread.start();
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Sets the player as the current player
@@ -416,49 +394,49 @@ public class Facade {
      * @return true if the setCurrentPlayer was successful
      * or false otherwise.
      */
-    private boolean setCurrentPlayer(Player player)
-    {
-        if(player != null)
-        {
-            ClientFacade.getInstance().setCurrentPlayer(player);
-            return true;
-        }
+//    private boolean setCurrentPlayer(Player player)
+//    {
+//        if(player != null)
+//        {
+//            ClientFacade.getInstance().setCurrentPlayer(player);
+//            return true;
+//        }
+//
+//        return false;
+//    }
 
-        return false;
-    }
+//    private Player getCurrentPlayer(){
+//        return ClientModel.getInstance().getCurrentPlayer();
+//    }
 
-    private Player getCurrentPlayer(){
-        return ClientModel.getInstance().getCurrentPlayer();
-    }
-
-    private int getCurrentGame(){
-        return ClientModel.getInstance().getGameID();
-    }
+//    private int getCurrentGame(){
+//        return ClientModel.getInstance().getGameID();
+//    }
 
     /**
      * sets the private variable 'set' to either true or false
      * @param switchTo the boolean to set the variable 'set'
      */
-    private void setSet(boolean switchTo)
-    {
-        this.set = switchTo;
-    }
+//    private void setSet(boolean switchTo)
+//    {
+//        this.set = switchTo;
+//    }
 
-    private void sendTrainCardChoice(TrainCard trainCard){
-
-    }
-    private void claimRoute(Route route){
-        proxy.claimRoute(this.getCurrentPlayer().getName(),this.getCurrentGame(),route);
-    }
-    private void putDestinationCardBack(DestinationCard dCard){
-        proxy.putDestinationCardBack(dCard);
-
-    }
-    private void assignDestinationCard(DestinationCard dcard){
-
-    }
-    private void endPlayerTurn(){
-
-    }
+//    private void sendTrainCardChoice(TrainCard trainCard){
+//
+//    }
+//    private void claimRoute(Route route){
+//        proxy.claimRoute(this.getCurrentPlayer().getName(),this.getCurrentGame(),route);
+//    }
+//    private void putDestinationCardBack(DestinationCard dCard){
+//        proxy.putDestinationCardBack(dCard);
+//
+//    }
+//    private void assignDestinationCard(DestinationCard dcard){
+//
+//    }
+//    private void endPlayerTurn(){
+//
+//    }
 
 }

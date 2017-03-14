@@ -5,7 +5,7 @@ package com.example.alec.phase_05.Shared.command;
  */
 
 public abstract class DrawDestinationCardCommand extends GameCommand {
-    public DrawDestinationCardCommand(String userName, String password, int gameID) {
-        super("DrawDestinationCard", userName, password, gameID);
+    public DrawDestinationCardCommand(String playerName, int gameID) {
+        super("DrawDestinationCard", playerName, gameID);
     }
 }

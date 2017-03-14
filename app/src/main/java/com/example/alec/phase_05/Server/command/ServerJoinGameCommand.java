@@ -1,30 +1,22 @@
 package com.example.alec.phase_05.Server.command;
 
-import com.example.alec.phase_05.Server.ServerFacade;
-import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.GameState;
-import com.example.alec.phase_05.Shared.model.Player;
-import com.example.alec.phase_05.Shared.command.AbstractJoinGameCommand;
+import com.example.alec.phase_05.Server.model.ServerFacade;
+import com.example.alec.phase_05.Shared.command.JoinGameCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 
 /**
  * Created by samuel on 2/9/17.
  */
 
-public class ServerJoinGameCommand  extends AbstractJoinGameCommand {
-
-    public ServerJoinGameCommand(String username, String password, int gameID, String color) {
-        super(username, password, gameID, color);
+public class ServerJoinGameCommand  extends JoinGameCommand {
+    public ServerJoinGameCommand(String playerName, int gameID, String color) {
+        super(playerName, gameID, color);
     }
 
     @Override
     public Result execute() {
-        ServerFacade sf = ServerFacade.get_instance();
-        Player player = sf.getPlayerByName(getUserName());
-        GameState game = sf.joinGame(player, getGameID(), getColor());
-        //String gameName = sf.joinGame(player, getGameID(), getColor());
         Result result = new ServerResult();
-        result.setResultObject(game);
+        result.setResultObject(ServerFacade.getInstance().joinGame(getPlayerName(), getGameId(), getColor()));
         return result;
     }
 }

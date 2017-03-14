@@ -5,8 +5,7 @@ package com.example.alec.phase_05.Shared.command;
  */
 
 public abstract class GetCommandListCommand extends GameCommand {
-
-    public GetCommandListCommand(String userName, String password, int gameID) {
-        super("GetCommandList", userName, password, gameID);
+    public GetCommandListCommand(String playerName, int gameID) {
+        super("GetCommandList", playerName, gameID);
     }
 }

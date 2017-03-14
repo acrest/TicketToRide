@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:textColor="#FFF"
+        android:id="@+id/player_stat_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1666"
+        android:text="Name"
+        android:textAlignment="center" />
+
+    <TextView
+        android:textColor="#FFF"
+        android:id="@+id/player_stat_points"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1666"
+        android:text="10"
+        android:textAlignment="center" />
+
+    <TextView
+        android:textColor="#FFF"
+        android:id="@+id/player_stat_train_count"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1666"
+        android:text="5"
+        android:textAlignment="center" />
+
+    <TextView
+        android:textColor="#FFF"
+        android:id="@+id/player_stat_train_cards"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1666"
+        android:text="2"
+        android:textAlignment="center" />
+
+    <TextView
+        android:textColor="#FFF"
+        android:id="@+id/player_stat_destination_cards"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1666"
+        android:text="16"
+        android:textAlignment="center" />
+
+</LinearLayout>

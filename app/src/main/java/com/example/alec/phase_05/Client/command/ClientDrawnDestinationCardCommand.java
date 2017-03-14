@@ -10,14 +10,13 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
  */
 
 public class ClientDrawnDestinationCardCommand extends DrawnDestinationCardCommand {
-    public ClientDrawnDestinationCardCommand(String playerName, DestinationCard card) {
-        super(playerName, card);
+    public ClientDrawnDestinationCardCommand(String playerName) {
+        super(playerName);
     }
 
     @Override
     public Result execute() {
-        ClientFacade facade = ClientFacade.getInstance();
-        facade.drawDestinationCard(getPlayerName(), getCard());
+        ClientFacade.getInstance().drawDestinationCard(getPlayerName());
         return null;
     }
 }

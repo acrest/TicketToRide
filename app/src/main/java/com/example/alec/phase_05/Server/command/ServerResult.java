@@ -1,13 +1,13 @@
 package com.example.alec.phase_05.Server.command;
 
 import com.example.alec.phase_05.Shared.command.*;
+import com.example.alec.phase_05.Shared.communication.SerDes;
 
 /**
  * Created by samuel on 2/9/17.
  */
 
-public class ServerResult extends Result
-{
+public class ServerResult extends Result {
     //this assumes that the server commands are in the same package as this CommandHandler
     public static final String SERVER_COMMAND_PREFIX = ServerResult.class.getPackage().getName() + ".Server";
     public static final String SERVER_COMMAND_SUFFIX = "Command";
@@ -20,8 +20,7 @@ public class ServerResult extends Result
      * @return deserialized command
      */
     @Override
-    public ICommand toCommand()
-    {
+    public ICommand toCommand() {
         return SerDes.deserializeCommand(getRawSerializedResult(), SERVER_COMMAND_PREFIX, SERVER_COMMAND_SUFFIX);
     }
 }

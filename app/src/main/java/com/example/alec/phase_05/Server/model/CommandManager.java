@@ -1,27 +1,15 @@
-package com.example.alec.phase_05.Server;
+package com.example.alec.phase_05.Server.model;
 
-import android.util.Log;
-
-import com.example.alec.phase_05.Server.command.ServerDrawnDestinationCardCommand;
 import com.example.alec.phase_05.Server.command.ServerGameStartedCommand;
 import com.example.alec.phase_05.Server.command.ServerStartGameCommand;
-import com.example.alec.phase_05.Server.model.GameStateFactory;
-import com.example.alec.phase_05.Server.model.IServerGame;
 import com.example.alec.phase_05.Shared.command.BaseCommand;
-import com.example.alec.phase_05.Shared.command.DrawDestinationCardCommand;
-import com.example.alec.phase_05.Shared.command.DrawTrainCardCommand;
-import com.example.alec.phase_05.Shared.command.DrawnDestinationCardCommand;
-import com.example.alec.phase_05.Shared.command.DrawnTrainCardCommand;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
-import com.example.alec.phase_05.Shared.command.StartGameCommand;
 import com.example.alec.phase_05.Shared.model.GameState;
-import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.TreeMap;
 
 /**
@@ -43,13 +31,25 @@ public class CommandManager {
         this.game = game;
     }
 
-    public void addCommand(GameCommand command){
+    public void addCommand(GameCommand command) {
         commands.add(command);
     }
 
-    public List<BaseCommand> recentCommands(String playerName){
+    public ICommand recentCommand(String playerName) {
+        int commandIndex = getCommandIndex(playerName);
+        ICommand command;
+        if(commandIndex == -1) {
+            command = new ServerGameStartedCommand(GameStateFactory.gameToGameState(game));
+        } else {
+            command = commandIndex < commands.size() ? createCorrospondingCommand(commands.get(commandIndex)) : null;
+        }
+        setCommandIndex(playerName, commandIndex + 1);
+        return command;
+    }
+
+//    public List<BaseCommand> recentCommands(String playerName) {
 //        System.out.println("called recentCommands with " + player.getName());
-        List<BaseCommand> recCommands = new ArrayList<>();
+//        List<BaseCommand> recCommands = new ArrayList<>();
 //        int commandIndex = getCommandIndex(player);
 //        System.out.println("command index for player is " + commandIndex);
 //        System.out.println("command size is " + commands.size());
@@ -73,41 +73,40 @@ public class CommandManager {
 //        playerIndex.put(player.getName(), commands.size());
 //
 
-        System.out.println("recentCommands called");
-        if(hasServerStartGame()) { //temporary code
-            GameState state = GameStateFactory.gameToGameState(game);
-            if(state == null) {
-                System.out.println("got null game state");
-                System.out.println("game = " + game);
-            } else {
-                System.out.println("game state not null");
-            }
-            recCommands.add(new ServerGameStartedCommand(state));
-        }
-        return recCommands;
-    }
+//        System.out.println("recentCommands called");
+//        if (hasServerStartGame()) { //temporary code
+//            GameState state = GameStateFactory.gameToGameState(game);
+//            if (state == null) {
+//                System.out.println("got null game state");
+//                System.out.println("game = " + game);
+//            } else {
+//                System.out.println("game state not null");
+//            }
+//            recCommands.add(new ServerGameStartedCommand(state));
+//        }
+//        return recCommands;
+//    }
 
-    private boolean hasServerStartGame() {
-        for(GameCommand command : commands) {
-            if(command instanceof ServerStartGameCommand) return true;
-        }
-        return false;
-    }
+//    private boolean hasServerStartGame() {
+//        for (GameCommand command : commands) {
+//            if (command instanceof ServerStartGameCommand) return true;
+//        }
+//        return false;
+//    }
 
-    private ICommand createNeededCommand(GameCommand command) {
-        if(command instanceof ServerStartGameCommand) {
-            return new ServerGameStartedCommand(GameStateFactory.gameToGameState(game));
-        }
-
+    private ICommand createCorrospondingCommand(GameCommand command) {
         return null;
     }
 
-    private int getCommandIndex(String playerName){
-        if(!playerIndex.containsKey(playerName))
-        {
-            playerIndex.put(playerName, 0);
+    private int getCommandIndex(String playerName) {
+        if (!playerIndex.containsKey(playerName)) {
+            playerIndex.put(playerName, -1);
         }
 
         return playerIndex.get(playerName);
+    }
+
+    private void setCommandIndex(String playerName, int index) {
+        playerIndex.put(playerName, index);
     }
 }

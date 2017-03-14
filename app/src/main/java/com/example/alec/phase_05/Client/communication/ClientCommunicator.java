@@ -1,8 +1,9 @@
-package com.example.alec.phase_05.Client.command;
+package com.example.alec.phase_05.Client.communication;
 
-import android.os.AsyncTask;
-
+import com.example.alec.phase_05.Client.command.ClientResult;
 import com.example.alec.phase_05.Shared.command.*;
+import com.example.alec.phase_05.Shared.communication.SerDes;
+
 import java.net.*;
 import java.io.*;
 
@@ -81,7 +82,7 @@ public class ClientCommunicator
             //serverIP = "192.168.1.118";
             //serverIP2 = "192.168.1.111";
             //serverIP = "10.24.65.234";
-            serverIP = "10.24.68.46";
+            serverIP = "192.168.122.1";
             URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
 //            System.out.println(url.toString());
 

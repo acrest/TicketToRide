@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Shared.command;
 
+import com.example.alec.phase_05.Shared.communication.SerDes;
+
 /**
  * Contains data returned from a command's execute() method.
  * The data can be primitive data types, commands, and other classes.

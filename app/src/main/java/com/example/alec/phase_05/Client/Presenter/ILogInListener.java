@@ -5,4 +5,6 @@ package com.example.alec.phase_05.Client.Presenter;
  */
 
 public interface ILogInListener {
+    void onLoginResults(boolean success);
+    void onRegisterResults(boolean success);
 }

@@ -7,33 +7,14 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
  */
 
 public abstract class DrawnTrainCardCommand extends BaseCommand {
-
     private String playerName;
-    private int cardIndex;
-    private TrainCard card;
-    private TrainCard nextCard;
 
-    public DrawnTrainCardCommand(String playerName, int cardIndex, TrainCard card, TrainCard nextCard) {
+    public DrawnTrainCardCommand(String playerName) {
         super("DrawnTrainCard");
         this.playerName = playerName;
-        this.cardIndex = cardIndex;
-        this.card = card;
-        this.nextCard = nextCard;
     }
 
     public String getPlayerName() {
         return playerName;
-    }
-
-    public int getCardIndex() {
-        return cardIndex;
-    }
-
-    public TrainCard getCard() {
-        return card;
-    }
-
-    public TrainCard getNextCard() {
-        return nextCard;
     }
 }

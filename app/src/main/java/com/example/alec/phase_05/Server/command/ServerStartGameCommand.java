@@ -1,6 +1,6 @@
 package com.example.alec.phase_05.Server.command;
 
-import com.example.alec.phase_05.Server.ServerFacade;
+import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.command.StartGameCommand;
 
@@ -9,14 +9,14 @@ import com.example.alec.phase_05.Shared.command.StartGameCommand;
  */
 
 public class ServerStartGameCommand extends StartGameCommand {
-    public ServerStartGameCommand(String userName, String password, int gameID) {
-        super(userName, password, gameID);
+    public ServerStartGameCommand(int gameId) {
+        super(gameId);
     }
 
     @Override
     public Result execute() {
         Result result = new ServerResult();
-        result.setResultObject(ServerFacade.get_instance().startGame(getGameID()));
-        return new ServerResult();
+        result.setResultObject(ServerFacade.getInstance().startGame(getGameId()));
+        return result;
     }
 }

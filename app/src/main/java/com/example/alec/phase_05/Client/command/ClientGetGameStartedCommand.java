@@ -9,8 +9,8 @@ import com.example.alec.phase_05.Shared.command.Result;
  */
 
 public class ClientGetGameStartedCommand extends GetGameStartedCommand {
-    public ClientGetGameStartedCommand(String userName, String password, int gameID) {
-        super(userName, password, gameID);
+    public ClientGetGameStartedCommand(String playerName, int gameID) {
+        super(playerName, gameID);
     }
 
     @Override

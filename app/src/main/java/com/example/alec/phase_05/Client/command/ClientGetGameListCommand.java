@@ -1,20 +1,14 @@
 package com.example.alec.phase_05.Client.command;
 
-import com.example.alec.phase_05.Shared.command.AbstractGetGameListCommand;
+import com.example.alec.phase_05.Shared.command.GetGameListCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 
 /**
  * Created by clarkpathakis on 2/8/17.
  */
 
-public class ClientGetGameListCommand extends AbstractGetGameListCommand {
-    /**
-     * @param userName    username of client
-     * @param password    password of client
-     */
-    public ClientGetGameListCommand(String userName, String password) {
-        super(userName, password);
-    }
+public class ClientGetGameListCommand extends GetGameListCommand {
+    public ClientGetGameListCommand() {}
 
     /**
      * Does nothing.

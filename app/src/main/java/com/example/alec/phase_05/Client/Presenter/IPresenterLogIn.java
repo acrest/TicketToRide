@@ -7,9 +7,6 @@ import java.util.Observer;
  */
 
 public interface IPresenterLogIn extends IPresenter {
-
-    boolean logIn(String username, String password);
-
-    boolean register(String username, String password);
-
+    void logIn(String username, String password);
+    void register(String username, String password);
 }

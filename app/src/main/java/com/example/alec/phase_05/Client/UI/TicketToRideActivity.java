@@ -6,11 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
-import android.media.Image;
-import android.provider.ContactsContract;
-import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -18,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -49,6 +44,7 @@ import com.example.alec.phase_05.Shared.model.City;
 import com.example.alec.phase_05.Shared.model.Deck;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Client.Model.PlayerStat;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
@@ -60,7 +56,6 @@ import java.util.List;
 //public class TicketToRideActivity extends Activity {
 
 
-
 public class TicketToRideActivity extends TabActivity implements ITicketToRideListener {
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
@@ -69,9 +64,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private RecyclerView mChatRecView;
     private RecyclerView mRoutesRecView;
     private RecyclerView mGameHistoryRecView;
+    private RecyclerView mPlayerStatsView;
     private ChatAdapter mChatRecyclerAdapter;
     private RouteAdapter mRoutesRecyclerAdapter;
     private GameHistoryAdapter mGameHistoryRecyclerAdapter;
+    private PlayerStatAdapter mPlayerStatAdapter;
     private Button mCreateChatButton;
     private EditText mEditTextChat;
     private TextView boxCountView;
@@ -105,25 +102,37 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mChatRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
         mRoutesRecView = (RecyclerView) findViewById(R.id.routes_list);
         mGameHistoryRecView = (RecyclerView) findViewById(R.id.games_history_list);
+        mPlayerStatsView = (RecyclerView) findViewById(R.id.player_stats);
+
         mChatRecView.setLayoutManager(new LinearLayoutManager(this));
         mRoutesRecView.setLayoutManager(new LinearLayoutManager(this));
-        mGameHistoryRecView .setLayoutManager(new LinearLayoutManager(this));
+        mGameHistoryRecView.setLayoutManager(new LinearLayoutManager(this));
+        mPlayerStatsView.setLayoutManager(new LinearLayoutManager(this));
 
         mChatRecyclerAdapter = new ChatAdapter(new ArrayList<Chat>(), this);
         mRoutesRecyclerAdapter = new RouteAdapter(Derpness.getInstance().generateFakeChat(), this);
         mGameHistoryRecyclerAdapter = new GameHistoryAdapter(new ArrayList<Chat>(), this);
+//        List<PlayerStat> tmp=new ArrayList<>();
+//        tmp.add(new PlayerStat(new Player("test1")));
+//        tmp.add(new PlayerStat(new Player("test2")));
+//        tmp.add(new PlayerStat(new Player("test3")));
+//        tmp.add(new PlayerStat(new Player("test4")));
+//        tmp.add(new PlayerStat(new Player("test5")));
+//        tmp.add(new PlayerStat(new Player("test6")));
+//        tmp.add(new PlayerStat(new Player("test7")));
+//        mPlayerStatAdapter = new PlayerStatAdapter(tmp, this);
+        mPlayerStatAdapter = new PlayerStatAdapter(presenter.getPlayerStats(), this);
         mChatRecView.setAdapter(mChatRecyclerAdapter);
         mRoutesRecView.setAdapter(mRoutesRecyclerAdapter);
         mGameHistoryRecView.setAdapter(mGameHistoryRecyclerAdapter);
+        mPlayerStatsView.setAdapter(mPlayerStatAdapter);
 
         mCreateChatButton = (Button) findViewById(R.id.create_chat_button);
         mEditTextChat = (EditText) findViewById(R.id.EditTextChat);
-        mCreateChatButton.setOnClickListener(new View.OnClickListener()
-        {
+        mCreateChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if(mEditTextChat.getText() != null){
+            public void onClick(View v) {
+                if (mEditTextChat.getText() != null) {
                     Chat chat = new Chat(ClientModel.getInstance().getCurrentPlayer().getName(), ClientModel.getInstance().getGameID(), mEditTextChat.getText().toString(), ClientModel.getInstance().getCurrentPlayer().getColor());
                     mEditTextChat.setText("");
                     ClientModel.getInstance().addChat(chat);
@@ -154,10 +163,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         mTabHost.setCurrentTab(0);
 
-        setTrainCards();
-        setPlayersStats();
-        setRoutes();
-
+//        setTrainCards();
+//        setPlayersStats();
+//        setRoutes();
 
 
         final Deck deck = new Deck();
@@ -234,14 +242,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         });
 
 
-
-        presenter = new PresenterTicketToRide(this);
-        presenter = new PresenterTicketToRide(this);
-
-
-
         //*************************************************
-        final ImageView imageView = (ImageView)findViewById(R.id.map);
+        final ImageView imageView = (ImageView) findViewById(R.id.map);
 /*
         imageView.setOnTouchListener(new ImageView.OnTouchListener() {
             @Override
@@ -275,19 +277,20 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         });
 */
 
+        presenter.updateAll();
     }
 
-    public void drawRouteLine(City city1, City city2, Player player){
+    public void drawRouteLine(City city1, City city2, String color) {
         ImageView imageView = new ImageView(this);
-        imageView = (ImageView)findViewById(R.id.map);
-        if(imageView.getWidth()>0&&imageView.getHeight()>0) {
+        imageView = (ImageView) findViewById(R.id.map);
+        if (imageView.getWidth() > 0 && imageView.getHeight() > 0) {
             Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(bmp);
             imageView.draw(c);
 
             Paint p = new Paint();
             p.setStrokeWidth(8);
-            switch (player.getColor().toLowerCase()) {
+            switch (color.toLowerCase()) {
                 case "black":
                     p.setColor(Color.BLACK);
                     break;
@@ -317,31 +320,31 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     //**************************************
 
 
-
-    public void checkIfRouteSelected(){
+    public void checkIfRouteSelected() {
         //do some things
     }
-/*
-    public Float[] convertToImageCoord(float deviceWidth, float deviceHeight, float imageWidth,
-                                       float imageHeight, float xInput, float yInput){
-        Float[] coordinates = new Float[2];
-        float x;
-        float y;
-        // System.out.println(" The x and y " + xInput + " " + yInput);
-        float conversionRate = deviceHeight/imageHeight;
-        // System.out.println("The device height and image height " + deviceHeight + " " + imageHeight);
-        //System.out.println("Conversion rate: " + conversionRate + "New Image Width: " + imageWidth * conversionRate);
-        float extraSpace = (deviceWidth - (imageWidth*conversionRate))/2;
-        //System.out.println("Extra space: " + extraSpace);
-        x = ((xInput- extraSpace)/conversionRate);
-        y = (yInput)/conversionRate;
-        //System.out.println("The converted points " + x + " " + y);
-        coordinates[0] = x;
-        coordinates[1] = y;
-        return coordinates;
-    }
-*/
-    public PointF convertToScreenCoordinates(float deviceWidth, float deviceHeight, float xInput, float yInput){
+
+    /*
+        public Float[] convertToImageCoord(float deviceWidth, float deviceHeight, float imageWidth,
+                                           float imageHeight, float xInput, float yInput){
+            Float[] coordinates = new Float[2];
+            float x;
+            float y;
+            // System.out.println(" The x and y " + xInput + " " + yInput);
+            float conversionRate = deviceHeight/imageHeight;
+            // System.out.println("The device height and image height " + deviceHeight + " " + imageHeight);
+            //System.out.println("Conversion rate: " + conversionRate + "New Image Width: " + imageWidth * conversionRate);
+            float extraSpace = (deviceWidth - (imageWidth*conversionRate))/2;
+            //System.out.println("Extra space: " + extraSpace);
+            x = ((xInput- extraSpace)/conversionRate);
+            y = (yInput)/conversionRate;
+            //System.out.println("The converted points " + x + " " + y);
+            coordinates[0] = x;
+            coordinates[1] = y;
+            return coordinates;
+        }
+    */
+    public PointF convertToScreenCoordinates(float deviceWidth, float deviceHeight, float xInput, float yInput) {
 
         float imageWidth = getResources().getDrawable(R.drawable.tickettoridemap).getMinimumWidth();
         float imageHeight = getResources().getDrawable(R.drawable.tickettoridemap).getMinimumHeight();
@@ -349,8 +352,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         PointF newPoint = new PointF();
         float x;
         float y;
-        float conversionRate = deviceHeight/imageHeight;
-        float extraSpace = (deviceWidth - (imageWidth*conversionRate))/2;
+        float conversionRate = deviceHeight / imageHeight;
+        float extraSpace = (deviceWidth - (imageWidth * conversionRate)) / 2;
         x = (xInput * conversionRate) + extraSpace;
         y = yInput * conversionRate;
         newPoint.x = x;
@@ -363,14 +366,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     // **************************************
 
 
-    public void setCard(ImageButton button, Deck deck){
-        TrainCard card =  deck.drawCard();
+    public void setCard(ImageButton button, Deck deck) {
+        TrainCard card = deck.drawCard();
         setImageButton(button, card.getType());
     }
 
 
-    public void setImageButton(ImageButton button, TrainType id){
-        switch (id){
+    public void setImageButton(ImageButton button, TrainType id) {
+        switch (id) {
             case HOPPER:
                 button.setImageResource(R.drawable.black);
                 break;
@@ -417,64 +420,64 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //        route_List.setText(builder.toString());
     }
 
-    private void setPlayersStats() {
+//    private void setPlayersStats() {
+//
+//        ArrayList<Player> playerList = presenter.getPlayers();
+//        ArrayList<String> playerInfo = new ArrayList<>();
+//        Player player_with_longest_route = new Player(null, null);
+//        Player currPlayer = presenter.getCurrPlayer();
+//
+//        System.out.println("WE ARE TESTING HERE");
+//        System.out.println(playerList.size());
+//            for (int i = 0; i < playerList.size(); i++) {
+//                Player temp_player = playerList.get(i);
+//               if (currPlayer.getName().equals(temp_player.getName())) {
+//
+//                   String temp = temp_player.getName() + "                  " + temp_player.getPointCount() + "                    "
+//                           + temp_player.getTrainCount() + "                      "  + "                    "
+//                            + "  " + temp_player.getColor();
+//                   playerInfo.add(temp);
+//
+//
+//               } else {
+//
+//                   String temp = temp_player.getName() + "                  " + temp_player.getPointCount() + "                    "
+//                           + temp_player.getTrainCount() + "                   " + temp_player.getTrainCards().size() + "                 "
+//                           + temp_player.getDestinationCards().size() + "  " + temp_player.getColor();
+//                   playerInfo.add(temp);
+//
+//               }
+//
+//                if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
+//                    player_with_longest_route = temp_player;
+//                }
+//
+//            }
+//
+//
+//        populatePlayerListView(playerInfo);
+//
+//        TextView longest_route_player = (TextView) findViewById(R.id.longest_route_text);
+//        String name = player_with_longest_route.getName();
+//        int longest_route_size = player_with_longest_route.getPointCount();
+//        longest_route_player.setText(name + " has the longest route of " + Integer.toString(longest_route_size));
+//
+//
+//    }
 
-        ArrayList<Player> playerList = presenter.getPlayers();
-        ArrayList<String> playerInfo = new ArrayList<String>();
-        Player player_with_longest_route = new Player(null, null);
-        Player currPlayer = presenter.getCurrPlayer();
 
-        System.out.println("WE ARE TESTING HERE");
-        System.out.println(playerList.size());
-            for (int i = 0; i < playerList.size(); i++) {
-                Player temp_player = playerList.get(i);
-               if (currPlayer.getName().equals(temp_player.getName())) {
-
-                   String temp = temp_player.getName() + "                  " + temp_player.getPointCount() + "                    "
-                           + temp_player.getTrainCount() + "                      "  + "                    "
-                            + "  " + temp_player.getColor();
-                   playerInfo.add(temp);
-
-
-               } else {
-
-                   String temp = temp_player.getName() + "                  " + temp_player.getPointCount() + "                    "
-                           + temp_player.getTrainCount() + "                   " + temp_player.getTrainCards().size() + "                 "
-                           + temp_player.getDestinationCards().size() + "  " + temp_player.getColor();
-                   playerInfo.add(temp);
-
-               }
-
-                if (player_with_longest_route.getPointCount() < temp_player.getPointCount()) {
-                    player_with_longest_route = temp_player;
-                }
-
-            }
-
-
-        populatePlayerListView(playerInfo);
-
-        TextView longest_route_player = (TextView) findViewById(R.id.longest_route_text);
-        String name = player_with_longest_route.getName();
-        int longest_route_size = player_with_longest_route.getPointCount();
-        longest_route_player.setText(name + " has the longest route of " + Integer.toString(longest_route_size));
-
-
-    }
-
-
-    private void populatePlayerListView(ArrayList<String> playerInfo) {
-        TextView playersStats = (TextView) findViewById(R.id.player_stats);
-
-        StringBuilder builder = new StringBuilder();
-
-        for (String a_player : playerInfo) {
-            builder.append(a_player + "\n");
-        }
-
-        playersStats.setText(builder.toString());
-
-    }
+//    private void populatePlayerListView(ArrayList<String> playerInfo) {
+//        TextView playersStats = (TextView) findViewById(R.id.player_stats);
+//
+//        StringBuilder builder = new StringBuilder();
+//
+//        for (String a_player : playerInfo) {
+//            builder.append(a_player + "\n");
+//        }
+//
+//        playersStats.setText(builder.toString());
+//
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -563,65 +566,65 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
     }
 
-    private void setTrainCards() {
-        TextView redCard = (TextView) findViewById(R.id.red_cards);
-        TextView orangeCard = (TextView) findViewById(R.id.orange_cards);
-        TextView yellowCard = (TextView) findViewById(R.id.yellow_cards);
-        TextView greenCard = (TextView) findViewById(R.id.green_cards);
-        TextView blueCard = (TextView) findViewById(R.id.blue_cards);
-        TextView purpleCard = (TextView) findViewById(R.id.purple_cards);
-        TextView whiteCard = (TextView) findViewById(R.id.white_cards);
-        TextView blackCard = (TextView) findViewById(R.id.black_cards);
-        TextView rainbowCard = (TextView) findViewById(R.id.rainbow_cards);
-
-        TextView playerInfoList = (TextView) findViewById(R.id.player_stats);
-
-        ArrayList<TrainCard> cardList = presenter.getTrainCards();
-        //ArrayList<TrainCard> cardList = ClientModel.getInstance().getCurrentPlayer().getTrainCards();
-        int red_coal = 0;
-        int orange_tanker = 0;
-        int yellow_boxcar = 0;
-        int green_caboose = 0;
-        int blue_passenger = 0;
-        int purple_freight = 0;
-        int white_reefer = 0;
-        int black_hopper = 0;
-        int rainbow_any = 0;
-        for (int i = 0; i < cardList.size(); i++) {
-            TrainType trainType = cardList.get(i).getType();
-            switch (trainType) {
-                case COAL: red_coal++;
-                    break;
-                case TANKER: orange_tanker++;
-                    break;
-                case BOX: yellow_boxcar++;
-                    break;
-                case CABOOSE: green_caboose++;
-                    break;
-                case PASSENGER: blue_passenger++;
-                    break;
-                case FREIGHT: purple_freight++;
-                    break;
-                case REEFER: white_reefer++;
-                    break;
-                case HOPPER: black_hopper++;
-                    break;
-                case LOCOMOTIVE: rainbow_any++;
-            }
-
-        }
-
-        redCard.setText(Integer.toString(red_coal));
-        orangeCard.setText(Integer.toString(orange_tanker));
-        yellowCard.setText(Integer.toString(yellow_boxcar));
-        greenCard.setText(Integer.toString(green_caboose));
-        blueCard.setText(Integer.toString(blue_passenger));
-        purpleCard.setText(Integer.toString(purple_freight));
-        whiteCard.setText(Integer.toString(white_reefer));
-        blackCard.setText(Integer.toString(black_hopper));
-        rainbowCard.setText(Integer.toString(rainbow_any));
-
-    }
+//    private void setTrainCards() {
+//        TextView redCard = (TextView) findViewById(R.id.red_cards);
+//        TextView orangeCard = (TextView) findViewById(R.id.orange_cards);
+//        TextView yellowCard = (TextView) findViewById(R.id.yellow_cards);
+//        TextView greenCard = (TextView) findViewById(R.id.green_cards);
+//        TextView blueCard = (TextView) findViewById(R.id.blue_cards);
+//        TextView purpleCard = (TextView) findViewById(R.id.purple_cards);
+//        TextView whiteCard = (TextView) findViewById(R.id.white_cards);
+//        TextView blackCard = (TextView) findViewById(R.id.black_cards);
+//        TextView rainbowCard = (TextView) findViewById(R.id.rainbow_cards);
+//
+//        TextView playerInfoList = (TextView) findViewById(R.id.player_stats);
+//
+//        ArrayList<TrainCard> cardList = presenter.getTrainCards();
+//        //ArrayList<TrainCard> cardList = ClientModel.getInstance().getCurrentPlayer().getTrainCards();
+//        int red_coal = 0;
+//        int orange_tanker = 0;
+//        int yellow_boxcar = 0;
+//        int green_caboose = 0;
+//        int blue_passenger = 0;
+//        int purple_freight = 0;
+//        int white_reefer = 0;
+//        int black_hopper = 0;
+//        int rainbow_any = 0;
+//        for (int i = 0; i < cardList.size(); i++) {
+//            TrainType trainType = cardList.get(i).getType();
+//            switch (trainType) {
+//                case COAL: red_coal++;
+//                    break;
+//                case TANKER: orange_tanker++;
+//                    break;
+//                case BOX: yellow_boxcar++;
+//                    break;
+//                case CABOOSE: green_caboose++;
+//                    break;
+//                case PASSENGER: blue_passenger++;
+//                    break;
+//                case FREIGHT: purple_freight++;
+//                    break;
+//                case REEFER: white_reefer++;
+//                    break;
+//                case HOPPER: black_hopper++;
+//                    break;
+//                case LOCOMOTIVE: rainbow_any++;
+//            }
+//
+//        }
+//
+//        redCard.setText(Integer.toString(red_coal));
+//        orangeCard.setText(Integer.toString(orange_tanker));
+//        yellowCard.setText(Integer.toString(yellow_boxcar));
+//        greenCard.setText(Integer.toString(green_caboose));
+//        blueCard.setText(Integer.toString(blue_passenger));
+//        purpleCard.setText(Integer.toString(purple_freight));
+//        whiteCard.setText(Integer.toString(white_reefer));
+//        blackCard.setText(Integer.toString(black_hopper));
+//        rainbowCard.setText(Integer.toString(rainbow_any));
+//
+//    }
 
 
     /*
@@ -630,24 +633,23 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             getMenuInflater().inflate(R.menu.menu_ticket_to_ride);
         }
     */
-    private void addDrawerItems() {
-        String[] osArray = { "I", "am", "a", "test", "wizard" };
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        mDrawerList.setAdapter(mAdapter);
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(TicketToRideActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void addDrawerItems() {
+//        String[] osArray = { "I", "am", "a", "test", "wizard" };
+//        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+//        mDrawerList.setAdapter(mAdapter);
+//        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(TicketToRideActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     @Override
     public void updateTrainCards(List<TrainCard> cards) {
-        Log.d("TicketToRideActivity", "updateTrainCards called");
         setCardCountsZero();
-        for(int i = 0; i < cards.size(); i++){
-            switch (cards.get(i).getType()){
+        for (int i = 0; i < cards.size(); i++) {
+            switch (cards.get(i).getType()) {
                 case BOX:
                     boxCount++;
                     boxCountView.setText(Integer.toString(boxCount));
@@ -690,62 +692,49 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateDestinationCards(List<DestinationCard> cards) {
-        Log.d("TicketToRideActivity", "updateDestinationCards called");
         mRoutesRecyclerAdapter.updateListData(cards);
-        setPlayersStats();
     }
 
     @Override
     public void updatePlayerTrainCards(String playerName, int count) {
-        Log.d("TicketToRideActivity", "updatePlayerTrainCards called");
-        setPlayersStats();
-
+        mPlayerStatAdapter.setPlayerTrainCards(playerName, count);
     }
 
     @Override
     public void updatePlayerDestinationCards(String playerName, int count) {
-        Log.d("TicketToRideActivity", "updatePlayerDestinationCards called");
-        setPlayersStats();
-
+        mPlayerStatAdapter.setPlayerDestinationCards(playerName, count);
     }
 
     @Override
     public void updateChats(List<Chat> chats) {
-        Log.d("TicketToRideActivity", "updateChats called");
         mChatRecyclerAdapter.updateListData(chats);
     }
 
     @Override
     public void updatePlayerPoints(String playerName, int points) {
-        Log.d("TicketToRideActivity", "updatePlayerPoints called");
-        setPlayersStats();
-
+        mPlayerStatAdapter.setPlayerPoints(playerName, points);
     }
 
     @Override
     public void updatePlayerTrainCount(String playerName, int count) {
-        Log.d("TicketToRideActivity", "updatePlayerTrainCount called");
-        setPlayersStats();
-
+        mPlayerStatAdapter.setPlayerTrainCount(playerName, count);
     }
 
     @Override
     public void updateFaceupTrainCards(List<TrainCard> cards) {
-        Log.d("TicketToRideActivity", "updateFaceupTrainCards called");
 
     }
 
     @Override
     public void updateMap(GameMap map) {
-        Log.d("TicketToRideActivity", "updateMap called");
-        for(int i = 1; i<=100;i++) {
+        for (int i = 1; i <= 100; i++) {
             if (map.getRoutes().get(i).getOwner() != null) {
-                drawRouteLine(map.getRoutes().get(i).getCity1(), map.getRoutes().get(i).getCity2(), map.getRoutes().get(i).getOwner());
+                drawRouteLine(map.getRoutes().get(i).getCity1(), map.getRoutes().get(i).getCity2(), map.getRoutes().get(i).getOwner().getColor());
             }
         }
     }
 
-    public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder>   {
+    public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         private static final int INVALID_INDEX = -1;
 
         private List<Chat> listData;
@@ -753,8 +742,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         private RecyclerView recyclerView;
         private int selectedIndex;
 
-        public ChatAdapter(List<Chat> listData, Context c)
-        {
+        public ChatAdapter(List<Chat> listData, Context c) {
             this.inflater = LayoutInflater.from(c);
             this.listData = listData;
             selectedIndex = INVALID_INDEX;
@@ -785,20 +773,20 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
             holder.message.setText(message.getMessage());
 
-            switch (message.getColor()){
-                case("blue"):
+            switch (message.getColor()) {
+                case ("blue"):
                     holder.message.setTextColor(Color.BLUE);
                     break;
-                case("red"):
+                case ("red"):
                     holder.message.setTextColor(Color.RED);
                     break;
-                case("yellow"):
+                case ("yellow"):
                     holder.message.setTextColor(Color.YELLOW);
                     break;
-                case("black"):
+                case ("black"):
                     holder.message.setTextColor(Color.BLACK);
                     break;
-                case("green"):
+                case ("green"):
                     holder.message.setTextColor(Color.GREEN);
                     break;
             }
@@ -810,43 +798,19 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
 
         public void updateListData(List<Chat> newListData) {
-            //remember the selected game's id
-            //int selectedGameID = getSelectedGameID();
-//            System.out.println("selected game id = " + selectedGameID);
-//            List<GameDescription> oldList = listData;
             listData = newListData;
-//            int minLength = Math.min(oldList.size(), newListData.size());
-//            for(int i = 0; i < minLength; ++i) {
-//                if(oldList.get(i).getID() != newListData.get(i).getID()) {
-//                    //something has changed, so we need to do some updating
-//                    notifyItemChanged(i);
-//                }
-//            }
-//            int maxLength = Math.max(oldList.size(), newListData.size());
-//            int maxLength = Math.max(oldList.size(), newListData.size());
-//            //this loop deletes / adds extrea items
-//            for(int i = minLength; i < maxLength; ++i) {
-//                if(oldList.size() >= minLength) {
-//                    //oldList is larger, so delete extra items
-//                    notifyItemRemoved(i);
-//                } else {
-//                    //newList is larger, so add extra items
-//                    notifyItemInserted(i);
-//                }
-//            }
-            //reselect the item with the correct id
-            //selectGameOfID(selectedGameID);
+            recyclerView.getRecycledViewPool().clear();
             notifyDataSetChanged();
         }
 
         public ChatHolder getSelectedHolder() {
-            if(selectedIndex != INVALID_INDEX) {
+            if (selectedIndex != INVALID_INDEX) {
                 return (ChatHolder) recyclerView.findViewHolderForAdapterPosition(selectedIndex);
             }
             return null;
         }
 
-        class ChatHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        class ChatHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private TextView message;
             private View container;
 
@@ -855,7 +819,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 super(itemView);
                 itemView.setOnClickListener(this);
 
-                message = (TextView)itemView.findViewById(R.id.lbl_simple_view);
+                message = (TextView) itemView.findViewById(R.id.lbl_simple_view);
                 container = itemView.findViewById(R.id.cont_item_root);
             }
 
@@ -867,20 +831,16 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     }
 
-    public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteHolder>   {
+    public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteHolder> {
         private static final int INVALID_INDEX = -1;
 
         private List<DestinationCard> listData;
         private LayoutInflater inflater;
         private RecyclerView recyclerView;
-        private int selectedIndex;
 
-        public RouteAdapter(List<DestinationCard> listData, Context c)
-        {
+        public RouteAdapter(List<DestinationCard> listData, Context c) {
             this.inflater = LayoutInflater.from(c);
             this.listData = listData;
-            selectedIndex = INVALID_INDEX;
-            recyclerView = null;
         }
 
         @Override
@@ -916,43 +876,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
 
         public void updateListData(List<DestinationCard> newListData) {
-            //remember the selected game's id
-            //int selectedGameID = getSelectedGameID();
-//            System.out.println("selected game id = " + selectedGameID);
-//            List<GameDescription> oldList = listData;
             listData = newListData;
-//            int minLength = Math.min(oldList.size(), newListData.size());
-//            for(int i = 0; i < minLength; ++i) {
-//                if(oldList.get(i).getID() != newListData.get(i).getID()) {
-//                    //something has changed, so we need to do some updating
-//                    notifyItemChanged(i);
-//                }
-//            }
-//            int maxLength = Math.max(oldList.size(), newListData.size());
-//            int maxLength = Math.max(oldList.size(), newListData.size());
-//            //this loop deletes / adds extrea items
-//            for(int i = minLength; i < maxLength; ++i) {
-//                if(oldList.size() >= minLength) {
-//                    //oldList is larger, so delete extra items
-//                    notifyItemRemoved(i);
-//                } else {
-//                    //newList is larger, so add extra items
-//                    notifyItemInserted(i);
-//                }
-//            }
-            //reselect the item with the correct id
-            //selectGameOfID(selectedGameID);
+            recyclerView.getRecycledViewPool().clear();
             notifyDataSetChanged();
         }
 
-        public RouteHolder getSelectedHolder() {
-            if(selectedIndex != INVALID_INDEX) {
-                return (RouteHolder) recyclerView.findViewHolderForAdapterPosition(selectedIndex);
-            }
-            return null;
-        }
-
-        class RouteHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        class RouteHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private TextView city1;
             private TextView city2;
             private TextView destination_points;
@@ -963,9 +892,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 super(itemView);
                 itemView.setOnClickListener(this);
 
-                city1 = (TextView)itemView.findViewById(R.id.destination_city1);
-                city2 = (TextView)itemView.findViewById(R.id.destination_city2);
-                destination_points = (TextView)itemView.findViewById(R.id.destination_points);
+                city1 = (TextView) itemView.findViewById(R.id.destination_city1);
+                city2 = (TextView) itemView.findViewById(R.id.destination_city2);
+                destination_points = (TextView) itemView.findViewById(R.id.destination_points);
                 container = itemView.findViewById(R.id.cont_item_root);
             }
 
@@ -977,7 +906,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     }
 
-    public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.GameHistoryHolder>   {
+    public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.GameHistoryHolder> {
         private static final int INVALID_INDEX = -1;
 
         private List<Chat> listData;
@@ -985,8 +914,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         private RecyclerView recyclerView;
         private int selectedIndex;
 
-        public GameHistoryAdapter(List<Chat> listData, Context c)
-        {
+        public GameHistoryAdapter(List<Chat> listData, Context c) {
             this.inflater = LayoutInflater.from(c);
             this.listData = listData;
             selectedIndex = INVALID_INDEX;
@@ -1017,20 +945,20 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
             holder.message.setText(message.getMessage());
 
-            switch (message.getColor()){
-                case("blue"):
+            switch (message.getColor()) {
+                case ("blue"):
                     holder.message.setTextColor(Color.BLUE);
                     break;
-                case("red"):
+                case ("red"):
                     holder.message.setTextColor(Color.RED);
                     break;
-                case("yellow"):
+                case ("yellow"):
                     holder.message.setTextColor(Color.YELLOW);
                     break;
-                case("black"):
+                case ("black"):
                     holder.message.setTextColor(Color.BLACK);
                     break;
-                case("green"):
+                case ("green"):
                     holder.message.setTextColor(Color.GREEN);
                     break;
             }
@@ -1042,43 +970,19 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
 
         public void updateListData(List<Chat> newListData) {
-            //remember the selected game's id
-            //int selectedGameID = getSelectedGameID();
-//            System.out.println("selected game id = " + selectedGameID);
-//            List<GameDescription> oldList = listData;
             listData = newListData;
-//            int minLength = Math.min(oldList.size(), newListData.size());
-//            for(int i = 0; i < minLength; ++i) {
-//                if(oldList.get(i).getID() != newListData.get(i).getID()) {
-//                    //something has changed, so we need to do some updating
-//                    notifyItemChanged(i);
-//                }
-//            }
-//            int maxLength = Math.max(oldList.size(), newListData.size());
-//            int maxLength = Math.max(oldList.size(), newListData.size());
-//            //this loop deletes / adds extrea items
-//            for(int i = minLength; i < maxLength; ++i) {
-//                if(oldList.size() >= minLength) {
-//                    //oldList is larger, so delete extra items
-//                    notifyItemRemoved(i);
-//                } else {
-//                    //newList is larger, so add extra items
-//                    notifyItemInserted(i);
-//                }
-//            }
-            //reselect the item with the correct id
-            //selectGameOfID(selectedGameID);
+            recyclerView.getRecycledViewPool().clear();
             notifyDataSetChanged();
         }
 
         public GameHistoryHolder getSelectedHolder() {
-            if(selectedIndex != INVALID_INDEX) {
+            if (selectedIndex != INVALID_INDEX) {
                 return (GameHistoryHolder) recyclerView.findViewHolderForAdapterPosition(selectedIndex);
             }
             return null;
         }
 
-        class GameHistoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        class GameHistoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private TextView message;
             private View container;
 
@@ -1087,7 +991,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 super(itemView);
                 itemView.setOnClickListener(this);
 
-                message = (TextView)itemView.findViewById(R.id.lbl_simple_view);
+                message = (TextView) itemView.findViewById(R.id.lbl_simple_view);
                 container = itemView.findViewById(R.id.cont_item_root);
             }
 
@@ -1099,7 +1003,131 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     }
 
-    private void setCardCountsZero(){
+    private class PlayerStatAdapter extends RecyclerView.Adapter<PlayerStatAdapter.StatHolder> {
+        private List<PlayerStat> listData;
+        private LayoutInflater inflater;
+        private RecyclerView recyclerView;
+
+        public PlayerStatAdapter(List<PlayerStat> listData, Context c) {
+            this.inflater = LayoutInflater.from(c);
+            this.listData = listData;
+            recyclerView = null;
+        }
+
+        @Override
+        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
+            this.recyclerView = recyclerView;
+        }
+
+        @Override
+        public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+            super.onDetachedFromRecyclerView(recyclerView);
+            this.recyclerView = null;
+        }
+
+        @Override
+        public StatHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = inflater.inflate(R.layout.list_player_stat_view, parent, false);
+            return new StatHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(StatHolder holder, int position) {
+            PlayerStat stat = listData.get(position);
+
+            holder.name.setText(stat.getPlayerName());
+            holder.name.setTextColor(getColorFromName(stat.getColor()));
+            holder.points.setText(Integer.toString(stat.getPoints()));
+            holder.points.setTextColor(getColorFromName(stat.getColor()));
+            holder.trainCount.setText(Integer.toString(stat.getTrainCount()));
+            holder.trainCount.setTextColor(getColorFromName(stat.getColor()));
+            holder.trainCards.setText(Integer.toString(stat.getTrainCards()));
+            holder.trainCards.setTextColor(getColorFromName(stat.getColor()));
+            holder.destinationCards.setText(Integer.toString(stat.getDestinationCards()));
+            holder.destinationCards.setTextColor(getColorFromName(stat.getColor()));
+        }
+
+        @Override
+        public int getItemCount() {
+            return listData.size();
+        }
+
+        public void updateListData(List<PlayerStat> newListData) {
+            listData = newListData;
+            recyclerView.getRecycledViewPool().clear();
+            notifyDataSetChanged();
+        }
+
+        public void addStat(PlayerStat stat) {
+            listData.add(stat);
+            notifyItemInserted(listData.size() - 1);
+        }
+
+        private int findStatByName(String playerName) {
+            for (int i = 0; i < listData.size(); ++i) {
+                if (listData.get(i).getPlayerName().equals(playerName)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public void setPlayerColor(String playerName, String color) {
+            int statIndex = findStatByName(playerName);
+            if (statIndex == -1) return;
+            listData.get(statIndex).setColor(color);
+        }
+
+        public void setPlayerPoints(String playerName, int points) {
+            int statIndex = findStatByName(playerName);
+            if (statIndex == -1) return;
+            listData.get(statIndex).setPoints(points);
+            notifyItemChanged(statIndex);
+        }
+
+        public void setPlayerTrainCount(String playerName, int trainCount) {
+            int statIndex = findStatByName(playerName);
+            if (statIndex == -1) return;
+            listData.get(statIndex).setTrainCount(trainCount);
+            notifyItemChanged(statIndex);
+        }
+
+        public void setPlayerTrainCards(String playerName, int trainCards) {
+            int statIndex = findStatByName(playerName);
+            if (statIndex == -1) return;
+            listData.get(statIndex).setTrainCards(trainCards);
+            notifyItemChanged(statIndex);
+        }
+
+        public void setPlayerDestinationCards(String playerName, int destinationCards) {
+            int statIndex = findStatByName(playerName);
+            if (statIndex == -1) return;
+            listData.get(statIndex).setDestinationCards(destinationCards);
+            notifyItemChanged(statIndex);
+        }
+
+        public class StatHolder extends RecyclerView.ViewHolder {
+            private TextView name;
+            private TextView points;
+            private TextView trainCount;
+            private TextView trainCards;
+            private TextView destinationCards;
+
+
+            public StatHolder(View itemView) {
+                super(itemView);
+
+                name = (TextView) itemView.findViewById(R.id.player_stat_name);
+                points = (TextView) itemView.findViewById(R.id.player_stat_points);
+                trainCount = (TextView) itemView.findViewById(R.id.player_stat_train_count);
+                trainCards = (TextView) itemView.findViewById(R.id.player_stat_train_cards);
+                destinationCards = (TextView) itemView.findViewById(R.id.player_stat_destination_cards);
+            }
+        }
+    }
+
+    private void setCardCountsZero() {
         boxCount = 0;
         passengerCount = 0;
         tankerCount = 0;
@@ -1109,5 +1137,21 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         coalCount = 0;
         cabooseCount = 0;
         locomotiveCount = 0;
+    }
+
+    private int getColorFromName(String colorName) {
+        switch (colorName.toLowerCase()) {
+            case "black":
+                return Color.BLACK;
+            case "yellow":
+                return Color.YELLOW;
+            case "red":
+                return Color.RED;
+            case "green":
+                return Color.GREEN;
+            case "blue":
+                return Color.BLUE;
+        }
+        return -1;
     }
 }

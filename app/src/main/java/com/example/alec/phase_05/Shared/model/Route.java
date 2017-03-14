@@ -8,11 +8,11 @@ public class Route {
 
     private City city1, city2;
     private int length;
-    private Player owner;
+    private IPlayer owner;
     private TrainType type;
     private int id;
 
-    public Route(City city1, City city2, int length, Player owner, TrainType type, int id) {
+    public Route(City city1, City city2, int length, IPlayer owner, TrainType type, int id) {
         this.city1 = city1;
         this.city2 = city2;
         this.length = length;
@@ -45,11 +45,11 @@ public class Route {
         this.length = length;
     }
 
-    public Player getOwner() {
+    public IPlayer getOwner() {
         return owner;
     }
 
-    public void setOwner(Player owner) {
+    public void setOwner(IPlayer owner) {
         this.owner = owner;
     }
 

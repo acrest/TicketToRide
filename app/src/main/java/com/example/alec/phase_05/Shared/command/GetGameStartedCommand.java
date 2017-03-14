@@ -5,7 +5,7 @@ package com.example.alec.phase_05.Shared.command;
  */
 
 public abstract class GetGameStartedCommand extends GameCommand {
-    public GetGameStartedCommand(String userName, String password, int gameID) {
-        super("GetGameStarted", userName, password, gameID);
+    public GetGameStartedCommand(String playerName, int gameID) {
+        super("GetGameStarted", playerName, gameID);
     }
 }

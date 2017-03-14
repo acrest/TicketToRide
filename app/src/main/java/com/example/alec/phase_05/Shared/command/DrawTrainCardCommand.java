@@ -9,15 +9,7 @@ import java.util.List;
  */
 
 public abstract class DrawTrainCardCommand extends GameCommand {
-
-    private int cardIndex;
-
-    public DrawTrainCardCommand(String userName, String password, int gameID, int cardIndex) {
-        super("DrawTrainCard", userName, password, gameID);
-        this.cardIndex = cardIndex;
-    }
-
-    public int getCardIndex() {
-        return cardIndex;
+    public DrawTrainCardCommand(String playerName, int gameID) {
+        super("DrawTrainCard", playerName, gameID);
     }
 }

@@ -10,14 +10,13 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
  */
 
 public class ClientDrawnTrainCardCommand extends DrawnTrainCardCommand {
-    public ClientDrawnTrainCardCommand(String playerName, int cardIndex, TrainCard card, TrainCard nextCard) {
-        super(playerName, cardIndex, card, nextCard);
+    public ClientDrawnTrainCardCommand(String playerName) {
+        super(playerName);
     }
 
     @Override
     public Result execute() {
-        ClientFacade facade = ClientFacade.getInstance();
-        facade.drawTrainCard(getPlayerName(), getCardIndex(), getCard(), getNextCard());
+        ClientFacade.getInstance().drawTrainCard(getPlayerName());
         return null;
     }
 }
