@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Server.model;
 
 import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.EachGameState;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameMap;
@@ -15,6 +16,7 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 public class ServerGame extends Game implements IServerGame {
     private CommandManager commandManager;
     private IChatManager chatManager;
+    private EachGameState gameState;
 
     public ServerGame(int id, String name, int maxPlayers, CommandManager commandManager, IChatManager chatManager, IBank bank, GameMap gameMap) {
         super(id, name, maxPlayers, bank, gameMap);
