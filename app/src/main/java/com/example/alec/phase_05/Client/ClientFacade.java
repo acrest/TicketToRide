@@ -158,13 +158,19 @@ public class ClientFacade {
         model.addDestinationCard(card);
     }
 
-    public void executeCommand(ICommand command) {
-        command.execute();
+    public void claimRoute(String playerName, int routeId) {
+        //TODO
     }
 
-    public void executeCommands(List<BaseCommand> commands) {
-        for (BaseCommand command : commands) {
-            command.execute();
-        }
+    public void finishTurn(String playerName) {
+        //TODO
+    }
+
+    public void returnDestinationCard(String playerName) {
+        //TODO
+    }
+
+    public void executeCommand(ICommand command) {
+        command.execute();
     }
 }

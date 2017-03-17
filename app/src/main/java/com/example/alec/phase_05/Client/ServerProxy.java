@@ -1,7 +1,7 @@
 package com.example.alec.phase_05.Client;
 
-import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.command.ClientClaimRouteCommand;
+import com.example.alec.phase_05.Client.command.ClientFinishTurnCommand;
 import com.example.alec.phase_05.Client.command.ClientGetNextChangeCommand;
 import com.example.alec.phase_05.Client.command.ClientPickTrainCardCommand;
 import com.example.alec.phase_05.Client.communication.ClientCommunicator;
@@ -13,11 +13,10 @@ import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameDescriptionCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
-import com.example.alec.phase_05.Client.command.ClientGetGameStartedCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameStateCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
-import com.example.alec.phase_05.Client.command.ClientPutBackDestinationCardCommand;
+import com.example.alec.phase_05.Client.command.ClientReturnDestinationCardCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Client.command.ClientStartGameCommand;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
@@ -28,7 +27,6 @@ import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.IServer;
-import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -203,10 +201,10 @@ public class ServerProxy implements IServer {
     }
 
     //temporary method
-    public ClientGameStartedCommand getGameStartedCommand(String playerName, int gameId) {
-        return (ClientGameStartedCommand) executeCommand(new ClientGetGameStartedCommand(playerName, gameId))
-                .toClass(ClientGameStartedCommand.class);
-    }
+//    public ClientGameStartedCommand getGameStartedCommand(String playerName, int gameId) {
+//        return (ClientGameStartedCommand) executeCommand(new ClientGetGameStartedCommand(playerName, gameId))
+//                .toClass(ClientGameStartedCommand.class);
+//    }
 
     @Override
     public boolean claimRoute(String playerName, int gameID, int routeId) {
@@ -234,8 +232,13 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public boolean putBackDestinationCard(String playerName, int gameId, DestinationCard card){
-        return executeCommand(new ClientPutBackDestinationCardCommand(playerName, gameId, card)).toBoolean();
+    public boolean finishTurn(String playerName, int gameId) {
+        return executeCommand(new ClientFinishTurnCommand(playerName, gameId)).toBoolean();
+    }
+
+    @Override
+    public boolean returnDestinationCard(String playerName, int gameId, DestinationCard card){
+        return executeCommand(new ClientReturnDestinationCardCommand(playerName, gameId, card)).toBoolean();
     }
 
     @Override

@@ -1,13 +1,12 @@
 package com.example.alec.phase_05.Server.model;
 
-import com.example.alec.phase_05.Server.command.ServerGetGameStartedCommand;
 import com.example.alec.phase_05.Server.command.ServerResult;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
-import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
+import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.IServer;
@@ -305,6 +304,11 @@ public class ServerFacade implements IServer {
         return true;
     }
 
+    @Override
+    public boolean finishTurn(String playerName, int gameId) {
+        return false; //TODO
+    }
+
     /**
      * returns an unwanted destination card to the deck
      * @pre playerName is not null, username characters are limited to letters, ^, *,  and _
@@ -317,7 +321,7 @@ public class ServerFacade implements IServer {
      * @return true if the game exists, false otherwise
      */
     @Override
-    public boolean putBackDestinationCard(String playerName, int gameId, DestinationCard card) {
+    public boolean returnDestinationCard(String playerName, int gameId, DestinationCard card) {
         IServerGame game = model.getGame(gameId);
         if(game == null) return false;
         IServerBank bank = (IServerBank) game;
@@ -355,9 +359,9 @@ public class ServerFacade implements IServer {
         return null;
     }
 
-    public ServerGetGameStartedCommand getGameStartedCommand(String playerName, int gameId) {
-        return null;
-    }
+//    public ServerGetGameStartedCommand getGameStartedCommand(String playerName, int gameId) {
+//        return null;
+//    }
 
     /**
      * gets the serverGameStartedCommand

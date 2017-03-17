@@ -44,21 +44,23 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
 
     @Override
     public void claimRoute(int routeID) {
+        facade.claimRoute(routeID);
     }
 
     @Override
     public void returnDestinationCard(Integer cardID) {
-
     }
 
     @Override
     public void drawDestinationCards() {
-
+        facade.drawDestinationCard();
+        facade.drawDestinationCard();
+        facade.drawDestinationCard();
     }
 
     @Override
     public void endTurn() {
-
+        facade.finishTurn();
     }
 
     @Override

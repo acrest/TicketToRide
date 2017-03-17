@@ -1,24 +1,11 @@
 package com.example.alec.phase_05.Client;
 
-import android.util.Log;
-
 import com.example.alec.phase_05.Client.Model.ClientModel;
-import com.example.alec.phase_05.Client.Model.IClientGame;
-import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
-import com.example.alec.phase_05.Shared.command.BaseCommand;
-import com.example.alec.phase_05.Shared.command.CommandHolder;
-import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
-import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
-import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Player;
-import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by clarkpathakis on 2/6/17.
@@ -30,6 +17,7 @@ public class Facade {
 
     /**
      * gets singleton instance of Facade.
+     *
      * @return current instance of Facade, if not creates one.
      */
     public static Facade getInstance() {
@@ -66,6 +54,7 @@ public class Facade {
     /**
      * Uses the username and password to login if valid player through ServerProxy.
      * Also starts the poller.
+     *
      * @param username the name of the player that is trying to login
      * @param password the password of the player that is trying to login
      * @return true if the player was successfully logged in, if not returns false.
@@ -100,6 +89,7 @@ public class Facade {
     /**
      * Register's user and automatically logs them in through ServerProxy.
      * Also starts the poller.
+     *
      * @param username the name of the player trying to register
      * @param password the password of the player trying to register
      * @return true if registration was successful false if not.
@@ -135,13 +125,14 @@ public class Facade {
      * Creates a new thread.
      * Creates game after calling the method in ServerProxy.
      * Starts the player waiting poller.
+     *
      * @param numOfPlayers the number of players the hostPlayer sets
-     * @param gameName the name of the game that is given automatically,
-     *                 but can be named differently by the host player.
-     * @param hostColor the color that the hostPlayer chooses for their
-     *                  pawn in the game
-     * This creates a thread which initializes the game and waits for
-     *                  more players to join.
+     * @param gameName     the name of the game that is given automatically,
+     *                     but can be named differently by the host player.
+     * @param hostColor    the color that the hostPlayer chooses for their
+     *                     pawn in the game
+     *                     This creates a thread which initializes the game and waits for
+     *                     more players to join.
      */
     public void createGame(final int numOfPlayers, final String gameName, final String hostColor) {
         Thread thread = new Thread(new Runnable() {
@@ -162,11 +153,12 @@ public class Facade {
     /**
      * Allows player to join a game that has not started yet.
      * Starts player waiting poller.
+     *
      * @param gameID the id of the game the player desires to join.
-     * @param color the color that the current player chooses for
-     *              their pawn in the game.
-     * This creates a thread that waits with the poller for more
-     *              players to join the game and then starts the game
+     * @param color  the color that the current player chooses for
+     *               their pawn in the game.
+     *               This creates a thread that waits with the poller for more
+     *               players to join the game and then starts the game
      */
     public void joinGame(final int gameID, final String color) {
         Thread thread = new Thread(new Runnable() {
@@ -186,6 +178,7 @@ public class Facade {
 
     /**
      * Call to get the games in the Game Station
+     *
      * @param player name of player who's client is trying to get the list of games in the GameLobby
      */
     public void getGames(final Player player) {
@@ -220,6 +213,7 @@ public class Facade {
 
     /**
      * gets the game, specifically the current game state, that the player is in
+     *
      * @param player the player class of the user. Includes their username
      *               and password which get passed when getting calling the
      *               ServerProxy to get the current game state
@@ -264,9 +258,9 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if(model.hasCurrentGame()) {
+                if (model.hasCurrentGame()) {
                     ICommand command;
-                    while((command = proxy.getNextCommand(model.getCurrentPlayerName(), model.getGameID())) != null) {
+                    while ((command = proxy.getNextCommand(model.getCurrentPlayerName(), model.getGameID())) != null) {
                         clientFacade.executeCommand(command);
                     }
                 }
@@ -284,7 +278,7 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if(model.hasCurrentGame()) {
+                if (model.hasCurrentGame()) {
                     clientFacade.addDestinationCard(proxy.drawDestinationCard(model.getCurrentPlayerName(), model.getGameID()));
                 }
             }
@@ -301,7 +295,7 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if(model.hasCurrentGame()) {
+                if (model.hasCurrentGame()) {
                     clientFacade.addTrainCard(proxy.drawTrainCard(model.getCurrentPlayerName(), model.getGameID()));
                 }
             }
@@ -318,7 +312,7 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if(model.hasCurrentGame()) {
+                if (model.hasCurrentGame()) {
                     clientFacade.addTrainCard(proxy.pickTrainCard(model.getCurrentPlayerName(), model.getGameID(), index));
                 }
             }
@@ -335,7 +329,7 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if(model.hasCurrentGame()) {
+                if (model.hasCurrentGame()) {
                     proxy.discardTrainCard(model.getCurrentPlayerName(), model.getGameID(), card);
                 }
             }
@@ -348,12 +342,36 @@ public class Facade {
 //        }
     }
 
+    public void claimRoute(final int routeId) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (model.hasCurrentGame()) {
+                    proxy.claimRoute(model.getCurrentPlayerName(), model.getGameID(), routeId);
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public void finishTurn() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (model.hasCurrentGame()) {
+                    proxy.finishTurn(model.getCurrentPlayerName(), model.getGameID());
+                }
+            }
+        });
+        thread.start();
+    }
+
     public void putBackDestinationCard(final DestinationCard card) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if(model.hasCurrentGame()) {
-                    proxy.putBackDestinationCard(model.getCurrentPlayerName(), model.getGameID(), card);
+                if (model.hasCurrentGame()) {
+                    proxy.returnDestinationCard(model.getCurrentPlayerName(), model.getGameID(), card);
                 }
             }
         });
