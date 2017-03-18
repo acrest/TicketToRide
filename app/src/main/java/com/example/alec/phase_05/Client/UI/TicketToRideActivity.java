@@ -7,16 +7,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,24 +29,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
-import com.example.alec.phase_05.Client.Poller;
-import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Client.Model.Derpness;
+import com.example.alec.phase_05.Client.Model.PlayerStat;
+import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRide;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRide;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.view.MenuItem;
-
 import com.example.alec.phase_05.R;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.City;
 import com.example.alec.phase_05.Shared.model.Deck;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
-import com.example.alec.phase_05.Client.Model.PlayerStat;
-import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.IPlayer;
+import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
@@ -720,8 +717,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updateMap(GameMap map) {
         for (int i = 1; i <= 100; i++) {
-            if (map.getRoutes().get(i).getOwner() != null) {
-                drawRouteLine(map.getRoutes().get(i).getCity1(), map.getRoutes().get(i).getCity2(), map.getRoutes().get(i).getOwner().getColor());
+            Route route = map.getRouteByID(i);
+            IPlayer owner = route.getOwner();
+            if (owner != null) {
+                drawRouteLine(route.getCity1(), route.getCity2(), owner.getColor());
             }
         }
     }

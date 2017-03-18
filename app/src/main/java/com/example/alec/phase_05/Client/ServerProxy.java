@@ -1,35 +1,32 @@
 package com.example.alec.phase_05.Client;
 
-import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.command.ClientClaimRouteCommand;
-import com.example.alec.phase_05.Client.command.ClientGetNextChangeCommand;
-import com.example.alec.phase_05.Client.command.ClientPickTrainCardCommand;
-import com.example.alec.phase_05.Client.communication.ClientCommunicator;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientDiscardTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawDestinationCardCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawTrainCardCommand;
-import com.example.alec.phase_05.Client.command.ClientGameStartedCommand;
+import com.example.alec.phase_05.Client.command.ClientFinishTurnCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameDescriptionCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
-import com.example.alec.phase_05.Client.command.ClientGetGameStartedCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameStateCommand;
+import com.example.alec.phase_05.Client.command.ClientGetNextChangeCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
-import com.example.alec.phase_05.Client.command.ClientPutBackDestinationCardCommand;
+import com.example.alec.phase_05.Client.command.ClientPickTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
+import com.example.alec.phase_05.Client.command.ClientReturnDestinationCardCommand;
 import com.example.alec.phase_05.Client.command.ClientStartGameCommand;
+import com.example.alec.phase_05.Client.communication.ClientCommunicator;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
-import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameInfo;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.IServer;
-import com.example.alec.phase_05.Shared.model.Player;
-import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
@@ -111,9 +108,9 @@ public class ServerProxy implements IServer {
      * @return An instance of a game, with the specified fields.
      */
     @Override
-    public GameState createGame(String playerName, int numOfPlayers, String gameName, String hostColor) {
-        return (GameState) executeCommand(new ClientCreateGameCommand(gameName, numOfPlayers, playerName, hostColor))
-                .toClass(GameState.class);
+    public GameInfo createGame(String playerName, int numOfPlayers, String gameName, String hostColor) {
+        return (GameInfo) executeCommand(new ClientCreateGameCommand(gameName, numOfPlayers, playerName, hostColor))
+                .toClass(GameInfo.class);
     }
 
     /** Join a player into a game that is already created.
@@ -126,8 +123,8 @@ public class ServerProxy implements IServer {
      * @return An instance of a game, with the specified fields.
      */
     @Override
-    public GameState joinGame(String playerName, int gameID, String color) {
-        return (GameState) executeCommand(new ClientJoinGameCommand(playerName, gameID, color)).toClass(GameState.class);
+    public GameInfo joinGame(String playerName, int gameID, String color) {
+        return (GameInfo) executeCommand(new ClientJoinGameCommand(playerName, gameID, color)).toClass(GameInfo.class);
     }
 
     /** Returns a list of games that a specified player is currently in. If the person doesn't excist, or wrong password, return null.
@@ -198,15 +195,15 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public GameState getGameState(int gameID) {
-        return (GameState) executeCommand(new ClientGetGameStateCommand(gameID)).toClass(GameState.class);
+    public GameInfo getGameState(int gameID) {
+        return (GameInfo) executeCommand(new ClientGetGameStateCommand(gameID)).toClass(GameInfo.class);
     }
 
     //temporary method
-    public ClientGameStartedCommand getGameStartedCommand(String playerName, int gameId) {
-        return (ClientGameStartedCommand) executeCommand(new ClientGetGameStartedCommand(playerName, gameId))
-                .toClass(ClientGameStartedCommand.class);
-    }
+//    public ClientGameStartedCommand getGameStartedCommand(String playerName, int gameId) {
+//        return (ClientGameStartedCommand) executeCommand(new ClientGetGameStartedCommand(playerName, gameId))
+//                .toClass(ClientGameStartedCommand.class);
+//    }
 
     @Override
     public boolean claimRoute(String playerName, int gameID, int routeId) {
@@ -234,8 +231,13 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public boolean putBackDestinationCard(String playerName, int gameId, DestinationCard card){
-        return executeCommand(new ClientPutBackDestinationCardCommand(playerName, gameId, card)).toBoolean();
+    public boolean finishTurn(String playerName, int gameId) {
+        return executeCommand(new ClientFinishTurnCommand(playerName, gameId)).toBoolean();
+    }
+
+    @Override
+    public boolean returnDestinationCard(String playerName, int gameId, DestinationCard card){
+        return executeCommand(new ClientReturnDestinationCardCommand(playerName, gameId, card)).toBoolean();
     }
 
     @Override

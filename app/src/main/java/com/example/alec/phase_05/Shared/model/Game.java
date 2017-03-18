@@ -37,7 +37,7 @@ public abstract class Game implements IGame {
 
     @Override
     public IPlayer getPlayer(int position) {
-        if(position < players.size()) {
+        if (position < players.size()) {
             return players.get(position);
         }
         return null;
@@ -45,7 +45,7 @@ public abstract class Game implements IGame {
 
     @Override
     public void setPlayer(int position, IPlayer player) {
-        while(position >= players.size()) {
+        while (position >= players.size()) {
             players.add(null);
         }
         players.set(position, player);
@@ -57,43 +57,61 @@ public abstract class Game implements IGame {
     }
 
     @Override
-    public IBank getBank() {
-        return bank;
-    }
-
-    @Override
-    public GameMap getMap() {
-        return gameMap;
-    }
-
-    @Override
-    public void setMap(GameMap map) {
-        gameMap = map;
-    }
-
-    @Override
     public int getNumberPlayers() {
         int count = 0;
-        for(IPlayer player : players) {
-            if(player != null) {
+        for (IPlayer player : players) {
+            if (player != null) {
                 ++count;
             }
         }
         return count;
     }
 
+    @Override
+    public TrainCard getVisibleCard(int index) {
+        return bank.getVisibleCard(index);
+    }
 
     @Override
-    public int addPlayerAtNextPosition(IPlayer player){
-        if(hasPlayer(player))
+    public int getNumberOfTrainCards() {
+        return bank.getNumberOfTrainCards();
+    }
+
+    public int getNumberOfDestinationCards() {
+        return bank.getNumberOfDestinationCards();
+    }
+
+    @Override
+    public City getCityByName(String name) {
+        return gameMap.getCityByName(name);
+    }
+
+    @Override
+    public void addCity(City city) {
+        gameMap.addCity(city);
+    }
+
+    @Override
+    public Route getRouteByID(int routeID) {
+        return gameMap.getRouteByID(routeID);
+    }
+
+    @Override
+    public void addRoute(Route route) {
+        gameMap.addRoute(route);
+    }
+
+    @Override
+    public int addPlayerAtNextPosition(IPlayer player) {
+        if (hasPlayer(player))
             return -1;
-        for(int i = 0; i < players.size(); ++i) {
-            if(players.get(i) == null) {
+        for (int i = 0; i < players.size(); ++i) {
+            if (players.get(i) == null) {
                 players.set(i, player);
                 return i;
             }
         }
-        if(players.size() < getMaxPlayers()) {
+        if (players.size() < getMaxPlayers()) {
             players.add(player);
             return players.size() - 1;
         }
@@ -101,8 +119,8 @@ public abstract class Game implements IGame {
     }
 
     private boolean hasPlayer(IPlayer player) {
-        for(IPlayer p : players) {
-            if(player.equals(p)){
+        for (IPlayer p : players) {
+            if (player.equals(p)) {
                 return true;
             }
         }
@@ -129,5 +147,17 @@ public abstract class Game implements IGame {
     @Override
     public void setGameStarted() {
         gameStarted = true;
+    }
+
+    protected IBank getBank() {
+        return bank;
+    }
+
+    protected GameMap getGameMap() {
+        return gameMap;
+    }
+
+    protected void setGameMap(GameMap map) {
+        gameMap = map;
     }
 }

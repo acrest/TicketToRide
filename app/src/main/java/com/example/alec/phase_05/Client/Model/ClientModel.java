@@ -8,7 +8,6 @@ import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
-import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
@@ -36,6 +35,7 @@ public class ClientModel extends Observable {
     public static String PLAYER_TRAIN_CARDS = "player train cards";
     public static String VISIBLE_TRAIN_CARDS = "visible train cards";
     public static String NUM_DESTINATION_CARDS = "num destination cards";
+    public static String NUM_TRAIN_CARDS = "num train cards";
     public static String PLAYER_DESTINATION_CARDS = "player destination cards";
     public static String GAME_MAP = "game map";
     public static String CHAT = "chat";
@@ -67,7 +67,7 @@ public class ClientModel extends Observable {
 
     public IPlayer getCurrentPlayer() {
         if (currentGame == null) return null;
-        return currentGame.findPlayerByName(currentPlayerName);
+        return currentGame.getPlayerByName(currentPlayerName);
     }
 
     public void setCurrentPlayerName(String currentPlayerName) {
@@ -123,14 +123,14 @@ public class ClientModel extends Observable {
         return currentGame.getPlayer(index);
     }
 
-    public IPlayer findPlayerByName(String playerName) {
+    public IPlayer getPlayerByName(String playerName) {
         if (currentGame == null) return null;
-        return currentGame.findPlayerByName(playerName);
+        return currentGame.getPlayerByName(playerName);
     }
 
     public void addTrainCard(String playerName) {
         if (currentGame == null) return;
-        IPlayer player = currentGame.findPlayerByName(playerName);
+        IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null || !(player instanceof OtherPlayer)) return;
         OtherPlayer otherPlayer = (OtherPlayer) player;
         otherPlayer.setTrainCardCount(otherPlayer.getTrainCardCount() + 1);
@@ -146,15 +146,13 @@ public class ClientModel extends Observable {
 
     public void setVisibleCard(int index, TrainCard card) {
         if (currentGame == null) return;
-        IClientBank bank = (IClientBank) currentGame.getBank();
-        bank.setVisibleCard(index, card);
+        currentGame.setVisibleCard(index, card);
         notifyPropertyChanges(VISIBLE_TRAIN_CARDS);
     }
 
     public TrainCard getVisibleTrainCard(int index) {
         if (currentGame == null) return null;
-        IClientBank bank = (IClientBank) currentGame.getBank();
-        return bank.getVisibleCard(index);
+        return currentGame.getVisibleCard(index);
     }
 
 //    public void setVisibleCards(List<TrainCard> cards) {
@@ -168,14 +166,25 @@ public class ClientModel extends Observable {
 
     public void decNumOfDestinationCards() {
         if (currentGame == null) return;
-        IClientBank bank = (IClientBank) currentGame.getBank();
-        bank.decNumberOfDestinationCards();
+        currentGame.decNumberOfDestinationCards();
         notifyPropertyChanges(NUM_DESTINATION_CARDS);
+    }
+
+    public void incNumOfDestinationCards() {
+        if (currentGame == null) return;
+        currentGame.incNumberOfDestinationCards();
+        notifyPropertyChanges(NUM_DESTINATION_CARDS);
+    }
+
+    public void decNumOfTrainCards() {
+        if (currentGame == null) return;
+        currentGame.decNumberOfTrainCards();
+        notifyPropertyChanges(NUM_TRAIN_CARDS);
     }
 
     public void addDestinationCard(String playerName) {
         if (currentGame == null) return;
-        IPlayer player = currentGame.findPlayerByName(playerName);
+        IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null || !(player instanceof OtherPlayer)) return;
         OtherPlayer otherPlayer = (OtherPlayer) player;
         otherPlayer.setDestinationCardCount(otherPlayer.getDestinationCardCount() + 1);
@@ -203,7 +212,7 @@ public class ClientModel extends Observable {
 
     public void setTrainCount(String playerName, int count) {
         if (currentGame == null) return;
-        IPlayer player = currentGame.findPlayerByName(playerName);
+        IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null) return;
         player.setTrainCount(count);
         notifyPropertyChanges(PLAYER_TRAIN_COUNT);
@@ -212,12 +221,6 @@ public class ClientModel extends Observable {
     public int getNumberPlayers() {
         if (currentGame == null) return 0;
         return currentGame.getNumberPlayers();
-    }
-
-    public void setMap(GameMap map) {
-        if (currentGame == null) return;
-        currentGame.setMap(map);
-        notifyPropertyChanges(GAME_MAP);
     }
 
     public void addChat(Chat chat) {
@@ -236,7 +239,7 @@ public class ClientModel extends Observable {
 
 //    public void addPlayerPoints(String playerName, int points) {
 //        if (currentGame == null) return;
-//        OtherPlayer player = currentGame.findPlayerByName(playerName);
+//        OtherPlayer player = currentGame.getPlayerByName(playerName);
 //        if (player == null) return;
 //        player.setPoints(player.getPoints() + points);
 //        notifyPropertyChanges(PLAYER_POINTS);
@@ -250,7 +253,7 @@ public class ClientModel extends Observable {
 
     public void setPlayerPoints(String playerName, int points) {
         if (currentGame == null) return;
-        IPlayer player = currentGame.findPlayerByName(playerName);
+        IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null) return;
         player.setPoints(points);
         notifyPropertyChanges(PLAYER_POINTS);
@@ -264,34 +267,29 @@ public class ClientModel extends Observable {
 
     public int getPlayerPoints(String playerName) {
         if (currentGame == null) return 0;
-        IPlayer player = currentGame.findPlayerByName(playerName);
+        IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null) return 0;
         return player.getPoints();
     }
 
     public void setRouteOwner(String playerName, int routeId) {
         if (currentGame == null) return;
-        IPlayer player = currentGame.findPlayerByName(playerName);
+        IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null) return;
-        currentGame.getMap().getRoutes().get(routeId).setOwner(player);
+        currentGame.getRouteByID(routeId).setOwner(player);
         notifyPropertyChanges(GAME_MAP);
-    }
-
-    public GameMap getGameMap() {
-        if (currentGame == null) return null;
-        return currentGame.getMap();
     }
 
     public int getDestinationCardCount(String playerName) {
         if (currentGame == null) return 0;
-        IPlayer player = currentGame.findPlayerByName(playerName);
+        IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null) return 0;
         return player.getDestinationCardCount();
     }
 
     public int getTrainCardCount(String playerName) {
         if (currentGame == null) return 0;
-        IPlayer player = currentGame.findPlayerByName(playerName);
+        IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null) return 0;
         return player.getTrainCardCount();
     }
@@ -317,7 +315,7 @@ public class ClientModel extends Observable {
 
     public void removeTrainCard(String playerName) {
         if (currentGame == null) return;
-        IPlayer player = currentGame.findPlayerByName(playerName);
+        IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null || !(player instanceof OtherPlayer)) return;
         OtherPlayer otherPlayer = (OtherPlayer) player;
         otherPlayer.setTrainCardCount(otherPlayer.getTrainCardCount() - 1);
@@ -333,7 +331,7 @@ public class ClientModel extends Observable {
 
     public void removeDestinationCard(String playerName) {
         if (currentGame == null) return;
-        IPlayer player = currentGame.findPlayerByName(playerName);
+        IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null || !(player instanceof OtherPlayer)) return;
         OtherPlayer otherPlayer = (OtherPlayer) player;
         otherPlayer.setDestinationCardCount(otherPlayer.getDestinationCardCount() - 1);
@@ -376,6 +374,16 @@ public class ClientModel extends Observable {
         } else {
             notifyPropertyChanges(REGISTER_FAILURE);
         }
+    }
+
+    public GameMap getMap() {
+        if (currentGame == null) return null;
+        return currentGame.getMap();
+    }
+
+    public void setMap(GameMap map) {
+        if (currentGame == null) return;
+        currentGame.setMap(map);
     }
 
     public void setHost(boolean host) {
