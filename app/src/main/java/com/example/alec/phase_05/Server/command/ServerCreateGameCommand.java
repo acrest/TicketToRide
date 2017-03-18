@@ -1,9 +1,8 @@
 package com.example.alec.phase_05.Server.command;
 
 import com.example.alec.phase_05.Server.model.ServerFacade;
-import com.example.alec.phase_05.Shared.model.GameState;
-import com.example.alec.phase_05.Shared.model.Player;
-import com.example.alec.phase_05.Shared.command.*;
+import com.example.alec.phase_05.Shared.command.CreateGameCommand;
+import com.example.alec.phase_05.Shared.command.Result;
 
 /**
  * Created by samuel on 2/9/17.

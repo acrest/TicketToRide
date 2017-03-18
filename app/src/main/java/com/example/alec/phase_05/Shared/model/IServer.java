@@ -14,9 +14,9 @@ public interface IServer {
 
     boolean registerUser(String username, String password);
 
-    GameState createGame(String playerName, int numOfPlayers, String gameName, String hostColor);
+    GameInfo createGame(String playerName, int numOfPlayers, String gameName, String hostColor);
 
-    GameState joinGame(String playerName, int gameID, String color);
+    GameInfo joinGame(String playerName, int gameID, String color);
 
     List<GameDescription> getGames();
 
@@ -28,7 +28,7 @@ public interface IServer {
 
     ICommand getNextCommand(String player, int gameID);
 
-    GameState getGameState(int gameID);
+    GameInfo getGameState(int gameID);
 
     boolean claimRoute(String playerName, int gameId, int routeId);
 

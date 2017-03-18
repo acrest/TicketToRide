@@ -65,7 +65,7 @@ public class CommandManager {
 //        System.out.println("command size is " + commands.size());
 
 //        if(commandIndex == 0) {
-//            GameState gameState = GameStateFactory.gameToGameState(game);
+//            GameInfo gameState = GameStateFactory.gameToGameState(game);
 //            ServerGameStartedCommand command = new ServerGameStartedCommand(gameState);
 //            recCommands.add(command);
 //        }
@@ -85,7 +85,7 @@ public class CommandManager {
 
 //        System.out.println("recentCommands called");
 //        if (hasServerStartGame()) { //temporary code
-//            GameState state = GameStateFactory.gameToGameState(game);
+//            GameInfo state = GameStateFactory.gameToGameState(game);
 //            if (state == null) {
 //                System.out.println("got null game state");
 //                System.out.println("game = " + game);
@@ -117,7 +117,7 @@ public class CommandManager {
             return new ServerFinishedTurnCommand(command.getPlayerName());
         } else if (command instanceof ServerPickTrainCardCommand) {
             int cardIndex = ((ServerPickTrainCardCommand) command).getCardIndex();
-            return new ServerPickedTrainCardCommand(command.getPlayerName(), cardIndex, game.getBank().getVisibleCard(cardIndex));
+            return new ServerPickedTrainCardCommand(command.getPlayerName(), cardIndex, game.getVisibleCard(cardIndex));
         } else if (command instanceof ServerReturnDestinationCardCommand) {
             return new ServerReturnedDestinationCard(command.getPlayerName());
         }

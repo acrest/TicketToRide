@@ -86,7 +86,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
                 listener.updatePlayerPoints(player.getName(), player.getPoints());
             }
         });
-        listener.updateMap(model.getGameMap());
+        listener.updateMap(model.getMap());
         visitAllPlayers(new PlayerVisitor() {
             @Override
             public void visitPlayer(IPlayer player) {
@@ -150,7 +150,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             });
         }
         if (u.needUpdate(ClientModel.GAME_MAP)) {
-            listener.updateMap(ClientModel.getInstance().getGameMap());
+            listener.updateMap(ClientModel.getInstance().getMap());
         }
         if (u.needUpdate(ClientModel.PLAYER_TRAIN_COUNT)) {
             visitAllPlayers(new PlayerVisitor() {

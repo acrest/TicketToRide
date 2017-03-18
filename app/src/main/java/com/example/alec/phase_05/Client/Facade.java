@@ -391,7 +391,7 @@ public class Facade {
 //                ClientModel model = ClientModel.getInstance();
 //                if(model.hasCurrentGame()) {
 //                    ClientGameStartedCommand command = proxy.getGameStartedCommand();
-//                    if(command == null || command.getGameState() == null) return;
+//                    if(command == null || command.getGameInfo() == null) return;
 //                    List<BaseCommand> commands = new ArrayList<>();
 //                    commands.add(command);
 //                    ClientFacade.getInstance().executeCommands(commands);

@@ -1,13 +1,10 @@
 package com.example.alec.phase_05.Shared.model;
 
-import java.util.List;
-
 /**
  * Created by samuel on 3/2/17.
  */
 
-public class GameState {
-
+public class GameInfo {
     private int id;
     private String name;
     private int maxPlayers;
@@ -15,7 +12,7 @@ public class GameState {
     private TrainCard[] visibleTrainCards;
     private GameMap map;
 
-    public GameState(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, GameMap map) {
+    public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, GameMap map) {
         this.id = id;
         this.name = name;
         this.maxPlayers = maxPlayers;

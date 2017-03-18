@@ -21,11 +21,19 @@ public interface IGame {
 
     int getMaxPlayers();
 
-    IBank getBank();
+    TrainCard getVisibleCard(int index);
 
-    GameMap getMap();
+    int getNumberOfTrainCards();
 
-    void setMap(GameMap map);
+    int getNumberOfDestinationCards();
+
+    City getCityByName(String name);
+
+    void addCity(City city);
+
+    Route getRouteByID(int routeID);
+
+    void addRoute(Route route);
 
     boolean isGameStarted();
 
