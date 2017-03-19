@@ -1,21 +1,15 @@
 package com.example.alec.phase_05.Client.States;
 
-import com.example.alec.phase_05.Client.Model.ClientGame;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.EachGameState;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 /**
- * Created by clarkpathakis on 3/16/17.
+ * Created by clarkpathakis on 3/17/17.
  */
 
-public class ClientEndGameState implements EachGameState {
-    private ClientGame game;
-
-    public ClientEndGameState() {}
-
-
+public class ClientPlayerEndTurnState implements EachGameState {
     @Override
     public void drawDestinationCard(Game game, String player) {
 

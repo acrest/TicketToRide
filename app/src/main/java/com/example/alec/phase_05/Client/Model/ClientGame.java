@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Client.Model;
 
+import com.example.alec.phase_05.Client.States.ClientPlayerDrawTrainCardState;
 import com.example.alec.phase_05.Shared.model.EachGameState;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameMap;
@@ -19,6 +20,8 @@ public class ClientGame extends Game implements IClientGame {
 
     public ClientGame(int id, String name, int maxPlayers, IBank bank, GameMap gameMap) {
         super(id, name, maxPlayers, bank, gameMap);
+        gameState = new ClientPlayerDrawTrainCardState();
+        gameState.drawDestinationCard(this, name);
     }
 
     @Override

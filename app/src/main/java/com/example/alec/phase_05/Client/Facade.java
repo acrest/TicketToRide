@@ -348,7 +348,7 @@ public class Facade {
 //        }
     }
 
-    public void putBackDestinationCard(final DestinationCard card) {
+    public void putBackDestinationCard() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
