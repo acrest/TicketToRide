@@ -33,7 +33,7 @@ public class ClientPlayerDrawDestinationCardState implements EachGameState {
 
     @Override
     public boolean putBackDestinationCard(Game game, String player, DestinationCard card) {
-        facade.putBackDestinationCard();
+        //facade.putBackDestinationCard();
         game.setGameState(new ClientPlayerEndTurnState());
         return false;
     }

@@ -342,9 +342,6 @@ public class Facade {
 //        }
     }
 
-
-    public void putBackDestinationCard() {
-
     public void claimRoute(final int routeId) {
         Thread thread = new Thread(new Runnable() {
             @Override

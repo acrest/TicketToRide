@@ -150,10 +150,10 @@ public abstract class Game implements IGame {
         gameStarted = true;
     }
 
-<<<<<<< HEAD
+
     @Override
     public void setGameState(EachGameState gameState) { state = gameState;}
-=======
+
     protected IBank getBank() {
         return bank;
     }
@@ -165,5 +165,5 @@ public abstract class Game implements IGame {
     protected void setGameMap(GameMap map) {
         gameMap = map;
     }
->>>>>>> 5a0328c753a66cda2e21cb1b71e32d075bfcb363
+
 }
