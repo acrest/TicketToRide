@@ -25,10 +25,11 @@ public class ServerFacade implements IServer {
 
     /**
      * Returns the singleton instance of the ServerFacade and creates one if it has not been created
+     *
      * @return current instance of ServerFacade
      */
-    public static ServerFacade getInstance(){
-        if(instance == null){
+    public static ServerFacade getInstance() {
+        if (instance == null) {
             instance = new ServerFacade();
         }
         return instance;
@@ -41,22 +42,24 @@ public class ServerFacade implements IServer {
     }
 
     /**
-     * @pre a valid command object
-     * @post the commmand is executed
      * @param command the command to be executed
      * @return the results of the executed command
+     * @pre a valid command object
+     * @post the commmand is executed
      */
     @Override
     public Result executeCommand(ICommand command) {
         Result r;
-        if(command == null) {
+        if (command == null) {
             r = new ServerResult();
             r.setErrorMessage("no server command to match command sent to server");
         }
-        if(command instanceof GameCommand) {
+        if (command instanceof GameCommand) {
             GameCommand gameCommand = (GameCommand) command;
             ServerGame game = model.getGame(gameCommand.getGameId());
-            game.addCommand(gameCommand);
+            if (game != null) {
+                game.addCommand(gameCommand);
+            }
             r = gameCommand.execute();
         } else {
             r = command.execute();
@@ -77,6 +80,7 @@ public class ServerFacade implements IServer {
 
     /**
      * returns false
+     *
      * @return false
      */
     public boolean poller() {
@@ -85,12 +89,13 @@ public class ServerFacade implements IServer {
 
     /**
      * calls the login method inside ServerModel
-     * @pre Username is not null, username characters are limited to letters, ^, *,  and _
-     * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
-     * @post the player successfully logs in if username and password match a registered user
+     *
      * @param username the username given by the user
      * @param password the password given by the user
      * @return returns the player if the password and username are correct, returns null if they are not correct
+     * @pre Username is not null, username characters are limited to letters, ^, *,  and _
+     * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
+     * @post the player successfully logs in if username and password match a registered user
      */
     @Override
     public boolean login(String username, String password) {
@@ -99,32 +104,34 @@ public class ServerFacade implements IServer {
 
     /**
      * creates a new player using the given username and password and adds it to the ServerModel
-     * @pre Username is not null, username characters are limited to letters, ^, *,  and _
-     * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
-     * @post the user is registered if the user does not already exist
+     *
      * @param username the username given by the user
      * @param password the password given by the user
      * @return returns false if the player already exists, true otherwise
+     * @pre Username is not null, username characters are limited to letters, ^, *,  and _
+     * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
+     * @post the user is registered if the user does not already exist
      */
     @Override
     public boolean registerUser(String username, String password) {
         PlayerCredentials player = new PlayerCredentials(username, password);
-        System.out.println("TEST RESGISTER USER "+player.getUsername()+" "+player.getPassword());
+        System.out.println("TEST RESGISTER USER " + player.getUsername() + " " + player.getPassword());
         return model.addPlayer(player);
     }
 
     /**
      * creates a new game and adds it to the ServerModel
+     *
+     * @param playerName   the player who created the game
+     * @param numOfPlayers the max number of players allowed in the game
+     * @param gameName     the name of the game
+     * @param hostColor    the color of the hostPlayer
+     * @return the game state of the newly created game
      * @pre hostPlayer is a valid Player obj.
      * @pre numOfPlayers is an int between 2 and 5.
      * @pre gameName is 15 characters or less.
      * @pre hostColor is "red", "blue", "yellow", "Black", or "green".
      * @post a new game is created with the variables from the input
-     * @param playerName the player who created the game
-     * @param numOfPlayers the max number of players allowed in the game
-     * @param gameName the name of the game
-     * @param hostColor the color of the hostPlayer
-     * @return the game state of the newly created game
      */
     @Override
     public GameInfo createGame(String playerName, int numOfPlayers, String gameName, String hostColor) {
@@ -138,39 +145,41 @@ public class ServerFacade implements IServer {
         Player player = new Player(playerName);
         player.setColor(hostColor);
         int position = game.addPlayerAtNextPosition(player);
-        if(position == -1)
+        if (position == -1)
             return null;
         return GameStateFactory.gameToGameState(game);
     }
 
     /**
      * adds a player to an existing game inside the ServerModel
+     *
+     * @param playerName the player to be added to the game
+     * @param gameID     the ID of the game to be added to
+     * @param color      the chosen color of the newPlayer
+     * @return returns the GameInfo if it exists, null if it does not exist or the player is already in the game
      * @pre newPlayer is a valid Player obj
      * @pre gameId is a non negative int
      * @pre host color is either "red", "blue", "yellow", "Black", or "green".
      * @post the player is added to the game if the game exists and the player is not already in it
-     * @param playerName the player to be added to the game
-     * @param gameID the ID of the game to be added to
-     * @param color the chosen color of the newPlayer
-     * @return returns the GameInfo if it exists, null if it does not exist or the player is already in the game
      */
     @Override
     public GameInfo joinGame(String playerName, int gameID, String color) {
         IServerGame game = model.getGame(gameID);
         Player player = new Player(playerName);
         player.setColor(color);
-        if(game == null) return null;
+        if (game == null) return null;
         int playerPosition = game.addPlayerAtNextPosition(player);
         //check to see of the player was added successfully
-        if(playerPosition == -1) return null;
+        if (playerPosition == -1) return null;
         return GameStateFactory.gameToGameState(game);
     }
 
     /**
      * gets the list of games from the ServerModel that are available to join
+     *
+     * @return a list of available games to join
      * @pre Username is not null, username characters are limited to letters, ^, *,  and _
      * @pre gameId is a non negative int
-     * @return a list of available games to join
      */
     @Override
     public List<GameDescription> getGames() {
@@ -180,11 +189,12 @@ public class ServerFacade implements IServer {
 
     /**
      * gets a specific GameInfo based on the given gameID
+     *
+     * @param gameID the ID of the game
+     * @return the GameInfo of the given gameID, returns null if the game does not exist
      * @pre Username is not null, username characters are limited to letters, ^, *,  and _
      * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
      * @pre gameId is a non negative int
-     * @param gameID the ID of the game
-     * @return the GameInfo of the given gameID, returns null if the game does not exist
      */
     @Override
     public Game getGame(int gameID) {
@@ -193,10 +203,11 @@ public class ServerFacade implements IServer {
 
     /**
      * gets the list of commands from the ServerModel that have not been executed yet by the client
-     * @pre the clientName is not null, username characters are limited to letters, ^, *,  and _
-     * @pre gameId is a non negative int
+     *
      * @param gameID the ID of the game to check for updates from
      * @return returns a list of commands to be executed on the client side, returns null if all commands are up to date
+     * @pre the clientName is not null, username characters are limited to letters, ^, *,  and _
+     * @pre gameId is a non negative int
      */
     @Override
     public ICommand getNextCommand(String playerName, int gameID) {
@@ -205,11 +216,12 @@ public class ServerFacade implements IServer {
 
     /**
      * gets a GameDescription from the ServerModel of the given gameID
+     *
+     * @param gameID the ID of the game
+     * @return the GameDescriptionn of the given gameID, null if the game does not exist
      * @pre Username is not null, username characters are limited to letters, ^, *,  and _
      * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
      * @pre gameId is a non negative int
-     * @param gameID the ID of the game
-     * @return the GameDescriptionn of the given gameID, null if the game does not exist
      */
     @Override
     public GameDescription getGameDescription(int gameID) {
@@ -236,11 +248,12 @@ public class ServerFacade implements IServer {
 
     /**
      * gets a GameInfo from the ServerModel with the given gameID
+     *
+     * @param gameID the ID of the game
+     * @return the GameInfo of the given gameID, null if the game does not exist
      * @pre Username is not null, username characters are limited to letters, ^, *,  and _
      * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
      * @pre gameId is a non negative int
-     * @param gameID the ID of the game
-     * @return the GameInfo of the given gameID, null if the game does not exist
      */
     @Override
     public GameInfo getGameState(int gameID) {
@@ -250,15 +263,16 @@ public class ServerFacade implements IServer {
 
     /**
      * draws a train card for the current player
+     *
+     * @param playerName the username of the player
+     * @param gameID     the ID of the game
+     * @param index      the index of the visible card to draw or -1 if drawing from bank
+     * @return a trainCard if there are enough, null otherwise
      * @pre Username is not null, username characters are limited to letters, ^, *,  and _
      * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
      * @pre gameId is a non negative int
      * @pre index is -1 through 4
      * @post the player recieves a train card and the trainCard deck is decremented
-     * @param playerName the username of the player
-     * @param gameID the ID of the game
-     * @param index the index of the visible card to draw or -1 if drawing from bank
-     * @return a trainCard if there are enough, null otherwise
      */
     @Override
     public TrainCard pickTrainCard(String playerName, int gameID, int index) {
@@ -276,30 +290,32 @@ public class ServerFacade implements IServer {
 
     /**
      * draws a destination card for the current player
+     *
+     * @param gameID the ID of the game
+     * @return a destination card if there are enough, null otherwise
      * @pre Username is not null, username characters are limited to letters, ^, *,  and _
      * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
      * @pre gameId is a non negative int
      * @post the player recieves a train card and the trainCard deck is decremented
-     * @param gameID the ID of the game
-     * @return a destination card if there are enough, null otherwise
      */
     @Override
     public DestinationCard drawDestinationCard(String playerName, int gameID) {
         IServerGame game = model.getGame(gameID);
-        if(game == null) return null;
+        if (game == null) return null;
         return game.drawDestinationCard(playerName);
     }
 
     /**
      * starts the game on the server
-     * @pre gameId is a non negative int
+     *
      * @param gameId the id of the game
      * @return true if the gameID is valid, false otherwise
+     * @pre gameId is a non negative int
      */
     @Override
     public boolean startGame(int gameId) {
         IServerGame game = model.getGame(gameId);
-        if(game == null) return false;
+        if (game == null) return false;
         game.setGameStarted();
         return true;
     }
@@ -311,19 +327,20 @@ public class ServerFacade implements IServer {
 
     /**
      * returns an unwanted destination card to the deck
+     *
+     * @param playerName the username of the player
+     * @param gameId     the id of the game
+     * @param card       the card to be returned
+     * @return true if the game exists, false otherwise
      * @pre playerName is not null, username characters are limited to letters, ^, *,  and _
      * @pre gameId is a non negative int
      * @pre DestinationCard is not null
      * @post the returned destinationCard is added to the deck and removed from the player's hand
-     * @param playerName the username of the player
-     * @param gameId the id of the game
-     * @param card the card to be returned
-     * @return true if the game exists, false otherwise
      */
     @Override
     public boolean returnDestinationCard(String playerName, int gameId, DestinationCard card) {
         IServerGame game = model.getGame(gameId);
-        if(game == null) return false;
+        if (game == null) return false;
         IServerBank bank = (IServerBank) game;
         bank.addDestinationCardToBottom(card);
         return true;
@@ -331,26 +348,32 @@ public class ServerFacade implements IServer {
 
     /**
      * discards a traincard
+     *
+     * @param playerName the username of the player
+     * @param gameId     the id of the game
+     * @param card       the card to be returned
+     * @return true if the game exists, false otherwise
      * @pre playerName is not null, username characters are limited to letters, ^, *,  and _
      * @pre gameId is a non negative int
      * @pre TrainCard is not null
      * @post the discarded destinationCard is added to the discard deck and removed from the player's hand
-     * @param playerName the username of the player
-     * @param gameId the id of the game
-     * @param card the card to be returned
-     * @return true if the game exists, false otherwise
      */
     @Override
     public boolean discardTrainCard(String playerName, int gameId, TrainCard card) {
         IServerGame game = model.getGame(gameId);
-        if(game == null) return false;
+        if (game == null) return false;
         IServerBank bank = (IServerBank) game;
         return true;
     }
 
     @Override
     public boolean claimRoute(String playerName, int gameId, int routeId) {
-        return false;
+        IServerGame game = model.getGame(gameId);
+        if (game == null) return false;
+        IPlayer player = game.getPlayerByName(playerName);
+        if (player == null) return false;
+        game.getRouteByID(routeId).setOwner(player);
+        return true;
     }
 
     @Override
