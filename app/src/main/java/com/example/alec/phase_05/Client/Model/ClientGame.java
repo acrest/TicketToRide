@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Client.Model;
 
+import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.EachGameState;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameMap;
@@ -15,17 +16,6 @@ public class ClientGame extends Game implements IClientGame {
 
     public ClientGame(int id, String name, int maxPlayers, IClientBank bank, GameMap gameMap) {
         super(id, name, maxPlayers, bank, gameMap);
-    }
-
-    @Override
-    public IPlayer getPlayerByName(String playerName) {
-        for (int i = 0; i < getMaxPlayers(); ++i) {
-            IPlayer player = getPlayer(i);
-            if (player != null && player.getName().equals(playerName)) {
-                return player;
-            }
-        }
-        return null;
     }
 
     @Override
@@ -56,5 +46,39 @@ public class ClientGame extends Game implements IClientGame {
     @Override
     public void setMap(GameMap map) {
         setGameMap(map);
+    }
+
+    @Override
+    public DestinationCard drawDestinationCard(String player) {
+        return gameState.drawDestinationCard(player);
+    }
+
+    @Override
+    public boolean putBackDestinationCard(String player, DestinationCard card) {
+        return gameState.putBackDestinationCard(player, card);
+    }
+
+    @Override
+    public TrainCard drawTrainCardFromDeck(String player) {
+        return null;
+    }
+
+    @Override
+    public TrainCard pickTrainCard(String player, int cardIndex) {
+        return gameState.pickTrainCard(player, cardIndex);
+    }
+
+    @Override
+    public void claimRoute(String player, int routeId) {
+        gameState.claimRoute(player, routeId);
+    }
+
+    @Override
+    public void endTurn(String player) {
+        gameState.endTurn(player);
+    }
+
+    public void setState(EachGameState state) {
+        gameState = state;
     }
 }
