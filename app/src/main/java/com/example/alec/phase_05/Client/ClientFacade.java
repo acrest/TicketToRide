@@ -2,13 +2,11 @@ package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.Model.ClientGameFactory;
 import com.example.alec.phase_05.Client.Model.ClientModel;
-import com.example.alec.phase_05.Shared.model.IPlayer;
-import com.example.alec.phase_05.Shared.model.OtherPlayer;
-import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.GameInfo;
+import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -36,10 +34,10 @@ public class ClientFacade {
         model.setGameList(games);
     }
 
-    public void createGame(GameState gameState) {
-        if (gameState != null) {
+    public void createGame(GameInfo gameInfo) {
+        if (gameInfo != null) {
             model.setCreateGameSuccess(true);
-            model.setCurrentGame(ClientGameFactory.createGame(gameState));
+            model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
             model.setHost(true);
             Poller.getInstance().setPlayerWatingPolling();
         } else {
@@ -48,10 +46,10 @@ public class ClientFacade {
 
     }
 
-    public void joinGame(GameState gameState) {
-        if (gameState != null) {
+    public void joinGame(GameInfo gameInfo) {
+        if (gameInfo != null) {
             model.setJoinGameSuccess(true);
-            model.setCurrentGame(ClientGameFactory.createGame(gameState));
+            model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
             model.setHost(false);
             Poller.getInstance().setPlayerWatingPolling();
         } else {
@@ -107,20 +105,21 @@ public class ClientFacade {
     }
 
     public void drawTrainCard(String playerName) {
+        model.decNumOfTrainCards();
         model.addTrainCard(playerName);
     }
 
-    public void setGameState(GameState gameState) {
+    public void setGameInfo(GameInfo gameInfo) {
         if (!model.hasCurrentGame()) {
-            model.setCurrentGame(ClientGameFactory.createGame(gameState));
+            model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
             return;
         }
-        if (model.getGameID() != gameState.getId() ||
-                !model.getGameName().equals(gameState.getName()) ||
-                model.getGameMaxPlayers() != gameState.getMaxPlayers()) {
-            throw new IllegalArgumentException("gameState must have the same name, id, and max players as the current game");
+        if (model.getGameID() != gameInfo.getId() ||
+                !model.getGameName().equals(gameInfo.getName()) ||
+                model.getGameMaxPlayers() != gameInfo.getMaxPlayers()) {
+            throw new IllegalArgumentException("gameInfo must have the same name, id, and max players as the current game");
         }
-        Player[] players = gameState.getPlayers();
+        Player[] players = gameInfo.getPlayers();
         for (int i = 0; i < players.length; ++i) {
             Player player = players[i];
             if (player != null) {
@@ -131,11 +130,11 @@ public class ClientFacade {
                 }
             }
         }
-        TrainCard[] visibleTrainCards = gameState.getVisibleTrainCards();
+        TrainCard[] visibleTrainCards = gameInfo.getVisibleTrainCards();
         for (int i = 0; i < players.length; ++i) {
             model.setVisibleCard(i, visibleTrainCards[i]);
         }
-        model.setMap(gameState.getMap());
+        model.setMap(gameInfo.getMap());
     }
 
     public void startGame() {
@@ -158,13 +157,20 @@ public class ClientFacade {
         model.addDestinationCard(card);
     }
 
-    public void executeCommand(ICommand command) {
-        command.execute();
+    public void claimRoute(String playerName, int routeId) {
+        model.setRouteOwner(playerName, routeId);
     }
 
-    public void executeCommands(List<BaseCommand> commands) {
-        for (BaseCommand command : commands) {
-            command.execute();
-        }
+    public void finishTurn(String playerName) {
+        //TODO
+    }
+
+    public void returnDestinationCard(String playerName) {
+        model.removeDestinationCard(playerName);
+        model.incNumOfDestinationCards();
+    }
+
+    public void executeCommand(ICommand command) {
+        command.execute();
     }
 }

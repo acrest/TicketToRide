@@ -4,11 +4,10 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
-import com.example.alec.phase_05.Shared.model.IPlayer;
-import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
@@ -134,10 +133,10 @@ public final class Demo {
 
     private void testAddDestinationCards() {
         System.out.println("testing add destination cards");
-        GameMap map = model.getGameMap();
-        model.addDestinationCard(new DestinationCard(map.getCities().get("Chicago"), map.getCities().get("Santa Fe"), 9));
-        model.addDestinationCard(new DestinationCard(map.getCities().get("Seattle"), map.getCities().get("New York"), 22));
-        model.addDestinationCard(new DestinationCard(map.getCities().get("New York"), map.getCities().get("Atlanta"), 6));
+        GameMap map=model.getMap();
+        model.addDestinationCard(new DestinationCard(map.getCityByName("Chicago"), map.getCityByName("Santa Fe"), 9));
+        model.addDestinationCard(new DestinationCard(map.getCityByName("Seattle"), map.getCityByName("New York"), 22));
+        model.addDestinationCard(new DestinationCard(map.getCityByName("New York"), map.getCityByName("Atlanta"), 6));
     }
 
     private void testRemoveDestinationCards() {
@@ -175,7 +174,7 @@ public final class Demo {
             System.out.println("there are no other players to test");
             return;
         }
-        model.addChat(new Chat(player, 0, "test chat 1", ClientModel.getInstance().findPlayerByName(player).getColor()));
+        model.addChat(new Chat(player, 0, "test chat 1", ClientModel.getInstance().getPlayerByName(player).getColor()));
     }
 
     private void testOtherAddTrainCards() {
@@ -209,7 +208,6 @@ public final class Demo {
             System.out.println("there are no other players to test");
             return;
         }
-        GameMap map = ClientModel.getInstance().getGameMap();
         model.addDestinationCard(player);
         model.addDestinationCard(player);
         model.addDestinationCard(player);

@@ -1,14 +1,13 @@
 package com.example.alec.phase_05.Server.model;
 
-import com.example.alec.phase_05.Server.command.ServerGetGameStartedCommand;
 import com.example.alec.phase_05.Server.command.ServerResult;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
-import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.Game;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.GameInfo;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.IServer;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -57,7 +56,7 @@ public class ServerFacade implements IServer {
         if(command instanceof GameCommand) {
             GameCommand gameCommand = (GameCommand) command;
             ServerGame game = model.getGame(gameCommand.getGameId());
-            game.getCommandManager().addCommand(gameCommand);
+            game.addCommand(gameCommand);
             r = gameCommand.execute();
         } else {
             r = command.execute();
@@ -128,7 +127,7 @@ public class ServerFacade implements IServer {
      * @return the game state of the newly created game
      */
     @Override
-    public GameState createGame(String playerName, int numOfPlayers, String gameName, String hostColor) {
+    public GameInfo createGame(String playerName, int numOfPlayers, String gameName, String hostColor) {
         //    {"gameName":"Hillary Clinton","hostColor":"green","numberOfPlayers":4,"password":"55","userName":"andrew","commandName":"CreateGame"}     example requestbody. Used for fake client.
 //        Player[] players = new Player[numOfPlayers];
 //        String[] colors = new String[numOfPlayers];
@@ -153,10 +152,10 @@ public class ServerFacade implements IServer {
      * @param playerName the player to be added to the game
      * @param gameID the ID of the game to be added to
      * @param color the chosen color of the newPlayer
-     * @return returns the GameState if it exists, null if it does not exist or the player is already in the game
+     * @return returns the GameInfo if it exists, null if it does not exist or the player is already in the game
      */
     @Override
-    public GameState joinGame(String playerName, int gameID, String color) {
+    public GameInfo joinGame(String playerName, int gameID, String color) {
         IServerGame game = model.getGame(gameID);
         Player player = new Player(playerName);
         player.setColor(color);
@@ -180,12 +179,12 @@ public class ServerFacade implements IServer {
     }
 
     /**
-     * gets a specific GameState based on the given gameID
+     * gets a specific GameInfo based on the given gameID
      * @pre Username is not null, username characters are limited to letters, ^, *,  and _
      * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
      * @pre gameId is a non negative int
      * @param gameID the ID of the game
-     * @return the GameState of the given gameID, returns null if the game does not exist
+     * @return the GameInfo of the given gameID, returns null if the game does not exist
      */
     @Override
     public Game getGame(int gameID) {
@@ -236,15 +235,15 @@ public class ServerFacade implements IServer {
 //    }
 
     /**
-     * gets a GameState from the ServerModel with the given gameID
+     * gets a GameInfo from the ServerModel with the given gameID
      * @pre Username is not null, username characters are limited to letters, ^, *,  and _
      * @pre Password is not null, password characters rare limited to letters, numbers, ^, *, and _
      * @pre gameId is a non negative int
      * @param gameID the ID of the game
-     * @return the GameState of the given gameID, null if the game does not exist
+     * @return the GameInfo of the given gameID, null if the game does not exist
      */
     @Override
-    public GameState getGameState(int gameID) {
+    public GameInfo getGameState(int gameID) {
         IServerGame game = model.getGame(gameID);
         return GameStateFactory.gameToGameState(game);
     }
@@ -305,6 +304,11 @@ public class ServerFacade implements IServer {
         return true;
     }
 
+    @Override
+    public boolean finishTurn(String playerName, int gameId) {
+        return false; //TODO
+    }
+
     /**
      * returns an unwanted destination card to the deck
      * @pre playerName is not null, username characters are limited to letters, ^, *,  and _
@@ -317,11 +321,11 @@ public class ServerFacade implements IServer {
      * @return true if the game exists, false otherwise
      */
     @Override
-    public boolean putBackDestinationCard(String playerName, int gameId, DestinationCard card) {
+    public boolean returnDestinationCard(String playerName, int gameId, DestinationCard card) {
         IServerGame game = model.getGame(gameId);
         if(game == null) return false;
         IServerBank bank = (IServerBank) game;
-        //bank.addDestinationCardToBottom( , card); //TODO: not sure what the id is
+        bank.addDestinationCardToBottom(card);
         return true;
     }
 
@@ -341,7 +345,6 @@ public class ServerFacade implements IServer {
         IServerGame game = model.getGame(gameId);
         if(game == null) return false;
         IServerBank bank = (IServerBank) game;
-        //bank.d( , card); //TODO
         return true;
     }
 
@@ -355,9 +358,9 @@ public class ServerFacade implements IServer {
         return null;
     }
 
-    public ServerGetGameStartedCommand getGameStartedCommand(String playerName, int gameId) {
-        return null;
-    }
+//    public ServerGetGameStartedCommand getGameStartedCommand(String playerName, int gameId) {
+//        return null;
+//    }
 
     /**
      * gets the serverGameStartedCommand

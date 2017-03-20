@@ -5,12 +5,19 @@ import com.example.alec.phase_05.Server.model.IServerBank;
 import com.example.alec.phase_05.Server.model.ServerBank;
 import com.example.alec.phase_05.Server.model.ServerGame;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static com.example.alec.phase_05.Shared.model.TrainType.*;
+import static com.example.alec.phase_05.Shared.model.TrainType.ANY;
+import static com.example.alec.phase_05.Shared.model.TrainType.BOX;
+import static com.example.alec.phase_05.Shared.model.TrainType.CABOOSE;
+import static com.example.alec.phase_05.Shared.model.TrainType.COAL;
+import static com.example.alec.phase_05.Shared.model.TrainType.FREIGHT;
+import static com.example.alec.phase_05.Shared.model.TrainType.HOPPER;
+import static com.example.alec.phase_05.Shared.model.TrainType.LOCOMOTIVE;
+import static com.example.alec.phase_05.Shared.model.TrainType.PASSENGER;
+import static com.example.alec.phase_05.Shared.model.TrainType.REEFER;
+import static com.example.alec.phase_05.Shared.model.TrainType.TANKER;
 
 /**
  * Created by samuel on 2/23/17.
@@ -18,7 +25,8 @@ import static com.example.alec.phase_05.Shared.model.TrainType.*;
 
 public final class GameComponentFactory {
 
-    private GameComponentFactory() {}
+    private GameComponentFactory() {
+    }
 
     public static ServerGame createGame(int id, String name, int maxPlayers) {
         Map<String, City> cities = createCities();
@@ -47,26 +55,26 @@ public final class GameComponentFactory {
         return new GameMap(cities, routes);
     }
 
-    public static List<TrainCard> createTrainCardDeck() {
-        List<TrainCard> deck = new ArrayList<>();
-        for(int i = 0; i < 12; ++i) {
-            deck.add(new TrainCard(BOX));
-            deck.add(new TrainCard(PASSENGER));
-            deck.add(new TrainCard(TANKER));
-            deck.add(new TrainCard(REEFER));
-            deck.add(new TrainCard(FREIGHT));
-            deck.add(new TrainCard(HOPPER));
-            deck.add(new TrainCard(COAL));
-            deck.add(new TrainCard(CABOOSE));
-            deck.add(new TrainCard(LOCOMOTIVE));
+    public static TrainCardDeck createTrainCardDeck() {
+        TrainCardDeck deck = new TrainCardDeck();
+        for (int i = 0; i < 12; ++i) {
+            deck.addCard(new TrainCard(BOX));
+            deck.addCard(new TrainCard(PASSENGER));
+            deck.addCard(new TrainCard(TANKER));
+            deck.addCard(new TrainCard(REEFER));
+            deck.addCard(new TrainCard(FREIGHT));
+            deck.addCard(new TrainCard(HOPPER));
+            deck.addCard(new TrainCard(COAL));
+            deck.addCard(new TrainCard(CABOOSE));
+            deck.addCard(new TrainCard(LOCOMOTIVE));
         }
-        deck.add(new TrainCard(LOCOMOTIVE));
-        deck.add(new TrainCard(LOCOMOTIVE));
+        deck.addCard(new TrainCard(LOCOMOTIVE));
+        deck.addCard(new TrainCard(LOCOMOTIVE));
         return deck;
     }
 
-    public static Map<Integer,DestinationCard> createDestinationCardDeck(Map<String, City> cities) {
-        Map<Integer,DestinationCard> deck = new HashMap<>();
+    public static DestinationCardDeck createDestinationCardDeck(Map<String, City> cities) {
+        Map<Integer, DestinationCard> deck = new HashMap<>();
         deck.put(1, new DestinationCard(cities.get("Denver"), cities.get("El Paso"), 4));
         deck.put(2, new DestinationCard(cities.get("Kansas City"), cities.get("Houston"), 5));
         deck.put(3, new DestinationCard(cities.get("New York"), cities.get("Atlanta"), 6));
@@ -97,7 +105,7 @@ public final class GameComponentFactory {
         deck.put(28, new DestinationCard(cities.get("Los Angeles"), cities.get("Miami"), 20));
         deck.put(29, new DestinationCard(cities.get("Los Angeles"), cities.get("New York"), 21));
         deck.put(30, new DestinationCard(cities.get("Seattle"), cities.get("New York"), 22));
-        return deck;
+        return new DestinationCardDeck(deck.values());
     }
 
     public static Map<String, City> createCities() {
