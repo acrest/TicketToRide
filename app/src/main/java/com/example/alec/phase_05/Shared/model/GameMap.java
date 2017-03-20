@@ -1,7 +1,5 @@
 package com.example.alec.phase_05.Shared.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,7 +7,6 @@ import java.util.Map;
  */
 
 public class GameMap {
-
     private Map<String, City> cities;
     private Map<Integer, Route> routes;
 
@@ -18,11 +15,19 @@ public class GameMap {
         this.routes = routes;
     }
 
-    public Map<String, City> getCities() {
-        return cities;
+    public City getCityByName(String name){
+        return cities.get(name);
     }
 
-    public Map<Integer, Route> getRoutes() {
-        return routes;
+    public void addCity(City city){
+        cities.put(city.getName(), city);
+    }
+
+    public Route getRouteByID(int routeID){
+        return routes.get(routeID);
+    }
+
+    public void addRoute(Route route){
+        routes.put(route.getId(), route);
     }
 }

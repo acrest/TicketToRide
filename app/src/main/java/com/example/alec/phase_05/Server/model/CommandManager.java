@@ -1,11 +1,21 @@
 package com.example.alec.phase_05.Server.model;
 
+import com.example.alec.phase_05.Server.command.ServerClaimRouteCommand;
+import com.example.alec.phase_05.Server.command.ServerClaimedRouteCommand;
+import com.example.alec.phase_05.Server.command.ServerDiscardTrainCardCommand;
+import com.example.alec.phase_05.Server.command.ServerDrawDestinationCardCommand;
+import com.example.alec.phase_05.Server.command.ServerDrawTrainCardCommand;
+import com.example.alec.phase_05.Server.command.ServerDrawnDestinationCardCommand;
+import com.example.alec.phase_05.Server.command.ServerDrawnTrainCardCommand;
+import com.example.alec.phase_05.Server.command.ServerFinishTurnCommand;
+import com.example.alec.phase_05.Server.command.ServerFinishedTurnCommand;
 import com.example.alec.phase_05.Server.command.ServerGameStartedCommand;
-import com.example.alec.phase_05.Server.command.ServerStartGameCommand;
-import com.example.alec.phase_05.Shared.command.BaseCommand;
+import com.example.alec.phase_05.Server.command.ServerPickedTrainCardCommand;
+import com.example.alec.phase_05.Server.command.ServerReturnDestinationCardCommand;
+import com.example.alec.phase_05.Server.command.ServerReturnedDestinationCard;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.command.ServerPickTrainCardCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +48,10 @@ public class CommandManager {
     public ICommand recentCommand(String playerName) {
         int commandIndex = getCommandIndex(playerName);
         ICommand command;
-        if(commandIndex == -1) {
+        if (commandIndex == -1) {
             command = new ServerGameStartedCommand(GameStateFactory.gameToGameState(game));
         } else {
-            command = commandIndex < commands.size() ? createCorrospondingCommand(commands.get(commandIndex)) : null;
+            command = commandIndex < commands.size() ? createCorrespondingCommand(commands.get(commandIndex)) : null;
         }
         setCommandIndex(playerName, commandIndex + 1);
         return command;
@@ -55,7 +65,7 @@ public class CommandManager {
 //        System.out.println("command size is " + commands.size());
 
 //        if(commandIndex == 0) {
-//            GameState gameState = GameStateFactory.gameToGameState(game);
+//            GameInfo gameState = GameStateFactory.gameToGameState(game);
 //            ServerGameStartedCommand command = new ServerGameStartedCommand(gameState);
 //            recCommands.add(command);
 //        }
@@ -75,7 +85,7 @@ public class CommandManager {
 
 //        System.out.println("recentCommands called");
 //        if (hasServerStartGame()) { //temporary code
-//            GameState state = GameStateFactory.gameToGameState(game);
+//            GameInfo state = GameStateFactory.gameToGameState(game);
 //            if (state == null) {
 //                System.out.println("got null game state");
 //                System.out.println("game = " + game);
@@ -94,7 +104,24 @@ public class CommandManager {
 //        return false;
 //    }
 
-    private ICommand createCorrospondingCommand(GameCommand command) {
+    private ICommand createCorrespondingCommand(GameCommand command) {
+        if (command instanceof ServerClaimRouteCommand) {
+            return new ServerClaimedRouteCommand(command.getPlayerName(), ((ServerClaimRouteCommand) command).getRouteId());
+        } else if (command instanceof ServerDiscardTrainCardCommand) {
+            return null; //not sure if we are going to use this command
+        } else if (command instanceof ServerDrawDestinationCardCommand) {
+            return new ServerDrawnDestinationCardCommand(command.getPlayerName());
+        } else if (command instanceof ServerDrawTrainCardCommand) {
+            return new ServerDrawnTrainCardCommand(command.getPlayerName());
+        } else if (command instanceof ServerFinishTurnCommand) {
+            return new ServerFinishedTurnCommand(command.getPlayerName());
+        } else if (command instanceof ServerPickTrainCardCommand) {
+            int cardIndex = ((ServerPickTrainCardCommand) command).getCardIndex();
+            return new ServerPickedTrainCardCommand(command.getPlayerName(), cardIndex, game.getVisibleCard(cardIndex));
+        } else if (command instanceof ServerReturnDestinationCardCommand) {
+            return new ServerReturnedDestinationCard(command.getPlayerName());
+        }
+
         return null;
     }
 

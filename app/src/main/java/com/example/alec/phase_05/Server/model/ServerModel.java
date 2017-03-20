@@ -1,12 +1,9 @@
 package com.example.alec.phase_05.Server.model;
 
-import com.example.alec.phase_05.Shared.command.BaseCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.PlayerCredentials;
-import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,6 +134,6 @@ public class ServerModel {
     public ICommand getNextCommand(String playerName, int gameID) {
         IServerGame game = getGame(gameID);
         if(game == null || !game.isGameStarted()) return null;
-        return game.getCommandManager().recentCommand(playerName);
+        return game.recentCommand(playerName);
     }
 }

@@ -1,20 +1,20 @@
 package com.example.alec.phase_05.Shared.command;
 
-import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.GameInfo;
 
 /**
  * Created by samuel on 3/2/17.
  */
 
 public abstract class GameStartedCommand extends BaseCommand {
-    private GameState gameState;
+    private GameInfo gameInfo;
 
-    public GameStartedCommand(GameState gameState) {
+    public GameStartedCommand(GameInfo gameInfo) {
         super("GameStarted");
-        this.gameState = gameState;
+        this.gameInfo = gameInfo;
     }
 
-    public GameState getGameState() {
-        return gameState;
+    public GameInfo getGameInfo() {
+        return gameInfo;
     }
 }
