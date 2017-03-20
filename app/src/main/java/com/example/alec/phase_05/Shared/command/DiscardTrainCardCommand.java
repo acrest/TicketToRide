@@ -7,11 +7,10 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
  */
 
 public abstract class DiscardTrainCardCommand extends GameCommand {
-
     private TrainCard card;
 
-    public DiscardTrainCardCommand(String userName, String password, int gameID, TrainCard card) {
-        super("DiscardTrainCard", userName, password, gameID);
+    public DiscardTrainCardCommand(String playerName, int gameID, TrainCard card) {
+        super("DiscardTrainCard", playerName, gameID);
         this.card = card;
     }
 

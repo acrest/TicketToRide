@@ -7,6 +7,5 @@ import java.util.Observer;
  */
 
 public interface IPresenterLobby extends IPresenter {
-
     void onStartGameButtonPressed();
 }

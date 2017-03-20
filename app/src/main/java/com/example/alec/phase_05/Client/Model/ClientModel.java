@@ -5,7 +5,8 @@ import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameMap;
-import com.example.alec.phase_05.Shared.model.IGame;
+import com.example.alec.phase_05.Shared.model.IPlayer;
+import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -19,6 +20,10 @@ import java.util.Observable;
 
 public class ClientModel extends Observable {
 
+    public static String LOGIN_SUCCESS = "login success";
+    public static String LOGIN_FAILURE = "login failure";
+    public static String REGISTER_SUCCESS = "register success";
+    public static String REGISTER_FAILURE = "register failure";
     public static String GAME_LIST = "game list";
     public static String CREATE_GAME_SUCCESS = "create game success";
     public static String CREATE_GAME_FAILURE = "create game failure";
@@ -30,6 +35,7 @@ public class ClientModel extends Observable {
     public static String PLAYER_TRAIN_CARDS = "player train cards";
     public static String VISIBLE_TRAIN_CARDS = "visible train cards";
     public static String NUM_DESTINATION_CARDS = "num destination cards";
+    public static String NUM_TRAIN_CARDS = "num train cards";
     public static String PLAYER_DESTINATION_CARDS = "player destination cards";
     public static String GAME_MAP = "game map";
     public static String CHAT = "chat";
@@ -40,7 +46,7 @@ public class ClientModel extends Observable {
     private static ClientModel instance = null;
 
     public static ClientModel getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new ClientModel();
         return instance;
     }
@@ -48,65 +54,29 @@ public class ClientModel extends Observable {
     private List<GameDescription> gameList;
     private List<Chat> chats;
     private IClientGame currentGame;
-    private Player currentPlayer;
+    private String currentPlayerName;
+    private boolean isHost;
 
     public ClientModel() {
         currentGame = null;
-        currentPlayer = null;
+        currentPlayerName = null;
         gameList = null;
         chats = new ArrayList<>();
+        isHost = false;
     }
 
-//    public IClientGame getCurrentGame() {
-//        return currentGame;
-//    }
-
-//    public void addPlayerToGame(Player player, String color) {
-//        player.setColor(color);
-//        currentGame.addPlayerAtNextPosition(player);
-//        notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
-//    }
-
-//    public GameDescription getCurrentGameDescription() {
-//        return currentGameDescription;
-//    }
-
-//    public void setCurrentGameDescription(GameDescription gameDescription) {
-//        currentGameDescription = gameDescription;
-//        notifyPropertyChanges(NUM_PLAYERS_IN_GAME);
-//    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
+    public IPlayer getCurrentPlayer() {
+        if (currentGame == null) return null;
+        return currentGame.getPlayerByName(currentPlayerName);
     }
 
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
+    public void setCurrentPlayerName(String currentPlayerName) {
+        this.currentPlayerName = currentPlayerName;
     }
 
-//    public void addGameToList(GameDescription game) {
-//        gameList.add(game);
-//        notifyPropertyChanges(GAME_LIST);
-//    }
-
-//    public boolean hasGameInList(GameDescription game) {
-//        return gameList.contains(game);
-//    }
-
-//    public boolean hasGameInList(int gameID) {
-//        GameDescription dummyGame = new GameDescription(gameID, null, 0, null);
-//        return gameList.contains(dummyGame );
-//    }
-
-//    public void removeGameFromList(GameDescription game) {
-//        gameList.remove(game);
-//        notifyPropertyChanges(GAME_LIST);
-//    }
-
-//    public void removeGameFromList(int gameID) {
-//        GameDescription dummyGame = new GameDescription(gameID, null, 0, null);
-//        removeGameFromList(dummyGame);
-//    }
+    public String getCurrentPlayerName() {
+        return currentPlayerName;
+    }
 
     public List<GameDescription> getGameList() {
         return gameList;
@@ -119,8 +89,11 @@ public class ClientModel extends Observable {
 
     public void setCurrentGame(IClientGame currentGame) {
         this.currentGame = currentGame;
-        currentPlayer = currentGame.findPlayerByName(currentPlayer.getName());
         notifyPropertyChanges(CURRENT_GAME);
+    }
+
+    public IClientGame getGame() {
+        return currentGame;
     }
 
     public boolean hasCurrentGame() {
@@ -139,94 +112,115 @@ public class ClientModel extends Observable {
         return currentGame.getMaxPlayers();
     }
 
-    public void setPlayer(int index, Player player) {
-        if(currentGame == null) return;
+    public void setPlayer(int index, IPlayer player) {
+        if (currentGame == null) return;
         currentGame.setPlayer(index, player);
-//        if(currentPlayer.getName().equals(player.getName())) {
-//            currentPlayer = player;
-//        }
         notifyPropertyChanges(PLAYER_IN_GAME, NUM_PLAYERS_IN_GAME);
     }
 
-    public Player getPlayer(int index) {
-        if(currentGame == null) return null;
+    public IPlayer getPlayer(int index) {
+        if (currentGame == null) return null;
         return currentGame.getPlayer(index);
     }
 
-    public void addTrainCard(String playerName, TrainCard card) {
-        if(currentGame == null) return;
-        Player player = currentGame.findPlayerByName(playerName);
-        if(player == null) return;
-        player.addTrainCard(card);
+    public IPlayer getPlayerByName(String playerName) {
+        if (currentGame == null) return null;
+        return currentGame.getPlayerByName(playerName);
+    }
+
+    public void addTrainCard(String playerName) {
+        if (currentGame == null) return;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null || !(player instanceof OtherPlayer)) return;
+        OtherPlayer otherPlayer = (OtherPlayer) player;
+        otherPlayer.setTrainCardCount(otherPlayer.getTrainCardCount() + 1);
         notifyPropertyChanges(PLAYER_TRAIN_CARDS);
     }
 
     public void addTrainCard(TrainCard card) {
-        if(currentPlayer == null) return;
-        currentPlayer.addTrainCard(card);
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null || !(currentPlayer instanceof Player)) return;
+        ((Player) currentPlayer).addTrainCard(card);
         notifyPropertyChanges(PLAYER_TRAIN_CARDS);
     }
 
     public void setVisibleCard(int index, TrainCard card) {
-        if(currentGame == null) return;
-        IClientBank bank = (IClientBank) currentGame.getBank();
-        bank.setVisibleCard(index, card);
-        notifyPropertyChanges(VISIBLE_TRAIN_CARDS);
-    }
-
-    public void setVisibleCards(List<TrainCard> cards) {
-        if(currentGame == null) return;
-        IClientBank bank = (IClientBank) currentGame.getBank();
-        for(int i = 0; i < cards.size(); ++i) {
-            bank.setVisibleCard(i, cards.get(i));
-        }
+        if (currentGame == null) return;
+        currentGame.setVisibleCard(index, card);
         notifyPropertyChanges(VISIBLE_TRAIN_CARDS);
     }
 
     public TrainCard getVisibleTrainCard(int index) {
-        if(currentGame == null) return null;
-        IClientBank bank = (IClientBank) currentGame.getBank();
-        return bank.getVisibleCard(index);
+        if (currentGame == null) return null;
+        return currentGame.getVisibleCard(index);
     }
 
+//    public void setVisibleCards(List<TrainCard> cards) {
+//        if (currentGame == null) return;
+//        IClientBank bank = (IClientBank) currentGame.getBank();
+//        for (int i = 0; i < cards.size(); ++i) {
+//            bank.setVisibleCard(i, cards.get(i));
+//        }
+//        notifyPropertyChanges(VISIBLE_TRAIN_CARDS);
+//    }
+
     public void decNumOfDestinationCards() {
-        if(currentGame == null) return;
-        IClientBank bank = (IClientBank) currentGame.getBank();
-        bank.decNumberOfDestinationCards();
+        if (currentGame == null) return;
+        currentGame.decNumberOfDestinationCards();
         notifyPropertyChanges(NUM_DESTINATION_CARDS);
     }
 
-    public void addDestinationCard(String playerName, DestinationCard card) {
-        if(currentGame == null) return;
-        Player player = currentGame.findPlayerByName(playerName);
-        if(player == null) return;
-        player.addDestinationCard(card);
+    public void incNumOfDestinationCards() {
+        if (currentGame == null) return;
+        currentGame.incNumberOfDestinationCards();
+        notifyPropertyChanges(NUM_DESTINATION_CARDS);
+    }
+
+    public void decNumOfTrainCards() {
+        if (currentGame == null) return;
+        currentGame.decNumberOfTrainCards();
+        notifyPropertyChanges(NUM_TRAIN_CARDS);
+    }
+
+    public void addDestinationCard(String playerName) {
+        if (currentGame == null) return;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null || !(player instanceof OtherPlayer)) return;
+        OtherPlayer otherPlayer = (OtherPlayer) player;
+        otherPlayer.setDestinationCardCount(otherPlayer.getDestinationCardCount() + 1);
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
 
     public void addDestinationCard(DestinationCard card) {
-        if(currentPlayer == null) return;
-        currentPlayer.addDestinationCard(card);
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null || !(currentPlayer instanceof Player)) return;
+        ((Player) currentPlayer).addDestinationCard(card);
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
 
+    public List<DestinationCard> getDestinationCards() {
+        IPlayer player = getCurrentPlayer();
+        if (player == null || !(player instanceof Player)) return null;
+        return ((Player) player).getDestinationCards();
+    }
+
+    public void setTrainCount(int count) {
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null) return;
+        currentPlayer.setTrainCount(count);
+    }
+
     public void setTrainCount(String playerName, int count) {
-        if(currentGame == null) return;
-        Player player = currentGame.findPlayerByName(playerName);
-        if(player == null) return;
+        if (currentGame == null) return;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null) return;
         player.setTrainCount(count);
         notifyPropertyChanges(PLAYER_TRAIN_COUNT);
     }
 
     public int getNumberPlayers() {
-        if(currentGame == null) return 0;
+        if (currentGame == null) return 0;
         return currentGame.getNumberPlayers();
-    }
-
-    public void setMap(GameMap map) {
-        if(currentGame == null) return;
-        currentGame.setMap(map);
-        notifyPropertyChanges(GAME_MAP);
     }
 
     public void addChat(Chat chat) {
@@ -238,112 +232,167 @@ public class ClientModel extends Observable {
         return chats;
     }
 
-    public void addPlayerPoints(String playerName, int points) {
-        if(currentGame == null) return;
-        Player player = currentGame.findPlayerByName(playerName);
-        if(player == null) return;
-        player.addPoints(points);
+//    public void addPlayerPoints(int points) {
+//        if (currentGame == null) return;
+//        getCurrentPlayer().addPoints(points);
+//    }
+
+//    public void addPlayerPoints(String playerName, int points) {
+//        if (currentGame == null) return;
+//        OtherPlayer player = currentGame.getPlayerByName(playerName);
+//        if (player == null) return;
+//        player.setPoints(player.getPoints() + points);
+//        notifyPropertyChanges(PLAYER_POINTS);
+//    }
+
+    public void setPlayerPoints(int points) {
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null) return;
+        currentPlayer.setPoints(points);
+    }
+
+    public void setPlayerPoints(String playerName, int points) {
+        if (currentGame == null) return;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null) return;
+        player.setPoints(points);
         notifyPropertyChanges(PLAYER_POINTS);
     }
 
+    public int getPlayerPoints() {
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null) return 0;
+        return currentPlayer.getPoints();
+    }
+
     public int getPlayerPoints(String playerName) {
-        if(currentGame == null) return 0;
-        Player player = currentGame.findPlayerByName(playerName);
-        if(player == null) return 0;
-        return player.getPointCount();
+        if (currentGame == null) return 0;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null) return 0;
+        return player.getPoints();
     }
 
     public void setRouteOwner(String playerName, int routeId) {
-        if(currentGame == null) return;
-        Player player = currentGame.findPlayerByName(playerName);
-        if(player == null) return;
-        currentGame.getMap().getRoutes().get(routeId).setOwner(player);
+        if (currentGame == null) return;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null) return;
+        currentGame.getRouteByID(routeId).setOwner(player);
         notifyPropertyChanges(GAME_MAP);
     }
 
-    public GameMap getGameMap() {
-        if(currentGame == null) return null;
-        return currentGame.getMap();
+    public int getDestinationCardCount(String playerName) {
+        if (currentGame == null) return 0;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null) return 0;
+        return player.getDestinationCardCount();
     }
 
-    public int getNumberOfDestinationCards(String playerName) {
-        if(currentGame == null) return 0;
-        Player player = currentGame.findPlayerByName(playerName);
-        if(player == null) return 0;
-        return player.getDestinationCards().size(); //TODO: not sure if this is a good idea (requires seeing other player's destination cards
-    }
-
-    public int getNumberOfTrainCards(String playerName) {
-        if(currentGame == null) return 0;
-        Player player = currentGame.findPlayerByName(playerName);
-        if(player == null) return 0;
-        return player.getTrainCards().size(); //TODO: not sure if this is a good idea (requires seeing other player's train cards
+    public int getTrainCardCount(String playerName) {
+        if (currentGame == null) return 0;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null) return 0;
+        return player.getTrainCardCount();
     }
 
     public void setGameStarted() {
-        System.out.println("setGameStarted called in ClientModel");
-        if(currentGame == null) return;
+        if (currentGame == null) return;
         currentGame.setGameStarted();
         notifyPropertyChanges(GAME_START);
     }
 
     public void removeTrainCard(int index) {
-        if(currentPlayer == null) return;
-        currentPlayer.getTrainCards().remove(index);
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null || !(currentPlayer instanceof Player)) return;
+        ((Player) currentPlayer).removeTrainCard(index);
         notifyPropertyChanges(PLAYER_TRAIN_CARDS);
     }
 
-    public void removeTrainCard(String playerName, int index) {
-        if(currentGame == null) return;
-        Player player = currentGame.findPlayerByName(playerName);
-        if(player == null) return;
-        player.getTrainCards().remove(index);
+    public List<TrainCard> getTrainCards() {
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null || !(currentPlayer instanceof Player)) return null;
+        return ((Player) currentPlayer).getTrainCards();
+    }
+
+    public void removeTrainCard(String playerName) {
+        if (currentGame == null) return;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null || !(player instanceof OtherPlayer)) return;
+        OtherPlayer otherPlayer = (OtherPlayer) player;
+        otherPlayer.setTrainCardCount(otherPlayer.getTrainCardCount() - 1);
         notifyPropertyChanges(PLAYER_TRAIN_CARDS);
     }
+
     public void removeDestinationCard(int index) {
-        if(currentPlayer == null) return;
-        currentPlayer.getDestinationCards().remove(index);
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null || !(currentPlayer instanceof Player)) return;
+        ((Player) currentPlayer).removeDestinationCard(index);
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
 
-    public void removeDestinationCard(String playerName, int index) {
-        if(currentGame == null) return;
-        Player player = currentGame.findPlayerByName(playerName);
-        if(player == null) return;
-        player.getDestinationCards().remove(index);
+    public void removeDestinationCard(String playerName) {
+        if (currentGame == null) return;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null || !(player instanceof OtherPlayer)) return;
+        OtherPlayer otherPlayer = (OtherPlayer) player;
+        otherPlayer.setDestinationCardCount(otherPlayer.getDestinationCardCount() - 1);
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
 
     public void setCreateGameSuccess(boolean success) {
-        if(success) {
-            currentPlayer.setHost(true);
+        if (success) {
+            isHost = true;
             notifyPropertyChanges(CREATE_GAME_SUCCESS);
         } else {
             notifyPropertyChanges(CREATE_GAME_FAILURE);
         }
     }
+
     public void setJoinGameSuccess(boolean success) {
-        if(success) {
-            currentPlayer.setHost(false);
+        if (success) {
+            isHost = false;
             notifyPropertyChanges(JOIN_GAME_SUCCESS);
         } else {
             notifyPropertyChanges(JOIN_GAME_FAILURE);
         }
     }
 
-//    public void joinGame(GameDescription gameDescription) {
-//        if(gameDescription != null) {
-//            currentGame = GameComponentFactory.createGame(gameDescription.getID(), gameDescription.getName(), gameDescription.getMaxPlayers());
-//            currentGame.setPlayers(gameDescription.getPlayers());
-//            notifyPropertyChanges(JOIN_GAME_SUCCESS);
-//        } else {
-//            notifyPropertyChanges(JOIN_GAME_FAILURE);
-//        }
-//    }
+    public boolean isHost() {
+        return isHost;
+    }
+
+    public void setLoginSuccess(boolean success) {
+        if (success) {
+            notifyPropertyChanges(LOGIN_SUCCESS);
+        } else {
+            notifyPropertyChanges(LOGIN_FAILURE);
+        }
+    }
+
+    public void setRegisterSuccess(boolean success) {
+        if (success) {
+            notifyPropertyChanges(REGISTER_SUCCESS);
+        } else {
+            notifyPropertyChanges(REGISTER_FAILURE);
+        }
+    }
+
+    public GameMap getMap() {
+        if (currentGame == null) return null;
+        return currentGame.getMap();
+    }
+
+    public void setMap(GameMap map) {
+        if (currentGame == null) return;
+        currentGame.setMap(map);
+    }
+
+    public void setHost(boolean host) {
+        this.isHost = host;
+    }
 
     private void notifyPropertyChanges(String... properties) {
         UpdateIndicator u = new UpdateIndicator();
-        for(String property : properties) {
+        for (String property : properties) {
             u.addProperty(property);
         }
         setChanged();

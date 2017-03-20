@@ -9,8 +9,8 @@ import com.example.alec.phase_05.Shared.model.Route;
  */
 
 public class ClientClaimRouteCommand extends ClaimRouteCommand {
-    public ClientClaimRouteCommand(String userName, String password, int gameID, Route route) {
-        super(userName, password, gameID, route);
+    public ClientClaimRouteCommand(String playerName, int gameID, int routeId) {
+        super(playerName, gameID, routeId);
     }
 
     @Override

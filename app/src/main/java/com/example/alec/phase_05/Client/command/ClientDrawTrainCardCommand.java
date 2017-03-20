@@ -12,9 +12,8 @@ import java.util.List;
  */
 
 public class ClientDrawTrainCardCommand extends DrawTrainCardCommand {
-
-    public ClientDrawTrainCardCommand(String userName, String password, int gameID, int cardIndex) {
-        super(userName, password, gameID, cardIndex);
+    public ClientDrawTrainCardCommand(String playerName, int gameID) {
+        super(playerName, gameID);
     }
 
     public Result execute() {

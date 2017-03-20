@@ -1,22 +1,19 @@
 package com.example.alec.phase_05.Server.command;
 
-import com.example.alec.phase_05.Server.ServerFacade;
+import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.*;
-import com.example.alec.phase_05.Shared.model.Player;
 
 /**
  * Submits a login request to the server facade.
  * Created by samuel on 2/4/17.
  */
-public class ServerLoginCommand extends AbstractLoginCommand
-{
+public class ServerLoginCommand extends LoginCommand {
     /**
-     * Should not be used.
-     * Instances of this class will be created by deserialization of the corresponding client class.
+     * @param username username of client
+     * @param password password of client
      */
-    public ServerLoginCommand()
-    {
-        super(null, null);
+    public ServerLoginCommand(String username, String password) {
+        super(username, password);
     }
 
     /**
@@ -24,11 +21,9 @@ public class ServerLoginCommand extends AbstractLoginCommand
      * @return Result object containing a ServerLoginResponseCommand
      */
     @Override
-    public Result execute()
-    {
-        Player player = ServerFacade.get_instance().login(getUserName(), getPassword());
+    public Result execute() {
         Result result = new ServerResult();
-        result.setResultObject(player);
+        result.setResultObject(ServerFacade.getInstance().login(getUsername(), getPassword()));
         return result;
     }
 }

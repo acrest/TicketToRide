@@ -49,11 +49,13 @@ public class ClientBank implements IClientBank {
         numberOfTrainCards--;
     }
 
-//    public void setNumberOfTrainCards(int numberOfTrainCards) {
-//        this.numberOfTrainCards = numberOfTrainCards;
-//    }
+    @Override
+    public void incNumberOfDestinationCards() {
+        numberOfDestinationCards++;
+    }
 
-//    public void setNumberOfDestinationCards(int numberOfDestinationCards) {
-//        this.numberOfDestinationCards = numberOfDestinationCards;
-//    }
+    @Override
+    public void decNumberOfTrainCards() {
+        numberOfTrainCards--;
+    }
 }

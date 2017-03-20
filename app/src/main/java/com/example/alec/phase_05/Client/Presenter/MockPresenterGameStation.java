@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
 
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class MockPresenterGameStation extends Presenter implements IPresenterGam
         int id = random.nextInt(1000);
         String name = generateRandomAlphabeticString();
         int max = random.nextInt(4) + 2;
-        List<Player> players = generateRandomPlayers();
+        List<IPlayer> players = generateRandomPlayers();
         return new GameDescription(id, name, max, players);
     }
 
@@ -113,10 +114,10 @@ public class MockPresenterGameStation extends Presenter implements IPresenterGam
         return (char)(c + random.nextInt(26));
     }
 
-    private List<Player> generateRandomPlayers() {
+    private List<IPlayer> generateRandomPlayers() {
         Random random = new Random();
         int size = random.nextInt(4) + 2;
-        List<Player> players = new ArrayList<>();
+        List<IPlayer> players = new ArrayList<>();
         for(int i = 0; i < size; ++i) {
             players.add(generateRandomPlayer());
         }
@@ -124,7 +125,7 @@ public class MockPresenterGameStation extends Presenter implements IPresenterGam
     }
 
     private Player generateRandomPlayer() {
-        return new Player(generateRandomAlphabeticString(), generateRandomAlphabeticString());
+        return new Player(generateRandomAlphabeticString());
     }
 
     private String[] generateRandomPlayerColors(Player[] players) {

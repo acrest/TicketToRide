@@ -8,8 +8,8 @@ import com.example.alec.phase_05.Shared.command.StartGameCommand;
  */
 
 public class ClientStartGameCommand extends StartGameCommand {
-    public ClientStartGameCommand(String userName, String password, int gameID) {
-        super(userName, password, gameID);
+    public ClientStartGameCommand(int gameId) {
+        super(gameId);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.alec.phase_05.Server.command;
 
-import com.example.alec.phase_05.Server.ServerFacade;
+import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.DrawDestinationCardCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
@@ -10,17 +10,14 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
  */
 
 public class ServerDrawDestinationCardCommand extends DrawDestinationCardCommand {
-
-    public ServerDrawDestinationCardCommand(String userName, String password, int gameID) {
-        super(userName, password, gameID);
+    public ServerDrawDestinationCardCommand(String playerName, int gameID) {
+        super(playerName, gameID);
     }
 
     @Override
     public Result execute() {
-        ServerFacade facade = ServerFacade.get_instance();
-        DestinationCard card = facade.drawDestinationCard(getUserName(), getPassword(), getGameID());
         Result result = new ServerResult();
-        result.setResultObject(card);
+        result.setResultObject(ServerFacade.getInstance().drawDestinationCard(getPlayerName(), getGameId()));
         return result;
     }
 }

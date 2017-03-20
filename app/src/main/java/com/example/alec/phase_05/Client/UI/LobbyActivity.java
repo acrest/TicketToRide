@@ -46,8 +46,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
         ClientModel model = ClientModel.getInstance();
         mNumberOfPlayers.setText(model.getNumberPlayers() + "/" + model.getGameMaxPlayers());
 
-        if(model.getPlayer(0).getName().equals(ClientModel.getInstance().getCurrentPlayer().getName()))
-        {
+        if (model.isHost()) {
             mStartGameButton.setVisibility(View.VISIBLE);
         }
     }
@@ -64,8 +63,7 @@ public class LobbyActivity extends Activity implements ILobbyListener {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         //remove player from game;
         //Poller.getInstance().setListGamePolling();
         //super.onBackPressed();

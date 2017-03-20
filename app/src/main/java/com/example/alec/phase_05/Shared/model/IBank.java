@@ -7,8 +7,9 @@ import java.util.List;
  */
 
 public interface IBank {
-
     TrainCard getVisibleCard(int index);
+
     int getNumberOfTrainCards();
+
     int getNumberOfDestinationCards();
 }
