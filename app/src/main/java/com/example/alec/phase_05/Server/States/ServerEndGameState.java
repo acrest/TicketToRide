@@ -3,7 +3,7 @@ package com.example.alec.phase_05.Server.States;
 import com.example.alec.phase_05.Server.model.ServerGame;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.EachGameState;
-import com.example.alec.phase_05.Shared.model.GameState;
+//import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 /**
