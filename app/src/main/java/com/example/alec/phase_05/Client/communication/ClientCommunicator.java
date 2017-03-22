@@ -1,11 +1,16 @@
 package com.example.alec.phase_05.Client.communication;
 
 import com.example.alec.phase_05.Client.command.ClientResult;
-import com.example.alec.phase_05.Shared.command.*;
+import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.communication.SerDes;
 
-import java.net.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Handles client requests to the server.
@@ -82,7 +87,7 @@ public class ClientCommunicator
             //serverIP = "192.168.1.118";
             //serverIP2 = "192.168.1.111";
             //serverIP = "10.24.65.234";
-            serverIP = "10.24.69.160";
+            serverIP = "10.24.68.45";
             URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
 //            System.out.println(url.toString());
 

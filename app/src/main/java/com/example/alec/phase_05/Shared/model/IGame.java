@@ -13,6 +13,8 @@ public interface IGame {
 
     IPlayer getPlayer(int position);
 
+    IPlayer getPlayerByName(String playerName);
+
     void setPlayer(int position, IPlayer player);
 
     int addPlayerAtNextPosition(IPlayer player);
@@ -38,4 +40,6 @@ public interface IGame {
     boolean isGameStarted();
 
     void setGameStarted();
+
+    void setGameState(GameState gameState);
 }

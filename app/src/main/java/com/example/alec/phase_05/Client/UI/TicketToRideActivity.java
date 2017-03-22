@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -277,8 +279,26 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 */
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        final View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
+        //final EditText mGameName = (EditText) mView.findViewById(R.id.new_game_edit_text);
+        //final NumberPicker mNoPicker = (NumberPicker) mView.findViewById(R.id.new_game_number_picker);
+        //mButtonDialogRed = (Button) mView.findViewById(R.id.new_game_button_red);
+        //mButtonDialogBlue = (Button) mView.findViewById(R.id.new_game_button_blue);
+        //mButtonDialogYellow = (Button) mView.findViewById(R.id.new_game_button_yellow);
+        //mButtonDialogGreen = (Button) mView.findViewById(R.id.new_game_button_green);
+        //mButtonDialogBlack = (Button) mView.findViewById(R.id.new_game_button_black);
+        //final Button mButtonDialogCancel = (Button) mView.findViewById(R.id.new_game_button_cancel);
+        //final Button mButtonDialogOk = (Button) mView.findViewById(R.id.new_game_button_ok);
+
+
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        //dialog.show();
 
         presenter.updateAll();
+        dialog.show();
     }
 
     public void drawRouteLine(City city1, City city2, String color) {
