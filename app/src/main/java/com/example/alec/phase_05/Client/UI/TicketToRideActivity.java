@@ -69,6 +69,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private GameHistoryAdapter mGameHistoryRecyclerAdapter;
     private PlayerStatAdapter mPlayerStatAdapter;
     private Button mCreateChatButton;
+    private Button doneSelCard;
     private EditText mEditTextChat;
     private TextView boxCountView;
     private TextView passengerCountView;
@@ -79,6 +80,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView coalCountView;
     private TextView caboosecountView;
     private TextView locomotiveCountView;
+    private TextView firstCard;
+    private TextView secondCard;
+    private TextView thirdCard;
 
     int boxCount;
     int passengerCount;
@@ -108,6 +112,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mGameHistoryRecView.setLayoutManager(new LinearLayoutManager(this));
         mPlayerStatsView.setLayoutManager(new LinearLayoutManager(this));
 
+
         mChatRecyclerAdapter = new ChatAdapter(new ArrayList<Chat>(), this);
         mRoutesRecyclerAdapter = new RouteAdapter(Derpness.getInstance().generateFakeChat(), this);
         mGameHistoryRecyclerAdapter = new GameHistoryAdapter(new ArrayList<Chat>(), this);
@@ -127,6 +132,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mPlayerStatsView.setAdapter(mPlayerStatAdapter);
 
         mCreateChatButton = (Button) findViewById(R.id.create_chat_button);
+        doneSelCard = (Button) findViewById(R.id.doneButton);
         mEditTextChat = (EditText) findViewById(R.id.EditTextChat);
         mCreateChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +155,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         coalCountView = (TextView) findViewById(R.id.red_cards);
         caboosecountView = (TextView) findViewById(R.id.green_cards);
         locomotiveCountView = (TextView) findViewById(R.id.rainbow_cards);
+        firstCard = (TextView) findViewById(R.id.firstCard);
+        secondCard = (TextView) findViewById(R.id.secondCard);
+        thirdCard = (TextView) findViewById(R.id.thirdCard);
 
         TabHost mTabHost = getTabHost();
 
@@ -232,6 +241,20 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 setImageButton(card5Button, card.getType());
             }
         });
+        final ImageView imageView = (ImageView) findViewById(R.id.map);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        final View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+
+        doneSelCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //send cards to DB
+                dialog.dismiss();
+            }
+        });
 
         Button placeRoutesButton = (Button) findViewById(R.id.placeRoute);
         placeRoutesButton.setOnClickListener(new View.OnClickListener() {
@@ -242,7 +265,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
 
         //*************************************************
-        final ImageView imageView = (ImageView) findViewById(R.id.map);
+
 /*
         imageView.setOnTouchListener(new ImageView.OnTouchListener() {
             @Override
@@ -275,23 +298,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 */
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
-        final View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
-        //final EditText mGameName = (EditText) mView.findViewById(R.id.new_game_edit_text);
-        //final NumberPicker mNoPicker = (NumberPicker) mView.findViewById(R.id.new_game_number_picker);
-        //mButtonDialogRed = (Button) mView.findViewById(R.id.new_game_button_red);
-        //mButtonDialogBlue = (Button) mView.findViewById(R.id.new_game_button_blue);
-        //mButtonDialogYellow = (Button) mView.findViewById(R.id.new_game_button_yellow);
-        //mButtonDialogGreen = (Button) mView.findViewById(R.id.new_game_button_green);
-        //mButtonDialogBlack = (Button) mView.findViewById(R.id.new_game_button_black);
-        //final Button mButtonDialogCancel = (Button) mView.findViewById(R.id.new_game_button_cancel);
-        //final Button mButtonDialogOk = (Button) mView.findViewById(R.id.new_game_button_ok);
 
 
-
-        mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
-        //dialog.show();
 
         presenter.updateAll();
         dialog.show();
