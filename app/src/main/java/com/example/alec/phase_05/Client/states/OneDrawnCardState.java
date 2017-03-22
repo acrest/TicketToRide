@@ -6,6 +6,8 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.StateWarning;
+import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 /**
  * Created by clarkpathakis on 3/22/17.
@@ -35,8 +37,12 @@ public class OneDrawnCardState implements GameState {
         System.out.println("Train card picked from face up cards.");
         // check not rainbow card.
         facade.pickTrainCard(cardIndex);
-        state.setTurnState(state.getOneDrawnOnePickedCardState());
-
+        TrainCard pickedCard = game.getVisibleCard(cardIndex);
+        if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
+            state.setTurnState(state.getRainbowCardState());
+        } else {
+            state.setTurnState(state.getOneDrawnOnePickedCardState());
+        }
     }
 
     @Override
