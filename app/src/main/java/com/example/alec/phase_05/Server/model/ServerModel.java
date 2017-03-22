@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 public class ServerModel {
+    //The ID of the next valid game to be assigned
     private static int nextValidGameID = 0;
 
+    //Map of the current games running
     private Map<Integer,ServerGame> gamesMap;
     private Map<String,PlayerCredentials> playerMap;
-
     private static ServerModel _instance;
 
 
