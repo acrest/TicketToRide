@@ -3,8 +3,11 @@ package com.example.alec.phase_05.Server.States;
 import com.example.alec.phase_05.Server.model.ServerGame;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.EachGameState;
+<<<<<<< HEAD
 import com.example.alec.phase_05.Shared.model.Game;
 
+=======
+>>>>>>> 8a5a18c48201cd391d3573892c77359647375430
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 /**

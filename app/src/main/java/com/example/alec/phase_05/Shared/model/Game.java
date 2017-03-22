@@ -45,6 +45,16 @@ public abstract class Game implements IGame {
     }
 
     @Override
+    public IPlayer getPlayerByName(String playerName) {
+        for(IPlayer player : players) {
+            if(player != null && player.getName().equals(playerName)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void setPlayer(int position, IPlayer player) {
         while (position >= players.size()) {
             players.add(null);
