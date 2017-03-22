@@ -15,6 +15,7 @@ public abstract class Game implements IGame {
     private IBank bank;
     private GameMap gameMap;
     private boolean gameStarted;
+    private GameState state;
 
     public Game(int id, String name, int maxPlayers, IBank bank, GameMap gameMap) {
         this.id = id;
@@ -159,6 +160,10 @@ public abstract class Game implements IGame {
         gameStarted = true;
     }
 
+
+    @Override
+    public void setGameState(GameState gameState) { state = gameState;}
+
     protected IBank getBank() {
         return bank;
     }
@@ -170,4 +175,5 @@ public abstract class Game implements IGame {
     protected void setGameMap(GameMap map) {
         gameMap = map;
     }
+
 }
