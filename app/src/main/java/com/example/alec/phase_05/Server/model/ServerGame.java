@@ -3,7 +3,7 @@ package com.example.alec.phase_05.Server.model;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
-import com.example.alec.phase_05.Shared.model.EachGameState;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IChatManager;
@@ -16,7 +16,7 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 public class ServerGame extends Game implements IServerGame {
     private CommandManager commandManager;
     private IChatManager chatManager;
-    private EachGameState gameState;
+    private GameState gameState;
 
     public ServerGame(int id, String name, int maxPlayers, CommandManager commandManager, IChatManager chatManager, IServerBank bank, GameMap gameMap) {
         super(id, name, maxPlayers, bank, gameMap);

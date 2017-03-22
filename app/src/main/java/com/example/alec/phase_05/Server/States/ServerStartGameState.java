@@ -2,7 +2,7 @@ package com.example.alec.phase_05.Server.States;
 
 import com.example.alec.phase_05.Server.model.ServerGame;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
-import com.example.alec.phase_05.Shared.model.EachGameState;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -10,7 +10,7 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
  * Created by clarkpathakis on 3/16/17.
  */
 
-public class ServerStartGameState implements EachGameState {
+public class ServerStartGameState implements GameState {
     private ServerGame game;
 
     public ServerStartGameState() {}
@@ -22,18 +22,18 @@ public class ServerStartGameState implements EachGameState {
     }
 
     @Override
-    public boolean putBackDestinationCard(Game game, String player, DestinationCard card) {
-        return false;
+    public void putBackDestinationCard(Game game, String player, DestinationCard card) {
+
     }
 
     @Override
-    public TrainCard drawTrainCardFromDeck(Game game, String player) {
-        return null;
+    public void drawTrainCardFromDeck(Game game, String player) {
+
     }
 
     @Override
-    public TrainCard pickTrainCard(Game game, String player, int cardIndex) {
-        return null;
+    public void pickTrainCard(Game game, String player, int cardIndex) {
+
     }
 
     @Override

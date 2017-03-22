@@ -41,5 +41,5 @@ public interface IGame {
 
     void setGameStarted();
 
-    void setGameState(EachGameState gameState);
+    void setGameState(GameState gameState);
 }
