@@ -46,7 +46,10 @@ public class StartTurnState implements GameState {
     public void drawDestinationCard(String player) throws StateWarning  {
         System.out.println("Drawing a destination card.");
         //draw destination card
-        facade.drawDestinationCard();
+        int drawThree = 3;
+        for (int i = 0; i < drawThree; i++) {
+            facade.drawDestinationCard();
+        }
         state.setTurnState(new DrawDestinationState(state));
     }
 
