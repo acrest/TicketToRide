@@ -20,51 +20,51 @@ public class StartTurnState implements GameState {
     public StartTurnState(ClientGame playerTurnStates) { state = playerTurnStates; }
 
     @Override
-    public void drawTrainCardFromDeck(Game game, String player) {
+    public void drawTrainCardFromDeck(String player) throws StateWarning {
         System.out.println("Drawing Train Card from Deck.");
         //draw card from deck
         facade.drawTrainCard();
-        state.setTurnState(state.getOneDrawnCardState());
+        state.setTurnState(new OneDrawnCardState(state));
     }
 
     @Override
-    public void pickTrainCard(Game game, String player, int cardIndex) {
+    public void pickTrainCard(String player, int cardIndex) throws StateWarning {
         System.out.println("Picking Train card from face up cards.");
         // pick card
         // if card is a rainbow -> state.setCardState(state.getRainbowCardState());
         facade.pickTrainCard(cardIndex);
-        TrainCard pickedCard = game.getVisibleCard(cardIndex);
+        TrainCard pickedCard = state.getVisibleCard(cardIndex);
         if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
-            state.setTurnState(state.getRainbowCardState());
+            state.setTurnState(new RainbowCardState(state));
         } else {
-            state.setTurnState(state.getOnePickedCardState());
+            state.setTurnState(new OnePickedCardState(state));
         }
 
     }
 
     @Override
-    public void drawDestinationCard(Game game, String player) {
+    public void drawDestinationCard(String player) throws StateWarning  {
         System.out.println("Drawing a destination card.");
         //draw destination card
         facade.drawDestinationCard();
-        state.setTurnState(state.getDrawDestinationState());
+        state.setTurnState(new DrawDestinationState(state));
     }
 
     @Override
-    public void putBackDestinationCard(Game game, String player, DestinationCard card) throws StateWarning {
+    public void putBackDestinationCard(String player, DestinationCard card) throws StateWarning {
         throw new StateWarning("You must draw some destination cards first.");
     }
 
     @Override
-    public void claimRoute(Game game, String player, int routeId) {
+    public void claimRoute(String player, int routeId) throws StateWarning {
         System.out.println("Claiming route.");
         // claim route
         facade.claimRoute(routeId);
-        state.setTurnState(state.getClaimRouteState());
+        state.setTurnState(new ClaimRouteState(state));
     }
 
     @Override
-    public void endTurn(Game game, String player) throws StateWarning {
+    public void endTurn(String player) throws StateWarning {
         throw new StateWarning("You must either draw train cards, " +
                 "draw destination cards, or claim a route before you can end your turn.");
     }

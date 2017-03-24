@@ -18,7 +18,7 @@ public class ClientGameTest {
 
         IClientBank bank;
         GameMap gameMap;
-        ClientGame testGame = new ClientGame(1, "Name", 2, bank, gameMap);
+        //ClientGame testGame = new ClientGame(1, "Name", 2, bank, gameMap);
     }
 
     @Test

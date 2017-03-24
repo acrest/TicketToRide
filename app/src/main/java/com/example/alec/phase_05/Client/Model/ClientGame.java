@@ -45,18 +45,18 @@ public class ClientGame extends Game implements IClientGame {
 
     }
 
-    public void drawCard(Game game, String player) throws StateWarning {
-        turnState.drawDestinationCard(game, player);
+    public void drawCard(String player) throws StateWarning {
+        turnState.drawDestinationCard(player);
     }
 
 
-    public void pickCard(Game game, String player, int index) throws StateWarning {
-        turnState.pickTrainCard(game, player, index);
+    public void pickCard(String player, int index) throws StateWarning {
+        turnState.pickTrainCard(player, index);
     }
 
 
-    public void endTurn(Game game, String player) throws StateWarning {
-        turnState.endTurn(game, player);
+    public void endPlayerTurn(String player) throws StateWarning {
+        turnState.endTurn(player);
     }
 
     public void setTurnState(GameState playerTurnState) { turnState = playerTurnState; }
@@ -125,6 +125,7 @@ public class ClientGame extends Game implements IClientGame {
     public void endTurn(String player) {
 
     }
+
 
     public GameState getCardState() {
         return turnState;
