@@ -140,11 +140,11 @@ public class ClientGame extends Game implements IClientGame {
     }
 
     public void setNoCardState(GameState noCardState) {
-        this.noCardState = noCardState;
+        this.startTurnState = noCardState;
     }
 
     public GameState getNoCardState() {
-        return noCardState;
+        return startTurnState;
     }
 
     public void setOneDrawnOnePickedCardState(GameState oneDrawnOnePickedState) {
