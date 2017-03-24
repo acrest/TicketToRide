@@ -29,4 +29,6 @@ public interface ITicketToRideListener {
     void updateFaceupTrainCards(List<TrainCard> cards); // faceup train cards in the bank;
 
     void updateMap(GameMap map);
+
+    void pickDestinationCards(List<DestinationCard> cards);
 }
