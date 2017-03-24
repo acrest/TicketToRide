@@ -84,8 +84,8 @@ public class ClientCommunicator
             //URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
             //URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
             //clark's ip "45.56.33.124"
-            //serverIP = "192.168.1.118";
-            //serverIP2 = "192.168.1.111";
+            //serverIPandrewYouKnow = "192.168.1.118";
+            //serverIPandrewHome = "192.168.1.111";
             //serverIP = "10.24.65.234";
             serverIP = "10.24.66.148";
             URL url = new URL("http://" + serverIP + ":" + serverPort + handler);

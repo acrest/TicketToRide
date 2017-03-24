@@ -1,6 +1,5 @@
 package com.example.alec.phase_05.Client.Model;
 
-
 import com.example.alec.phase_05.Client.states.ClaimRouteState;
 import com.example.alec.phase_05.Client.states.DrawDestinationState;
 import com.example.alec.phase_05.Client.states.EndTurnState;
