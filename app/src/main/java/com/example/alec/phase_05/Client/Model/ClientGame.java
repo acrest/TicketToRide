@@ -30,7 +30,7 @@ public class ClientGame extends Game implements IClientGame {
     GameState oneDrawnOnePickedCardState = new OneDrawnOnePickedCardState(this);
     GameState twoDrawnCardState = new TwoDrawnCardState(this);
     GameState twoPickedCardState = new TwoPickedCardState(this);
-    GameState noCardState = new StartTurnState(this);
+    GameState startTurnState = new StartTurnState(this);
     GameState endTurnState = new EndTurnState(this);
     GameState drawDestinationState = new DrawDestinationState(this);
     GameState returnDestinationState = new ReturnDestinationState(this);
@@ -41,7 +41,7 @@ public class ClientGame extends Game implements IClientGame {
     public ClientGame(int id, String name, int maxPlayers, IClientBank bank, GameMap gameMap) {
 
         super(id, name, maxPlayers, bank, gameMap);
-        turnState = noCardState;
+        turnState = startTurnState;
 
 
     }
@@ -140,11 +140,11 @@ public class ClientGame extends Game implements IClientGame {
     }
 
     public void setNoCardState(GameState noCardState) {
-        this.noCardState = noCardState;
+        this.startTurnState = noCardState;
     }
 
     public GameState getNoCardState() {
-        return noCardState;
+        return startTurnState;
     }
 
     public void setOneDrawnOnePickedCardState(GameState oneDrawnOnePickedState) {
