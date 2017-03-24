@@ -37,7 +37,7 @@ public class StartTurnState implements GameState {
         if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
             state.setTurnState(state.getRainbowCardState());
         } else {
-            state.setTurnState(state.getOneDrawnOnePickedCardState());
+            state.setTurnState(state.getOnePickedCardState());
         }
 
     }
