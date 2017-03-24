@@ -39,10 +39,12 @@ import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRide;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRide;
 import com.example.alec.phase_05.R;
+import com.example.alec.phase_05.Server.model.ServerBank;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.City;
 import com.example.alec.phase_05.Shared.model.Deck;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Route;
@@ -290,6 +292,15 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         destCardChoices.put(firstCard, false);
         destCardChoices.put(secondCard, false);
         destCardChoices.put(thirdCard, false);
+
+
+        //DestinationCard first_card = ServerBank.drawDestinationCard();
+        //DestinationCard second_card = ServerBank.drawDestinationCard();
+        //DestinationCard third_card = ServerBank.drawDestinationCard();
+
+        firstCard.setText("first card");
+        secondCard.setText("second card");
+        thirdCard.setText("third card");
 
         dialogDestinationButton.setOnClickListener(new View.OnClickListener() {
             @Override

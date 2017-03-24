@@ -52,9 +52,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     }
 
     @Override
-    public void drawDestinationCards() {
-        facade.drawDestinationCard();
-        facade.drawDestinationCard();
+    public void drawDestinationCard() {
         facade.drawDestinationCard();
     }
 

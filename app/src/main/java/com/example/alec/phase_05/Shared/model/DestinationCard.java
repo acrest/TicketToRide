@@ -15,6 +15,18 @@ public class DestinationCard {
         city2 = _city2;
         value = _value;
     }
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(city1);
+        sb.append(" to ");
+        sb.append(city2);
+        sb.append(": ");
+        sb.append(value);
+        sb.append("pts.");
+
+        return sb.toString();
+    }
 
     public City getCity1() {
         return city1;

@@ -6,11 +6,14 @@ import java.util.List;
 public class Player extends AbstractPlayer {
     private ArrayList<TrainCard> trainCards;
     private ArrayList<DestinationCard> destinationCards;
+    private ArrayList<DestinationCard> tempDestinationCards;
+    private boolean firstDraw;
 
     public Player(String name) {
         super(name);
         trainCards = new ArrayList<>();
         destinationCards = new ArrayList<>();
+        tempDestinationCards = new ArrayList<>();
     }
 
     @Override
@@ -21,6 +24,14 @@ public class Player extends AbstractPlayer {
     @Override
     public int getDestinationCardCount() {
         return destinationCards.size();
+    }
+
+    public void cardsChosen(){
+        firstDraw = true;
+        int i = tempDestinationCards.size();
+        for(int j=0; j<i; j++){
+            destinationCards.add(tempDestinationCards.get(j));
+        }
     }
 
     public void addTrainCard(TrainCard card) {
@@ -39,7 +50,7 @@ public class Player extends AbstractPlayer {
     }
 
     public void addDestinationCard(DestinationCard card) {
-        destinationCards.add(card);
+        tempDestinationCards.add(card);
     }
 
     public void removeDestinationCard(int index) {
