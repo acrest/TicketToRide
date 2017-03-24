@@ -82,4 +82,9 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
     public void updateMap(GameMap map) {
 
     }
+
+    @Override
+    public void pickDestinationCards(List<DestinationCard> cards) {
+
+    }
 }

@@ -103,6 +103,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     int coalCount;
     int cabooseCount;
     int locomotiveCount;
+    private List<DestinationCard> cardChoices;
 
     Map<TextView, Boolean> destCardChoices;
 
@@ -286,6 +287,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             @Override
             public void onClick(View view) {
                 Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
+                presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
             }
         });
 
@@ -784,6 +786,53 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 drawRouteLine(route.getCity1(), route.getCity2(), owner.getColor());
             }
         }
+    }
+
+    @Override
+    public void pickDestinationCards(List<DestinationCard> cards) {
+        cardChoices = cards;
+        View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        destCardChoices = new HashMap<>();
+        destCardChoices.put(firstCard, false);
+        destCardChoices.put(secondCard, false);
+        destCardChoices.put(thirdCard, false);
+        firstCard.setText(cards.get(0).toString());
+        secondCard.setText(cards.get(1).toString());
+        thirdCard.setText(cards.get(2).toString());
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+
+        dialog.show();
+    }
+
+    private List<DestinationCard> getChosenDestinationCards() {
+        List<DestinationCard> chosen = new ArrayList<>();
+        if(destCardChoices.get(firstCard)) {
+            chosen.add(cardChoices.get(0));
+        }
+        if(destCardChoices.get(secondCard)) {
+            chosen.add(cardChoices.get(1));
+        }
+        if(destCardChoices.get(thirdCard)) {
+            chosen.add(cardChoices.get(2));
+        }
+        return chosen;
+    }
+
+    private List<DestinationCard> getNotChosenDestinationCards() {
+        List<DestinationCard> notChosen = new ArrayList<>();
+        if(!destCardChoices.get(firstCard)) {
+            notChosen.add(cardChoices.get(0));
+        }
+        if(!destCardChoices.get(secondCard)) {
+            notChosen.add(cardChoices.get(1));
+        }
+        if(!destCardChoices.get(thirdCard)) {
+            notChosen.add(cardChoices.get(2));
+        }
+        return notChosen;
     }
 
     public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
