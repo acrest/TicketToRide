@@ -2,8 +2,10 @@ package com.example.alec.phase_05.Client.Model;
 
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.IPlayer;
+import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 /**
@@ -34,4 +36,18 @@ public interface IClientGame extends IGame {
     void claimRoute(String player, int routeId);
 
     void endTurn(String player);
+
+    void doDrawTrainCardFromDeck(String player) throws StateWarning;
+
+    void doPickTrainCard(String player, int cardIndex) throws StateWarning;
+
+    void doDrawDestinationCard(String player) throws StateWarning;
+
+    void doPutBackDestinationCard(String player, DestinationCard card) throws StateWarning;
+
+    void doClaimRoute(String player, int routeId) throws StateWarning;
+
+    void doEndTurn(String player) throws StateWarning;
+
+    void setTurnState(GameState state);
 }
