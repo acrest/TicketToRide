@@ -34,14 +34,14 @@ public class OnePickedCardState implements GameState {
     }
 
     @Override
-    public void pickTrainCard(Game game, String player, int cardIndex) {
+    public void pickTrainCard(Game game, String player, int cardIndex) throws StateWarning {
         System.out.println("Another card picked from the face up cards.");
         // pick train card
         // check not rainbow card.
         facade.pickTrainCard(cardIndex);
         TrainCard pickedCard = game.getVisibleCard(cardIndex);
         if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
-            state.setTurnState(state.getRainbowCardState());
+            throw new StateWarning("Cannot draw a rainbow card if you already have picked a card.");
         } else {
             state.setTurnState(state.getOneDrawnOnePickedCardState());
         }
