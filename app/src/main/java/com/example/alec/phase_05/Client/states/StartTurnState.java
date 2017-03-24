@@ -6,6 +6,8 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.StateWarning;
+import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 /**
  * Created by clarkpathakis on 3/22/17.
@@ -31,7 +33,12 @@ public class StartTurnState implements GameState {
         // pick card
         // if card is a rainbow -> state.setCardState(state.getRainbowCardState());
         facade.pickTrainCard(cardIndex);
-        state.setTurnState(state.getOnePickedCardState());
+        TrainCard pickedCard = game.getVisibleCard(cardIndex);
+        if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
+            state.setTurnState(state.getRainbowCardState());
+        } else {
+            state.setTurnState(state.getOnePickedCardState());
+        }
 
     }
 

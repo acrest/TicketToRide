@@ -132,7 +132,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mPlayerStatsView.setAdapter(mPlayerStatAdapter);
 
         mCreateChatButton = (Button) findViewById(R.id.create_chat_button);
-        doneSelCard = (Button) findViewById(R.id.doneButton);
+
         mEditTextChat = (EditText) findViewById(R.id.EditTextChat);
         mCreateChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,9 +155,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         coalCountView = (TextView) findViewById(R.id.red_cards);
         caboosecountView = (TextView) findViewById(R.id.green_cards);
         locomotiveCountView = (TextView) findViewById(R.id.rainbow_cards);
-        firstCard = (TextView) findViewById(R.id.firstCard);
-        secondCard = (TextView) findViewById(R.id.secondCard);
-        thirdCard = (TextView) findViewById(R.id.thirdCard);
+
 
         TabHost mTabHost = getTabHost();
 
@@ -242,19 +240,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
         final ImageView imageView = (ImageView) findViewById(R.id.map);
+
+
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
         final View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
 
-        doneSelCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                //send cards to DB
-                dialog.dismiss();
-            }
-        });
 
         Button placeRoutesButton = (Button) findViewById(R.id.placeRoute);
         placeRoutesButton.setOnClickListener(new View.OnClickListener() {
@@ -263,6 +256,18 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
+        firstCard = (TextView) mView.findViewById(R.id.firstCard);
+        secondCard = (TextView) mView.findViewById(R.id.secondCard);
+        thirdCard = (TextView) mView.findViewById(R.id.thirdCard);
+        doneSelCard = (Button) mView.findViewById(R.id.doneButton);
+        doneSelCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //send cards to DB
+                dialog.dismiss();
+            }
+        });
 
         //*************************************************
 
