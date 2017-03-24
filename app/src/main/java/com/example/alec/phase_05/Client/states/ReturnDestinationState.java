@@ -22,35 +22,35 @@ public class ReturnDestinationState implements GameState {
 
 
     @Override
-    public void drawTrainCardFromDeck(Game game, String player) throws StateWarning {
+    public void drawTrainCardFromDeck(String player) throws StateWarning {
         throw new StateWarning("You drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void pickTrainCard(Game game, String player, int cardIndex) throws StateWarning {
+    public void pickTrainCard(String player, int cardIndex) throws StateWarning {
         throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void drawDestinationCard(Game game, String player) throws StateWarning {
+    public void drawDestinationCard(String player) throws StateWarning {
         throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void putBackDestinationCard(Game game, String player, DestinationCard card) throws StateWarning {
+    public void putBackDestinationCard(String player, DestinationCard card) throws StateWarning {
         throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void claimRoute(Game game, String player, int routeId) throws StateWarning {
+    public void claimRoute(String player, int routeId) throws StateWarning {
         throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void endTurn(Game game, String player) throws StateWarning {
+    public void endTurn(String player) throws StateWarning {
         System.out.println("Cards returned. Ending turn.");
         facade.finishTurn();
-        state.setTurnState((state.getEndTurnState()));
+        state.setTurnState(new EndTurnState(state));
 
     }
 }
