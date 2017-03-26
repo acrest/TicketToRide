@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Client.Model;
 
+
 import com.example.alec.phase_05.Client.states.ClaimRouteState;
 import com.example.alec.phase_05.Client.states.DrawDestinationState;
 import com.example.alec.phase_05.Client.states.EndTurnState;
@@ -23,77 +24,77 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
  */
 
 public class ClientGame extends Game implements IClientGame {
-    GameState oneDrawnCardState = new OneDrawnCardState(this);
-    GameState onePickedCardState = new OnePickedCardState(this);
-    GameState rainbowCardState = new RainbowCardState(this);
-    GameState oneDrawnOnePickedCardState = new OneDrawnOnePickedCardState(this);
-    GameState twoDrawnCardState = new TwoDrawnCardState(this);
-    GameState twoPickedCardState = new TwoPickedCardState(this);
-    GameState startTurnState = new StartTurnState(this);
-    GameState endTurnState = new EndTurnState(this);
-    GameState drawDestinationState = new DrawDestinationState(this);
-    GameState returnDestinationState = new ReturnDestinationState(this);
-    GameState claimRouteState = new ClaimRouteState(this);
-    GameState turnState = null;
-
+    private GameState turnState = null;
 
     public ClientGame(int id, String name, int maxPlayers, IClientBank bank, GameMap gameMap) {
 
         super(id, name, maxPlayers, bank, gameMap);
-        turnState = startTurnState;
-
+        turnState = new StartTurnState(this);
 
     }
 
-    public void drawCard(Game game, String player) throws StateWarning {
-        turnState.drawDestinationCard(game, player);
+    @Override
+    public void doDrawTrainCardFromDeck(String player) throws StateWarning {
+        turnState.drawTrainCardFromDeck(player);
     }
 
-
-    public void pickCard(Game game, String player, int index) throws StateWarning {
-        turnState.pickTrainCard(game, player, index);
+    @Override
+    public void doPickTrainCard(String player, int cardIndex) throws StateWarning {
+        turnState.pickTrainCard(player, cardIndex);
     }
 
-
-    public void endTurn(Game game, String player) throws StateWarning {
-        turnState.endTurn(game, player);
+    @Override
+    public void doDrawDestinationCard(String player) throws StateWarning {
+        turnState.drawDestinationCard(player);
     }
 
-    public void setTurnState(GameState playerTurnState) { turnState = playerTurnState; }
+    @Override
+    public void doPutBackDestinationCard(String player, DestinationCard card) throws StateWarning {
+        turnState.putBackDestinationCard(player, card);
+    }
 
-    public void setState(GameState state) {
+    @Override
+    public void doClaimRoute(String player, int routeId) throws StateWarning {
+        turnState.claimRoute(player, routeId);
+    }
+
+    @Override
+    public void doEndTurn(String player) throws StateWarning {
+        turnState.endTurn(player);
+    }
+
+    public void setTurnState(GameState state) {
         turnState = state;
     }
 
-
     @Override
     public void decNumberOfDestinationCards() {
-
+        ((IClientBank) getBank()).decNumberOfDestinationCards();
     }
 
     @Override
     public void incNumberOfDestinationCards() {
-
+        ((IClientBank) getBank()).incNumberOfDestinationCards();
     }
 
     @Override
     public void decNumberOfTrainCards() {
-
+        ((IClientBank) getBank()).decNumberOfTrainCards();
     }
 
     @Override
     public void setVisibleCard(int index, TrainCard card) {
-
+        ((IClientBank) getBank()).setVisibleCard(index, card);
     }
 
     @Override
     public GameMap getMap() {
-        return null;
+        return getGameMap();
     }
 
     @Override
     public void setMap(GameMap map) {
-
+        setGameMap(map);
     }
 
     @Override
@@ -125,89 +126,4 @@ public class ClientGame extends Game implements IClientGame {
     public void endTurn(String player) {
 
     }
-
-    public GameState getCardState() {
-        return turnState;
-    }
-
-    public void setOneDrawnCardState(GameState oneDrawnState) {
-        oneDrawnCardState = oneDrawnState;
-    }
-
-    public GameState getOneDrawnCardState() {
-        return oneDrawnCardState;
-    }
-
-    public void setNoCardState(GameState noCardState) {
-        this.startTurnState = noCardState;
-    }
-
-    public GameState getNoCardState() {
-        return startTurnState;
-    }
-
-    public void setOneDrawnOnePickedCardState(GameState oneDrawnOnePickedState) {
-        oneDrawnOnePickedCardState = oneDrawnOnePickedState;
-    }
-
-    public GameState getOneDrawnOnePickedCardState() {
-        return oneDrawnOnePickedCardState;
-    }
-
-    public void setOnePickedCardState(GameState onePickedState) {
-        onePickedCardState = onePickedState;
-    }
-
-    public GameState getOnePickedCardState() {
-        return onePickedCardState;
-    }
-
-    public void setRainbowCardState(GameState rainbowState) {
-        rainbowCardState = rainbowState;
-    }
-
-    public GameState getRainbowCardState() {
-        return rainbowCardState;
-    }
-
-    public void setTwoDrawnCardState(GameState twoDrawnState) {
-        twoDrawnCardState = twoDrawnState;
-    }
-
-    public GameState getTwoDrawnCardState() {
-        return twoDrawnCardState;
-    }
-
-    public void setTwoPickedCardState(GameState twopickedState) {
-        twoPickedCardState = twopickedState;
-    }
-
-    public GameState getTwoPickedCardState() {
-        return twoPickedCardState;
-    }
-
-    public void setEndTurnState(GameState endTurnState) {
-        this.endTurnState = endTurnState;
-    }
-
-    public GameState getEndTurnState() {
-        return endTurnState;
-    }
-
-    public void setReturnDestinationState(GameState putbackDestinationState) {
-        returnDestinationState = putbackDestinationState;
-    }
-
-    public GameState getReturnDestinationState() {return returnDestinationState;}
-
-    public void setDrawDestinationState(GameState drawDestState) {
-        drawDestinationState = drawDestState;
-    }
-
-    public GameState getDrawDestinationState() {return drawDestinationState;}
-
-    public void setClaimRouteState(GameState claimedRoute) { claimRouteState = claimedRoute; }
-
-    public GameState getClaimRouteState() {return claimRouteState;}
-
 }

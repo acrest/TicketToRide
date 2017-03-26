@@ -8,6 +8,7 @@ import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class ClientModel extends Observable {
     public static String PLAYER_POINTS = "player points";
     public static String PLAYER_TRAIN_COUNT = "player train count";
     public static String GAME_START = "game start";
+    public static String PLAYER_HAND = "player hand";
 
     private static ClientModel instance = null;
 
@@ -53,6 +55,7 @@ public class ClientModel extends Observable {
 
     private List<GameDescription> gameList;
     private List<Chat> chats;
+    private List<DestinationCard> cardChoices;
     private IClientGame currentGame;
     private String currentPlayerName;
     private boolean isHost;
@@ -62,6 +65,7 @@ public class ClientModel extends Observable {
         currentPlayerName = null;
         gameList = null;
         chats = new ArrayList<>();
+        cardChoices = new ArrayList<>();
         isHost = false;
     }
 
@@ -388,6 +392,51 @@ public class ClientModel extends Observable {
 
     public void setHost(boolean host) {
         this.isHost = host;
+    }
+
+    public List<DestinationCard> getCardChoices() {
+        return cardChoices;
+    }
+
+    public void addCardToChoices(DestinationCard card) {
+        cardChoices.add(card);
+        if(cardChoices.size() >= 3) {
+            notifyPropertyChanges(PLAYER_HAND);
+        }
+    }
+
+    public void clearCardChoices() {
+        cardChoices.clear();
+    }
+
+    public void doDrawTrainCardFromDeck(String player) throws StateWarning {
+        if (currentGame == null) return;
+        currentGame.doDrawTrainCardFromDeck(player);
+    }
+
+    public void doPickTrainCard(String player, int cardIndex) throws StateWarning {
+        if (currentGame == null) return;
+        currentGame.doPickTrainCard(player, cardIndex);
+    }
+
+    public void doDrawDestinationCard(String player) throws StateWarning {
+        if (currentGame == null) return;
+        currentGame.doDrawDestinationCard(player);
+    }
+
+    public void doPutBackDestinationCard(String player, DestinationCard card) throws StateWarning {
+        if (currentGame == null) return;
+        currentGame.doPutBackDestinationCard(player, card);
+    }
+
+    public void doClaimRoute(String player, int routeId) throws StateWarning {
+        if (currentGame == null) return;
+        currentGame.doClaimRoute(player, routeId);
+    }
+
+    public void doEndTurn(String player) throws StateWarning {
+        if (currentGame == null) return;
+        currentGame.doEndTurn(player);
     }
 
     private void notifyPropertyChanges(String... properties) {

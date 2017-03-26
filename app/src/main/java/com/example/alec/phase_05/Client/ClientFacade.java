@@ -138,14 +138,17 @@ public class ClientFacade {
     }
 
     public void startGame() {
-        Facade facade = Facade.getInstance();
-        facade.drawDestinationCard();
-        facade.drawDestinationCard();
-        facade.drawDestinationCard();
-        facade.drawTrainCard();
-        facade.drawTrainCard();
-        facade.drawTrainCard();
-        facade.drawTrainCard();
+        try {
+            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
+            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
+            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
+            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
+            model.doDrawDestinationCard(model.getCurrentPlayerName());
+            model.doDrawDestinationCard(model.getCurrentPlayerName());
+            model.doDrawDestinationCard(model.getCurrentPlayerName());
+        } catch(Exception e) {
+            System.err.println("Unable to draw initial train cards and destination cards");
+        }
         model.setGameStarted();
     }
 
@@ -154,7 +157,7 @@ public class ClientFacade {
     }
 
     public void addDestinationCard(DestinationCard card) {
-        model.addDestinationCard(card);
+        model.addCardToChoices(card);
     }
 
     public void claimRoute(String playerName, int routeId) {
