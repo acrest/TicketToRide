@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Client.Demo;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Model.PlayerStat;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.IPlayer;
@@ -145,6 +146,11 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         }
     }
 
+    @Override
+    public void sendChat(Chat chat) {
+        //TODO send chat
+    }
+
 
     @Override
     public void update(UpdateIndicator u) {
@@ -195,7 +201,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             }
             listener.updateFaceupTrainCards(cards);
         }
-        if (u.needUpdate(ClientModel.PLAYER_HAND)) {
+        if (u.needUpdate(ClientModel.DISPLAY_HAND)) {
             listener.pickDestinationCards(model.getCardChoices());
         }
     }

@@ -17,7 +17,10 @@ public class StartTurnState implements GameState {
     private ClientGame state = null;
     private Facade facade;
 
-    public StartTurnState(ClientGame playerTurnStates) { state = playerTurnStates; }
+    public StartTurnState(ClientGame playerTurnStates) {
+        state = playerTurnStates;
+        facade = Facade.getInstance();
+    }
 
     @Override
     public void drawTrainCardFromDeck(String player) throws StateWarning {

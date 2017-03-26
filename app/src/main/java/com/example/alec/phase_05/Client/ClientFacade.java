@@ -3,11 +3,13 @@ package com.example.alec.phase_05.Client;
 import com.example.alec.phase_05.Client.Model.ClientGameFactory;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameInfo;
 import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
@@ -146,10 +148,11 @@ public class ClientFacade {
             model.doDrawDestinationCard(model.getCurrentPlayerName());
             model.doDrawDestinationCard(model.getCurrentPlayerName());
             model.doDrawDestinationCard(model.getCurrentPlayerName());
-        } catch(Exception e) {
+        } catch(StateWarning e) {
             System.err.println("Unable to draw initial train cards and destination cards");
         }
         model.setGameStarted();
+        model.tryDisplayHand();
     }
 
     public void addTrainCard(TrainCard card) {
@@ -158,6 +161,7 @@ public class ClientFacade {
 
     public void addDestinationCard(DestinationCard card) {
         model.addCardToChoices(card);
+        model.tryDisplayHand();
     }
 
     public void claimRoute(String playerName, int routeId) {
@@ -171,6 +175,10 @@ public class ClientFacade {
     public void returnDestinationCard(String playerName) {
         model.removeDestinationCard(playerName);
         model.incNumOfDestinationCards();
+    }
+
+    public void chatSent(Chat chat) {
+        model.addChat(chat);
     }
 
     public void executeCommand(ICommand command) {

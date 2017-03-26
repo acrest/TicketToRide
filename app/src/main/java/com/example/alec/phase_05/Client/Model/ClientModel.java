@@ -43,7 +43,7 @@ public class ClientModel extends Observable {
     public static String PLAYER_POINTS = "player points";
     public static String PLAYER_TRAIN_COUNT = "player train count";
     public static String GAME_START = "game start";
-    public static String PLAYER_HAND = "player hand";
+    public static String DISPLAY_HAND = "display hand";
 
     private static ClientModel instance = null;
 
@@ -400,8 +400,11 @@ public class ClientModel extends Observable {
 
     public void addCardToChoices(DestinationCard card) {
         cardChoices.add(card);
+    }
+
+    public void tryDisplayHand() {
         if(cardChoices.size() >= 3) {
-            notifyPropertyChanges(PLAYER_HAND);
+            notifyPropertyChanges(DISPLAY_HAND);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client.Presenter;
 
 import com.example.alec.phase_05.Client.Model.PlayerStat;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -30,4 +31,6 @@ public interface IPresenterTicketToRide extends IPresenter {
     List<PlayerStat> getPlayerStats();
 
     void chooseDestinationCards(List<DestinationCard> chosen, List<DestinationCard> notChosen);
+
+    void sendChat(Chat chat);
 }

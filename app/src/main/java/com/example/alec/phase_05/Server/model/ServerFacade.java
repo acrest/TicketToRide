@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Server.command.ServerResult;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -116,9 +117,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public boolean registerUser(String username, String password) {
-        PlayerCredentials player = new PlayerCredentials(username, password);
-        System.out.println("TEST RESGISTER USER " + player.getUsername() + " " + player.getPassword());
-        return model.addPlayer(player);
+        return model.addPlayer(new PlayerCredentials(username, password));
     }
 
     /**
@@ -325,6 +324,15 @@ public class ServerFacade implements IServer {
     @Override
     public boolean finishTurn(String playerName, int gameId) {
         return false; //TODO
+    }
+
+    @Override
+    public boolean sendChat(Chat chat) {
+//        IServerGame game = model.getGame(chat.getGameID());
+//        if(game == null) return false;
+//        IPlayer player = game.getPlayerByName(chat.getName());
+//        if(player == null) return false;
+        return true;
     }
 
     /**

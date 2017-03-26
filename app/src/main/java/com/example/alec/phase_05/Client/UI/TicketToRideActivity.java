@@ -148,16 +148,16 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setCard(card4Button, deck);
         setCard(card5Button, deck);
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
-        destCardChoices = new HashMap<>();
-        destCardChoices.put(firstCard, false);
-        destCardChoices.put(secondCard, false);
-        destCardChoices.put(thirdCard, false);
-        mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
+//        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+//        destCardChoices = new HashMap<>();
+//        destCardChoices.put(firstCard, false);
+//        destCardChoices.put(secondCard, false);
+//        destCardChoices.put(thirdCard, false);
+//        mBuilder.setView(mView);
+//        final AlertDialog dialog = mBuilder.create();
 
        // presenter.updateAll();
-        dialog.show();
+//        dialog.show();
     }
 
     private void setOnCreateFields(View mView){
