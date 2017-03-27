@@ -39,5 +39,4 @@ public interface IPresenterTicketToRide extends IPresenter {
     Map<Player, Integer> getLongestPlayer();
 
     String longestPath();
-
 }

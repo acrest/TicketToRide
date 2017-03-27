@@ -140,19 +140,14 @@ public class ClientFacade {
     }
 
     public void startGame() {
-        try {
-            Facade.getInstance().drawTrainCard(); //TODO only got 3 train cards once
-            Facade.getInstance().drawTrainCard();
-            Facade.getInstance().drawTrainCard();
-            Facade.getInstance().drawTrainCard();
-            model.doDrawDestinationCard(model.getCurrentPlayerName()); //TODO left off here
-            model.doDrawDestinationCard(model.getCurrentPlayerName());
-            model.doDrawDestinationCard(model.getCurrentPlayerName());
-        } catch(StateWarning e) {
-            System.err.println("Unable to draw initial train cards and destination cards");
-        }
-        model.setGameStarted();
-        model.tryDisplayHand();
+        Facade.getInstance().drawTrainCard(); //TODO only got 3 train cards once
+        Facade.getInstance().drawTrainCard();
+        Facade.getInstance().drawTrainCard();
+        Facade.getInstance().drawTrainCard();
+        Facade.getInstance().drawDestinationCard();
+        Facade.getInstance().drawDestinationCard();
+        Facade.getInstance().drawDestinationCard();
+        model.setGameStarted(); //make sure this is called at the end
     }
 
     public void addTrainCard(TrainCard card) {

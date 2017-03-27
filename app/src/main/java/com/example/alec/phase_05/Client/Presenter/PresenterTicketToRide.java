@@ -137,13 +137,13 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
 
     @Override
     public void chooseDestinationCards(List<DestinationCard> chosen, List<DestinationCard> notChosen) {
-        for(DestinationCard card : chosen) {
+        for (DestinationCard card : chosen) {
             model.addDestinationCard(card);
         }
-        for(DestinationCard card : notChosen) {
+        for (DestinationCard card : notChosen) {
             try {
                 model.doPutBackDestinationCard(model.getCurrentPlayerName(), card);
-            } catch(Exception e) {
+            } catch (Exception e) {
 
             }
         }
@@ -166,8 +166,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         int length = 0;
         if (longestRouteInfo == null) {
             playerName = "No one ";
-        }
-        else {
+        } else {
             Map.Entry<Player, Integer> entry = longestRouteInfo.entrySet().iterator().next();
             Player key = entry.getKey();
             length = entry.getValue();
@@ -183,7 +182,6 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         playerName = playerName + " has the longest route of " + Integer.toString(length);
         return playerName;
     }
-
 
     @Override
     public void update(UpdateIndicator u) {
@@ -236,6 +234,9 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         }
         if (u.needUpdate(ClientModel.DISPLAY_HAND)) {
             listener.pickDestinationCards(model.getCardChoices());
+        }
+        if (u.needUpdate(ClientModel.INIT_DISPLAY_HAND)) {
+            listener.initPickDestinationCards(model.getCardChoices());
         }
     }
 

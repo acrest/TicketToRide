@@ -125,6 +125,11 @@ public class ClientGame extends Game implements IClientGame {
 
     }
 
+    public String getCurrentPlayerTurn() {
+        return currentPlayerTurn;
+    }
+
+    //The player passed to this function is the player whose turn is ending.
     @Override
     public void endTurn(String player) {
         int index = -1;
