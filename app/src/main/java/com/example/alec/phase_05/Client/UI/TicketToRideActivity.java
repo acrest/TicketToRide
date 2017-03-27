@@ -51,6 +51,7 @@ import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.MyPoint;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
@@ -99,6 +100,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView firstCard;
     private TextView secondCard;
     private TextView thirdCard;
+    private TextView longest_route_player;
     TabHost mTabHost;
     final Deck deck = new Deck();
     int boxCount;
@@ -166,6 +168,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         dialog.show();
     }
 
+    private Map<Player, Integer> getLongestRoutePlayer() {
+        Map<Player, Integer> longestRoutePlayer = presenter.getLongestPlayer();
+        return longestRoutePlayer;
+    }
+
     private void setOnCreateFields(View mView){
         presenter = new PresenterTicketToRide(this);
 
@@ -173,6 +180,18 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mRoutesRecView = (RecyclerView) findViewById(R.id.routes_list);
         mGameHistoryRecView = (RecyclerView) findViewById(R.id.games_history_list);
         mPlayerStatsView = (RecyclerView) findViewById(R.id.player_stats);
+        longest_route_player = (TextView) findViewById(R.id.longest_route_text);
+        String longest_route = presenter.longestPath();
+
+
+        longest_route_player.setText(longest_route);
+//
+
+        //        TextView longest_route_player = (TextView) findViewById(R.id.longest_route_text);
+//        String name = player_with_longest_route.getName();
+//        int longest_route_size = player_with_longest_route.getPointCount();
+//        longest_route_player.setText(name + " has the longest route of " + Integer.toString(longest_route_size));
+//
 
         mChatRecView.setLayoutManager(new LinearLayoutManager(this));
         mRoutesRecView.setLayoutManager(new LinearLayoutManager(this));
