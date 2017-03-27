@@ -88,7 +88,7 @@ public class ClientCommunicator
             //serverIPandrewHome = "192.168.1.111";
             //serverIP = "10.24.65.234";
 
-            serverIP = "10.0.0.9";
+            serverIP = "10.24.70.33";
 
 
             URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
