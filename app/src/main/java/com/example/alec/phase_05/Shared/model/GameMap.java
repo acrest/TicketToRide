@@ -175,7 +175,14 @@ public class GameMap {
                     visited.add(route);
                     routeList.remove(route);
                     //currentLength = currentLength + route.getLength();
-                    visited = getLongestRoute(route, routeList, visited);
+
+                    ArrayList<Route> testVisited = getLongestRoute(route, routeList, visited);
+                    int visitedLength = getVisitedLength(visited);
+                    int testVisitedLength = getVisitedLength(testVisited);
+                    if (testVisitedLength > visitedLength) {
+                        visited = testVisited;
+                    }
+
                 }
             }
         }
@@ -186,7 +193,12 @@ public class GameMap {
                     visited.add(route);
                     routeList.remove(route);
                     //currentLength = currentLength + route.getLength();
-                    visited = getLongestRoute(route, routeList, visited);
+                    ArrayList<Route> testVisited = getLongestRoute(route, routeList, visited);
+                    int visitedLength = getVisitedLength(visited);
+                    int testVisitedLength = getVisitedLength(testVisited);
+                    if (testVisitedLength > visitedLength) {
+                        visited = testVisited;
+                    }
                 }
             }
         }
