@@ -1,5 +1,9 @@
 package com.example.alec.phase_05.Shared.model;
 
+import android.graphics.PointF;
+import android.view.View;
+
+import com.example.alec.phase_05.R;
 import com.example.alec.phase_05.Server.model.CommandManager;
 import com.example.alec.phase_05.Server.model.IServerBank;
 import com.example.alec.phase_05.Server.model.ServerBank;

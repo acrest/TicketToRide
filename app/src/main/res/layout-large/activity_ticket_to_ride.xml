@@ -341,7 +341,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </LinearLayout>  <!-- Player Info Tab -->
 
             <LinearLayout
                 android:id="@+id/routes"
@@ -392,7 +392,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </LinearLayout>  <!-- Routes Tab -->
 
             <LinearLayout
                 android:id="@+id/game_history"
@@ -418,8 +418,7 @@
                         android:layout_height="match_parent"
                         android:background="#AAE0E0E0"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
-            </LinearLayout>
-
+            </LinearLayout>  <!-- Games History Tab -->
 
             <LinearLayout
                 android:id="@+id/bank"
@@ -511,8 +510,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
-
+            </LinearLayout>  <!-- Bank Tab -->
 
             <LinearLayout
                 android:id="@+id/mapview"
@@ -567,10 +565,7 @@
 
 
 
-            </LinearLayout>
-
-
-
+            </LinearLayout>  <!-- MapView Tab -->
 
             <LinearLayout
                 android:id="@+id/chat"
@@ -619,7 +614,8 @@
 
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </LinearLayout>  <!-- Chat Tab -->
+
         </FrameLayout>
     </LinearLayout>
 
