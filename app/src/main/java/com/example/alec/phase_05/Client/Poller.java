@@ -61,12 +61,9 @@ public class Poller {
                 ClientModel model = ClientModel.getInstance();
                 switch (state) {
                     case 1:
-
                         Facade.getInstance().updateGameChanges();
-
                         break;
                     case 2:
-
                         if (model.hasCurrentGame()) {
                             GameDescription currentGameDescription = server.getGameDescription(model.getGameID());
                             if (currentGameDescription != null) {
@@ -77,7 +74,6 @@ public class Poller {
 
                         break;
                     case 3:
-
                         List<GameDescription> games = server.getGames();
                         if(games != null) {
                             model.setGameList(games);
