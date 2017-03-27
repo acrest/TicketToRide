@@ -9,6 +9,7 @@ public class Player extends AbstractPlayer {
     private ArrayList<DestinationCard> tempDestinationCards;
     private boolean firstDraw;
 
+
     public Player(String name) {
         super(name);
         trainCards = new ArrayList<>();

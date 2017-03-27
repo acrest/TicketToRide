@@ -8,11 +8,13 @@ import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 
 /**
@@ -45,6 +47,9 @@ public class ClientModel extends Observable {
     public static String GAME_START = "game start";
     public static String PLAYER_HAND = "player hand";
 
+    public int longestRoad;
+    public Player playerWithLongestRoute;
+
     private static ClientModel instance = null;
 
     public static ClientModel getInstance() {
@@ -59,6 +64,7 @@ public class ClientModel extends Observable {
     private IClientGame currentGame;
     private String currentPlayerName;
     private boolean isHost;
+    private Map<Player, Integer> longestPath;
 
     public ClientModel() {
         currentGame = null;
@@ -281,6 +287,7 @@ public class ClientModel extends Observable {
         IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null) return;
         currentGame.getRouteByID(routeId).setOwner(player);
+        setLongestPath();
         notifyPropertyChanges(GAME_MAP);
     }
 
@@ -447,4 +454,14 @@ public class ClientModel extends Observable {
         setChanged();
         notifyObservers(u);
     }
+
+
+    public Map<Player, Integer> getLongestRoute() {
+        return longestPath;
+    }
+
+    public void setLongestPath() {
+        longestPath = currentGame.getMap().findLongestRoute();
+    }
+
 }
