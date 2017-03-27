@@ -7,6 +7,7 @@ public class Player extends AbstractPlayer {
     private ArrayList<TrainCard> trainCards;
     private ArrayList<DestinationCard> destinationCards;
 
+
     public Player(String name) {
         super(name);
         trainCards = new ArrayList<>();

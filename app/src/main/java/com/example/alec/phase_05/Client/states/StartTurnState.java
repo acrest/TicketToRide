@@ -133,7 +133,7 @@ public class StartTurnState implements GameState {
             throw new StateWarning("You do not have enough of those cards in your hand to " +
                     "claim that route. Please draw a train card or destination card.");
         } else {
-            removeCardsFromHand(currentPlayer, cardsFromHand);
+            //removeCardsFromHand(currentPlayer, cardsFromHand);
             state.claimRoute(player, routeId);
             state.setTurnState(new ClaimRouteState(state));
         }

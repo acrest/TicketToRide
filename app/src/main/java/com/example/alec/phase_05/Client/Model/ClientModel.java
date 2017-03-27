@@ -9,11 +9,13 @@ import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 
 /**
@@ -44,6 +46,9 @@ public class ClientModel extends Observable {
     public static String PLAYER_POINTS = "player points";
     public static String PLAYER_TRAIN_COUNT = "player train count";
     public static String GAME_START = "game start";
+
+    public int longestRoad;
+    public Player playerWithLongestRoute;
 
     private static ClientModel instance = null;
 
@@ -400,4 +405,7 @@ public class ClientModel extends Observable {
         setChanged();
         notifyObservers(u);
     }
+
+
+
 }
