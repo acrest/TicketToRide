@@ -3,9 +3,11 @@ package com.example.alec.phase_05.Client.Presenter;
 import com.example.alec.phase_05.Client.Model.PlayerStat;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Molly on 2/23/2017.
@@ -33,4 +35,9 @@ public interface IPresenterTicketToRide extends IPresenter {
     void chooseDestinationCards(List<DestinationCard> chosen, List<DestinationCard> notChosen);
 
     void sendChat(Chat chat);
+
+    Map<Player, Integer> getLongestPlayer();
+
+    String longestPath();
+
 }

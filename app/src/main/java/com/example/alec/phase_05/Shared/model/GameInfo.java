@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.util.Map;
+
 /**
  * Created by samuel on 3/2/17.
  */
@@ -11,6 +13,7 @@ public class GameInfo {
     private Player[] players;
     private TrainCard[] visibleTrainCards;
     private GameMap map;
+
 
     public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, GameMap map) {
         this.id = id;
@@ -44,4 +47,6 @@ public class GameInfo {
     public GameMap getMap() {
         return map;
     }
+
+
 }

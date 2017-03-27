@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.states;
 
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientGame;
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.command.DrawDestinationCardCommand;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
@@ -15,6 +16,7 @@ import com.example.alec.phase_05.Shared.model.StateWarning;
 public class DrawDestinationState implements GameState {
     private ClientGame state = null;
     private Facade facade;
+
 
     public DrawDestinationState(ClientGame playerTurnStates) {
         state = playerTurnStates;

@@ -8,10 +8,12 @@ import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.IPlayer;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Molly on 2/23/2017.
@@ -49,6 +51,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     public void claimRoute(int routeID) {
         try {
             model.doClaimRoute(model.getCurrentPlayerName(), routeID);
+            model.setLongestPath();
         } catch (Exception e) {
 
         }
@@ -149,6 +152,36 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void sendChat(Chat chat) {
         Facade.getInstance().sendChat(chat);
+    }
+
+    @Override
+    public Map<Player, Integer> getLongestPlayer() {
+        return model.getLongestRoute();
+    }
+
+    @Override
+    public String longestPath() {
+        Map<Player, Integer> longestRouteInfo = model.getLongestRoute();
+        String playerName = "";
+        int length = 0;
+        if (longestRouteInfo == null) {
+            playerName = "No one ";
+        }
+        else {
+            Map.Entry<Player, Integer> entry = longestRouteInfo.entrySet().iterator().next();
+            Player key = entry.getKey();
+            length = entry.getValue();
+            playerName = key.getName();
+
+            while (longestRouteInfo.entrySet().iterator().hasNext()) {
+                entry = longestRouteInfo.entrySet().iterator().next();
+                key = entry.getKey();
+                length = entry.getValue();
+                playerName = playerName + ", " + key.getName();
+            }
+        }
+        playerName = playerName + " has the longest route of " + Integer.toString(length);
+        return playerName;
     }
 
 
