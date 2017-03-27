@@ -57,6 +57,17 @@ import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
+import static com.example.alec.phase_05.Shared.model.TrainType.ANY;
+import static com.example.alec.phase_05.Shared.model.TrainType.BOX;
+import static com.example.alec.phase_05.Shared.model.TrainType.CABOOSE;
+import static com.example.alec.phase_05.Shared.model.TrainType.COAL;
+import static com.example.alec.phase_05.Shared.model.TrainType.FREIGHT;
+import static com.example.alec.phase_05.Shared.model.TrainType.HOPPER;
+import static com.example.alec.phase_05.Shared.model.TrainType.LOCOMOTIVE;
+import static com.example.alec.phase_05.Shared.model.TrainType.PASSENGER;
+import static com.example.alec.phase_05.Shared.model.TrainType.REEFER;
+import static com.example.alec.phase_05.Shared.model.TrainType.TANKER;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -346,11 +357,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         imageView.setOnTouchListener(new ImageView.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                //PointF imagePoint = convertToImageCoord(imageView.getWidth(), imageView.getHeight(), event.getX(), event.getY());
-                PointF imagePoint = convertToImageCoordinates(event.getX(), event.getY());
-                PointF test = new PointF(event.getX(), event.getY());
-                //System.out.println(event.getX() + " " + event.getY());
-                int selectedRoute = checkIfRouteSelected(test);
+                PointF imagePoint = new PointF(event.getX(), event.getY());
+                checkIfRouteSelected(imagePoint);
                 return false;
             }
         });
@@ -474,12 +482,18 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     twinRouteInfo.setText("  Claim " + twinRoute.getCity1().getName()
                             + " to " + twinRoute.getCity2().getName() + ": " + twinRoute.getLength()
                             + " " +  twinRoute.getType()+ "  ");
+                    routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                    twinRouteInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                    changeTextColorBasedOnPart(routeInfo, currentRoute);
+                    changeTextColorBasedOnPart(twinRouteInfo, twinRoute);
                 }
                 else{
                     routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to "
                             + currentlySelectedRoute.getCity2().getName() + ": "
                             + currentlySelectedRoute.getLength() + " " +  currentlySelectedRoute.getType() + "  ");
+                    routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
                     twinRouteInfo.setVisibility(View.INVISIBLE);
+                    changeTextColorBasedOnPart(routeInfo, currentRoute);
                 }
                 return currentRoute.getId();
             }
@@ -491,6 +505,63 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         return -1;
     }
 
+    private void changeTextColorBasedOnPart(Button button, Route route){
+        TrainType type = route.getType();
+        button.setTextColor(Color.GRAY);
+
+        if(type == BOX){
+            button.setTextColor(Color.parseColor("#FF66FF"));
+        }
+        if(type == PASSENGER){
+            button.setTextColor(Color.WHITE);
+        }
+        if(type == TANKER){
+            button.setTextColor(Color.BLUE);
+        }
+        if(type == REEFER){
+            button.setTextColor(Color.YELLOW);
+        }
+        if(type == FREIGHT){
+            button.setTextColor(Color.parseColor("#FF8000"));
+        }
+        if(type == HOPPER){
+            button.setTextColor(Color.BLACK);
+        }
+        if(type == COAL){
+            button.setTextColor(Color.RED);
+        }
+        if(type == CABOOSE){
+            button.setTextColor(Color.parseColor("#999900"));
+        }
+
+//        switch(type){
+//            case(BOX):
+//                button.setTextColor(Color.parseColor("#FF66FF"));
+//                break;
+//            case(PASSENGER):
+//                button.setTextColor(Color.WHITE);
+//                break;
+//            case(TANKER):
+//                button.setTextColor(Color.BLUE);
+//                break;
+//            case(REEFER):
+//                button.setTextColor(Color.YELLOW);
+//                break;
+//            case(FREIGHT):
+//                button.setTextColor(Color.parseColor("#FF8000"));
+//                break;
+//            case(HOPPER):
+//                button.setTextColor(Color.BLACK);
+//                break;
+//            case(COAL):
+//                button.setTextColor(Color.RED);
+//                break;
+//            case(CABOOSE):
+//                button.setTextColor(Color.parseColor("#999900"));
+//                break;
+//            default:
+//                button.setTextColor(Color.GRAY);
+    }
 
     public boolean pointOnLine(Point start, Point end, PointF selectedPoint) {
 
