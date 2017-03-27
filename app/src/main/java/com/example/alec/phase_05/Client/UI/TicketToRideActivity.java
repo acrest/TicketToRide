@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.annotation.BoolRes;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TabHost;
@@ -43,8 +47,10 @@ import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.City;
 import com.example.alec.phase_05.Shared.model.Deck;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IPlayer;
+import com.example.alec.phase_05.Shared.model.MyPoint;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
@@ -93,6 +99,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView firstCard;
     private TextView secondCard;
     private TextView thirdCard;
+    TabHost mTabHost;
     final Deck deck = new Deck();
     int boxCount;
     int passengerCount;
@@ -103,6 +110,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     int coalCount;
     int cabooseCount;
     int locomotiveCount;
+    private List<DestinationCard> cardChoices;
 
     Map<TextView, Boolean> destCardChoices;
 
@@ -125,14 +133,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         setCardCountsZero();
 
-        TabHost mTabHost = getTabHost();
+        mTabHost = getTabHost();
 
         mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("Player Info").setContent(R.id.player_info));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("Routes").setContent(R.id.routes));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("Game History").setContent(R.id.game_history));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test4").setIndicator("Bank").setContent(R.id.bank));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test5").setIndicator("Map").setContent(R.id.map));
-
         mTabHost.addTab(mTabHost.newTabSpec("tab_test6").setIndicator("Chat").setContent(R.id.chat));
 
         mTabHost.setCurrentTab(0);
@@ -278,7 +285,27 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         placeRoutesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.startDemo();
+                //presenter.startDemo();
+                Map<String, City> cities = GameComponentFactory.createCities();
+
+                City seattle = cities.get("Seattle");
+                City helena = cities.get("Helena");
+                City slc = cities.get("Salt Lake City");
+                City denver = cities.get("Denver");
+                City santaFe = cities.get("Santa Fe");
+                City elPaso = cities.get("El Paso");
+                City houston = cities.get("Houston");
+                City newOrleans = cities.get("New Orleans");
+                City atlanta = cities.get("Atlanta");
+
+                drawRouteLine(seattle, helena, "blue");
+                drawRouteLine(helena, slc, "blue");
+                drawRouteLine(slc, denver, "blue");
+                drawRouteLine(denver, santaFe, "blue");
+                drawRouteLine(santaFe, elPaso, "blue");
+                drawRouteLine(elPaso, houston, "blue");
+                drawRouteLine(houston, newOrleans, "blue");
+                drawRouteLine(newOrleans, atlanta, "blue");
             }
         });
 
@@ -286,6 +313,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             @Override
             public void onClick(View view) {
                 Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
+                presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
             }
         });
 
@@ -341,6 +369,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     public void drawRouteLine(City city1, City city2, String color) {
         ImageView imageView = new ImageView(this);
         imageView = (ImageView) findViewById(R.id.map);
+
         if (imageView.getWidth() > 0 && imageView.getHeight() > 0) {
             Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(bmp);
@@ -365,12 +394,16 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     p.setColor(Color.BLUE);
                     break;
             }
-            //p.setAlpha(75);
-            PointF firstCity = convertToScreenCoordinates(imageView.getWidth(), imageView.getHeight(), (float) city1.getXCord(), (float) city1.getYCord());
-            PointF secondCity = convertToScreenCoordinates(imageView.getWidth(), imageView.getHeight(), (float) city2.getXCord(), (float) city2.getYCord());
 
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            //p.setAlpha(75);
+            PointF firstCity = convertToScreenCoordinates((float) city1.getXCord(), (float) city1.getYCord());
+            PointF secondCity = convertToScreenCoordinates((float) city2.getXCord(), (float) city2.getYCord());
 
             c.drawLine(secondCity.x, secondCity.y, firstCity.x, firstCity.y, p);
+
             imageView.setImageBitmap(bmp);
         }
     }
@@ -402,22 +435,18 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             return coordinates;
         }
     */
-    public PointF convertToScreenCoordinates(float deviceWidth, float deviceHeight, float xInput, float yInput) {
+    public PointF convertToScreenCoordinates(float xInput, float yInput) {
+        View map = findViewById(R.id.map);
+        final int ORIGINAL_PIC_WIDTH = 2460;
+        final int ORIGINAL_PIC_HEIGHT = 1522;
 
-        float imageWidth = getResources().getDrawable(R.drawable.tickettoridemap).getMinimumWidth();
-        float imageHeight = getResources().getDrawable(R.drawable.tickettoridemap).getMinimumHeight();
+        float y = (map.getHeight()*yInput)/ORIGINAL_PIC_HEIGHT;
 
-        PointF newPoint = new PointF();
-        float x;
-        float y;
-        float conversionRate = deviceHeight / imageHeight;
-        float extraSpace = (deviceWidth - (imageWidth * conversionRate)) / 2;
-        x = (xInput * conversionRate) + extraSpace;
-        y = yInput * conversionRate;
-        newPoint.x = x;
-        newPoint.y = y;
-        return newPoint;
+        float xPicWidth = (ORIGINAL_PIC_WIDTH*map.getHeight())/ORIGINAL_PIC_HEIGHT;
+        float extraSpace = (map.getWidth() - xPicWidth);
 
+        float x = ((xPicWidth * xInput)/ORIGINAL_PIC_WIDTH) + (extraSpace/2);
+        return new PointF(x, y);
     }
 
 
@@ -786,6 +815,53 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
     }
 
+    @Override
+    public void pickDestinationCards(List<DestinationCard> cards) {
+        cardChoices = cards;
+        View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        destCardChoices = new HashMap<>();
+        destCardChoices.put(firstCard, false);
+        destCardChoices.put(secondCard, false);
+        destCardChoices.put(thirdCard, false);
+        firstCard.setText(cards.get(0).toString());
+        secondCard.setText(cards.get(1).toString());
+        thirdCard.setText(cards.get(2).toString());
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+
+        dialog.show();
+    }
+
+    private List<DestinationCard> getChosenDestinationCards() {
+        List<DestinationCard> chosen = new ArrayList<>();
+        if(destCardChoices.get(firstCard)) {
+            chosen.add(cardChoices.get(0));
+        }
+        if(destCardChoices.get(secondCard)) {
+            chosen.add(cardChoices.get(1));
+        }
+        if(destCardChoices.get(thirdCard)) {
+            chosen.add(cardChoices.get(2));
+        }
+        return chosen;
+    }
+
+    private List<DestinationCard> getNotChosenDestinationCards() {
+        List<DestinationCard> notChosen = new ArrayList<>();
+        if(!destCardChoices.get(firstCard)) {
+            notChosen.add(cardChoices.get(0));
+        }
+        if(!destCardChoices.get(secondCard)) {
+            notChosen.add(cardChoices.get(1));
+        }
+        if(!destCardChoices.get(thirdCard)) {
+            notChosen.add(cardChoices.get(2));
+        }
+        return notChosen;
+    }
+
     public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         private static final int INVALID_INDEX = -1;
 
@@ -823,7 +899,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         public void onBindViewHolder(ChatHolder holder, int position) {
             Chat message = listData.get(position);
 
-            holder.message.setText(message.getMessage());
+            holder.message.setText(message.getMessage() + " -" + message.getName());
 
             switch (message.getColor()) {
                 case ("blue"):

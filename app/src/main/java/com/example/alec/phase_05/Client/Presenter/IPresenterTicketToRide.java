@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client.Presenter;
 
 import com.example.alec.phase_05.Client.Model.PlayerStat;
+import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
@@ -14,13 +15,11 @@ public interface IPresenterTicketToRide extends IPresenter {
 
     void pickTrainCard(int index);
 
-    void discardTrainCard(TrainCard card);
-
     void claimRoute(int routID);
 
-    void drawDestinationCards();
+    void drawDestinationCard();
 
-    void returnDestinationCard(Integer cardID);
+    void returnDestinationCard(DestinationCard cardID);
 
     void endTurn();
 
@@ -29,4 +28,6 @@ public interface IPresenterTicketToRide extends IPresenter {
     void startDemo();
 
     List<PlayerStat> getPlayerStats();
+
+    void chooseDestinationCards(List<DestinationCard> chosen, List<DestinationCard> notChosen);
 }

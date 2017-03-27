@@ -12,8 +12,10 @@ import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.IServer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.PlayerCredentials;
+import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -370,9 +372,27 @@ public class ServerFacade implements IServer {
     public boolean claimRoute(String playerName, int gameId, int routeId) {
         IServerGame game = model.getGame(gameId);
         if (game == null) return false;
-        IPlayer player = game.getPlayerByName(playerName);
+        Player player = (Player) game.getPlayerByName(playerName);
         if (player == null) return false;
-        game.getRouteByID(routeId).setOwner(player);
+        Route route = game.getRouteByID(routeId);
+        int count = route.getLength();
+        Iterator<TrainCard> cards = player.getTrainCards().iterator();
+        while(count > 0) {
+            if(cards.next().getType().equals(route.getType())) {
+                count--;
+            }
+        }
+        if(count > 0) return false;
+        count = route.getLength();
+        cards = player.getTrainCards().iterator();
+        while(count > 0 && cards.hasNext()) {
+            TrainCard card = cards.next();
+            if(card.getType().equals(route.getType())) {
+                count--;
+                cards.remove();
+            }
+        }
+        route.setOwner(player);
         return true;
     }
 
