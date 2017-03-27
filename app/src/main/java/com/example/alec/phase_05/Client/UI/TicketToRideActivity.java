@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -97,6 +98,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView coalCountView;
     private TextView caboosecountView;
     private TextView locomotiveCountView;
+    private Button routeInfo;
+    private Button twinRouteInfo;
+
     private TextView firstCard;
     private TextView secondCard;
     private TextView thirdCard;
@@ -117,6 +121,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private List<DestinationCard> cardChoices;
 
     Map<TextView, Boolean> destCardChoices;
+    private Route currentlySelectedRoute;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -178,6 +183,29 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     private void setOnCreateFields(View mView){
         presenter = new PresenterTicketToRide(this);
+
+        routeInfo = (Button) findViewById(R.id.route_info);
+        routeInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentlySelectedRoute != null) {
+                    drawRouteLine(currentlySelectedRoute.getCity1(), currentlySelectedRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+            }
+        });
+        twinRouteInfo = (Button) findViewById(R.id.twinroute_info);
+        twinRouteInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                if (twinRoute.getOwner() != null) {
+                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+            }
+        });
+
 
         mChatRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
         mRoutesRecView = (RecyclerView) findViewById(R.id.routes_list);
@@ -311,29 +339,26 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
+        /*
+        Button placeRoutesButton = (Button) findViewById(R.id.placeRoute);
         placeRoutesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //presenter.startDemo();
-                Map<String, City> cities = GameComponentFactory.createCities();
+                presenter.startDemo();
+            }
+        });
+*/
 
-                City seattle = cities.get("Seattle");
-                City helena = cities.get("Helena");
-                City slc = cities.get("Salt Lake City");
-                City denver = cities.get("Denver");
-                City santaFe = cities.get("Santa Fe");
-                City elPaso = cities.get("El Paso");
-                City houston = cities.get("Houston");
-                City newOrleans = cities.get("New Orleans");
-                City atlanta = cities.get("Atlanta");
+        //*************************************************
+        final ImageView imageView = (ImageView) findViewById(R.id.map);
 
-                drawRouteLine(seattle, helena, "blue");
-                drawRouteLine(helena, slc, "blue");
-                drawRouteLine(slc, denver, "blue");
-                drawRouteLine(denver, santaFe, "blue");
-                drawRouteLine(santaFe, elPaso, "blue");
-                drawRouteLine(elPaso, houston, "blue");
-                drawRouteLine(houston, newOrleans, "blue");
-                drawRouteLine(newOrleans, atlanta, "blue");
+        //checks if route is selected
+        imageView.setOnTouchListener(new ImageView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                PointF imagePoint = convertToImageCoord(imageView.getWidth(), imageView.getHeight(), event.getX(), event.getY());
+                //System.out.println(event.getX() + " " + event.getY());
+                int selectedRoute = checkIfRouteSelected(imagePoint);
+                return false;
             }
         });
 
@@ -438,10 +463,75 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     //**************************************
+    public int checkIfRouteSelected(PointF selectedPoint) {
+        Map<Integer, Route> routes = ClientModel.getInstance().getMap().getRoutes();
+        for (Route currentRoute : routes.values()){
+            if (pointOnLine(currentRoute.getCity1().getAsPoint(), currentRoute.getCity2().getAsPoint(), selectedPoint) == true){
+                currentlySelectedRoute = currentRoute;
+                routeInfo.setVisibility(View.VISIBLE);
+                twinRouteInfo.setVisibility(View.VISIBLE);
+                if (currentlySelectedRoute.getTwinID() != -1){
+                    Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                    routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to " +
+                            currentlySelectedRoute.getCity2().getName() + ": " + currentlySelectedRoute.getLength()
+                            + " " +  currentlySelectedRoute.getType() + "  ");
+                    twinRouteInfo.setText("  Claim " + twinRoute.getCity1().getName()
+                            + " to " + twinRoute.getCity2().getName() + ": " + twinRoute.getLength()
+                            + " " +  twinRoute.getType()+ "  ");
+                }
+                else{
+                    routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to "
+                            + currentlySelectedRoute.getCity2().getName() + ": "
+                            + currentlySelectedRoute.getLength() + " " +  currentlySelectedRoute.getType() + "  ");
+                    twinRouteInfo.setVisibility(View.INVISIBLE);
+                }
+                return currentRoute.getId();
+            }
+
+        }
+        currentlySelectedRoute = null;
+        routeInfo.setVisibility(View.INVISIBLE);
+        twinRouteInfo.setVisibility(View.INVISIBLE);
+        return -1;
+    }
 
 
-    public void checkIfRouteSelected() {
-        //do some things
+    public boolean pointOnLine(Point start, Point end, PointF selectedPoint) {
+
+        double routeDistance = lineDistance(new PointF(start.x, start.y), new PointF(end.x, end.y));
+        double ptDistance = lineDistance(new PointF(start.x, start.y), selectedPoint) + lineDistance(new PointF(end.x, end.y), selectedPoint);
+
+        double distanceFromRoute = routeDistance - ptDistance;
+        if (distanceFromRoute < 0){
+            distanceFromRoute = distanceFromRoute/-1;
+        }
+        if (distanceFromRoute <= 6){
+            return true;
+        }
+        return false;
+    }
+
+    public double lineDistance(PointF a, PointF b){
+        return Math.sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y));
+    }
+
+    public PointF convertToImageCoord(float deviceWidth, float deviceHeight, float xInput, float yInput){
+
+        float imageWidth = getResources().getDrawable(R.drawable.tickettoridemap).getMinimumWidth();
+        float imageHeight = getResources().getDrawable(R.drawable.tickettoridemap).getMinimumHeight();
+
+        PointF newPoint = new PointF();
+        float x;
+        float y;
+        float conversionRate = deviceHeight/imageHeight;
+        float extraSpace = (deviceWidth - (imageWidth*conversionRate))/2;
+        //System.out.println("Extra space: " + extraSpace);
+        x = ((xInput- extraSpace)/conversionRate);
+        y = (yInput)/conversionRate;
+        //System.out.println("The converted points " + x + " " + y);
+        newPoint.x = x;
+        newPoint.y = y;
+        return newPoint;
     }
 
     /*

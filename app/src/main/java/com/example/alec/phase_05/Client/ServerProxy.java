@@ -111,6 +111,8 @@ public class ServerProxy implements IServer {
      */
     @Override
     public GameInfo createGame(String playerName, int numOfPlayers, String gameName, String hostColor) {
+        System.out.println("inside server proxy create game");
+        System.out.println("inside " + gameName + " " + numOfPlayers +  " " + playerName + " " + hostColor);
         return (GameInfo) executeCommand(new ClientCreateGameCommand(gameName, numOfPlayers, playerName, hostColor))
                 .toClass(GameInfo.class);
     }
@@ -126,6 +128,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public GameInfo joinGame(String playerName, int gameID, String color) {
+        System.out.println("inside join game server proxy");
         return (GameInfo) executeCommand(new ClientJoinGameCommand(playerName, gameID, color)).toClass(GameInfo.class);
     }
 

@@ -38,6 +38,10 @@ public class GameMap {
         routes.put(route.getId(), route);
     }
 
+    public Map<Integer, Route> getRoutes(){
+        return routes;
+    }
+
     public boolean isInPlayerList(ArrayList<Player> playerList, Route tempRoute) {
         Player playerInRoute = (Player) tempRoute.getOwner();
         String playerName = playerInRoute.getName();
@@ -175,7 +179,14 @@ public class GameMap {
                     visited.add(route);
                     routeList.remove(route);
                     //currentLength = currentLength + route.getLength();
-                    visited = getLongestRoute(route, routeList, visited);
+
+                    ArrayList<Route> testVisited = getLongestRoute(route, routeList, visited);
+                    int visitedLength = getVisitedLength(visited);
+                    int testVisitedLength = getVisitedLength(testVisited);
+                    if (testVisitedLength > visitedLength) {
+                        visited = testVisited;
+                    }
+
                 }
             }
         }
@@ -186,7 +197,12 @@ public class GameMap {
                     visited.add(route);
                     routeList.remove(route);
                     //currentLength = currentLength + route.getLength();
-                    visited = getLongestRoute(route, routeList, visited);
+                    ArrayList<Route> testVisited = getLongestRoute(route, routeList, visited);
+                    int visitedLength = getVisitedLength(visited);
+                    int testVisitedLength = getVisitedLength(testVisited);
+                    if (testVisitedLength > visitedLength) {
+                        visited = testVisited;
+                    }
                 }
             }
         }
