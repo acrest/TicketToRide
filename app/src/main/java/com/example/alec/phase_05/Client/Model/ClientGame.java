@@ -16,6 +16,7 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -25,11 +26,13 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 
 public class ClientGame extends Game implements IClientGame {
     private GameState turnState = null;
+    private String currentPlayerTurn;
 
     public ClientGame(int id, String name, int maxPlayers, IClientBank bank, GameMap gameMap) {
 
         super(id, name, maxPlayers, bank, gameMap);
         turnState = new StartTurnState(this);
+        currentPlayerTurn = null;
 
     }
 
@@ -124,6 +127,21 @@ public class ClientGame extends Game implements IClientGame {
 
     @Override
     public void endTurn(String player) {
-
+        int index = -1;
+        for(int i = 0; i < getNumberPlayers(); i++) {
+            IPlayer p = getPlayer(i);
+            if(p != null && p.getName().equals(player)) {
+                index = i;
+                break;
+            }
+        }
+        if(index == -1) return;
+        for(int i = index + 1; i != index; i = (i + 1) % getNumberPlayers()) {
+            IPlayer p = getPlayer(i);
+            if(p != null) {
+                currentPlayerTurn = p.getName();
+                break;
+            }
+        }
     }
 }

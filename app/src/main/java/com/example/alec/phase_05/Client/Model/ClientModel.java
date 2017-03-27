@@ -342,6 +342,11 @@ public class ClientModel extends Observable {
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
 
+    public void endTurn(String player) {
+        if(currentGame == null) return;
+        currentGame.endTurn(player);
+    }
+
     public void setCreateGameSuccess(boolean success) {
         if (success) {
             isHost = true;

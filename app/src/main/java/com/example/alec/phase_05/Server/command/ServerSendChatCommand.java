@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server.command;
 
+import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.command.SendChatCommand;
 import com.example.alec.phase_05.Shared.model.Chat;
@@ -15,6 +16,8 @@ public class ServerSendChatCommand extends SendChatCommand {
 
     @Override
     public Result execute() {
-        return null; //TODO
+        Result result = new ServerResult();
+        result.setResultObject(ServerFacade.getInstance().sendChat(getChat()));
+        return result;
     }
 }

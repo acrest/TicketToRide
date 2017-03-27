@@ -156,7 +156,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //        mBuilder.setView(mView);
 //        final AlertDialog dialog = mBuilder.create();
 
-       // presenter.updateAll();
+        presenter.updateAll();
 //        dialog.show();
     }
 
@@ -217,9 +217,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             @Override
             public void onClick(View v) {
                 if (mEditTextChat.getText() != null) {
-                    Chat chat = new Chat(ClientModel.getInstance().getCurrentPlayer().getName(), ClientModel.getInstance().getGameID(), mEditTextChat.getText().toString(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    Chat chat = new Chat(ClientModel.getInstance().getCurrentPlayerName(), ClientModel.getInstance().getGameID(), mEditTextChat.getText().toString(), ClientModel.getInstance().getCurrentPlayer().getColor());
                     mEditTextChat.setText("");
-                    ClientModel.getInstance().addChat(chat);
+                    presenter.sendChat(chat);
                 }
             }
         });

@@ -148,7 +148,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
 
     @Override
     public void sendChat(Chat chat) {
-        //TODO send chat
+        Facade.getInstance().sendChat(chat);
     }
 
 

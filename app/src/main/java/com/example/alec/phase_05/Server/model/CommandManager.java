@@ -52,10 +52,15 @@ public class CommandManager {
         ICommand command;
         if (commandIndex == -1) {
             command = new ServerGameStartedCommand(GameStateFactory.gameToGameState(game));
+            setCommandIndex(playerName, 0);
         } else {
-            command = commandIndex < commands.size() ? createCorrespondingCommand(commands.get(commandIndex)) : null;
+            if(commandIndex == commands.size()) {
+                command = null;
+            } else {
+                command = createCorrespondingCommand(commands.get(commandIndex));
+                setCommandIndex(playerName, commandIndex + 1);
+            }
         }
-        setCommandIndex(playerName, commandIndex + 1);
         return command;
     }
 

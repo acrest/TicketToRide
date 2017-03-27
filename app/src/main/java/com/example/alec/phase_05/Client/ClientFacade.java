@@ -141,11 +141,11 @@ public class ClientFacade {
 
     public void startGame() {
         try {
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
-            model.doDrawDestinationCard(model.getCurrentPlayerName());
+            Facade.getInstance().drawTrainCard(); //TODO only got 3 train cards once
+            Facade.getInstance().drawTrainCard();
+            Facade.getInstance().drawTrainCard();
+            Facade.getInstance().drawTrainCard();
+            model.doDrawDestinationCard(model.getCurrentPlayerName()); //TODO left off here
             model.doDrawDestinationCard(model.getCurrentPlayerName());
             model.doDrawDestinationCard(model.getCurrentPlayerName());
         } catch(StateWarning e) {
@@ -169,7 +169,7 @@ public class ClientFacade {
     }
 
     public void finishTurn(String playerName) {
-        //TODO
+        model.endTurn(playerName);
     }
 
     public void returnDestinationCard(String playerName) {

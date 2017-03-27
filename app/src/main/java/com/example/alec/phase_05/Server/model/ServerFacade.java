@@ -323,7 +323,7 @@ public class ServerFacade implements IServer {
 
     @Override
     public boolean finishTurn(String playerName, int gameId) {
-        return false; //TODO
+        return true;
     }
 
     @Override
