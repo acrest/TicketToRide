@@ -75,9 +75,7 @@ public class GameMap {
                 ArrayList<Route> newRoutes = new ArrayList<>();
                 routesToPlayersMap.put(newPlayer, newRoutes);
             }
-            ArrayList<Route> playersRoute = routesToPlayersMap.get(newPlayer);
-            playersRoute.add(tempRoute);
-            routesToPlayersMap.put(newPlayer,playersRoute);
+            routesToPlayersMap.get(newPlayer).add(tempRoute);
 
         }
 
