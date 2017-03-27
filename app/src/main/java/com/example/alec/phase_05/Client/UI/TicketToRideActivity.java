@@ -260,7 +260,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         caboosecountView = (TextView) findViewById(R.id.green_cards);
         locomotiveCountView = (TextView) findViewById(R.id.rainbow_cards);
 
-        placeRoutesButton = (Button) findViewById(R.id.placeRoute);
+//        placeRoutesButton = (Button) findViewById(R.id.placeRoute);
 
         firstCard = (TextView) mView.findViewById(R.id.firstCard);
         secondCard = (TextView) mView.findViewById(R.id.secondCard);
