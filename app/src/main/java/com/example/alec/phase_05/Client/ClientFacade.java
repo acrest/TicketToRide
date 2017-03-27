@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Client;
 
+import android.graphics.Point;
+
 import com.example.alec.phase_05.Client.Model.ClientGameFactory;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.command.ICommand;
@@ -163,6 +165,8 @@ public class ClientFacade {
     public void claimRoute(String playerName, int routeId) {
         model.setRouteOwner(playerName, routeId);
     }
+
+
 
     public void finishTurn(String playerName) {
         //TODO

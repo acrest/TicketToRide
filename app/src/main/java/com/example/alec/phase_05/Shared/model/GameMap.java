@@ -38,6 +38,10 @@ public class GameMap {
         routes.put(route.getId(), route);
     }
 
+    public Map<Integer, Route> getRoutes(){
+        return routes;
+    }
+
     public boolean isInPlayerList(ArrayList<Player> playerList, Route tempRoute) {
         Player playerInRoute = (Player) tempRoute.getOwner();
         String playerName = playerInRoute.getName();

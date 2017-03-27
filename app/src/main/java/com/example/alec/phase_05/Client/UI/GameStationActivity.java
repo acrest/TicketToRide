@@ -22,7 +22,10 @@ import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Presenter.IGameStationListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterGameStation;
 import com.example.alec.phase_05.Client.Presenter.PresenterGameStation;
+import com.example.alec.phase_05.Client.ServerProxy;
 import com.example.alec.phase_05.R;
+import com.example.alec.phase_05.Server.model.ServerFacade;
+import com.example.alec.phase_05.Server.model.ServerModel;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 
@@ -42,6 +45,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_game_station);
+
 
         mGameRecView = (RecyclerView) findViewById(R.id.rec_game_list);
         mGameRecView.setLayoutManager(new LinearLayoutManager(this));

@@ -12,6 +12,8 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 public final class ClientGameFactory {
 
     public static IClientGame createGame(GameInfo gameInfo) {
+
+        System.out.println("inside client game factory");
         IClientBank bank = createBank();
         TrainCard[] cards = gameInfo.getVisibleTrainCards();
         for (int i = 0; i < cards.length; ++i) {

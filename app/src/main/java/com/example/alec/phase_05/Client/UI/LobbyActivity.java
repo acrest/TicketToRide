@@ -14,10 +14,9 @@ import com.example.alec.phase_05.Client.Model.IClientGame;
 import com.example.alec.phase_05.Client.Presenter.ILobbyListener;
 import com.example.alec.phase_05.Client.Presenter.IPresenterLobby;
 import com.example.alec.phase_05.Client.Presenter.PresenterLobby;
+import com.example.alec.phase_05.Client.ServerProxy;
 import com.example.alec.phase_05.R;
-import com.example.alec.phase_05.Shared.model.Game;
-import com.example.alec.phase_05.Shared.model.GameDescription;
-import com.example.alec.phase_05.Shared.model.IGame;
+
 
 public class LobbyActivity extends Activity implements ILobbyListener {
     private Button mStartGameButton;

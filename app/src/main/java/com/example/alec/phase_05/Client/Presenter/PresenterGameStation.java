@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.Presenter;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Facade;
+import com.example.alec.phase_05.Client.ServerProxy;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 
 import java.util.Collection;
@@ -22,6 +23,7 @@ public class PresenterGameStation extends Presenter implements IPresenterGameSta
     public void joinGame(int gameID, String color) {
         Facade.getInstance().joinGame(gameID, color);
     }
+
 
     @Override
     public void createGame(String hostColor, String gameName, int numberOfPlayers) {

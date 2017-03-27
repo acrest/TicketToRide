@@ -161,6 +161,7 @@ public class Facade {
      *               players to join the game and then starts the game
      */
     public void joinGame(final int gameID, final String color) {
+       // System.out.println("the facade join game " + proxy.getGames());
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

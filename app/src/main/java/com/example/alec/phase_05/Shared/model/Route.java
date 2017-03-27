@@ -11,14 +11,16 @@ public class Route {
     private IPlayer owner;
     private TrainType type;
     private int id;
+    private int twinID;
 
-    public Route(City city1, City city2, int length, IPlayer owner, TrainType type, int id) {
+    public Route(City city1, City city2, int length, IPlayer owner, TrainType type, int id, int twinID) {
         this.city1 = city1;
         this.city2 = city2;
         this.length = length;
         this.owner = owner;
         this.type = type;
         this.id = id;
+        this.twinID = twinID;
     }
 
     public City getCity1() {
@@ -67,6 +69,10 @@ public class Route {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getTwinID(){
+        return twinID;
     }
 
     public int getPoints() {

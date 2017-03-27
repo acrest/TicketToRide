@@ -30,6 +30,8 @@ public class PresenterLobby extends Presenter implements IPresenterLobby {
     }
 
     private void requestStartGame() {
+        System.out.println("request start game " + ClientModel.getInstance().getGameID());
+
         if (ClientModel.getInstance().getNumberPlayers() < 2 || gameStarted) return;
         Facade.getInstance().startGame();
         gameStarted = true;
