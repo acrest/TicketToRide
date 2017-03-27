@@ -37,7 +37,6 @@
 
             <TextView
                 android:gravity="center"
-                android:text="TextView"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
@@ -55,7 +54,6 @@
 
             <TextView
                 android:gravity="center"
-                android:text="TextView"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
@@ -73,7 +71,6 @@
 
             <TextView
                 android:gravity="center"
-                android:text="TextView"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
