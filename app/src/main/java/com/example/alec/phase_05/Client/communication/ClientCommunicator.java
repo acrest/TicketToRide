@@ -83,6 +83,7 @@ public class ClientCommunicator
         {
             //URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
             //URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
+
             //clark's ip "45.56.33.124"
             //serverIPandrewYouKnow = "192.168.1.118";
             //serverIPandrewHome = "192.168.1.111";
@@ -91,11 +92,11 @@ public class ClientCommunicator
             serverIP = "10.24.70.33";
 
 
+            //serverIP = "10.24.70.33";
             URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
 //            System.out.println(url.toString());
 
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
-
             http.setRequestMethod("POST");
             http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             http.setDoOutput(true);

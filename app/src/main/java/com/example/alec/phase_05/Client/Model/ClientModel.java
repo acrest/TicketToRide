@@ -255,6 +255,7 @@ public class ClientModel extends Observable {
 //        notifyPropertyChanges(PLAYER_POINTS);
 //    }
 
+
     public void setPlayerPoints(int points) {
         IPlayer currentPlayer = getCurrentPlayer();
         if (currentPlayer == null) return;

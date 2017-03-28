@@ -391,6 +391,8 @@
 
                     </LinearLayout>
 
+
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -519,6 +521,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
+                android:background="@mipmap/old_map"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -540,7 +543,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:text="PLACE ROUTE" />
+                    android:text="CLAIM ROUTE" />
 
             </RelativeLayout>
 

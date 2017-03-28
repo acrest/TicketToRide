@@ -30,8 +30,8 @@ public class ServerFacade implements IServer {
      *
      * @return current instance of ServerFacade
      */
-    public static ServerFacade getInstance() {
-        if (instance == null) {
+    public static ServerFacade getInstance(){
+        if(instance == null){
             instance = new ServerFacade();
         }
         return instance;
@@ -142,11 +142,12 @@ public class ServerFacade implements IServer {
 //        String[] colors = new String[numOfPlayers];
 //        players[0] = hostPlayer;
 //        colors[0] = hostColor;
-
         IServerGame game = model.createGame(gameName, numOfPlayers);
+
         Player player = new Player(playerName);
         player.setColor(hostColor);
         int position = game.addPlayerAtNextPosition(player);
+
         if (position == -1)
             return null;
         return GameStateFactory.gameToGameState(game);
