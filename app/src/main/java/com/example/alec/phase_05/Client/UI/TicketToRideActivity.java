@@ -57,6 +57,17 @@ import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
+import static com.example.alec.phase_05.Shared.model.TrainType.ANY;
+import static com.example.alec.phase_05.Shared.model.TrainType.BOX;
+import static com.example.alec.phase_05.Shared.model.TrainType.CABOOSE;
+import static com.example.alec.phase_05.Shared.model.TrainType.COAL;
+import static com.example.alec.phase_05.Shared.model.TrainType.FREIGHT;
+import static com.example.alec.phase_05.Shared.model.TrainType.HOPPER;
+import static com.example.alec.phase_05.Shared.model.TrainType.LOCOMOTIVE;
+import static com.example.alec.phase_05.Shared.model.TrainType.PASSENGER;
+import static com.example.alec.phase_05.Shared.model.TrainType.REEFER;
+import static com.example.alec.phase_05.Shared.model.TrainType.TANKER;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -269,7 +280,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mCreateChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEditTextChat.getText() != null) {
+                if (!mEditTextChat.getText().toString().isEmpty()) {
                     Chat chat = new Chat(ClientModel.getInstance().getCurrentPlayer().getName(), ClientModel.getInstance().getGameID(), mEditTextChat.getText().toString(), ClientModel.getInstance().getCurrentPlayer().getColor());
                     mEditTextChat.setText("");
                     ClientModel.getInstance().addChat(chat);
@@ -346,9 +357,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         imageView.setOnTouchListener(new ImageView.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                PointF imagePoint = convertToImageCoord(imageView.getWidth(), imageView.getHeight(), event.getX(), event.getY());
-                //System.out.println(event.getX() + " " + event.getY());
-                int selectedRoute = checkIfRouteSelected(imagePoint);
+                PointF imagePoint = new PointF(event.getX(), event.getY());
+                checkIfRouteSelected(imagePoint);
                 return false;
             }
         });
@@ -443,8 +453,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             Point size = new Point();
             display.getSize(size);
             //p.setAlpha(75);
-            PointF firstCity = convertToScreenCoordinates((float) city1.getXCord(), (float) city1.getYCord());
-            PointF secondCity = convertToScreenCoordinates((float) city2.getXCord(), (float) city2.getYCord());
+            PointF firstCity = convertToImageCoordinates((float) city1.getXCord(), (float) city1.getYCord());
+            PointF secondCity = convertToImageCoordinates((float) city2.getXCord(), (float) city2.getYCord());
 
             c.drawLine(secondCity.x, secondCity.y, firstCity.x, firstCity.y, p);
 
@@ -452,11 +462,15 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
     }
 
-    //**************************************
     public int checkIfRouteSelected(PointF selectedPoint) {
         Map<Integer, Route> routes = ClientModel.getInstance().getMap().getRoutes();
         for (Route currentRoute : routes.values()){
-            if (pointOnLine(currentRoute.getCity1().getAsPoint(), currentRoute.getCity2().getAsPoint(), selectedPoint) == true){
+            City city1 = currentRoute.getCity1();
+            City city2 = currentRoute.getCity2();
+            PointF point1 = convertToImageCoordinates((float)city1.getXCord(), (float)city1.getYCord());
+            PointF point2 = convertToImageCoordinates((float)city2.getXCord(), (float)city2.getYCord());
+
+            if (pointOnLine(new Point((int)point1.x, (int)point1.y), new Point((int)point2.x, (int)point2.y), selectedPoint) == true){
                 currentlySelectedRoute = currentRoute;
                 routeInfo.setVisibility(View.VISIBLE);
                 twinRouteInfo.setVisibility(View.VISIBLE);
@@ -468,12 +482,18 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     twinRouteInfo.setText("  Claim " + twinRoute.getCity1().getName()
                             + " to " + twinRoute.getCity2().getName() + ": " + twinRoute.getLength()
                             + " " +  twinRoute.getType()+ "  ");
+                    routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                    twinRouteInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                    changeTextColorBasedOnPart(routeInfo, currentRoute);
+                    changeTextColorBasedOnPart(twinRouteInfo, twinRoute);
                 }
                 else{
                     routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to "
                             + currentlySelectedRoute.getCity2().getName() + ": "
                             + currentlySelectedRoute.getLength() + " " +  currentlySelectedRoute.getType() + "  ");
+                    routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
                     twinRouteInfo.setVisibility(View.INVISIBLE);
+                    changeTextColorBasedOnPart(routeInfo, currentRoute);
                 }
                 return currentRoute.getId();
             }
@@ -485,6 +505,63 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         return -1;
     }
 
+    private void changeTextColorBasedOnPart(Button button, Route route){
+        TrainType type = route.getType();
+        button.setTextColor(Color.GRAY);
+
+        if(type == BOX){
+            button.setTextColor(Color.parseColor("#FF66FF"));
+        }
+        if(type == PASSENGER){
+            button.setTextColor(Color.WHITE);
+        }
+        if(type == TANKER){
+            button.setTextColor(Color.BLUE);
+        }
+        if(type == REEFER){
+            button.setTextColor(Color.YELLOW);
+        }
+        if(type == FREIGHT){
+            button.setTextColor(Color.parseColor("#FF8000"));
+        }
+        if(type == HOPPER){
+            button.setTextColor(Color.BLACK);
+        }
+        if(type == COAL){
+            button.setTextColor(Color.RED);
+        }
+        if(type == CABOOSE){
+            button.setTextColor(Color.parseColor("#999900"));
+        }
+
+//        switch(type){
+//            case(BOX):
+//                button.setTextColor(Color.parseColor("#FF66FF"));
+//                break;
+//            case(PASSENGER):
+//                button.setTextColor(Color.WHITE);
+//                break;
+//            case(TANKER):
+//                button.setTextColor(Color.BLUE);
+//                break;
+//            case(REEFER):
+//                button.setTextColor(Color.YELLOW);
+//                break;
+//            case(FREIGHT):
+//                button.setTextColor(Color.parseColor("#FF8000"));
+//                break;
+//            case(HOPPER):
+//                button.setTextColor(Color.BLACK);
+//                break;
+//            case(COAL):
+//                button.setTextColor(Color.RED);
+//                break;
+//            case(CABOOSE):
+//                button.setTextColor(Color.parseColor("#999900"));
+//                break;
+//            default:
+//                button.setTextColor(Color.GRAY);
+    }
 
     public boolean pointOnLine(Point start, Point end, PointF selectedPoint) {
 
@@ -505,46 +582,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         return Math.sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y));
     }
 
-    public PointF convertToImageCoord(float deviceWidth, float deviceHeight, float xInput, float yInput){
-
-        float imageWidth = getResources().getDrawable(R.drawable.tickettoridemap).getMinimumWidth();
-        float imageHeight = getResources().getDrawable(R.drawable.tickettoridemap).getMinimumHeight();
-
-        PointF newPoint = new PointF();
-        float x;
-        float y;
-        float conversionRate = deviceHeight/imageHeight;
-        float extraSpace = (deviceWidth - (imageWidth*conversionRate))/2;
-        //System.out.println("Extra space: " + extraSpace);
-        x = ((xInput- extraSpace)/conversionRate);
-        y = (yInput)/conversionRate;
-        //System.out.println("The converted points " + x + " " + y);
-        newPoint.x = x;
-        newPoint.y = y;
-        return newPoint;
-    }
-
-    /*
-        public Float[] convertToImageCoord(float deviceWidth, float deviceHeight, float imageWidth,
-                                           float imageHeight, float xInput, float yInput){
-            Float[] coordinates = new Float[2];
-            float x;
-            float y;
-            // System.out.println(" The x and y " + xInput + " " + yInput);
-            float conversionRate = deviceHeight/imageHeight;
-            // System.out.println("The device height and image height " + deviceHeight + " " + imageHeight);
-            //System.out.println("Conversion rate: " + conversionRate + "New Image Width: " + imageWidth * conversionRate);
-            float extraSpace = (deviceWidth - (imageWidth*conversionRate))/2;
-            //System.out.println("Extra space: " + extraSpace);
-            x = ((xInput- extraSpace)/conversionRate);
-            y = (yInput)/conversionRate;
-            //System.out.println("The converted points " + x + " " + y);
-            coordinates[0] = x;
-            coordinates[1] = y;
-            return coordinates;
-        }
-    */
-    public PointF convertToScreenCoordinates(float xInput, float yInput) {
+    public PointF convertToImageCoordinates(float xInput, float yInput) {
         View map = findViewById(R.id.map);
         final int ORIGINAL_PIC_WIDTH = 2460;
         final int ORIGINAL_PIC_HEIGHT = 1522;
@@ -557,10 +595,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         float x = ((xPicWidth * xInput)/ORIGINAL_PIC_WIDTH) + (extraSpace/2);
         return new PointF(x, y);
     }
-
-
-    // **************************************
-
 
     public void setCard(ImageButton button, Deck deck) {
         TrainCard card = deck.drawCard();
@@ -837,9 +871,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(TicketToRideActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+//
 
     @Override
     public void updateTrainCards(List<TrainCard> cards) {
