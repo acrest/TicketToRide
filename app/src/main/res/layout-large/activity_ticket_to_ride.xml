@@ -520,7 +520,6 @@
                 android:background="@mipmap/old_map"
                 android:orientation="horizontal">
 
-
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
