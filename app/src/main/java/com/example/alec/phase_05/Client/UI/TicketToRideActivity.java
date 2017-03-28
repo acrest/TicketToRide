@@ -44,7 +44,6 @@ import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRide;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRide;
 import com.example.alec.phase_05.R;
-import com.example.alec.phase_05.Server.model.ServerBank;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.City;
 import com.example.alec.phase_05.Shared.model.Deck;
@@ -373,7 +372,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
-
         dialogDestinationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -430,7 +428,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 checkNumSelectedDestCards();
             }
         });
-
     }
 
     public void drawRouteLine(City city1, City city2, String color) {

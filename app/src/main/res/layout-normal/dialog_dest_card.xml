@@ -21,9 +21,6 @@
             android:textSize="50dp"
             android:textStyle="bold"/>
 
-<<<<<<< HEAD
-        <TextView
-=======
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="3dp"
@@ -32,8 +29,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:text="TextView"
->>>>>>> c487e49e53af4c01490c27be4c49a53422964981
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.7"
@@ -41,7 +36,6 @@
 
             <TextView
                 android:gravity="center"
-                android:text="TextView"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
@@ -59,7 +53,6 @@
 
             <TextView
                 android:gravity="center"
-                android:text="TextView"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
@@ -77,7 +70,6 @@
 
             <TextView
                 android:gravity="center"
-                android:text="TextView"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
