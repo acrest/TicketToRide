@@ -4,9 +4,11 @@ import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Picture;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -95,7 +97,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private Button dialogDestinationButton;
     private Button dialogBeginTurnButton;
     private Button dialogMapButton;
-    private Button dialogSeeMapButton;
+    private Button dialogSeeMapButton1;
+    private Button dialogSeeMapButton2;
+    private Button dialogSeeMapButton3;
+    private DestinationCard observingCard;
     Button deckButton;
     Button destDeckButton;
     ImageButton card1Button;
@@ -119,6 +124,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     AlertDialog dialogDesinationCards;
     AlertDialog dialogBeginTurn;
     AlertDialog dialogMap;
+    View mView;
+    View mBeginTurnView;
+    View mShowMapView;
 
     private TextView firstCard;
     private TextView secondCard;
@@ -155,9 +163,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card3Button = (ImageButton) findViewById(R.id.card3);
         card4Button = (ImageButton) findViewById(R.id.card4);
         card5Button = (ImageButton) findViewById(R.id.card5);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
-        View mBeginTurnView = getLayoutInflater().inflate(R.layout.dialog_begin_turn, null);
-        View mShowMapView = getLayoutInflater().inflate(R.layout.dialog_map, null);
+        mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
+        mBeginTurnView = getLayoutInflater().inflate(R.layout.dialog_begin_turn, null);
+        mShowMapView = getLayoutInflater().inflate(R.layout.dialog_map, null);
 
         setOnCreateFields(mView, mBeginTurnView, mShowMapView);
         setOnCreateOnCreateListeners();
@@ -208,11 +216,40 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
-        dialogSeeMapButton = (Button) mView.findViewById(R.id.dialog_see_map_button);
-        dialogSeeMapButton.setOnClickListener(new View.OnClickListener() {
+        dialogSeeMapButton1 = (Button) mView.findViewById(R.id.dialog_see_map_button1);
+        dialogSeeMapButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //observingCard = firstCard;
                 dialogMap.show();
+                showDestinationCanvas(mShowMapView);
+                dialogMap.dismiss();
+                dialogMap.show();
+                showDestinationCanvas(mShowMapView);
+            }
+        });
+        dialogSeeMapButton2 = (Button) mView.findViewById(R.id.dialog_see_map_button2);
+        dialogSeeMapButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //observingCard = secondCard;
+                dialogMap.show();
+                showDestinationCanvas(mShowMapView);
+                dialogMap.dismiss();
+                dialogMap.show();
+                showDestinationCanvas(mShowMapView);
+            }
+        });
+        dialogSeeMapButton3 = (Button) mView.findViewById(R.id.dialog_see_map_button3);
+        dialogSeeMapButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //observingCard = firstCard;
+                dialogMap.show();
+                showDestinationCanvas(mShowMapView);
+                dialogMap.dismiss();
+                dialogMap.show();
+                showDestinationCanvas(mShowMapView);
             }
         });
 
@@ -243,6 +280,38 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         Point size = new Point();
         display.getSize(size);
         dialogMap.getWindow().setLayout((int)(size.x*.7), (int)(size.y*.7));
+
+        //test
+        Map<String, City> cities = GameComponentFactory.createCities();
+        observingCard = new DestinationCard(cities.get("Seattle"), cities.get("New York"), 22);
+    }
+
+    private void showDestinationCanvas(View mShowMapView){
+        ImageView imageView = new ImageView(this);
+        imageView = (ImageView) mShowMapView.findViewById(R.id.dialog_map_image);
+        View map = mShowMapView.findViewById(R.id.dialog_map_image);
+
+        if (imageView.getWidth() > 0 && imageView.getHeight() > 0) {
+            Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(bmp);
+            imageView.draw(c);
+
+            City city1 = observingCard.getCity1();
+            City city2 = observingCard.getCity2();
+            PointF cityOnePoint = convertToImageCoordinates((float) city1.getXCord(), (float) city1.getYCord(), map);
+            PointF cityTwoPoint = convertToImageCoordinates((float) city2.getXCord(), (float) city2.getYCord(), map);
+
+            Paint p = new Paint();
+            p.setColor(Color.parseColor("#009900"));
+
+            //c.drawCircle(firstCity.x, firstCity.y, 15, p);
+            //c.drawCircle(secondCity.x, secondCity.y, 15, p);
+            Bitmap something = BitmapFactory.decodeResource(getResources(), R.drawable.star);
+            c.drawBitmap(something, cityOnePoint.x - (something.getWidth()/2), cityOnePoint.y - (something.getHeight()/2), null);
+            c.drawBitmap(something, cityTwoPoint.x - (something.getWidth()/2), cityTwoPoint.y - (something.getHeight()/2), null);
+
+            imageView.setImageBitmap(bmp);
+        }
     }
 
     private Map<Player, Integer> getLongestRoutePlayer() {
@@ -537,8 +606,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             Point size = new Point();
             display.getSize(size);
             //p.setAlpha(75);
-            PointF firstCity = convertToImageCoordinates((float) city1.getXCord(), (float) city1.getYCord());
-            PointF secondCity = convertToImageCoordinates((float) city2.getXCord(), (float) city2.getYCord());
+            View map = findViewById(R.id.map);
+            PointF firstCity = convertToImageCoordinates((float) city1.getXCord(), (float) city1.getYCord(), map);
+            PointF secondCity = convertToImageCoordinates((float) city2.getXCord(), (float) city2.getYCord(), map);
 
             c.drawLine(secondCity.x, secondCity.y, firstCity.x, firstCity.y, p);
 
@@ -551,8 +621,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         for (Route currentRoute : routes.values()){
             City city1 = currentRoute.getCity1();
             City city2 = currentRoute.getCity2();
-            PointF point1 = convertToImageCoordinates((float)city1.getXCord(), (float)city1.getYCord());
-            PointF point2 = convertToImageCoordinates((float)city2.getXCord(), (float)city2.getYCord());
+            View map = findViewById(R.id.map);
+            PointF point1 = convertToImageCoordinates((float)city1.getXCord(), (float)city1.getYCord(), map);
+            PointF point2 = convertToImageCoordinates((float)city2.getXCord(), (float)city2.getYCord(), map);
 
             if (pointOnLine(new Point((int)point1.x, (int)point1.y), new Point((int)point2.x, (int)point2.y), selectedPoint) == true){
                 currentlySelectedRoute = currentRoute;
@@ -646,8 +717,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         return Math.sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y));
     }
 
-    public PointF convertToImageCoordinates(float xInput, float yInput) {
-        View map = findViewById(R.id.map);
+    public PointF convertToImageCoordinates(float xInput, float yInput, View map) {
         final int ORIGINAL_PIC_WIDTH = 2460;
         final int ORIGINAL_PIC_HEIGHT = 1522;
 
