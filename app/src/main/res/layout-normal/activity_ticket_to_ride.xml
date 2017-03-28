@@ -335,7 +335,6 @@
                             android:id="@+id/longest_route_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" has the longest route of "
                             android:textColor="#FFF" />
 
                     </LinearLayout>
@@ -365,8 +364,8 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/routes_list"
                         android:layout_width="match_parent"
-                        android:layout_height="230dp"
-                        android:background="#AAE0E0E0"></android.support.v7.widget.RecyclerView>
+                        android:layout_height="370dp"
+                        android:background="#AAE0E0E0" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -390,8 +389,6 @@
                             android:textSize="10dp" />
 
                     </LinearLayout>
-
-
 
                 </LinearLayout>
 
@@ -419,7 +416,7 @@
                         android:id="@+id/games_history_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#AAE0E0E0"></android.support.v7.widget.RecyclerView>
+                        android:background="#AAE0E0E0" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -429,7 +426,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@mipmap/old_map">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -524,28 +522,54 @@
                 android:background="@mipmap/old_map"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/map"
-                    android:background="#444444"
+
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/tickettoridemap" />
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="#AA000000"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/tickettoridemap" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="bottom">
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/twinroute_info"
+                            android:visibility="invisible"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/roundbutton"
+                            android:textSize="16dp"/>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/route_info"
+                            android:layout_margin="5dp"
+                            android:visibility="invisible"
+                            android:background="@drawable/roundbutton"
+                            android:textSize="16dp"/>
+                    </LinearLayout>
+
+
+                </FrameLayout>
+
+
+
 
             </LinearLayout>
 
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/placeRoute"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:text="CLAIM ROUTE" />
-
-            </RelativeLayout>
 
 
             <LinearLayout

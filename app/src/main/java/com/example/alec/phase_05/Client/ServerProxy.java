@@ -16,11 +16,13 @@ import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientPickTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Client.command.ClientReturnDestinationCardCommand;
+import com.example.alec.phase_05.Client.command.ClientSendChatCommand;
 import com.example.alec.phase_05.Client.command.ClientStartGameCommand;
 import com.example.alec.phase_05.Client.communication.ClientCommunicator;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -236,6 +238,11 @@ public class ServerProxy implements IServer {
     @Override
     public boolean finishTurn(String playerName, int gameId) {
         return executeCommand(new ClientFinishTurnCommand(playerName, gameId)).toBoolean();
+    }
+
+    @Override
+    public boolean sendChat(Chat chat) {
+        return executeCommand(new ClientSendChatCommand(chat)).toBoolean();
     }
 
     @Override

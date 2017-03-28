@@ -7,6 +7,5 @@ import java.util.Observer;
  */
 
 public interface IPresenter extends Observer {
-
     void update(UpdateIndicator updateIndicator);
 }
