@@ -335,6 +335,8 @@
                             android:id="@+id/longest_route_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="24dp"
+                            android:paddingBottom="10dp"
                             android:textColor="#FFF" />
 
                     </LinearLayout>
