@@ -16,10 +16,23 @@ import static com.example.alec.phase_05.R.id.map;
 public class GameMap {
     private Map<String, City> cities;
     private Map<Integer, Route> routes;
+    private Map<City, ArrayList<Route>> cityToRoutes;
 
     public GameMap(Map<String, City> cities, Map<Integer, Route> routes) {
         this.cities = cities;
         this.routes = routes;
+
+        for(int i = 0; i < cities.size(); i++){
+            if(!cityToRoutes.containsKey(cities.get(i))){
+                cityToRoutes.put(cities.get(i), new ArrayList<Route>());
+            }
+        }
+
+        for(int i = 0; i < routes.size(); i++){
+            Route route = routes.get(i);
+            cityToRoutes.get(route.getCity1()).add(route);
+            cityToRoutes.get(route.getCity2()).add(route);
+        }
     }
 
     public City getCityByName(String name){
@@ -211,5 +224,108 @@ public class GameMap {
         return visited;
     }
 
+    public boolean checkIfDestinationComplete(DestinationCard destinationCard, String player){
+        City city1 = destinationCard.getCity1();
+        City city2 = destinationCard.getCity2();
+        ArrayList<Route> rootRoutes = new ArrayList<>();
+        Map<City, Boolean> markedCities = initializeCitiesToFalse();
 
+        markedCities.put(city1, true);
+
+        for(int i = 0; i < routes.size(); i++){
+            Route route = routes.get(i);
+
+            if(route.getCity1() == city1 || route.getCity2() == city1){
+                rootRoutes.add(route);
+            }
+        }
+
+        for(int i = 0; i < rootRoutes.size(); i++){
+            Route route = rootRoutes.get(i);
+            City firstCity = route.getCity1();
+            City secondCity = route.getCity2();
+
+            if(firstCity == city2 || secondCity == city2){
+                return true;
+            }
+
+            if(markedCities.get(firstCity) != true){
+                markedCities.put(firstCity, true);
+
+                for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
+                    if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities)){
+                        return true;
+                    }
+                }
+
+                markedCities.put(firstCity, false);
+            }
+
+            if(markedCities.get(secondCity) != true){
+                markedCities.put(secondCity, true);
+
+                for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
+                    if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities)){
+                        return true;
+                    }
+                }
+
+                markedCities.put(secondCity, false);
+            }
+        }
+
+        return false;
+    }
+
+    private boolean checkIfDestinationCompleteRec(City city2, City city, Route rootRoute, Map<City, Boolean> markedCities){
+
+        for(int i = 0; i < cityToRoutes.get(city).size(); i++){
+            Route route = cityToRoutes.get(city).get(i);
+
+            if(route != rootRoute){
+                City firstCity = route.getCity1();
+                City secondCity = route.getCity2();
+
+                if(firstCity == city2 || secondCity == city2){
+                    return true;
+                }
+
+                if(markedCities.get(firstCity) != true){
+                    markedCities.put(firstCity, true);
+
+                    for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
+                        if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities)){
+                            return true;
+                        }
+                    }
+
+                    markedCities.put(firstCity, false);
+                }
+
+                if(markedCities.get(secondCity) != true){
+                    markedCities.put(secondCity, true);
+
+                    for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
+                        if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities)){
+                            return true;
+                        }
+                    }
+
+                    markedCities.put(secondCity, false);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private Map<City, Boolean> initializeCitiesToFalse(){
+        Map<City, Boolean> map = new HashMap<>();
+
+        for(int i = 0; i < cities.size(); i++){
+            map.put(cities.get(i), false);
+        }
+
+        return map;
+    }
 }
