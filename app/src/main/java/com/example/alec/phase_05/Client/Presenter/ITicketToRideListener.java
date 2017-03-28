@@ -33,4 +33,6 @@ public interface ITicketToRideListener {
     void pickDestinationCards(List<DestinationCard> cards);
 
     void initPickDestinationCards(List<DestinationCard> cards);
+
+    void onTurnStart();
 }

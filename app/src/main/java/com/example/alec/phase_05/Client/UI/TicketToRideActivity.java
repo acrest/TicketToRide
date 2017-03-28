@@ -984,6 +984,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         displayCardChoiceDialog();
     }
 
+    @Override
+    public void onTurnStart() {
+        //TODO tell the player it's their turn
+    }
+
     private void displayCardChoiceDialog() {
         destCardChoices.put(firstCard, false);
         destCardChoices.put(secondCard, false);
