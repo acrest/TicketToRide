@@ -95,8 +95,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private Button dialogDestinationButton;
     private Button dialogBeginTurnButton;
     ImageButton deckButton;
-    Button deckButton;
-    Button destDeckButton;
+//    Button deckButton;
+//    Button destDeckButton;
     ImageButton card1Button;
     ImageButton card2Button;
     ImageButton card3Button;
@@ -115,7 +115,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView locomotiveCountView;
     private Button routeInfo;
     private Button twinRouteInfo;
-    AlertDialog dialog;
+//    AlertDialog dialog;
     AlertDialog dialogBeginTurn;
 
     private TextView firstCard;
@@ -182,13 +182,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
        // setCard(card4Button, deck);
        // setCard(card5Button, deck);
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
-        destCardChoices = new HashMap<>();
-        destCardChoices.put(firstCard, false);
-        destCardChoices.put(secondCard, false);
-        destCardChoices.put(thirdCard, false);
-        mBuilder.setView(mView);
-        dialog = mBuilder.create();
+//        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+//        destCardChoices = new HashMap<>();
+//        destCardChoices.put(firstCard, false);
+//        destCardChoices.put(secondCard, false);
+//        destCardChoices.put(thirdCard, false);
+//        mBuilder.setView(mView);
+//        dialog = mBuilder.create();
 
         AlertDialog.Builder mBeginTurnBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
         mBeginTurnBuilder.setView(mBeginTurnView);
@@ -197,14 +197,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         //dialog.setCanceledOnTouchOutside(false);
         //dialogBeginTurn.setCanceledOnTouchOutside(false);
 
-        dialogDestinationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
-                presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
-                dialog.dismiss();
-            }
-        });
+//        dialogDestinationButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
+//                presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
+//                dialog.dismiss();
+//            }
+//        });
 
         dialogBeginTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,7 +214,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         });
 
         presenter.updateAll();
-        dialog.show();
+//        dialog.show();
     }
 
     private Map<Player, Integer> getLongestRoutePlayer() {
@@ -423,7 +423,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View view) {
                 Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
                 presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
-                destinationDialog.hide();
+                destinationDialog.dismiss();
             }
         });
 
@@ -1012,7 +1012,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void onTurnStart() {
-        //TODO tell the player it's their turn
+        dialogBeginTurn.show();
     }
 
     @Override
