@@ -167,8 +167,8 @@ public class ClientFacade {
 
 
 
-    public void finishTurn(String playerName) {
-        model.endTurn(playerName);
+    public void finishTurn() {
+        model.endTurn();
     }
 
     public void returnDestinationCard(String playerName) {

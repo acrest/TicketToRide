@@ -32,7 +32,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void drawTrainCard() {
         try {
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
+            model.doDrawTrainCardFromDeck();
         } catch (Exception e) {
 
         }
@@ -41,7 +41,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void pickTrainCard(int deckID) {
         try {
-            model.doPickTrainCard(model.getCurrentPlayerName(), deckID);
+            model.doPickTrainCard(deckID);
         } catch (Exception e) {
 
         }
@@ -50,7 +50,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void claimRoute(int routeID) {
         try {
-            model.doClaimRoute(model.getCurrentPlayerName(), routeID);
+            model.doClaimRoute(routeID);
             model.setLongestPath();
         } catch (Exception e) {
 
@@ -60,7 +60,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void returnDestinationCard(DestinationCard card) {
         try {
-            model.doPutBackDestinationCard(model.getCurrentPlayerName(), card);
+            model.doPutBackDestinationCard(card);
         } catch (Exception e) {
         }
     }
@@ -68,7 +68,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void drawDestinationCard() {
         try {
-            model.doDrawDestinationCard(model.getCurrentPlayerName());
+            model.doDrawDestinationCard();
         } catch (Exception e) {
         }
     }
@@ -76,7 +76,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void endTurn() {
         try {
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
+            model.doDrawTrainCardFromDeck();
         } catch (Exception e) {
         }
     }
@@ -142,7 +142,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         }
         for (DestinationCard card : notChosen) {
             try {
-                model.doPutBackDestinationCard(model.getCurrentPlayerName(), card);
+                model.doPutBackDestinationCard(card);
             } catch (Exception e) {
 
             }

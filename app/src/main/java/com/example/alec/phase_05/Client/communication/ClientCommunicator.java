@@ -83,7 +83,7 @@ public class ClientCommunicator
         {
             //URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
             //URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
-            serverIP = "10.24.68.248";
+            serverIP = "10.24.67.25";
             //serverIP = "10.24.70.33";
             URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
 //            System.out.println(url.toString());

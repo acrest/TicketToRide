@@ -34,7 +34,7 @@ public class StartTurnState implements GameState {
     }
 
     @Override
-    public void drawTrainCardFromDeck(String player) throws StateWarning {
+    public void drawTrainCardFromDeck() throws StateWarning {
         System.out.println("Drawing Train Card from Deck.");
         //draw card from deck
 
@@ -43,22 +43,22 @@ public class StartTurnState implements GameState {
     }
 
     @Override
-    public void pickTrainCard(String player, int cardIndex) throws StateWarning {
+    public void pickTrainCard(int cardIndex) throws StateWarning {
         System.out.println("Picking Train card from face up cards.");
         // pick card
         // if card is a rainbow -> state.setCardState(state.getRainbowCardState());
-        facade.pickTrainCard(cardIndex);
         TrainCard pickedCard = state.getVisibleCard(cardIndex);
+        if(pickedCard == null) return; //no card in that spot
         if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
             state.setTurnState(new RainbowCardState(state));
         } else {
             state.setTurnState(new OnePickedCardState(state));
         }
-
+        facade.pickTrainCard(cardIndex);
     }
 
     @Override
-    public void drawDestinationCard(String player) throws StateWarning  {
+    public void drawDestinationCard() throws StateWarning  {
         System.out.println("Drawing a destination card.");
         //draw destination card
         int drawThree = 3;
@@ -69,7 +69,7 @@ public class StartTurnState implements GameState {
     }
 
     @Override
-    public void putBackDestinationCard(String player, DestinationCard card) throws StateWarning {
+    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
         throw new StateWarning("You must draw some destination cards first.");
     }
 
@@ -123,19 +123,19 @@ public class StartTurnState implements GameState {
     }
 
     @Override
-    public void claimRoute(String player, int routeId) throws StateWarning {
+    public void claimRoute(int routeId) throws StateWarning {
         System.out.println("Claiming route.");
         // claim route
         // get player hand and check that it has the needed cards
         // send in those cards.
-        Player currentPlayer = (Player) state.getPlayerByName(player);
+        Player currentPlayer = (Player) ClientModel.getInstance().getCurrentPlayer();
         List<TrainCard> cardsFromHand = findCardsFromHand(currentPlayer, routeId);
         if (cardsFromHand.size() == 0) {
             throw new StateWarning("You do not have enough of those cards in your hand to " +
                     "claim that route. Please draw a train card or destination card.");
         } else {
             //removeCardsFromHand(currentPlayer, cardsFromHand);
-            state.claimRoute(player, routeId);
+            facade.claimRoute(routeId);
             state.setTurnState(new ClaimRouteState(state));
         }
 
@@ -144,7 +144,7 @@ public class StartTurnState implements GameState {
     }
 
     @Override
-    public void endTurn(String player) throws StateWarning {
+    public void endTurn() throws StateWarning {
         throw new StateWarning("You must either draw train cards, " +
                 "draw destination cards, or claim a route before you can end your turn.");
     }

@@ -37,35 +37,36 @@ public class ClientGame extends Game implements IClientGame {
     }
 
     @Override
-    public void doDrawTrainCardFromDeck(String player) throws StateWarning {
-        turnState.drawTrainCardFromDeck(player);
+    public void doDrawTrainCardFromDeck() throws StateWarning {
+        turnState.drawTrainCardFromDeck();
     }
 
     @Override
-    public void doPickTrainCard(String player, int cardIndex) throws StateWarning {
-        turnState.pickTrainCard(player, cardIndex);
+    public void doPickTrainCard(int cardIndex) throws StateWarning {
+        turnState.pickTrainCard(cardIndex);
     }
 
     @Override
-    public void doDrawDestinationCard(String player) throws StateWarning {
-        turnState.drawDestinationCard(player);
+    public void doDrawDestinationCard() throws StateWarning {
+        turnState.drawDestinationCard();
     }
 
     @Override
-    public void doPutBackDestinationCard(String player, DestinationCard card) throws StateWarning {
-        turnState.putBackDestinationCard(player, card);
+    public void doPutBackDestinationCard(DestinationCard card) throws StateWarning {
+        turnState.putBackDestinationCard(card);
     }
 
     @Override
-    public void doClaimRoute(String player, int routeId) throws StateWarning {
-        turnState.claimRoute(player, routeId);
+    public void doClaimRoute(int routeId) throws StateWarning {
+        turnState.claimRoute(routeId);
     }
 
     @Override
-    public void doEndTurn(String player) throws StateWarning {
-        turnState.endTurn(player);
+    public void doEndTurn() throws StateWarning {
+        turnState.endTurn();
     }
 
+    @Override
     public void setTurnState(GameState state) {
         turnState = state;
     }
@@ -100,42 +101,49 @@ public class ClientGame extends Game implements IClientGame {
         setGameMap(map);
     }
 
-    @Override
-    public DestinationCard drawDestinationCard(String player) {
-        return null;
-    }
+//    @Override
+//    public DestinationCard drawDestinationCard(String player) {
+//        return null;
+//    }
+//
+//    @Override
+//    public boolean putBackDestinationCard(String player, DestinationCard card) {
+//        return false;
+//    }
+//
+//    @Override
+//    public TrainCard drawTrainCardFromDeck(String player) {
+//        return null;
+//    }
+//
+//    @Override
+//    public TrainCard pickTrainCard(String player, int cardIndex) {
+//        return null;
+//    }
+//
+//    @Override
+//    public void claimRoute(String player, int routeId) {
+//
+//    }
 
     @Override
-    public boolean putBackDestinationCard(String player, DestinationCard card) {
-        return false;
-    }
-
-    @Override
-    public TrainCard drawTrainCardFromDeck(String player) {
-        return null;
-    }
-
-    @Override
-    public TrainCard pickTrainCard(String player, int cardIndex) {
-        return null;
-    }
-
-    @Override
-    public void claimRoute(String player, int routeId) {
-
-    }
-
     public String getCurrentPlayerTurn() {
         return currentPlayerTurn;
     }
 
+
+    @Override
+    public void setCurrentPlayerTurn(String currentPlayerTurn) {
+        this.currentPlayerTurn = currentPlayerTurn;
+    }
+
     //The player passed to this function is the player whose turn is ending.
     @Override
-    public void endTurn(String player) {
+    public void endTurn() {
         int index = -1;
         for(int i = 0; i < getNumberPlayers(); i++) {
             IPlayer p = getPlayer(i);
-            if(p != null && p.getName().equals(player)) {
+            if(p != null && p.getName().equals(currentPlayerTurn)) {
                 index = i;
                 break;
             }
@@ -147,6 +155,9 @@ public class ClientGame extends Game implements IClientGame {
                 currentPlayerTurn = p.getName();
                 break;
             }
+        }
+        if(currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName())) {
+            turnState = new StartTurnState(this);
         }
     }
 }

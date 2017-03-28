@@ -358,9 +358,9 @@ public class ClientModel extends Observable {
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
 
-    public void endTurn(String player) {
+    public void endTurn() {
         if (currentGame == null) return;
-        currentGame.endTurn(player);
+        currentGame.endTurn();
     }
 
     public void setCreateGameSuccess(boolean success) {
@@ -443,34 +443,34 @@ public class ClientModel extends Observable {
         cardChoices.clear();
     }
 
-    public void doDrawTrainCardFromDeck(String player) throws StateWarning {
+    public void doDrawTrainCardFromDeck() throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doDrawTrainCardFromDeck(player);
+        currentGame.doDrawTrainCardFromDeck();
     }
 
-    public void doPickTrainCard(String player, int cardIndex) throws StateWarning {
+    public void doPickTrainCard(int cardIndex) throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doPickTrainCard(player, cardIndex);
+        currentGame.doPickTrainCard(cardIndex);
     }
 
-    public void doDrawDestinationCard(String player) throws StateWarning {
+    public void doDrawDestinationCard() throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doDrawDestinationCard(player);
+        currentGame.doDrawDestinationCard();
     }
 
-    public void doPutBackDestinationCard(String player, DestinationCard card) throws StateWarning {
+    public void doPutBackDestinationCard(DestinationCard card) throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doPutBackDestinationCard(player, card);
+        currentGame.doPutBackDestinationCard(card);
     }
 
-    public void doClaimRoute(String player, int routeId) throws StateWarning {
+    public void doClaimRoute(int routeId) throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doClaimRoute(player, routeId);
+        currentGame.doClaimRoute(routeId);
     }
 
-    public void doEndTurn(String player) throws StateWarning {
+    public void doEndTurn() throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doEndTurn(player);
+        currentGame.doEndTurn();
     }
 
     private void notifyPropertyChanges(String... properties) {

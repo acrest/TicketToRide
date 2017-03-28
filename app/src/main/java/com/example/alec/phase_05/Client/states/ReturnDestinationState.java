@@ -14,40 +14,45 @@ import com.example.alec.phase_05.Shared.model.StateWarning;
 public class ReturnDestinationState implements GameState {
     private ClientGame state = null;
     private Facade facade;
+    private int cardsReturned;
 
-    public ReturnDestinationState(ClientGame playerTurnStates) {
+    public ReturnDestinationState(ClientGame playerTurnStates, int cardsReturned) {
         state = playerTurnStates;
         facade = Facade.getInstance();
+        this.cardsReturned=cardsReturned;
     }
 
 
     @Override
-    public void drawTrainCardFromDeck(String player) throws StateWarning {
+    public void drawTrainCardFromDeck() throws StateWarning {
         throw new StateWarning("You drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void pickTrainCard(String player, int cardIndex) throws StateWarning {
+    public void pickTrainCard(int cardIndex) throws StateWarning {
         throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void drawDestinationCard(String player) throws StateWarning {
+    public void drawDestinationCard() throws StateWarning {
         throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void putBackDestinationCard(String player, DestinationCard card) throws StateWarning {
+    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
+        if(cardsReturned == 2)
+            throw new StateWarning("Attempt to return too many destination cards.");
+        facade.putBackDestinationCard(card);
+        cardsReturned++;
+    }
+
+    @Override
+    public void claimRoute(int routeId) throws StateWarning {
         throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void claimRoute(String player, int routeId) throws StateWarning {
-        throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
-    }
-
-    @Override
-    public void endTurn(String player) throws StateWarning {
+    public void endTurn() throws StateWarning {
         System.out.println("Cards returned. Ending turn.");
         facade.finishTurn();
         state.setTurnState(new EndTurnState(state));
