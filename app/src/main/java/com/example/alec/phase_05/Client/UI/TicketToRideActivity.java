@@ -220,36 +220,36 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         dialogSeeMapButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //observingCard = firstCard;
                 dialogMap.show();
-                showDestinationCanvus(mShowMapView);
+                showDestinationCanvas(mShowMapView);
                 dialogMap.dismiss();
                 dialogMap.show();
-                showDestinationCanvus(mShowMapView);
-                //observingCard = firstCard;
+                showDestinationCanvas(mShowMapView);
             }
         });
         dialogSeeMapButton2 = (Button) mView.findViewById(R.id.dialog_see_map_button2);
         dialogSeeMapButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //observingCard = secondCard;
                 dialogMap.show();
-                showDestinationCanvus(mShowMapView);
+                showDestinationCanvas(mShowMapView);
                 dialogMap.dismiss();
                 dialogMap.show();
-                showDestinationCanvus(mShowMapView);
-                //observingCard = firstCard;
+                showDestinationCanvas(mShowMapView);
             }
         });
         dialogSeeMapButton3 = (Button) mView.findViewById(R.id.dialog_see_map_button3);
         dialogSeeMapButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //observingCard = firstCard;
                 dialogMap.show();
-                showDestinationCanvus(mShowMapView);
+                showDestinationCanvas(mShowMapView);
                 dialogMap.dismiss();
                 dialogMap.show();
-                showDestinationCanvus(mShowMapView);
-                //observingCard = firstCard;
+                showDestinationCanvas(mShowMapView);
             }
         });
 
@@ -280,9 +280,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         Point size = new Point();
         display.getSize(size);
         dialogMap.getWindow().setLayout((int)(size.x*.7), (int)(size.y*.7));
+
+        //test
+        Map<String, City> cities = GameComponentFactory.createCities();
+        observingCard = new DestinationCard(cities.get("Seattle"), cities.get("New York"), 22);
     }
 
-    private void showDestinationCanvus(View mShowMapView){
+    private void showDestinationCanvas(View mShowMapView){
         ImageView imageView = new ImageView(this);
         imageView = (ImageView) mShowMapView.findViewById(R.id.dialog_map_image);
         View map = mShowMapView.findViewById(R.id.dialog_map_image);
@@ -292,10 +296,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             Canvas c = new Canvas(bmp);
             imageView.draw(c);
 
-            City slc = new City("Salt Lake City", new MyPoint(609, 575));
-            City pittsburgh = new City("Pittsburgh", new MyPoint(1908, 551));
-            PointF firstCity = convertToImageCoordinates((float) slc.getXCord(), (float) slc.getYCord(), map);
-            PointF secondCity = convertToImageCoordinates((float) pittsburgh.getXCord(), (float) pittsburgh.getYCord(), map);
+            City city1 = observingCard.getCity1();
+            City city2 = observingCard.getCity2();
+            PointF cityOnePoint = convertToImageCoordinates((float) city1.getXCord(), (float) city1.getYCord(), map);
+            PointF cityTwoPoint = convertToImageCoordinates((float) city2.getXCord(), (float) city2.getYCord(), map);
 
             Paint p = new Paint();
             p.setColor(Color.parseColor("#009900"));
@@ -303,8 +307,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             //c.drawCircle(firstCity.x, firstCity.y, 15, p);
             //c.drawCircle(secondCity.x, secondCity.y, 15, p);
             Bitmap something = BitmapFactory.decodeResource(getResources(), R.drawable.star);
-            c.drawBitmap(something, firstCity.x - (something.getWidth()/2), firstCity.y - (something.getHeight()/2), null);
-            c.drawBitmap(something, secondCity.x - (something.getWidth()/2), secondCity.y - (something.getHeight()/2), null);
+            c.drawBitmap(something, cityOnePoint.x - (something.getWidth()/2), cityOnePoint.y - (something.getHeight()/2), null);
+            c.drawBitmap(something, cityTwoPoint.x - (something.getWidth()/2), cityTwoPoint.y - (something.getHeight()/2), null);
 
             imageView.setImageBitmap(bmp);
         }
