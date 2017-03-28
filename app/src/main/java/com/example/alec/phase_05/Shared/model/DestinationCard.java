@@ -42,6 +42,6 @@ public class DestinationCard {
 
     @Override
     public String toString() {
-        return city1.getName() + " " + city2.getName() + " " + getValue();
+        return city1.getName() + " to " + city2.getName() + " " + getValue();
     }
 }
