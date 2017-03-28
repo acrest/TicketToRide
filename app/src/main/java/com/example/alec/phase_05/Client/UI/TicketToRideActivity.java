@@ -94,7 +94,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private Button mCreateChatButton;
     private Button dialogDestinationButton;
     private Button dialogBeginTurnButton;
-    ImageButton deckButton;
     Button deckButton;
     Button destDeckButton;
     ImageButton card1Button;
