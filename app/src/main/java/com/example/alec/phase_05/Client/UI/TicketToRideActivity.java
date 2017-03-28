@@ -492,8 +492,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     twinRouteInfo.setText("  Claim " + twinRoute.getCity1().getName()
                             + " to " + twinRoute.getCity2().getName() + ": " + twinRoute.getLength()
                             + " " +  twinRoute.getType()+ "  ");
-                    routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
-                    twinRouteInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                  //  routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                   // twinRouteInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
                     changeTextColorBasedOnPart(routeInfo, currentRoute);
                     changeTextColorBasedOnPart(twinRouteInfo, twinRoute);
                 }
@@ -501,7 +501,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to "
                             + currentlySelectedRoute.getCity2().getName() + ": "
                             + currentlySelectedRoute.getLength() + " " +  currentlySelectedRoute.getType() + "  ");
-                    routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                   // routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
                     twinRouteInfo.setVisibility(View.INVISIBLE);
                     changeTextColorBasedOnPart(routeInfo, currentRoute);
                 }
@@ -517,10 +517,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     private void changeTextColorBasedOnPart(Button button, Route route){
         TrainType type = route.getType();
-        button.setTextColor(Color.GRAY);
+        button.setTextColor(Color.parseColor("#606060"));
 
         if(type == BOX){
-            button.setTextColor(Color.parseColor("#FF66FF"));
+            button.setTextColor(Color.parseColor("#FF00FF"));
         }
         if(type == PASSENGER){
             button.setTextColor(Color.WHITE);
