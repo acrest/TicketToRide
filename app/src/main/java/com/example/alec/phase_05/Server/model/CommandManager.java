@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server.model;
 
+import com.example.alec.phase_05.Client.command.ClientPickedTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerChatSentCommand;
 import com.example.alec.phase_05.Server.command.ServerClaimRouteCommand;
 import com.example.alec.phase_05.Server.command.ServerClaimedRouteCommand;
@@ -13,13 +14,13 @@ import com.example.alec.phase_05.Server.command.ServerFinishTurnCommand;
 import com.example.alec.phase_05.Server.command.ServerFinishedTurnCommand;
 import com.example.alec.phase_05.Server.command.ServerGameFinishedCommand;
 import com.example.alec.phase_05.Server.command.ServerGameStartedCommand;
+import com.example.alec.phase_05.Server.command.ServerPickTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerPickedTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerReturnDestinationCardCommand;
 import com.example.alec.phase_05.Server.command.ServerReturnedDestinationCard;
 import com.example.alec.phase_05.Server.command.ServerSendChatCommand;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
-import com.example.alec.phase_05.Shared.command.ServerPickTrainCardCommand;
 
 import java.util.ArrayList;
 import java.util.List;

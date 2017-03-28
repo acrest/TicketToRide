@@ -146,8 +146,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setContentView(R.layout.activity_ticket_to_ride);
         Poller.getInstance().setModelPolling();
 
-        deckButton = (Button) findViewById(R.id.deck);
-        destDeckButton = (Button) findViewById(R.id.destdeck);
+//        deckButton = (Button) findViewById(R.id.deck);
+//        destDeckButton = (Button) findViewById(R.id.destdeck);
         card1Button = (ImageButton) findViewById(R.id.card1);
         card2Button = (ImageButton) findViewById(R.id.card2);
         card3Button = (ImageButton) findViewById(R.id.card3);
@@ -307,23 +307,23 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
-        deckButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                presenter.drawTrainCard();
-                Toast.makeText(getApplicationContext(), "Card added to hand!",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        destDeckButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                presenter.drawDestinationCard();
-                Toast.makeText(getApplicationContext(), "Dest Card added to hand!",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        deckButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                presenter.drawTrainCard();
+//                Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                        Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//
+//        destDeckButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                presenter.drawDestinationCard();
+//                Toast.makeText(getApplicationContext(), "Dest Card added to hand!",
+//                        Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         card1Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
