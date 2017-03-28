@@ -12,12 +12,14 @@
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
-            android:layout_height="30dp" />
+            android:layout_height="0dp"
+            android:layout_weight="0.05"/>
 
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="0dp"
+            android:layout_weight="0.88">
 
             <LinearLayout
                 android:id="@+id/player_info"
@@ -580,9 +582,6 @@
 
                 </FrameLayout>
 
-
-
-
             </LinearLayout>  <!-- MapView Tab -->
 
             <LinearLayout
@@ -635,8 +634,23 @@
             </LinearLayout>  <!-- Chat Tab -->
 
         </FrameLayout>
-    </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.07"
+            android:background="#AAAAAA">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Turn state option."
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="25dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </TabHost>
 
