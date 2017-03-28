@@ -39,7 +39,9 @@ public class ClientFacade {
     }
 
     public void createGame(GameInfo gameInfo) {
+        System.out.println("ISDONF");
         if (gameInfo != null) {
+            System.out.println("in clientfacade");
             model.setCreateGameSuccess(true);
             model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
             model.setHost(true);

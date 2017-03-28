@@ -335,6 +335,8 @@
                             android:id="@+id/longest_route_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="24dp"
+                            android:paddingBottom="10dp"
                             android:textColor="#FFF" />
 
                     </LinearLayout>
@@ -514,12 +516,11 @@
 
             <LinearLayout
                 android:id="@+id/mapview"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:background="@mipmap/old_map"
                 android:orientation="horizontal">
-
 
                 <FrameLayout
                     android:layout_width="match_parent"

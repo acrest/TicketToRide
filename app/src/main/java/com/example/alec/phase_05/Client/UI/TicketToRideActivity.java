@@ -160,7 +160,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("Routes").setContent(R.id.routes));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("Game History").setContent(R.id.game_history));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test4").setIndicator("Bank").setContent(R.id.bank));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test5").setIndicator("Map").setContent(R.id.map));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test5").setIndicator("Map").setContent(R.id.mapview));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test6").setIndicator("Chat").setContent(R.id.chat));
 
         mTabHost.setCurrentTab(0);
@@ -228,6 +228,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
 
         longest_route_player.setText(longest_route);
+
 //
 
         //        TextView longest_route_player = (TextView) findViewById(R.id.longest_route_text);
@@ -493,8 +494,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     twinRouteInfo.setText("  Claim " + twinRoute.getCity1().getName()
                             + " to " + twinRoute.getCity2().getName() + ": " + twinRoute.getLength()
                             + " " +  twinRoute.getType()+ "  ");
-                    routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
-                    twinRouteInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                  //  routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                   // twinRouteInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
                     changeTextColorBasedOnPart(routeInfo, currentRoute);
                     changeTextColorBasedOnPart(twinRouteInfo, twinRoute);
                 }
@@ -502,7 +503,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to "
                             + currentlySelectedRoute.getCity2().getName() + ": "
                             + currentlySelectedRoute.getLength() + " " +  currentlySelectedRoute.getType() + "  ");
-                    routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                   // routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
                     twinRouteInfo.setVisibility(View.INVISIBLE);
                     changeTextColorBasedOnPart(routeInfo, currentRoute);
                 }
@@ -518,10 +519,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     private void changeTextColorBasedOnPart(Button button, Route route){
         TrainType type = route.getType();
-        button.setTextColor(Color.GRAY);
+        button.setTextColor(Color.parseColor("#606060"));
 
         if(type == BOX){
-            button.setTextColor(Color.parseColor("#FF66FF"));
+            button.setTextColor(Color.parseColor("#FF00FF"));
         }
         if(type == PASSENGER){
             button.setTextColor(Color.WHITE);
