@@ -93,6 +93,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private PlayerStatAdapter mPlayerStatAdapter;
     private Button mCreateChatButton;
     private Button dialogDestinationButton;
+    private Button dialogBeginTurnButton;
+    ImageButton deckButton;
     Button deckButton;
     Button destDeckButton;
     ImageButton card1Button;
@@ -100,6 +102,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     ImageButton card3Button;
     ImageButton card4Button;
     ImageButton card5Button;
+    Button placeRoutesButton;
     private EditText mEditTextChat;
     private TextView boxCountView;
     private TextView passengerCountView;
@@ -112,6 +115,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView locomotiveCountView;
     private Button routeInfo;
     private Button twinRouteInfo;
+    AlertDialog dialog;
+    AlertDialog dialogBeginTurn;
 
     private TextView firstCard;
     private TextView secondCard;
@@ -120,6 +125,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView longest_route_player;
     TabHost mTabHost;
     private AlertDialog destinationDialog;
+    final Deck deck = new Deck();
     int boxCount;
     int passengerCount;
     int tankerCount;
@@ -148,8 +154,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card4Button = (ImageButton) findViewById(R.id.card4);
         card5Button = (ImageButton) findViewById(R.id.card5);
         View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
+        View mBeginTurnView = getLayoutInflater().inflate(R.layout.dialog_begin_turn, null);
 
-        setOnCreateFields(mView);
+        setOnCreateFields(mView, mBeginTurnView);
         setOnCreateOnCreateListeners();
 
         setCardCountsZero();
@@ -175,17 +182,39 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
        // setCard(card4Button, deck);
        // setCard(card5Button, deck);
 
-//        mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
-//        destCardChoices = new HashMap<>();
-//        destCardChoices.put(firstCard, false);
-//        destCardChoices.put(secondCard, false);
-//        destCardChoices.put(thirdCard, false);
-//        mBuilder.setView(mView);
-//        final AlertDialog dialog = mBuilder.create();
-//
-//        dialog.show();
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        destCardChoices = new HashMap<>();
+        destCardChoices.put(firstCard, false);
+        destCardChoices.put(secondCard, false);
+        destCardChoices.put(thirdCard, false);
+        mBuilder.setView(mView);
+        dialog = mBuilder.create();
+
+        AlertDialog.Builder mBeginTurnBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        mBeginTurnBuilder.setView(mBeginTurnView);
+        dialogBeginTurn = mBeginTurnBuilder.create();
+
+        //dialog.setCanceledOnTouchOutside(false);
+        //dialogBeginTurn.setCanceledOnTouchOutside(false);
+
+        dialogDestinationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
+                presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
+                dialog.dismiss();
+            }
+        });
+
+        dialogBeginTurnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogBeginTurn.dismiss();
+            }
+        });
 
         presenter.updateAll();
+        dialog.show();
     }
 
     private Map<Player, Integer> getLongestRoutePlayer() {
@@ -193,31 +222,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         return longestRoutePlayer;
     }
 
-    private void setOnCreateFields(View mView){
+    private void setOnCreateFields(View mView, View mBeginTurnView){
         presenter = new PresenterTicketToRide(this);
-
-        routeInfo = (Button) findViewById(R.id.route_info);
-        routeInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentlySelectedRoute != null) {
-                    drawRouteLine(currentlySelectedRoute.getCity1(), currentlySelectedRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
-                    presenter.claimRoute(currentlySelectedRoute.getId());
-                }
-            }
-        });
-        twinRouteInfo = (Button) findViewById(R.id.twinroute_info);
-        twinRouteInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
-                if (twinRoute.getOwner() != null) {
-                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
-                    presenter.claimRoute(currentlySelectedRoute.getId());
-                }
-            }
-        });
-
 
         mChatRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
         mRoutesRecView = (RecyclerView) findViewById(R.id.routes_list);
@@ -279,12 +285,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         secondCard = (TextView) mView.findViewById(R.id.secondCard);
         thirdCard = (TextView) mView.findViewById(R.id.thirdCard);
         dialogDestinationButton = (Button) mView.findViewById(R.id.doneButton);
+        dialogBeginTurnButton = (Button) mBeginTurnView.findViewById(R.id.dialog_begin_turn_button);
 
         destinationCoiceCount = 2;
         destCardChoices = new HashMap<>();
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
         mBuilder.setView(mView);
         destinationDialog = mBuilder.create();
+
     }
 
     private void setOnCreateOnCreateListeners(){
@@ -381,6 +389,32 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 PointF imagePoint = new PointF(event.getX(), event.getY());
                 checkIfRouteSelected(imagePoint);
                 return false;
+            }
+        });
+
+        routeInfo = (Button) findViewById(R.id.route_info);
+        routeInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentlySelectedRoute != null) {
+                    drawRouteLine(currentlySelectedRoute.getCity1(), currentlySelectedRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    routeInfo.setVisibility(View.INVISIBLE);
+                    twinRouteInfo.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        twinRouteInfo = (Button) findViewById(R.id.twinroute_info);
+        twinRouteInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                if (twinRoute.getOwner() == null) {
+                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    routeInfo.setVisibility(View.INVISIBLE);
+                    twinRouteInfo.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -494,10 +528,18 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
             if (pointOnLine(new Point((int)point1.x, (int)point1.y), new Point((int)point2.x, (int)point2.y), selectedPoint) == true){
                 currentlySelectedRoute = currentRoute;
-                routeInfo.setVisibility(View.VISIBLE);
-                twinRouteInfo.setVisibility(View.VISIBLE);
+
+                if(currentlySelectedRoute.getOwner() == null)
+                {
+                    routeInfo.setVisibility(View.VISIBLE);
+                }
+
                 if (currentlySelectedRoute.getTwinID() != -1){
                     Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                    if(twinRoute.getOwner() == null){
+                        twinRouteInfo.setVisibility(View.VISIBLE);
+                    }
+
                     routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to " +
                             currentlySelectedRoute.getCity2().getName() + ": " + currentlySelectedRoute.getLength()
                             + " " +  currentlySelectedRoute.getType() + "  ");
@@ -555,34 +597,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         if(type == CABOOSE){
             button.setTextColor(Color.parseColor("#999900"));
         }
-
-//        switch(type){
-//            case(BOX):
-//                button.setTextColor(Color.parseColor("#FF66FF"));
-//                break;
-//            case(PASSENGER):
-//                button.setTextColor(Color.WHITE);
-//                break;
-//            case(TANKER):
-//                button.setTextColor(Color.BLUE);
-//                break;
-//            case(REEFER):
-//                button.setTextColor(Color.YELLOW);
-//                break;
-//            case(FREIGHT):
-//                button.setTextColor(Color.parseColor("#FF8000"));
-//                break;
-//            case(HOPPER):
-//                button.setTextColor(Color.BLACK);
-//                break;
-//            case(COAL):
-//                button.setTextColor(Color.RED);
-//                break;
-//            case(CABOOSE):
-//                button.setTextColor(Color.parseColor("#999900"));
-//                break;
-//            default:
-//                button.setTextColor(Color.GRAY);
     }
 
     public boolean pointOnLine(Point start, Point end, PointF selectedPoint) {
