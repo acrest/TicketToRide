@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Client.Model;
 
+import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Shared.model.GameInfo;
 import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -24,6 +25,7 @@ public final class ClientGameFactory {
         Player[] players = gameInfo.getPlayers();
         for (int i = 0; i < players.length; ++i) {
             Player player = players[i];
+            player.setTrainCount(Facade.getInstance().getTrainCount());
             if (player != null) {
                 if (player.getName().equals(ClientModel.getInstance().getCurrentPlayerName())) {
                     game.setPlayer(i, player);
