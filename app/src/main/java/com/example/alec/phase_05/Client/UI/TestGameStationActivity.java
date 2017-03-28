@@ -45,7 +45,6 @@ public class TestGameStationActivity extends Activity implements IGameStationLis
         presenter = new PresenterGameStation(this);
         System.out.println("inside test "+ ClientModel.getInstance().getPlayerPoints());
         presenter.createGame("red", "Test Game", 2);
-
     }
 
     private View newGameColorSelect(View color, View selectedColor, View mView)

@@ -420,7 +420,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/bank"
                 android:layout_width="fill_parent"
@@ -513,7 +512,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/mapview"
                 android:layout_width="fill_parent"
@@ -569,9 +567,6 @@
 
             </LinearLayout>
 
-
-
-
             <LinearLayout
                 android:id="@+id/chat"
                 android:layout_width="match_parent"
@@ -620,6 +615,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
         </FrameLayout>
     </LinearLayout>
 
