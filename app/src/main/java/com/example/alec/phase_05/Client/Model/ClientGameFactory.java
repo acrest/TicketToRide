@@ -25,8 +25,8 @@ public final class ClientGameFactory {
         Player[] players = gameInfo.getPlayers();
         for (int i = 0; i < players.length; ++i) {
             Player player = players[i];
-            player.setTrainCount(Facade.getInstance().getTrainCount());
             if (player != null) {
+                player.setTrainCount(Facade.getInstance().getTrainCount());
                 if (player.getName().equals(ClientModel.getInstance().getCurrentPlayerName())) {
                     game.setPlayer(i, player);
                 } else {
