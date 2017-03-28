@@ -236,7 +236,9 @@ public class GameMap {
             Route route = routes.get(i);
 
             if(route.getCity1() == city1 || route.getCity2() == city1){
-                rootRoutes.add(route);
+                if(route.getOwner().equals(player)){
+                    rootRoutes.add(route);
+                }
             }
         }
 
@@ -253,8 +255,10 @@ public class GameMap {
                 markedCities.put(firstCity, true);
 
                 for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
-                    if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities)){
-                        return true;
+                    if(cityToRoutes.get(firstCity).get(j).getOwner().equals(player)){
+                        if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities, player)){
+                            return true;
+                        }
                     }
                 }
 
@@ -265,8 +269,10 @@ public class GameMap {
                 markedCities.put(secondCity, true);
 
                 for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
-                    if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities)){
-                        return true;
+                    if(cityToRoutes.get(firstCity).get(j).getOwner().equals(player)){
+                        if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities, player)){
+                            return true;
+                        }
                     }
                 }
 
@@ -277,7 +283,7 @@ public class GameMap {
         return false;
     }
 
-    private boolean checkIfDestinationCompleteRec(City city2, City city, Route rootRoute, Map<City, Boolean> markedCities){
+    private boolean checkIfDestinationCompleteRec(City city2, City city, Route rootRoute, Map<City, Boolean> markedCities, String player){
 
         for(int i = 0; i < cityToRoutes.get(city).size(); i++){
             Route route = cityToRoutes.get(city).get(i);
@@ -294,8 +300,10 @@ public class GameMap {
                     markedCities.put(firstCity, true);
 
                     for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
-                        if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities)){
-                            return true;
+                        if(cityToRoutes.get(firstCity).get(j).getOwner().equals(player)){
+                            if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities, player)){
+                                return true;
+                            }
                         }
                     }
 
@@ -306,8 +314,10 @@ public class GameMap {
                     markedCities.put(secondCity, true);
 
                     for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
-                        if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities)){
-                            return true;
+                        if(cityToRoutes.get(firstCity).get(j).getOwner().equals(player)){
+                            if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities, player)){
+                                return true;
+                            }
                         }
                     }
 
