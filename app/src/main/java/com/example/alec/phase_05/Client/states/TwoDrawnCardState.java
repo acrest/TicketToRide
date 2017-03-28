@@ -21,32 +21,32 @@ public class TwoDrawnCardState implements GameState {
     }
 
     @Override
-    public void drawTrainCardFromDeck(String player) throws StateWarning {
+    public void drawTrainCardFromDeck() throws StateWarning {
         throw new StateWarning("Cannot draw any more cards. You must end your turn now.");
     }
 
     @Override
-    public void pickTrainCard(String player, int cardIndex) throws StateWarning {
+    public void pickTrainCard(int cardIndex) throws StateWarning {
         throw new StateWarning("Cannot draw any more cards. You must end your turn now.");
     }
 
     @Override
-    public void drawDestinationCard(String player) throws StateWarning {
+    public void drawDestinationCard() throws StateWarning {
         throw new StateWarning("Cannot draw any more cards. You must end your turn now.");
     }
 
     @Override
-    public void putBackDestinationCard(String player, DestinationCard card) throws StateWarning {
+    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
         throw new StateWarning("Cannot draw any more cards. You must end your turn now.");
     }
 
     @Override
-    public void claimRoute(String player, int routeId) throws StateWarning {
+    public void claimRoute(int routeId) throws StateWarning {
         throw new StateWarning("Already drew card. You must end your turn now.");
     }
 
     @Override
-    public void endTurn(String player) throws StateWarning  {
+    public void endTurn() throws StateWarning  {
         System.out.println("Turn ended.");
         facade.finishTurn();
         state.setTurnState(new EndTurnState(state));
