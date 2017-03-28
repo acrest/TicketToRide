@@ -514,10 +514,9 @@
 
             <LinearLayout
                 android:id="@+id/mapview"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@mipmap/old_map"
                 android:orientation="horizontal">
 
                 <FrameLayout
@@ -527,7 +526,6 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
-                    android:background="#AA000000"
                     android:orientation="vertical">
 
                     <ImageView

@@ -300,6 +300,7 @@ public class ClientModel extends Observable {
         if (currentGame == null) return 0;
         IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null) return 0;
+
         return player.getDestinationCardCount();
     }
 
