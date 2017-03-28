@@ -25,29 +25,33 @@ public interface IClientGame extends IGame {
 
     void setMap(GameMap map);
 
-    DestinationCard drawDestinationCard(String player);
+    String getCurrentPlayerTurn();
 
-    boolean putBackDestinationCard(String player, DestinationCard card);
+    void setCurrentPlayerTurn(String currentPlayerTurn);
 
-    TrainCard drawTrainCardFromDeck(String player);
+//    DestinationCard drawDestinationCard(String player);
+//
+//    boolean putBackDestinationCard(String player, DestinationCard card);
+//
+//    TrainCard drawTrainCardFromDeck(String player);
+//
+//    TrainCard pickTrainCard(String player, int cardIndex);
+//
+//    void claimRoute(int routeId);
 
-    TrainCard pickTrainCard(String player, int cardIndex);
+    void endTurn();
 
-    void claimRoute(String player, int routeId);
+    void doDrawTrainCardFromDeck() throws StateWarning;
 
-    void endTurn(String player);
+    void doPickTrainCard(int cardIndex) throws StateWarning;
 
-    void doDrawTrainCardFromDeck(String player) throws StateWarning;
+    void doDrawDestinationCard() throws StateWarning;
 
-    void doPickTrainCard(String player, int cardIndex) throws StateWarning;
+    void doPutBackDestinationCard(DestinationCard card) throws StateWarning;
 
-    void doDrawDestinationCard(String player) throws StateWarning;
+    void doClaimRoute(int routeId) throws StateWarning;
 
-    void doPutBackDestinationCard(String player, DestinationCard card) throws StateWarning;
-
-    void doClaimRoute(String player, int routeId) throws StateWarning;
-
-    void doEndTurn(String player) throws StateWarning;
+    void doEndTurn() throws StateWarning;
 
     void setTurnState(GameState state);
 }

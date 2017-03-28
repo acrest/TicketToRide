@@ -77,7 +77,7 @@ public class ServerModel {
      * @param gameID of Game object to be returned
      * @return Game object with the ID given in the parameter
      */
-    public ServerGame getGame(Integer gameID){
+    public ServerGame getGame(int gameID){
         return gamesMap.get(gameID);
     }
 

@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Client.Demo;
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.Model.PlayerStat;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.IPlayer;
@@ -31,7 +32,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void drawTrainCard() {
         try {
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
+            model.doDrawTrainCardFromDeck();
         } catch (Exception e) {
 
         }
@@ -40,7 +41,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void pickTrainCard(int deckID) {
         try {
-            model.doPickTrainCard(model.getCurrentPlayerName(), deckID);
+            model.doPickTrainCard(deckID);
         } catch (Exception e) {
 
         }
@@ -49,7 +50,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void claimRoute(int routeID) {
         try {
-            model.doClaimRoute(model.getCurrentPlayerName(), routeID);
+            model.doClaimRoute(routeID);
             model.setLongestPath();
         } catch (Exception e) {
 
@@ -59,7 +60,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void returnDestinationCard(DestinationCard card) {
         try {
-            model.doPutBackDestinationCard(model.getCurrentPlayerName(), card);
+            model.doPutBackDestinationCard(card);
         } catch (Exception e) {
         }
     }
@@ -67,7 +68,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void drawDestinationCard() {
         try {
-            model.doDrawDestinationCard(model.getCurrentPlayerName());
+            model.doDrawDestinationCard();
         } catch (Exception e) {
         }
     }
@@ -75,7 +76,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void endTurn() {
         try {
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
+            model.doDrawTrainCardFromDeck();
         } catch (Exception e) {
         }
     }
@@ -136,16 +137,21 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
 
     @Override
     public void chooseDestinationCards(List<DestinationCard> chosen, List<DestinationCard> notChosen) {
-        for(DestinationCard card : chosen) {
+        for (DestinationCard card : chosen) {
             model.addDestinationCard(card);
         }
-        for(DestinationCard card : notChosen) {
+        for (DestinationCard card : notChosen) {
             try {
-                model.doPutBackDestinationCard(model.getCurrentPlayerName(), card);
-            } catch(Exception e) {
+                model.doPutBackDestinationCard(card);
+            } catch (Exception e) {
 
             }
         }
+    }
+
+    @Override
+    public void sendChat(Chat chat) {
+        Facade.getInstance().sendChat(chat);
     }
 
     @Override
@@ -160,8 +166,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         int length = 0;
         if (longestRouteInfo == null) {
             playerName = "No one ";
-        }
-        else {
+        } else {
             Map.Entry<Player, Integer> entry = longestRouteInfo.entrySet().iterator().next();
             Player key = entry.getKey();
             length = entry.getValue();
@@ -177,7 +182,6 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         playerName = playerName + " has the longest route of " + Integer.toString(length);
         return playerName;
     }
-
 
     @Override
     public void update(UpdateIndicator u) {
@@ -228,8 +232,11 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             }
             listener.updateFaceupTrainCards(cards);
         }
-        if (u.needUpdate(ClientModel.PLAYER_HAND)) {
+        if (u.needUpdate(ClientModel.DISPLAY_HAND)) {
             listener.pickDestinationCards(model.getCardChoices());
+        }
+        if (u.needUpdate(ClientModel.INIT_DISPLAY_HAND)) {
+            listener.initPickDestinationCards(model.getCardChoices());
         }
     }
 

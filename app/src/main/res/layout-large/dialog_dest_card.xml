@@ -29,7 +29,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.8"
@@ -37,7 +36,6 @@
 
             <TextView
                 android:gravity="center"
-                android:text="TextView"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
@@ -55,7 +53,6 @@
 
             <TextView
                 android:gravity="center"
-                android:text="TextView"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
@@ -73,7 +70,6 @@
 
             <TextView
                 android:gravity="center"
-                android:text="TextView"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"

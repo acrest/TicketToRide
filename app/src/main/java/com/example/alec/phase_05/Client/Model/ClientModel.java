@@ -45,7 +45,8 @@ public class ClientModel extends Observable {
     public static String PLAYER_POINTS = "player points";
     public static String PLAYER_TRAIN_COUNT = "player train count";
     public static String GAME_START = "game start";
-    public static String PLAYER_HAND = "player hand";
+    public static String DISPLAY_HAND = "display hand";
+    public static String INIT_DISPLAY_HAND = "init display hand";
 
     public int longestRoad;
     public Player playerWithLongestRoute;
@@ -65,6 +66,7 @@ public class ClientModel extends Observable {
     private String currentPlayerName;
     private boolean isHost;
     private Map<Player, Integer> longestPath;
+    private boolean firstCardDraw;
 
     public ClientModel() {
         currentGame = null;
@@ -73,6 +75,7 @@ public class ClientModel extends Observable {
         chats = new ArrayList<>();
         cardChoices = new ArrayList<>();
         isHost = false;
+        firstCardDraw = true;
     }
 
     public IPlayer getCurrentPlayer() {
@@ -312,6 +315,11 @@ public class ClientModel extends Observable {
         notifyPropertyChanges(GAME_START);
     }
 
+    public boolean isGameStarted() {
+        if (currentGame == null) return false;
+        return currentGame.isGameStarted();
+    }
+
     public void removeTrainCard(int index) {
         IPlayer currentPlayer = getCurrentPlayer();
         if (currentPlayer == null || !(currentPlayer instanceof Player)) return;
@@ -348,6 +356,11 @@ public class ClientModel extends Observable {
         OtherPlayer otherPlayer = (OtherPlayer) player;
         otherPlayer.setDestinationCardCount(otherPlayer.getDestinationCardCount() - 1);
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
+    }
+
+    public void endTurn() {
+        if (currentGame == null) return;
+        currentGame.endTurn();
     }
 
     public void setCreateGameSuccess(boolean success) {
@@ -408,8 +421,21 @@ public class ClientModel extends Observable {
 
     public void addCardToChoices(DestinationCard card) {
         cardChoices.add(card);
-        if(cardChoices.size() >= 3) {
-            notifyPropertyChanges(PLAYER_HAND);
+    }
+
+    public void tryDisplayHand() {
+        if (cardChoices.size() >= 3) {
+            if (firstCardDraw) {
+                //there is a race condition, and this is here to avoid it
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                }
+                notifyPropertyChanges(INIT_DISPLAY_HAND);
+                firstCardDraw = false;
+            } else {
+                notifyPropertyChanges(DISPLAY_HAND);
+            }
         }
     }
 
@@ -417,34 +443,34 @@ public class ClientModel extends Observable {
         cardChoices.clear();
     }
 
-    public void doDrawTrainCardFromDeck(String player) throws StateWarning {
+    public void doDrawTrainCardFromDeck() throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doDrawTrainCardFromDeck(player);
+        currentGame.doDrawTrainCardFromDeck();
     }
 
-    public void doPickTrainCard(String player, int cardIndex) throws StateWarning {
+    public void doPickTrainCard(int cardIndex) throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doPickTrainCard(player, cardIndex);
+        currentGame.doPickTrainCard(cardIndex);
     }
 
-    public void doDrawDestinationCard(String player) throws StateWarning {
+    public void doDrawDestinationCard() throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doDrawDestinationCard(player);
+        currentGame.doDrawDestinationCard();
     }
 
-    public void doPutBackDestinationCard(String player, DestinationCard card) throws StateWarning {
+    public void doPutBackDestinationCard(DestinationCard card) throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doPutBackDestinationCard(player, card);
+        currentGame.doPutBackDestinationCard(card);
     }
 
-    public void doClaimRoute(String player, int routeId) throws StateWarning {
+    public void doClaimRoute(int routeId) throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doClaimRoute(player, routeId);
+        currentGame.doClaimRoute(routeId);
     }
 
-    public void doEndTurn(String player) throws StateWarning {
+    public void doEndTurn() throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doEndTurn(player);
+        currentGame.doEndTurn();
     }
 
     private void notifyPropertyChanges(String... properties) {

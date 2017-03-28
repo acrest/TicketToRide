@@ -115,8 +115,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView firstCard;
     private TextView secondCard;
     private TextView thirdCard;
+    private int destinationCoiceCount;
     private TextView longest_route_player;
     TabHost mTabHost;
+    private AlertDialog destinationDialog;
     final Deck deck = new Deck();
     int boxCount;
     int passengerCount;
@@ -172,16 +174,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setCard(card4Button, deck);
         setCard(card5Button, deck);
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
-        destCardChoices = new HashMap<>();
-        destCardChoices.put(firstCard, false);
-        destCardChoices.put(secondCard, false);
-        destCardChoices.put(thirdCard, false);
-        mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
+//        mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+//        destCardChoices = new HashMap<>();
+//        destCardChoices.put(firstCard, false);
+//        destCardChoices.put(secondCard, false);
+//        destCardChoices.put(thirdCard, false);
+//        mBuilder.setView(mView);
+//        final AlertDialog dialog = mBuilder.create();
+//
+//        dialog.show();
 
-       // presenter.updateAll();
-        dialog.show();
+        presenter.updateAll();
     }
 
     private Map<Player, Integer> getLongestRoutePlayer() {
@@ -268,12 +271,18 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         caboosecountView = (TextView) findViewById(R.id.green_cards);
         locomotiveCountView = (TextView) findViewById(R.id.rainbow_cards);
 
-        placeRoutesButton = (Button) findViewById(R.id.placeRoute);
+//        placeRoutesButton = (Button) findViewById(R.id.placeRoute);
 
         firstCard = (TextView) mView.findViewById(R.id.firstCard);
         secondCard = (TextView) mView.findViewById(R.id.secondCard);
         thirdCard = (TextView) mView.findViewById(R.id.thirdCard);
         dialogDestinationButton = (Button) mView.findViewById(R.id.doneButton);
+
+        destinationCoiceCount = 2;
+        destCardChoices = new HashMap<>();
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        mBuilder.setView(mView);
+        destinationDialog = mBuilder.create();
     }
 
     private void setOnCreateOnCreateListeners(){
@@ -281,9 +290,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             @Override
             public void onClick(View v) {
                 if (!mEditTextChat.getText().toString().isEmpty()) {
-                    Chat chat = new Chat(ClientModel.getInstance().getCurrentPlayer().getName(), ClientModel.getInstance().getGameID(), mEditTextChat.getText().toString(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    Chat chat = new Chat(ClientModel.getInstance().getCurrentPlayerName(), ClientModel.getInstance().getGameID(), mEditTextChat.getText().toString(), ClientModel.getInstance().getCurrentPlayer().getColor());
                     mEditTextChat.setText("");
-                    ClientModel.getInstance().addChat(chat);
+                    presenter.sendChat(chat);
                 }
             }
         });
@@ -368,6 +377,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View view) {
                 Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
                 presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
+                destinationDialog.hide();
             }
         });
 
@@ -958,21 +968,31 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void pickDestinationCards(List<DestinationCard> cards) {
-        cardChoices = cards;
-        View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
+        destinationCoiceCount = 1;
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
-        destCardChoices = new HashMap<>();
+        cardChoices = cards;
+
+        displayCardChoiceDialog();
+    }
+
+    @Override
+    public void initPickDestinationCards(List<DestinationCard> cards) {
+        destinationCoiceCount = 2;
+
+        cardChoices = cards;
+
+        displayCardChoiceDialog();
+    }
+
+    private void displayCardChoiceDialog() {
         destCardChoices.put(firstCard, false);
         destCardChoices.put(secondCard, false);
         destCardChoices.put(thirdCard, false);
-        firstCard.setText(cards.get(0).toString());
-        secondCard.setText(cards.get(1).toString());
-        thirdCard.setText(cards.get(2).toString());
-        mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
+        firstCard.setText(cardChoices.get(0).toString());
+        secondCard.setText(cardChoices.get(1).toString());
+        thirdCard.setText(cardChoices.get(2).toString());
 
-        dialog.show();
+        destinationDialog.show();
     }
 
     private List<DestinationCard> getChosenDestinationCards() {
@@ -1449,7 +1469,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             count++;
         }
 
-        if(count >= 2){
+        if(count >= destinationCoiceCount){
             dialogDestinationButton.setEnabled(true);
         }
         else{

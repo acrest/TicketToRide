@@ -5,11 +5,13 @@ import android.graphics.Point;
 import com.example.alec.phase_05.Client.Model.ClientGameFactory;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameInfo;
 import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
@@ -140,18 +142,14 @@ public class ClientFacade {
     }
 
     public void startGame() {
-        try {
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
-            model.doDrawTrainCardFromDeck(model.getCurrentPlayerName());
-            model.doDrawDestinationCard(model.getCurrentPlayerName());
-            model.doDrawDestinationCard(model.getCurrentPlayerName());
-            model.doDrawDestinationCard(model.getCurrentPlayerName());
-        } catch(Exception e) {
-            System.err.println("Unable to draw initial train cards and destination cards");
-        }
-        model.setGameStarted();
+        Facade.getInstance().drawTrainCard(); //TODO only got 3 train cards once
+        Facade.getInstance().drawTrainCard();
+        Facade.getInstance().drawTrainCard();
+        Facade.getInstance().drawTrainCard();
+        Facade.getInstance().drawDestinationCard();
+        Facade.getInstance().drawDestinationCard();
+        Facade.getInstance().drawDestinationCard();
+        model.setGameStarted(); //make sure this is called at the end
     }
 
     public void addTrainCard(TrainCard card) {
@@ -160,6 +158,7 @@ public class ClientFacade {
 
     public void addDestinationCard(DestinationCard card) {
         model.addCardToChoices(card);
+        model.tryDisplayHand();
     }
 
     public void claimRoute(String playerName, int routeId) {
@@ -168,13 +167,17 @@ public class ClientFacade {
 
 
 
-    public void finishTurn(String playerName) {
-        //TODO
+    public void finishTurn() {
+        model.endTurn();
     }
 
     public void returnDestinationCard(String playerName) {
         model.removeDestinationCard(playerName);
         model.incNumOfDestinationCards();
+    }
+
+    public void chatSent(Chat chat) {
+        model.addChat(chat);
     }
 
     public void executeCommand(ICommand command) {

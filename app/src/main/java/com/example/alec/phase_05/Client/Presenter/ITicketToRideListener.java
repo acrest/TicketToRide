@@ -31,4 +31,6 @@ public interface ITicketToRideListener {
     void updateMap(GameMap map);
 
     void pickDestinationCards(List<DestinationCard> cards);
+
+    void initPickDestinationCards(List<DestinationCard> cards);
 }

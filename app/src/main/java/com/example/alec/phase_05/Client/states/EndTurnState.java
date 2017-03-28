@@ -21,34 +21,32 @@ public class EndTurnState implements GameState {
     }
 
     @Override
-    public void drawTrainCardFromDeck(String player) throws StateWarning {
+    public void drawTrainCardFromDeck() throws StateWarning {
         throw new StateWarning("Turn ended. You need to wait until it is your turn again.");
     }
 
     @Override
-    public void pickTrainCard(String player, int cardIndex) throws StateWarning {
+    public void pickTrainCard(int cardIndex) throws StateWarning {
         throw new StateWarning("Turn ended. You need to wait until it is your turn again.");
     }
 
     @Override
-    public void drawDestinationCard(String player) throws StateWarning {
+    public void drawDestinationCard() throws StateWarning {
         throw new StateWarning("Turn ended. You need to wait until it is your turn again.");
     }
 
     @Override
-    public void putBackDestinationCard(String player, DestinationCard card) throws StateWarning {
+    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
         throw new StateWarning("Turn ended. You need to wait until it is your turn again.");
     }
 
     @Override
-    public void claimRoute(String player, int routeId) throws StateWarning {
+    public void claimRoute(int routeId) throws StateWarning {
         throw new StateWarning("Turn ended. You need to wait until it is your turn again.");
     }
 
     @Override
-    public void endTurn(String player) throws StateWarning {
-        System.out.println("Turn is already ended, but will end again.");
-        facade.finishTurn();
-        state.setTurnState(new EndTurnState(state));
+    public void endTurn() throws StateWarning {
+        throw new StateWarning("Can't end turn when it's not your turn.");
     }
 }
