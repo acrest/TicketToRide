@@ -28,7 +28,7 @@ public class OneDrawnCardState implements GameState {
     public void drawTrainCardFromDeck() throws StateWarning  {
         //draw a train card.
         System.out.println("Train card drawn from deck.");
-        state.setTurnState(new TwoDrawnCardState(state));
+        state.setTurnState(new EndTurnState(state));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class OneDrawnCardState implements GameState {
         if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
             throw new StateWarning("Cannot draw a rainbow card if you already have picked a card.");
         } else {
-            state.setTurnState(new OneDrawnOnePickedCardState(state));
+            state.setTurnState(new EndTurnState(state));
         }
     }
 
