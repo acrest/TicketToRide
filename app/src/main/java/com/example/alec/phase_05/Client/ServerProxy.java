@@ -57,9 +57,9 @@ public class ServerProxy implements IServer {
 //        myPort = serverPort;
         myCC = ClientCommunicator.getInstance();
         if (serverHost == null) {
-            myCC.setServerIP(DEFAULT_HOST);
+            //myCC.setServerIP(DEFAULT_HOST);
         } else {
-            myCC.setServerIP(serverHost);
+            //myCC.setServerIP(serverHost);
         }
         if (serverPort == null) {
             myCC.setServerPort(DEFAULT_PORT);

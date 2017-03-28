@@ -22,7 +22,7 @@ public class GameMap {
         this.cities = cities;
         this.routes = routes;
 
-        for(int i = 0; i < cities.size(); i++){
+        /*for(int i = 0; i < cities.size(); i++){
             if(!cityToRoutes.containsKey(cities.get(i))){
                 cityToRoutes.put(cities.get(i), new ArrayList<Route>());
             }
@@ -32,7 +32,7 @@ public class GameMap {
             Route route = routes.get(i);
             cityToRoutes.get(route.getCity1()).add(route);
             cityToRoutes.get(route.getCity2()).add(route);
-        }
+        }*/
     }
 
     public City getCityByName(String name){
@@ -133,6 +133,51 @@ public class GameMap {
         return longestPlayerMap;
     }
 
+    private boolean checkIfDestinationCompleteRec(City city2, City city, Route rootRoute, Map<City, Boolean> markedCities, String player){
+
+        for(int i = 0; i < cityToRoutes.get(city).size(); i++){
+            Route route = cityToRoutes.get(city).get(i);
+
+            if(route.getOwner().equals(player)){
+
+                if(route != rootRoute){
+                    City firstCity = route.getCity1();
+                    City secondCity = route.getCity2();
+
+                    if(firstCity == city2 || secondCity == city2){
+                        return true;
+                    }
+
+                    if(markedCities.get(firstCity) != true){
+                        markedCities.put(firstCity, true);
+
+                        for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
+                            if(cityToRoutes.get(firstCity).get(j).getOwner().equals(player)){
+                                if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities, player)){
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+
+                    if(markedCities.get(secondCity) != true){
+                        markedCities.put(secondCity, true);
+
+                        for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
+                            if(cityToRoutes.get(secondCity).get(j).getOwner().equals(player)){
+                                if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities, player)){
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     private int getVisitedLength(ArrayList<Route> visited) {
         int totalLength = 0;
         for(Route route : visited) {
@@ -160,7 +205,6 @@ public class GameMap {
         }
         return connectedRoutes;
     }
-
 
     private ArrayList<Route> getLongestRoute(Route tempRoute, ArrayList<Route> routeList, ArrayList<Route> visited) {
         ArrayList<Route> firstCityRoutes = null;
@@ -261,67 +305,17 @@ public class GameMap {
                         }
                     }
                 }
-
-                markedCities.put(firstCity, false);
             }
 
             if(markedCities.get(secondCity) != true){
                 markedCities.put(secondCity, true);
 
                 for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
-                    if(cityToRoutes.get(firstCity).get(j).getOwner().equals(player)){
+                    if(cityToRoutes.get(secondCity).get(j).getOwner().equals(player)){
                         if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities, player)){
                             return true;
                         }
                     }
-                }
-
-                markedCities.put(secondCity, false);
-            }
-        }
-
-        return false;
-    }
-
-    private boolean checkIfDestinationCompleteRec(City city2, City city, Route rootRoute, Map<City, Boolean> markedCities, String player){
-
-        for(int i = 0; i < cityToRoutes.get(city).size(); i++){
-            Route route = cityToRoutes.get(city).get(i);
-
-            if(route != rootRoute){
-                City firstCity = route.getCity1();
-                City secondCity = route.getCity2();
-
-                if(firstCity == city2 || secondCity == city2){
-                    return true;
-                }
-
-                if(markedCities.get(firstCity) != true){
-                    markedCities.put(firstCity, true);
-
-                    for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
-                        if(cityToRoutes.get(firstCity).get(j).getOwner().equals(player)){
-                            if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities, player)){
-                                return true;
-                            }
-                        }
-                    }
-
-                    markedCities.put(firstCity, false);
-                }
-
-                if(markedCities.get(secondCity) != true){
-                    markedCities.put(secondCity, true);
-
-                    for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
-                        if(cityToRoutes.get(firstCity).get(j).getOwner().equals(player)){
-                            if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities, player)){
-                                return true;
-                            }
-                        }
-                    }
-
-                    markedCities.put(secondCity, false);
                 }
             }
         }
