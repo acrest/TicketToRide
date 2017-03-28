@@ -5,6 +5,7 @@ import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
+import com.example.alec.phase_05.Shared.model.GameInfo;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -153,7 +154,9 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                clientFacade.createGame(proxy.createGame(model.getCurrentPlayerName(), numOfPlayers, gameName, hostColor));
+                GameInfo test = proxy.createGame(model.getCurrentPlayerName(), numOfPlayers, gameName, hostColor);
+                System.out.println("WHAT WHAT");
+                clientFacade.createGame(test);
             }
         });
         thread.start();
@@ -376,6 +379,18 @@ public class Facade {
             public void run() {
                 if (model.hasCurrentGame()) {
                     proxy.finishTurn(model.getCurrentPlayerName(), model.getGameID());
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public void finishGame() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (model.hasCurrentGame()) {
+                    proxy.finishGame(model.getCurrentPlayerName(), model.getGameID());
                 }
             }
         });

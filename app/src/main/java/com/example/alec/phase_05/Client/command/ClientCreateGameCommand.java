@@ -16,6 +16,7 @@ public class ClientCreateGameCommand extends CreateGameCommand {
      */
     public ClientCreateGameCommand(String gameName, int numberOfPlayers, String hostName, String hostColor) {
         super(gameName, numberOfPlayers, hostName, hostColor);
+
     }
 
     /**

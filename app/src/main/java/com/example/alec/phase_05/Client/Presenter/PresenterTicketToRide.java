@@ -241,6 +241,12 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         if (u.needUpdate(ClientModel.PLAYER_TURN_START)) {
             listener.onTurnStart();
         }
+        if(u.needUpdate(ClientModel.GAME_FINISHED_REQUEST)) {
+            Facade.getInstance().finishGame();
+        }
+        if (u.needUpdate(ClientModel.GAME_FINISHED)) {
+            listener.onGameFinished();
+        }
     }
 
     private void visitAllPlayers(PlayerVisitor visitor) {

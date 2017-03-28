@@ -84,9 +84,6 @@ public class ClientCommunicator
             //URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
             //URL url = new URL("http://" + "192.168.1.185" + ":" + serverPort + handler);
 
-            System.out.print("trying to get out and ip is: ");
-            System.out.println(serverIP);
-
             URL url = new URL("http://" + serverIP + ":" + serverPort + handler);
 //            System.out.println(url.toString());
 

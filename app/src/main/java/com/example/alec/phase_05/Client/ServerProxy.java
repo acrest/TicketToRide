@@ -5,6 +5,7 @@ import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientDiscardTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawDestinationCardCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawTrainCardCommand;
+import com.example.alec.phase_05.Client.command.ClientFinishGameCommand;
 import com.example.alec.phase_05.Client.command.ClientFinishTurnCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameDescriptionCommand;
@@ -238,6 +239,11 @@ public class ServerProxy implements IServer {
     @Override
     public boolean finishTurn(String playerName, int gameId) {
         return executeCommand(new ClientFinishTurnCommand(playerName, gameId)).toBoolean();
+    }
+
+    @Override
+    public boolean finishGame(String playerName, int gameId) {
+        return executeCommand(new ClientFinishGameCommand(playerName, gameId)).toBoolean();
     }
 
     @Override

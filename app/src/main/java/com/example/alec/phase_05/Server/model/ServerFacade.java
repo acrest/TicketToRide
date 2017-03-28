@@ -328,6 +328,11 @@ public class ServerFacade implements IServer {
     }
 
     @Override
+    public boolean finishGame(String playerName, int gameId) {
+        return true;
+    }
+
+    @Override
     public boolean sendChat(Chat chat) {
 //        IServerGame game = model.getGame(chat.getGameID());
 //        if(game == null) return false;

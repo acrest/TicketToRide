@@ -46,7 +46,7 @@
     <string name="results_points">Points Earned</string>
     <string name="results_penalties">Penalties</string>
     <string name="results_points_total">Total Points</string>
-    <string name="results_longest_route">The Longest Route Belongs to:</string>
+    <string name="results_longest_route">The Longest Route Belongs to: </string>
     <string name="done_button">Done</string>
     <string name="dialog_dest_selection_prompt">Choose at least 2 destination cards.</string>
     <string name="title_activity_test_login">TestLoginActivity</string>
@@ -54,5 +54,6 @@
     <string name="test_dialog">Skip the dumb stuff</string>
     <string name="num_players_test">Number of players to add to game</string>
     <string name="title_activity_start_screen">StartScreenActivity</string>
+    <string name="beginTurn">IT IS NOW YOUR TURN.</string>
 
 </resources>

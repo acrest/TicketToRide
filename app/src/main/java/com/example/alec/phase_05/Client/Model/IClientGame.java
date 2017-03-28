@@ -41,6 +41,8 @@ public interface IClientGame extends IGame {
 
     void endTurn();
 
+    boolean isGameFinished();
+
     void doDrawTrainCardFromDeck() throws StateWarning;
 
     void doPickTrainCard(int cardIndex) throws StateWarning;

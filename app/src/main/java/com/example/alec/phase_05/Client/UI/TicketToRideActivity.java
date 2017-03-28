@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.UI;
 
 import android.app.TabActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -92,7 +93,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private PlayerStatAdapter mPlayerStatAdapter;
     private Button mCreateChatButton;
     private Button dialogDestinationButton;
+    private Button dialogBeginTurnButton;
     ImageButton deckButton;
+    Button deckButton;
+    Button destDeckButton;
     ImageButton card1Button;
     ImageButton card2Button;
     ImageButton card3Button;
@@ -111,6 +115,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView locomotiveCountView;
     private Button routeInfo;
     private Button twinRouteInfo;
+    AlertDialog dialog;
+    AlertDialog dialogBeginTurn;
 
     private TextView firstCard;
     private TextView secondCard;
@@ -140,15 +146,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setContentView(R.layout.activity_ticket_to_ride);
         Poller.getInstance().setModelPolling();
 
-        deckButton = (ImageButton) findViewById(R.id.deck);
+//        deckButton = (Button) findViewById(R.id.deck);
+//        destDeckButton = (Button) findViewById(R.id.destdeck);
         card1Button = (ImageButton) findViewById(R.id.card1);
         card2Button = (ImageButton) findViewById(R.id.card2);
         card3Button = (ImageButton) findViewById(R.id.card3);
         card4Button = (ImageButton) findViewById(R.id.card4);
         card5Button = (ImageButton) findViewById(R.id.card5);
         View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
+        View mBeginTurnView = getLayoutInflater().inflate(R.layout.dialog_begin_turn, null);
 
-        setOnCreateFields(mView);
+        setOnCreateFields(mView, mBeginTurnView);
         setOnCreateOnCreateListeners();
 
         setCardCountsZero();
@@ -159,7 +167,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("Routes").setContent(R.id.routes));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("Game History").setContent(R.id.game_history));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test4").setIndicator("Bank").setContent(R.id.bank));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test5").setIndicator("Map").setContent(R.id.map));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test5").setIndicator("Map").setContent(R.id.mapview));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test6").setIndicator("Chat").setContent(R.id.chat));
 
         mTabHost.setCurrentTab(0);
@@ -168,23 +176,45 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //        setPlayersStats();
 //        setRoutes();
 
-        setCard(card1Button, deck);
-        setCard(card2Button, deck);
-        setCard(card3Button, deck);
-        setCard(card4Button, deck);
-        setCard(card5Button, deck);
+      //  setCard(card1Button, deck);
+       // setCard(card2Button, deck);
+       // setCard(card3Button, deck);
+       // setCard(card4Button, deck);
+       // setCard(card5Button, deck);
 
-//        mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
-//        destCardChoices = new HashMap<>();
-//        destCardChoices.put(firstCard, false);
-//        destCardChoices.put(secondCard, false);
-//        destCardChoices.put(thirdCard, false);
-//        mBuilder.setView(mView);
-//        final AlertDialog dialog = mBuilder.create();
-//
-//        dialog.show();
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        destCardChoices = new HashMap<>();
+        destCardChoices.put(firstCard, false);
+        destCardChoices.put(secondCard, false);
+        destCardChoices.put(thirdCard, false);
+        mBuilder.setView(mView);
+        dialog = mBuilder.create();
+
+        AlertDialog.Builder mBeginTurnBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        mBeginTurnBuilder.setView(mBeginTurnView);
+        dialogBeginTurn = mBeginTurnBuilder.create();
+
+        //dialog.setCanceledOnTouchOutside(false);
+        //dialogBeginTurn.setCanceledOnTouchOutside(false);
+
+        dialogDestinationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
+                presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
+                dialog.dismiss();
+            }
+        });
+
+        dialogBeginTurnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogBeginTurn.dismiss();
+            }
+        });
 
         presenter.updateAll();
+        dialog.show();
     }
 
     private Map<Player, Integer> getLongestRoutePlayer() {
@@ -192,31 +222,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         return longestRoutePlayer;
     }
 
-    private void setOnCreateFields(View mView){
+    private void setOnCreateFields(View mView, View mBeginTurnView){
         presenter = new PresenterTicketToRide(this);
-
-        routeInfo = (Button) findViewById(R.id.route_info);
-        routeInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentlySelectedRoute != null) {
-                    drawRouteLine(currentlySelectedRoute.getCity1(), currentlySelectedRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
-                    presenter.claimRoute(currentlySelectedRoute.getId());
-                }
-            }
-        });
-        twinRouteInfo = (Button) findViewById(R.id.twinroute_info);
-        twinRouteInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
-                if (twinRoute.getOwner() != null) {
-                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
-                    presenter.claimRoute(currentlySelectedRoute.getId());
-                }
-            }
-        });
-
 
         mChatRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
         mRoutesRecView = (RecyclerView) findViewById(R.id.routes_list);
@@ -227,6 +234,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
 
         longest_route_player.setText(longest_route);
+
 //
 
         //        TextView longest_route_player = (TextView) findViewById(R.id.longest_route_text);
@@ -277,12 +285,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         secondCard = (TextView) mView.findViewById(R.id.secondCard);
         thirdCard = (TextView) mView.findViewById(R.id.thirdCard);
         dialogDestinationButton = (Button) mView.findViewById(R.id.doneButton);
+        dialogBeginTurnButton = (Button) mBeginTurnView.findViewById(R.id.dialog_begin_turn_button);
 
         destinationCoiceCount = 2;
         destCardChoices = new HashMap<>();
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
         mBuilder.setView(mView);
         destinationDialog = mBuilder.create();
+
     }
 
     private void setOnCreateOnCreateListeners(){
@@ -297,56 +307,66 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
-        deckButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                TrainCard card = deck.drawCard();
-                Toast.makeText(getApplicationContext(), "Card added to hand!",
-                        Toast.LENGTH_SHORT).show();
+//        deckButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                presenter.drawTrainCard();
+//                Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                        Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//
+//        destDeckButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                presenter.drawDestinationCard();
+//                Toast.makeText(getApplicationContext(), "Dest Card added to hand!",
+//                        Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
-            }
-        });
         card1Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.pickTrainCard(0);
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
-                setImageButton(card1Button, card.getType());
+               // setImageButton(card1Button, card.getType());
             }
         });
 
         card2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.pickTrainCard(1);
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
-                setImageButton(card2Button, card.getType());
+               // setImageButton(card2Button, card.getType());
             }
         });
 
         card3Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.pickTrainCard(2);
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
-                setImageButton(card3Button, card.getType());
+              //  setImageButton(card3Button, card.getType());
             }
         });
 
         card4Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.pickTrainCard(3);
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
-                setImageButton(card4Button, card.getType());
+              //  setImageButton(card4Button, card.getType());
             }
         });
 
         card5Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.pickTrainCard(4);
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
-                setImageButton(card5Button, card.getType());
+              //  setImageButton(card5Button, card.getType());
             }
         });
 
@@ -369,6 +389,32 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 PointF imagePoint = new PointF(event.getX(), event.getY());
                 checkIfRouteSelected(imagePoint);
                 return false;
+            }
+        });
+
+        routeInfo = (Button) findViewById(R.id.route_info);
+        routeInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentlySelectedRoute != null) {
+                    drawRouteLine(currentlySelectedRoute.getCity1(), currentlySelectedRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    routeInfo.setVisibility(View.INVISIBLE);
+                    twinRouteInfo.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        twinRouteInfo = (Button) findViewById(R.id.twinroute_info);
+        twinRouteInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                if (twinRoute.getOwner() == null) {
+                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    routeInfo.setVisibility(View.INVISIBLE);
+                    twinRouteInfo.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -482,10 +528,18 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
             if (pointOnLine(new Point((int)point1.x, (int)point1.y), new Point((int)point2.x, (int)point2.y), selectedPoint) == true){
                 currentlySelectedRoute = currentRoute;
-                routeInfo.setVisibility(View.VISIBLE);
-                twinRouteInfo.setVisibility(View.VISIBLE);
+
+                if(currentlySelectedRoute.getOwner() == null)
+                {
+                    routeInfo.setVisibility(View.VISIBLE);
+                }
+
                 if (currentlySelectedRoute.getTwinID() != -1){
                     Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                    if(twinRoute.getOwner() == null){
+                        twinRouteInfo.setVisibility(View.VISIBLE);
+                    }
+
                     routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to " +
                             currentlySelectedRoute.getCity2().getName() + ": " + currentlySelectedRoute.getLength()
                             + " " +  currentlySelectedRoute.getType() + "  ");
@@ -543,34 +597,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         if(type == CABOOSE){
             button.setTextColor(Color.parseColor("#999900"));
         }
-
-//        switch(type){
-//            case(BOX):
-//                button.setTextColor(Color.parseColor("#FF66FF"));
-//                break;
-//            case(PASSENGER):
-//                button.setTextColor(Color.WHITE);
-//                break;
-//            case(TANKER):
-//                button.setTextColor(Color.BLUE);
-//                break;
-//            case(REEFER):
-//                button.setTextColor(Color.YELLOW);
-//                break;
-//            case(FREIGHT):
-//                button.setTextColor(Color.parseColor("#FF8000"));
-//                break;
-//            case(HOPPER):
-//                button.setTextColor(Color.BLACK);
-//                break;
-//            case(COAL):
-//                button.setTextColor(Color.RED);
-//                break;
-//            case(CABOOSE):
-//                button.setTextColor(Color.parseColor("#999900"));
-//                break;
-//            default:
-//                button.setTextColor(Color.GRAY);
     }
 
     public boolean pointOnLine(Point start, Point end, PointF selectedPoint) {
@@ -606,10 +632,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         return new PointF(x, y);
     }
 
-    public void setCard(ImageButton button, Deck deck) {
-        TrainCard card = deck.drawCard();
-        setImageButton(button, card.getType());
-    }
 
 
     public void setImageButton(ImageButton button, TrainType id) {
@@ -952,7 +974,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateFaceupTrainCards(List<TrainCard> cards) {
-
+        setImageButton(card1Button, cards.get(0).getType());
+        setImageButton(card2Button, cards.get(1).getType());
+        setImageButton(card3Button, cards.get(2).getType());
+        setImageButton(card4Button, cards.get(3).getType());
+        setImageButton(card5Button, cards.get(4).getType());
     }
 
     @Override
@@ -987,6 +1013,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void onTurnStart() {
         //TODO tell the player it's their turn
+    }
+
+    @Override
+    public void onGameFinished() {
+        startActivity(new Intent(TicketToRideActivity.this, TicketToRideEndGameActivity.class));
     }
 
     private void displayCardChoiceDialog() {

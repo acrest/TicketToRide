@@ -34,6 +34,12 @@ public final class ClientGameFactory {
                 }
             }
         }
+        for (Player player : players) {
+            if (player != null) {
+                game.setCurrentPlayerTurn(player.getName());
+                break;
+            }
+        }
         return game;
     }
 

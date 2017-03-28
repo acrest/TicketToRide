@@ -50,7 +50,7 @@ public class StartTurnState implements GameState {
         TrainCard pickedCard = state.getVisibleCard(cardIndex);
         if(pickedCard == null) return; //no card in that spot
         if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
-            state.setTurnState(new RainbowCardState(state));
+            state.setTurnState(new EndTurnState(state));
         } else {
             state.setTurnState(new OnePickedCardState(state));
         }
@@ -136,7 +136,7 @@ public class StartTurnState implements GameState {
         } else {
             //removeCardsFromHand(currentPlayer, cardsFromHand);
             facade.claimRoute(routeId);
-            state.setTurnState(new ClaimRouteState(state));
+            state.setTurnState(new EndTurnState(state));
         }
 
 

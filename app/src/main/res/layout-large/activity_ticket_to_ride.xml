@@ -335,6 +335,8 @@
                             android:id="@+id/longest_route_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="24dp"
+                            android:paddingBottom="10dp"
                             android:textColor="#FFF" />
 
                     </LinearLayout>
@@ -428,26 +430,43 @@
                 android:orientation="vertical"
                 android:background="@mipmap/old_map">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:background="#AA000000"
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp">
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/deck"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:paddingRight="20dp"
-                        android:src="@drawable/back" />
+                        android:background="@drawable/back"
+                        android:text = "draw train card"
+                        android:textStyle="bold"
+                        android:textColor="#ffffff" />
 
-                    <ImageButton
+                    <Space
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent" />
+
+                    <Button
                         android:id="@+id/destdeck"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:paddingLeft="20dp"
-                        android:src="@drawable/ticket" />
+                        android:background="@drawable/ticket"
+                        android:text = "draw destination card"
+                        android:textStyle="bold"
+                        android:textColor="#ffffff" />
 
                 </LinearLayout>
 
@@ -459,7 +478,6 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
-                    android:background="#AA000000"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -509,13 +527,14 @@
                         android:src="@drawable/back" />
 
                 </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>  <!-- Bank Tab -->
 
             <LinearLayout
                 android:id="@+id/mapview"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:background="@mipmap/old_map"
                 android:orientation="horizontal">
