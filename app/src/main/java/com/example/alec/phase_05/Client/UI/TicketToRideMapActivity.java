@@ -97,4 +97,9 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
     public void onTurnStart() {
 
     }
+
+    @Override
+    public void onGameFinished() {
+
+    }
 }

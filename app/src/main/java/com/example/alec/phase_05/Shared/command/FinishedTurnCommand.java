@@ -8,7 +8,7 @@ public abstract class FinishedTurnCommand extends BaseCommand {
     private String playerName;
 
     public FinishedTurnCommand(String playerName) {
-        super("FinishedTurnCommand");
+        super("FinishedTurn");
         this.playerName = playerName;
     }
 

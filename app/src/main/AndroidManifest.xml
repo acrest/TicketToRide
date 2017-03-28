@@ -51,6 +51,7 @@
             android:name=".TicketMapActivity"
             android:label="@string/title_activity_ticket_map"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Client.UI.TicketToRideEndGameActivity" />
 
     </application>
 

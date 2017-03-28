@@ -33,6 +33,7 @@ public class ServerBank implements IServerBank {
     private void initCards() {
         trainCardDeck.shuffle();
         destinationCardDeck.shuffle();
+        fillVisibleTrainCards();
     }
 
     private void fillVisibleTrainCards() {

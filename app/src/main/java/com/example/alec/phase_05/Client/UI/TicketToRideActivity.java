@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.UI;
 
 import android.app.TabActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -988,6 +989,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void onTurnStart() {
         //TODO tell the player it's their turn
+    }
+
+    @Override
+    public void onGameFinished() {
+        startActivity(new Intent(TicketToRideActivity.this, TicketToRideEndGameActivity.class));
     }
 
     private void displayCardChoiceDialog() {
