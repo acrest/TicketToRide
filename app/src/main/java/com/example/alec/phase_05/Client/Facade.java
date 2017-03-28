@@ -32,7 +32,21 @@ public class Facade {
     private ClientModel model;
     private ClientFacade clientFacade;
     private ServerProxy proxy;
-//    private boolean set = false;
+    private String ipAddress = "";
+    private Integer trainCount = 0;
+
+    public Integer getTrainCount() {
+        return trainCount;
+    }
+
+    public void setTrainCount(Integer trainCount) {
+        this.trainCount = trainCount;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+    //    private boolean set = false;
     /**
      * lets other methods know if the poller has already started.
      */
@@ -47,7 +61,7 @@ public class Facade {
      * constructor that starts with a new Server Proxy
      */
     public Facade() {
-        proxy = new ServerProxy(null, null);
+        proxy = new ServerProxy(ipAddress, null);
         model = ClientModel.getInstance();
         clientFacade = ClientFacade.getInstance();
         poller = Poller.getInstance();

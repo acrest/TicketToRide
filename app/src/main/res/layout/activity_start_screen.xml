@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="1">
+        android:layout_weight=".5">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,16 +50,159 @@
 
         </LinearLayout>
 
-
-
-
-
     </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"></RelativeLayout>
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight=".5">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ip_textbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:layout_marginLeft="2dp"
+                android:text="@string/ip_select"
+                android:background="#990000"
+                android:textColor="#edd8c4"
+                android:textStyle="bold"
+                android:textSize="10sp"/>
+
+
+            <EditText
+                android:id="@+id/first_ip_address"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:maxLength="3"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="2dp"
+                android:inputType="number"
+                android:background="#990000"
+                android:textColor="#edd8c4"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:layout_marginLeft="2dp"
+                android:text="."
+                android:background="#990000"
+                android:textColor="#edd8c4"
+                android:textStyle="bold"
+                android:textSize="10sp"/>
+            <EditText
+                android:id="@+id/second_ip_address"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:maxLength="3"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="2dp"
+                android:inputType="number"
+                android:background="#990000"
+                android:textColor="#edd8c4"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:layout_marginLeft="2dp"
+                android:text="."
+                android:background="#990000"
+                android:textColor="#edd8c4"
+                android:textStyle="bold"
+                android:textSize="10sp"/>
+            <EditText
+                android:id="@+id/third_ip_address"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:maxLength="3"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="2dp"
+                android:inputType="number"
+                android:background="#990000"
+                android:textColor="#edd8c4"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:layout_marginLeft="2dp"
+                android:text="."
+                android:background="#990000"
+                android:textColor="#edd8c4"
+                android:textStyle="bold"
+                android:textSize="10sp"/>
+            <EditText
+                android:id="@+id/fourth_ip_address"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:maxLength="3"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="2dp"
+                android:inputType="number"
+                android:background="#990000"
+                android:textColor="#edd8c4"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/sign_in_password_textbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ip_textbox"
+                android:padding="4dp"
+                android:layout_marginLeft="2dp"
+                android:text="@string/choose_num_of_trains"
+                android:background="#990000"
+                android:textColor="#edd8c4"
+                android:textStyle="bold"
+                android:textSize="10sp"/>
+
+            <EditText
+                android:id="@+id/num_of_trains"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:inputType="number"
+                android:ems="15"
+                android:maxLength="15"
+                android:background="#990000"
+                android:textColor="#edd8c4"
+                android:layout_marginRight="2dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".7"></RelativeLayout>
 
 </LinearLayout>
 
