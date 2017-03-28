@@ -94,9 +94,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private Button mCreateChatButton;
     private Button dialogDestinationButton;
     private Button dialogBeginTurnButton;
-    ImageButton deckButton;
-//    Button deckButton;
-//    Button destDeckButton;
+    Button deckButton;
+    Button destDeckButton;
     ImageButton card1Button;
     ImageButton card2Button;
     ImageButton card3Button;
@@ -974,11 +973,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateFaceupTrainCards(List<TrainCard> cards) {
-//        setImageButton(card1Button, cards.get(0).getType());
-//        setImageButton(card2Button, cards.get(1).getType());
-//        setImageButton(card3Button, cards.get(2).getType());
-//        setImageButton(card4Button, cards.get(3).getType());
-//        setImageButton(card5Button, cards.get(4).getType());
+        /*setImageButton(card1Button, cards.get(0).getType());
+        setImageButton(card2Button, cards.get(1).getType());
+        setImageButton(card3Button, cards.get(2).getType());
+        setImageButton(card4Button, cards.get(3).getType());
+        setImageButton(card5Button, cards.get(4).getType());*/
     }
 
     @Override

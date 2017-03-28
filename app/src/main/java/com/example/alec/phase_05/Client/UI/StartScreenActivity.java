@@ -35,25 +35,19 @@ public class StartScreenActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_start_screen);
 
+        firstIpAddress = (EditText) findViewById(R.id.first_ip_address);
+        secondIpAddress = (EditText) findViewById(R.id.second_ip_address);
+        thirdIpAddress = (EditText) findViewById(R.id.third_ip_address);
+        fourthIpAddress = (EditText) findViewById(R.id.fourth_ip_address);
+        numTrains = (EditText) findViewById(R.id.num_of_trains);
 
         Button mPlayButton = (Button) findViewById(R.id.go_to_playmode);
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-
-                firstIpAddress = (EditText) findViewById(R.id.first_ip_address);
-                secondIpAddress = (EditText) findViewById(R.id.second_ip_address);
-                thirdIpAddress = (EditText) findViewById(R.id.third_ip_address);
-                fourthIpAddress = (EditText) findViewById(R.id.fourth_ip_address);
-                numTrains = (EditText) findViewById(R.id.num_of_trains);
-
-                firstIpAddress.setText("10");
-                secondIpAddress.setText("24");
-                thirdIpAddress.setText("65");
-                fourthIpAddress.setText("241");
-                numTrains.setText("45");
+                setIpAndTrains();
+                setTrainCount();
 
                 if(fourthIpAddress.getText().toString().isEmpty()||thirdIpAddress.getText().toString().isEmpty()||numTrains.getText().toString().isEmpty()||firstIpAddress.getText().toString().isEmpty()||secondIpAddress.getText().toString().isEmpty()){
                     Toast.makeText(StartScreenActivity.this, "Fill out all fields", Toast.LENGTH_SHORT).show();
@@ -82,18 +76,9 @@ public class StartScreenActivity extends AppCompatActivity {
         mTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firstIpAddress = (EditText) findViewById(R.id.first_ip_address);
-                secondIpAddress = (EditText) findViewById(R.id.second_ip_address);
-                thirdIpAddress = (EditText) findViewById(R.id.third_ip_address);
-                fourthIpAddress = (EditText) findViewById(R.id.fourth_ip_address);
-                numTrains = (EditText) findViewById(R.id.num_of_trains);
 
-                firstIpAddress.setText("10");
-                secondIpAddress.setText("24");
-                thirdIpAddress.setText("65");
-                fourthIpAddress.setText("241");
-                numTrains.setText("45");
-
+                setIpAndTrains();
+                setTrainCount();
 
                 if(fourthIpAddress.getText().toString().isEmpty()||thirdIpAddress.getText().toString().isEmpty()||numTrains.getText().toString().isEmpty()||firstIpAddress.getText().toString().isEmpty()||secondIpAddress.getText().toString().isEmpty()){
                     Toast.makeText(StartScreenActivity.this, "Fill out all fields", Toast.LENGTH_SHORT).show();
@@ -118,6 +103,17 @@ public class StartScreenActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void setIpAndTrains(){
+        firstIpAddress.setText("192");
+        secondIpAddress.setText("168");
+        thirdIpAddress.setText("1");
+        fourthIpAddress.setText("111");
+    }
+
+    private void setTrainCount(){
+        numTrains.setText("45");
     }
 
 }
