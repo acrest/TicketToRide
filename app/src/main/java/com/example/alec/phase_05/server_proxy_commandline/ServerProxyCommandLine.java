@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.server_proxy_commandline;
 
 import com.example.alec.phase_05.Client.ServerProxy;
+import com.example.alec.phase_05.Client.communication.ClientCommunicator;
 import com.example.alec.phase_05.Shared.model.IServer;
 
 import java.lang.reflect.Method;
@@ -13,6 +14,7 @@ import java.util.Scanner;
 
 public class ServerProxyCommandLine {
     public static void main(String [] args){
+        ClientCommunicator.getInstance().setServerIP("10.24.67.25");
         ServerProxyCommandLine commandLine = new ServerProxyCommandLine();
         commandLine.start();
     }

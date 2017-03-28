@@ -125,6 +125,7 @@ public class ClientModel extends Observable {
     }
 
     public int getGameMaxPlayers() {
+        if (currentGame == null) return 0;
         return currentGame.getMaxPlayers();
     }
 

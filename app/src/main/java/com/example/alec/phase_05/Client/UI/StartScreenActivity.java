@@ -51,8 +51,8 @@ public class StartScreenActivity extends AppCompatActivity {
 
                 firstIpAddress.setText("10");
                 secondIpAddress.setText("24");
-                thirdIpAddress.setText("65");
-                fourthIpAddress.setText("241");
+                thirdIpAddress.setText("67");
+                fourthIpAddress.setText("25");
                 numTrains.setText("45");
 
                 if(fourthIpAddress.getText().toString().isEmpty()||thirdIpAddress.getText().toString().isEmpty()||numTrains.getText().toString().isEmpty()||firstIpAddress.getText().toString().isEmpty()||secondIpAddress.getText().toString().isEmpty()){
