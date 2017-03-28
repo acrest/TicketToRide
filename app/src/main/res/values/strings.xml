@@ -52,5 +52,6 @@
     <string name="test_dialog">Skip the dumb stuff</string>
     <string name="num_players_test">Number of players to add to game</string>
     <string name="title_activity_start_screen">StartScreenActivity</string>
+    <string name="beginTurn">IT IS NOW YOUR TURN.</string>
 
 </resources>
