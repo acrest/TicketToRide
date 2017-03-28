@@ -44,6 +44,7 @@ public class ReturnDestinationState implements GameState {
             throw new StateWarning("Attempt to return too many destination cards.");
         facade.putBackDestinationCard(card);
         cardsReturned++;
+        state.setTurnState(new EndTurnState(state));
     }
 
     @Override
