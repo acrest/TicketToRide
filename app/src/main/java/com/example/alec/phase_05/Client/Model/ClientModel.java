@@ -48,6 +48,8 @@ public class ClientModel extends Observable {
     public static String DISPLAY_HAND = "display hand";
     public static String INIT_DISPLAY_HAND = "init display hand";
     public static String PLAYER_TURN_START = "player turn start";
+    public static String GAME_FINISHED = "game finished";
+    public static String GAME_FINISHED_REQUEST = "game finished request";
 
     public int longestRoad;
     public Player playerWithLongestRoute;
@@ -362,10 +364,16 @@ public class ClientModel extends Observable {
     public void endTurn() {
         if (currentGame == null) return;
         currentGame.endTurn();
-        if(currentGame.getCurrentPlayerTurn().equals(currentPlayerName)) {
+        if (currentGame.isGameFinished()) {
+            notifyPropertyChanges(GAME_FINISHED_REQUEST);
+        } else if (currentGame.getCurrentPlayerTurn().equals(currentPlayerName)) {
             //just switched to current player's turn
             notifyPropertyChanges(PLAYER_TURN_START);
         }
+    }
+
+    public void notifyFinishGame() {
+        notifyPropertyChanges(GAME_FINISHED);
     }
 
     public void setCreateGameSuccess(boolean success) {

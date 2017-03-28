@@ -27,12 +27,15 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 public class ClientGame extends Game implements IClientGame {
     private GameState turnState = null;
     private String currentPlayerTurn;
+    private String lastPlayerTurn;
+    private boolean gameFinished;
 
     public ClientGame(int id, String name, int maxPlayers, IClientBank bank, GameMap gameMap) {
 
         super(id, name, maxPlayers, bank, gameMap);
-        turnState = new StartTurnState(this);
+        turnState = new EndTurnState(this);
         currentPlayerTurn = null;
+        gameFinished = false;
 
     }
 
@@ -135,29 +138,43 @@ public class ClientGame extends Game implements IClientGame {
     @Override
     public void setCurrentPlayerTurn(String currentPlayerTurn) {
         this.currentPlayerTurn = currentPlayerTurn;
+        if(currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName())) {
+            turnState = new StartTurnState(this);
+        }
     }
 
     //The player passed to this function is the player whose turn is ending.
     @Override
     public void endTurn() {
+        if(currentPlayerTurn.equals(lastPlayerTurn)) {
+            gameFinished = true;
+            return;
+        }
+        if (currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName()) && lastPlayerTurn == null) {
+            if(getPlayerByName(currentPlayerTurn).getTrainCount() <= 2) {
+                lastPlayerTurn = currentPlayerTurn;
+            }
+        }
         int index = -1;
-        for(int i = 0; i < getNumberPlayers(); i++) {
+        for (int i = 0; i < getNumberPlayers(); i++) {
             IPlayer p = getPlayer(i);
-            if(p != null && p.getName().equals(currentPlayerTurn)) {
+            if (p != null && p.getName().equals(currentPlayerTurn)) {
                 index = i;
                 break;
             }
         }
-        if(index == -1) return;
-        for(int i = index + 1; i != index; i = (i + 1) % getNumberPlayers()) {
+        if (index == -1) return;
+        for (int i = index + 1; i != index; i = (i + 1) % getNumberPlayers()) {
             IPlayer p = getPlayer(i);
-            if(p != null) {
-                currentPlayerTurn = p.getName();
+            if (p != null) {
+                setCurrentPlayerTurn(p.getName());
                 break;
             }
         }
-        if(currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName())) {
-            turnState = new StartTurnState(this);
-        }
+    }
+
+    @Override
+    public boolean isGameFinished() {
+        return gameFinished;
     }
 }

@@ -171,6 +171,10 @@ public class ClientFacade {
         model.endTurn();
     }
 
+    public void finishGame() {
+        model.notifyFinishGame();
+    }
+
     public void returnDestinationCard(String playerName) {
         model.removeDestinationCard(playerName);
         model.incNumOfDestinationCards();

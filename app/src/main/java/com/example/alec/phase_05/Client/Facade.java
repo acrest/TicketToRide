@@ -368,6 +368,18 @@ public class Facade {
         thread.start();
     }
 
+    public void finishGame() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (model.hasCurrentGame()) {
+                    proxy.finishGame(model.getCurrentPlayerName(), model.getGameID());
+                }
+            }
+        });
+        thread.start();
+    }
+
     public void putBackDestinationCard(final DestinationCard card) {
         Thread thread = new Thread(new Runnable() {
             @Override

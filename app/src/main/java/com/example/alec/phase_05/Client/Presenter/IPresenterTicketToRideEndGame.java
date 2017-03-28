@@ -9,7 +9,17 @@ import java.util.Iterator;
  */
 
 public interface IPresenterTicketToRideEndGame extends IPresenter {
-    Iterator<IPlayer> getPlayers();
+    Iterator<String> getPlayerNames();
+
+    int getPoints(String playerName);
+
+    int getPenalties(String playerName);
+
+    int getTotal(String playerName);
+
+    String getColor(String playerName);
+
     String getWinner();
+
     String getLongestRouteHolder();
 }

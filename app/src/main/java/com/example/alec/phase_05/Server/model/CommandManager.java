@@ -8,8 +8,10 @@ import com.example.alec.phase_05.Server.command.ServerDrawDestinationCardCommand
 import com.example.alec.phase_05.Server.command.ServerDrawTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawnDestinationCardCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawnTrainCardCommand;
+import com.example.alec.phase_05.Server.command.ServerFinishGameCommand;
 import com.example.alec.phase_05.Server.command.ServerFinishTurnCommand;
 import com.example.alec.phase_05.Server.command.ServerFinishedTurnCommand;
+import com.example.alec.phase_05.Server.command.ServerGameFinishedCommand;
 import com.example.alec.phase_05.Server.command.ServerGameStartedCommand;
 import com.example.alec.phase_05.Server.command.ServerPickedTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerReturnDestinationCardCommand;
@@ -129,6 +131,8 @@ public class CommandManager {
             return new ServerReturnedDestinationCard(command.getPlayerName());
         } else if (command instanceof ServerSendChatCommand) {
             return new ServerChatSentCommand(((ServerSendChatCommand) command).getChat());
+        } else if (command instanceof ServerFinishGameCommand) {
+            return new ServerGameFinishedCommand();
         }
 
         return null;
