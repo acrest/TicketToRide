@@ -93,13 +93,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private PlayerStatAdapter mPlayerStatAdapter;
     private Button mCreateChatButton;
     private Button dialogDestinationButton;
-    ImageButton deckButton;
+    Button deckButton;
+    Button destDeckButton;
     ImageButton card1Button;
     ImageButton card2Button;
     ImageButton card3Button;
     ImageButton card4Button;
     ImageButton card5Button;
-    Button placeRoutesButton;
     private EditText mEditTextChat;
     private TextView boxCountView;
     private TextView passengerCountView;
@@ -120,7 +120,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView longest_route_player;
     TabHost mTabHost;
     private AlertDialog destinationDialog;
-    final Deck deck = new Deck();
     int boxCount;
     int passengerCount;
     int tankerCount;
@@ -141,7 +140,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setContentView(R.layout.activity_ticket_to_ride);
         Poller.getInstance().setModelPolling();
 
-        deckButton = (ImageButton) findViewById(R.id.deck);
+        deckButton = (Button) findViewById(R.id.deck);
+        destDeckButton = (Button) findViewById(R.id.destdeck);
         card1Button = (ImageButton) findViewById(R.id.card1);
         card2Button = (ImageButton) findViewById(R.id.card2);
         card3Button = (ImageButton) findViewById(R.id.card3);
@@ -169,11 +169,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //        setPlayersStats();
 //        setRoutes();
 
-        setCard(card1Button, deck);
-        setCard(card2Button, deck);
-        setCard(card3Button, deck);
-        setCard(card4Button, deck);
-        setCard(card5Button, deck);
+      //  setCard(card1Button, deck);
+       // setCard(card2Button, deck);
+       // setCard(card3Button, deck);
+       // setCard(card4Button, deck);
+       // setCard(card5Button, deck);
 
 //        mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
 //        destCardChoices = new HashMap<>();
@@ -301,54 +301,64 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         deckButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.drawTrainCard();
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
 
             }
         });
+
+        destDeckButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.drawDestinationCard();
+                Toast.makeText(getApplicationContext(), "Dest Card added to hand!",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         card1Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.pickTrainCard(0);
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
-                setImageButton(card1Button, card.getType());
+               // setImageButton(card1Button, card.getType());
             }
         });
 
         card2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.pickTrainCard(1);
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
-                setImageButton(card2Button, card.getType());
+               // setImageButton(card2Button, card.getType());
             }
         });
 
         card3Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.pickTrainCard(2);
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
-                setImageButton(card3Button, card.getType());
+              //  setImageButton(card3Button, card.getType());
             }
         });
 
         card4Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.pickTrainCard(3);
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
-                setImageButton(card4Button, card.getType());
+              //  setImageButton(card4Button, card.getType());
             }
         });
 
         card5Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TrainCard card = deck.drawCard();
+                presenter.pickTrainCard(4);
                 Toast.makeText(getApplicationContext(), "Card added to hand!",
                         Toast.LENGTH_SHORT).show();
-                setImageButton(card5Button, card.getType());
+              //  setImageButton(card5Button, card.getType());
             }
         });
 
@@ -608,10 +618,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         return new PointF(x, y);
     }
 
-    public void setCard(ImageButton button, Deck deck) {
-        TrainCard card = deck.drawCard();
-        setImageButton(button, card.getType());
-    }
 
 
     public void setImageButton(ImageButton button, TrainType id) {
@@ -954,7 +960,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateFaceupTrainCards(List<TrainCard> cards) {
-
+        setImageButton(card1Button, cards.get(0).getType());
+        setImageButton(card2Button, cards.get(1).getType());
+        setImageButton(card3Button, cards.get(2).getType());
+        setImageButton(card4Button, cards.get(3).getType());
+        setImageButton(card5Button, cards.get(4).getType());
     }
 
     @Override
