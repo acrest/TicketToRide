@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9">
+
+        <ImageView
+            android:id="@+id/dialog_map_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#444444"
+            android:src="@mipmap/tickettoridemap" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:background="#AAAAAA">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.74">
+
+            <Button
+                android:id="@+id/dialog_map_button"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:text="@string/done_button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

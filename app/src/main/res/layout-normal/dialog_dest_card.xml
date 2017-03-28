@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bilbo">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,71 +11,96 @@
         android:orientation='vertical'
         android:background="#66EEEEEE">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.25"
-            android:text="@string/dialog_dest_selection_prompt"
-            android:gravity="center"
-            android:textSize="50dp"
-            android:textStyle="bold"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="#000000">
-
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.7"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:gravity="center"
-                android:textSize="25dp"
-                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.25"
-                android:id="@+id/firstCard"
-                android:clickable="true"/>
+                android:text="@string/dialog_dest_selection_prompt"
+                android:gravity="center"
+                android:textSize="30dp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/dialog_see_map_button"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:text="@string/seeMap"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#333333">
+                android:layout_height="3dp"
+                android:background="#000000">
 
             </LinearLayout>
-
-            <TextView
-                android:gravity="center"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.25"
-                android:id="@+id/secondCard"
-                android:clickable="true"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#333333">
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                android:orientation="vertical">
+
+                <TextView
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.25"
+                    android:text="TEST"
+                    android:id="@+id/firstCard"
+                    android:clickable="true"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#333333">
+
+                </LinearLayout>
+
+                <TextView
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.25"
+                    android:text="TEST"
+                    android:id="@+id/secondCard"
+                    android:clickable="true"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#333333">
+
+                </LinearLayout>
+
+                <TextView
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.25"
+                    android:text="TEST"
+                    android:id="@+id/thirdCard"
+                    android:clickable="true"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#333333">
+
+                </LinearLayout>
 
             </LinearLayout>
-
-            <TextView
-                android:gravity="center"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.25"
-                android:id="@+id/thirdCard"
-                android:clickable="true"/>
 
         </LinearLayout>
 
@@ -89,7 +113,7 @@
             <Button
                 android:text="@string/done_button"
                 android:textStyle="bold"
-                android:textSize="50dp"
+                android:textSize="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:id="@+id/doneButton"
