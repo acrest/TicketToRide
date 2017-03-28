@@ -238,6 +238,9 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         if (u.needUpdate(ClientModel.INIT_DISPLAY_HAND)) {
             listener.initPickDestinationCards(model.getCardChoices());
         }
+        if (u.needUpdate(ClientModel.PLAYER_TURN_START)) {
+            listener.onTurnStart();
+        }
     }
 
     private void visitAllPlayers(PlayerVisitor visitor) {
