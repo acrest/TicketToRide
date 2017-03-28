@@ -373,55 +373,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
-        //*************************************************
-        final ImageView imageView = (ImageView) findViewById(R.id.map);
-/*
-        imageView.setOnTouchListener(new ImageView.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                convertToImageCoord(imageView.getWidth(), imageView.getHeight(),
-                        getResources().getDrawable(R.drawable.ticketmap).getMinimumWidth(),
-                        getResources().getDrawable(R.drawable.ticketmap).getMinimumHeight(),
-                        event.getX(), event.getY());
-                return true;
-            }
-        });
-        final Button drawRoute  = (Button)findViewById(R.id.placeRoute);
-        drawRoute.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                presenter.startDemo();
-//                Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
-//                Canvas c = new Canvas(bmp);
-//                imageView.draw(c);
-//
-//                Paint p = new Paint();
-//                p.setStrokeWidth(8);
-//                p.setColor(Color.WHITE);
-//                p.setAlpha(75);
-//                c.drawLine(88, 0, 188, 100, p);
-//                imageView.setImageBitmap(bmp);
-            }
-        });
-*/
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
-        final View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
-        firstCard = (TextView) mView.findViewById(R.id.firstCard);
-        secondCard = (TextView) mView.findViewById(R.id.secondCard);
-        thirdCard = (TextView) mView.findViewById(R.id.thirdCard);
-        dialogDestinationButton = (Button) mView.findViewById(R.id.doneButton);
-        destCardChoices = new HashMap<>();
-        destCardChoices.put(firstCard, false);
-        destCardChoices.put(secondCard, false);
-        destCardChoices.put(thirdCard, false);
-
-
-        //DestinationCard first_card = ServerBank.drawDestinationCard();
-        //DestinationCard second_card = ServerBank.drawDestinationCard();
-        //DestinationCard third_card = ServerBank.drawDestinationCard();
-
-        firstCard.setText("first card");
-        secondCard.setText("second card");
-        thirdCard.setText("third card");
 
         dialogDestinationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -480,12 +431,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
-
-        mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
-
-        // presenter.updateAll();
-        dialog.show();
     }
 
     public void drawRouteLine(City city1, City city2, String color) {
