@@ -51,4 +51,9 @@ public class DestinationCard {
     public void setValue(Integer value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return city1.getName() + " " + city2.getName() + " " + getValue();
+    }
 }

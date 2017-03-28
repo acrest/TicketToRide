@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -56,6 +57,17 @@ import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
+
+import static com.example.alec.phase_05.Shared.model.TrainType.ANY;
+import static com.example.alec.phase_05.Shared.model.TrainType.BOX;
+import static com.example.alec.phase_05.Shared.model.TrainType.CABOOSE;
+import static com.example.alec.phase_05.Shared.model.TrainType.COAL;
+import static com.example.alec.phase_05.Shared.model.TrainType.FREIGHT;
+import static com.example.alec.phase_05.Shared.model.TrainType.HOPPER;
+import static com.example.alec.phase_05.Shared.model.TrainType.LOCOMOTIVE;
+import static com.example.alec.phase_05.Shared.model.TrainType.PASSENGER;
+import static com.example.alec.phase_05.Shared.model.TrainType.REEFER;
+import static com.example.alec.phase_05.Shared.model.TrainType.TANKER;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,11 +110,16 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView coalCountView;
     private TextView caboosecountView;
     private TextView locomotiveCountView;
+    private Button routeInfo;
+    private Button twinRouteInfo;
+
     private TextView firstCard;
     private TextView secondCard;
     private TextView thirdCard;
+    private int destinationCoiceCount;
     private TextView longest_route_player;
     TabHost mTabHost;
+    private AlertDialog destinationDialog;
     final Deck deck = new Deck();
     int boxCount;
     int passengerCount;
@@ -116,6 +133,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private List<DestinationCard> cardChoices;
 
     Map<TextView, Boolean> destCardChoices;
+    private Route currentlySelectedRoute;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -157,16 +175,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setCard(card4Button, deck);
         setCard(card5Button, deck);
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
-        destCardChoices = new HashMap<>();
-        destCardChoices.put(firstCard, false);
-        destCardChoices.put(secondCard, false);
-        destCardChoices.put(thirdCard, false);
-        mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
+//        mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+//        destCardChoices = new HashMap<>();
+//        destCardChoices.put(firstCard, false);
+//        destCardChoices.put(secondCard, false);
+//        destCardChoices.put(thirdCard, false);
+//        mBuilder.setView(mView);
+//        final AlertDialog dialog = mBuilder.create();
+//
+//        dialog.show();
 
-       // presenter.updateAll();
-        dialog.show();
+        presenter.updateAll();
     }
 
     private Map<Player, Integer> getLongestRoutePlayer() {
@@ -176,6 +195,29 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     private void setOnCreateFields(View mView){
         presenter = new PresenterTicketToRide(this);
+
+        routeInfo = (Button) findViewById(R.id.route_info);
+        routeInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentlySelectedRoute != null) {
+                    drawRouteLine(currentlySelectedRoute.getCity1(), currentlySelectedRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+            }
+        });
+        twinRouteInfo = (Button) findViewById(R.id.twinroute_info);
+        twinRouteInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                if (twinRoute.getOwner() != null) {
+                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+            }
+        });
+
 
         mChatRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
         mRoutesRecView = (RecyclerView) findViewById(R.id.routes_list);
@@ -230,22 +272,28 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         caboosecountView = (TextView) findViewById(R.id.green_cards);
         locomotiveCountView = (TextView) findViewById(R.id.rainbow_cards);
 
-        placeRoutesButton = (Button) findViewById(R.id.placeRoute);
+//        placeRoutesButton = (Button) findViewById(R.id.placeRoute);
 
         firstCard = (TextView) mView.findViewById(R.id.firstCard);
         secondCard = (TextView) mView.findViewById(R.id.secondCard);
         thirdCard = (TextView) mView.findViewById(R.id.thirdCard);
         dialogDestinationButton = (Button) mView.findViewById(R.id.doneButton);
+
+        destinationCoiceCount = 2;
+        destCardChoices = new HashMap<>();
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        mBuilder.setView(mView);
+        destinationDialog = mBuilder.create();
     }
 
     private void setOnCreateOnCreateListeners(){
         mCreateChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEditTextChat.getText() != null) {
-                    Chat chat = new Chat(ClientModel.getInstance().getCurrentPlayer().getName(), ClientModel.getInstance().getGameID(), mEditTextChat.getText().toString(), ClientModel.getInstance().getCurrentPlayer().getColor());
+                if (!mEditTextChat.getText().toString().isEmpty()) {
+                    Chat chat = new Chat(ClientModel.getInstance().getCurrentPlayerName(), ClientModel.getInstance().getGameID(), mEditTextChat.getText().toString(), ClientModel.getInstance().getCurrentPlayer().getColor());
                     mEditTextChat.setText("");
-                    ClientModel.getInstance().addChat(chat);
+                    presenter.sendChat(chat);
                 }
             }
         });
@@ -303,29 +351,25 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
+        /*
+        Button placeRoutesButton = (Button) findViewById(R.id.placeRoute);
         placeRoutesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //presenter.startDemo();
-                Map<String, City> cities = GameComponentFactory.createCities();
+                presenter.startDemo();
+            }
+        });
+*/
 
-                City seattle = cities.get("Seattle");
-                City helena = cities.get("Helena");
-                City slc = cities.get("Salt Lake City");
-                City denver = cities.get("Denver");
-                City santaFe = cities.get("Santa Fe");
-                City elPaso = cities.get("El Paso");
-                City houston = cities.get("Houston");
-                City newOrleans = cities.get("New Orleans");
-                City atlanta = cities.get("Atlanta");
+        //*************************************************
+        final ImageView imageView = (ImageView) findViewById(R.id.map);
 
-                drawRouteLine(seattle, helena, "blue");
-                drawRouteLine(helena, slc, "blue");
-                drawRouteLine(slc, denver, "blue");
-                drawRouteLine(denver, santaFe, "blue");
-                drawRouteLine(santaFe, elPaso, "blue");
-                drawRouteLine(elPaso, houston, "blue");
-                drawRouteLine(houston, newOrleans, "blue");
-                drawRouteLine(newOrleans, atlanta, "blue");
+        //checks if route is selected
+        imageView.setOnTouchListener(new ImageView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                PointF imagePoint = new PointF(event.getX(), event.getY());
+                checkIfRouteSelected(imagePoint);
+                return false;
             }
         });
 
@@ -384,6 +428,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View view) {
                 Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
                 presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
+                destinationDialog.hide();
             }
         });
 
@@ -476,8 +521,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             Point size = new Point();
             display.getSize(size);
             //p.setAlpha(75);
-            PointF firstCity = convertToScreenCoordinates((float) city1.getXCord(), (float) city1.getYCord());
-            PointF secondCity = convertToScreenCoordinates((float) city2.getXCord(), (float) city2.getYCord());
+            PointF firstCity = convertToImageCoordinates((float) city1.getXCord(), (float) city1.getYCord());
+            PointF secondCity = convertToImageCoordinates((float) city2.getXCord(), (float) city2.getYCord());
 
             c.drawLine(secondCity.x, secondCity.y, firstCity.x, firstCity.y, p);
 
@@ -485,34 +530,127 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
     }
 
-    //**************************************
+    public int checkIfRouteSelected(PointF selectedPoint) {
+        Map<Integer, Route> routes = ClientModel.getInstance().getMap().getRoutes();
+        for (Route currentRoute : routes.values()){
+            City city1 = currentRoute.getCity1();
+            City city2 = currentRoute.getCity2();
+            PointF point1 = convertToImageCoordinates((float)city1.getXCord(), (float)city1.getYCord());
+            PointF point2 = convertToImageCoordinates((float)city2.getXCord(), (float)city2.getYCord());
 
+            if (pointOnLine(new Point((int)point1.x, (int)point1.y), new Point((int)point2.x, (int)point2.y), selectedPoint) == true){
+                currentlySelectedRoute = currentRoute;
+                routeInfo.setVisibility(View.VISIBLE);
+                twinRouteInfo.setVisibility(View.VISIBLE);
+                if (currentlySelectedRoute.getTwinID() != -1){
+                    Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                    routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to " +
+                            currentlySelectedRoute.getCity2().getName() + ": " + currentlySelectedRoute.getLength()
+                            + " " +  currentlySelectedRoute.getType() + "  ");
+                    twinRouteInfo.setText("  Claim " + twinRoute.getCity1().getName()
+                            + " to " + twinRoute.getCity2().getName() + ": " + twinRoute.getLength()
+                            + " " +  twinRoute.getType()+ "  ");
+                  //  routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                   // twinRouteInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                    changeTextColorBasedOnPart(routeInfo, currentRoute);
+                    changeTextColorBasedOnPart(twinRouteInfo, twinRoute);
+                }
+                else{
+                    routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to "
+                            + currentlySelectedRoute.getCity2().getName() + ": "
+                            + currentlySelectedRoute.getLength() + " " +  currentlySelectedRoute.getType() + "  ");
+                   // routeInfo.setBackgroundColor(Color.parseColor("#00FFFF"));
+                    twinRouteInfo.setVisibility(View.INVISIBLE);
+                    changeTextColorBasedOnPart(routeInfo, currentRoute);
+                }
+                return currentRoute.getId();
+            }
 
-    public void checkIfRouteSelected() {
-        //do some things
+        }
+        currentlySelectedRoute = null;
+        routeInfo.setVisibility(View.INVISIBLE);
+        twinRouteInfo.setVisibility(View.INVISIBLE);
+        return -1;
     }
 
-    /*
-        public Float[] convertToImageCoord(float deviceWidth, float deviceHeight, float imageWidth,
-                                           float imageHeight, float xInput, float yInput){
-            Float[] coordinates = new Float[2];
-            float x;
-            float y;
-            // System.out.println(" The x and y " + xInput + " " + yInput);
-            float conversionRate = deviceHeight/imageHeight;
-            // System.out.println("The device height and image height " + deviceHeight + " " + imageHeight);
-            //System.out.println("Conversion rate: " + conversionRate + "New Image Width: " + imageWidth * conversionRate);
-            float extraSpace = (deviceWidth - (imageWidth*conversionRate))/2;
-            //System.out.println("Extra space: " + extraSpace);
-            x = ((xInput- extraSpace)/conversionRate);
-            y = (yInput)/conversionRate;
-            //System.out.println("The converted points " + x + " " + y);
-            coordinates[0] = x;
-            coordinates[1] = y;
-            return coordinates;
+    private void changeTextColorBasedOnPart(Button button, Route route){
+        TrainType type = route.getType();
+        button.setTextColor(Color.parseColor("#606060"));
+
+        if(type == BOX){
+            button.setTextColor(Color.parseColor("#FF00FF"));
         }
-    */
-    public PointF convertToScreenCoordinates(float xInput, float yInput) {
+        if(type == PASSENGER){
+            button.setTextColor(Color.WHITE);
+        }
+        if(type == TANKER){
+            button.setTextColor(Color.BLUE);
+        }
+        if(type == REEFER){
+            button.setTextColor(Color.YELLOW);
+        }
+        if(type == FREIGHT){
+            button.setTextColor(Color.parseColor("#FF8000"));
+        }
+        if(type == HOPPER){
+            button.setTextColor(Color.BLACK);
+        }
+        if(type == COAL){
+            button.setTextColor(Color.RED);
+        }
+        if(type == CABOOSE){
+            button.setTextColor(Color.parseColor("#999900"));
+        }
+
+//        switch(type){
+//            case(BOX):
+//                button.setTextColor(Color.parseColor("#FF66FF"));
+//                break;
+//            case(PASSENGER):
+//                button.setTextColor(Color.WHITE);
+//                break;
+//            case(TANKER):
+//                button.setTextColor(Color.BLUE);
+//                break;
+//            case(REEFER):
+//                button.setTextColor(Color.YELLOW);
+//                break;
+//            case(FREIGHT):
+//                button.setTextColor(Color.parseColor("#FF8000"));
+//                break;
+//            case(HOPPER):
+//                button.setTextColor(Color.BLACK);
+//                break;
+//            case(COAL):
+//                button.setTextColor(Color.RED);
+//                break;
+//            case(CABOOSE):
+//                button.setTextColor(Color.parseColor("#999900"));
+//                break;
+//            default:
+//                button.setTextColor(Color.GRAY);
+    }
+
+    public boolean pointOnLine(Point start, Point end, PointF selectedPoint) {
+
+        double routeDistance = lineDistance(new PointF(start.x, start.y), new PointF(end.x, end.y));
+        double ptDistance = lineDistance(new PointF(start.x, start.y), selectedPoint) + lineDistance(new PointF(end.x, end.y), selectedPoint);
+
+        double distanceFromRoute = routeDistance - ptDistance;
+        if (distanceFromRoute < 0){
+            distanceFromRoute = distanceFromRoute/-1;
+        }
+        if (distanceFromRoute <= 6){
+            return true;
+        }
+        return false;
+    }
+
+    public double lineDistance(PointF a, PointF b){
+        return Math.sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y));
+    }
+
+    public PointF convertToImageCoordinates(float xInput, float yInput) {
         View map = findViewById(R.id.map);
         final int ORIGINAL_PIC_WIDTH = 2460;
         final int ORIGINAL_PIC_HEIGHT = 1522;
@@ -525,10 +663,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         float x = ((xPicWidth * xInput)/ORIGINAL_PIC_WIDTH) + (extraSpace/2);
         return new PointF(x, y);
     }
-
-
-    // **************************************
-
 
     public void setCard(ImageButton button, Deck deck) {
         TrainCard card = deck.drawCard();
@@ -805,9 +939,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(TicketToRideActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+//
 
     @Override
     public void updateTrainCards(List<TrainCard> cards) {
@@ -894,21 +1026,36 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void pickDestinationCards(List<DestinationCard> cards) {
-        cardChoices = cards;
-        View mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
+        destinationCoiceCount = 1;
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
-        destCardChoices = new HashMap<>();
+        cardChoices = cards;
+
+        displayCardChoiceDialog();
+    }
+
+    @Override
+    public void initPickDestinationCards(List<DestinationCard> cards) {
+        destinationCoiceCount = 2;
+
+        cardChoices = cards;
+
+        displayCardChoiceDialog();
+    }
+
+    @Override
+    public void onTurnStart() {
+        //TODO tell the player it's their turn
+    }
+
+    private void displayCardChoiceDialog() {
         destCardChoices.put(firstCard, false);
         destCardChoices.put(secondCard, false);
         destCardChoices.put(thirdCard, false);
-        firstCard.setText(cards.get(0).toString());
-        secondCard.setText(cards.get(1).toString());
-        thirdCard.setText(cards.get(2).toString());
-        mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
+        firstCard.setText(cardChoices.get(0).toString());
+        secondCard.setText(cardChoices.get(1).toString());
+        thirdCard.setText(cardChoices.get(2).toString());
 
-        dialog.show();
+        destinationDialog.show();
     }
 
     private List<DestinationCard> getChosenDestinationCards() {
@@ -1385,7 +1532,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             count++;
         }
 
-        if(count >= 2){
+        if(count >= destinationCoiceCount){
             dialogDestinationButton.setEnabled(true);
         }
         else{

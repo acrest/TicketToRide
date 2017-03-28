@@ -46,5 +46,7 @@ public interface IServer {
 
     boolean finishTurn(String playerName, int gameId);
 
+    boolean sendChat(Chat chat);
+
     Result executeCommand(ICommand command);
 }

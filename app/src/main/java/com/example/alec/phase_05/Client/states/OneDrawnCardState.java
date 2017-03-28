@@ -25,14 +25,14 @@ public class OneDrawnCardState implements GameState {
 
 
     @Override
-    public void drawTrainCardFromDeck(String player) throws StateWarning  {
+    public void drawTrainCardFromDeck() throws StateWarning  {
         //draw a train card.
         System.out.println("Train card drawn from deck.");
         state.setTurnState(new TwoDrawnCardState(state));
     }
 
     @Override
-    public void pickTrainCard(String player, int cardIndex) throws StateWarning {
+    public void pickTrainCard(int cardIndex) throws StateWarning {
 // pick train card
         System.out.println("Train card picked from face up cards.");
         // check not rainbow card.
@@ -41,27 +41,27 @@ public class OneDrawnCardState implements GameState {
         if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
             throw new StateWarning("Cannot draw a rainbow card if you already have picked a card.");
         } else {
-            state.setTurnState(new OneDrawnCardState(state));
+            state.setTurnState(new OneDrawnOnePickedCardState(state));
         }
     }
 
     @Override
-    public void drawDestinationCard(String player) throws StateWarning {
+    public void drawDestinationCard() throws StateWarning {
         throw new StateWarning("You must get another Train card.");
     }
 
     @Override
-    public void putBackDestinationCard(String player, DestinationCard card) throws StateWarning {
+    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
         throw new StateWarning("You must get another Train card.");
     }
 
     @Override
-    public void claimRoute(String player, int routeId) throws StateWarning {
+    public void claimRoute(int routeId) throws StateWarning {
         throw new StateWarning("Already drew card. You must get another Train card.");
     }
 
     @Override
-    public void endTurn(String player) throws StateWarning {
+    public void endTurn() throws StateWarning {
         throw new StateWarning("Cannot finish turn yet. You must get another Train card.");
     }
 }

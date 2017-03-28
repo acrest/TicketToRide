@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server.model;
 
+import com.example.alec.phase_05.Server.command.ServerChatSentCommand;
 import com.example.alec.phase_05.Server.command.ServerClaimRouteCommand;
 import com.example.alec.phase_05.Server.command.ServerClaimedRouteCommand;
 import com.example.alec.phase_05.Server.command.ServerDiscardTrainCardCommand;
@@ -13,6 +14,7 @@ import com.example.alec.phase_05.Server.command.ServerGameStartedCommand;
 import com.example.alec.phase_05.Server.command.ServerPickedTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerReturnDestinationCardCommand;
 import com.example.alec.phase_05.Server.command.ServerReturnedDestinationCard;
+import com.example.alec.phase_05.Server.command.ServerSendChatCommand;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.ServerPickTrainCardCommand;
@@ -50,10 +52,15 @@ public class CommandManager {
         ICommand command;
         if (commandIndex == -1) {
             command = new ServerGameStartedCommand(GameStateFactory.gameToGameState(game));
+            setCommandIndex(playerName, 0);
         } else {
-            command = commandIndex < commands.size() ? createCorrespondingCommand(commands.get(commandIndex)) : null;
+            if(commandIndex == commands.size()) {
+                command = null;
+            } else {
+                command = createCorrespondingCommand(commands.get(commandIndex));
+                setCommandIndex(playerName, commandIndex + 1);
+            }
         }
-        setCommandIndex(playerName, commandIndex + 1);
         return command;
     }
 
@@ -120,6 +127,8 @@ public class CommandManager {
             return new ServerPickedTrainCardCommand(command.getPlayerName(), cardIndex, game.getVisibleCard(cardIndex));
         } else if (command instanceof ServerReturnDestinationCardCommand) {
             return new ServerReturnedDestinationCard(command.getPlayerName());
+        } else if (command instanceof ServerSendChatCommand) {
+            return new ServerChatSentCommand(((ServerSendChatCommand) command).getChat());
         }
 
         return null;

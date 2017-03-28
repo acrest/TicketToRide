@@ -48,4 +48,9 @@ public class City {
     public void setPoint(MyPoint point) {
         this.point = point;
     }
+
+    public Point getAsPoint(){
+        Point convertedPoint = new Point(point.getX(), point.getY());
+        return convertedPoint;
+    }
 }

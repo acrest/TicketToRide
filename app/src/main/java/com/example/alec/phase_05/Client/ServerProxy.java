@@ -16,11 +16,13 @@ import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientPickTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Client.command.ClientReturnDestinationCardCommand;
+import com.example.alec.phase_05.Client.command.ClientSendChatCommand;
 import com.example.alec.phase_05.Client.command.ClientStartGameCommand;
 import com.example.alec.phase_05.Client.communication.ClientCommunicator;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -109,6 +111,8 @@ public class ServerProxy implements IServer {
      */
     @Override
     public GameInfo createGame(String playerName, int numOfPlayers, String gameName, String hostColor) {
+        System.out.println("inside server proxy create game");
+        System.out.println("inside " + gameName + " " + numOfPlayers +  " " + playerName + " " + hostColor);
         return (GameInfo) executeCommand(new ClientCreateGameCommand(gameName, numOfPlayers, playerName, hostColor))
                 .toClass(GameInfo.class);
     }
@@ -124,6 +128,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public GameInfo joinGame(String playerName, int gameID, String color) {
+        System.out.println("inside join game server proxy");
         return (GameInfo) executeCommand(new ClientJoinGameCommand(playerName, gameID, color)).toClass(GameInfo.class);
     }
 
@@ -233,6 +238,11 @@ public class ServerProxy implements IServer {
     @Override
     public boolean finishTurn(String playerName, int gameId) {
         return executeCommand(new ClientFinishTurnCommand(playerName, gameId)).toBoolean();
+    }
+
+    @Override
+    public boolean sendChat(Chat chat) {
+        return executeCommand(new ClientSendChatCommand(chat)).toBoolean();
     }
 
     @Override

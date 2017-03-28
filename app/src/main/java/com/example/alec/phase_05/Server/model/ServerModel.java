@@ -26,6 +26,13 @@ public class ServerModel {
     public ServerModel() {
         playerMap = new HashMap<>();
         gamesMap = new HashMap<>();
+
+        //uncomment these to automate login
+        playerMap.put("Alec", new PlayerCredentials("Alec", "a"));
+        playerMap.put("Molly", new PlayerCredentials("Molly", "m"));
+        playerMap.put("Clark", new PlayerCredentials("Clark", "c"));
+        playerMap.put("Andrew", new PlayerCredentials("Andrew", "ac"));
+        playerMap.put("Sam", new PlayerCredentials("Sam", "s"));
     }
 
     /**
@@ -56,7 +63,7 @@ public class ServerModel {
     /**
      * Checks to see if the game already exists by ID, if
      * it doesn't exist, it adds it to the gamesMap
-     * @param gameInfo GameDesciription object of new game created
+     * @param name GameDesciription object of new game created
      * @return boolean if the game was added successfully
      */
     public ServerGame createGame(String name, int maxPlayers){
@@ -70,7 +77,7 @@ public class ServerModel {
      * @param gameID of Game object to be returned
      * @return Game object with the ID given in the parameter
      */
-    public ServerGame getGame(Integer gameID){
+    public ServerGame getGame(int gameID){
         return gamesMap.get(gameID);
     }
 
@@ -124,10 +131,8 @@ public class ServerModel {
 
     /**
      * gets the list of commands that haven't been sent to client
-     * @param player name of player whose poller is getting the update for
+     * @param playerName of player whose poller is getting the update for
      * @param gameID id of game for which the player is participating in
-     * @param lastUpdate the last command's ID so we can see how many commands have been
-     *                   created since the player has had a command executed
      * @return list of commands that haven't been executed yet for given player and game,
      * or null if there are no commands to be executed.
      */

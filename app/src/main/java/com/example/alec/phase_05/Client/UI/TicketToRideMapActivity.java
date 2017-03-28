@@ -87,4 +87,14 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
     public void pickDestinationCards(List<DestinationCard> cards) {
 
     }
+
+    @Override
+    public void initPickDestinationCards(List<DestinationCard> cards) {
+
+    }
+
+    @Override
+    public void onTurnStart() {
+
+    }
 }

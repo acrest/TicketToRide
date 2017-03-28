@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -161,6 +162,7 @@ public class Facade {
      *               players to join the game and then starts the game
      */
     public void joinGame(final int gameID, final String color) {
+       // System.out.println("the facade join game " + proxy.getGames());
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -381,6 +383,16 @@ public class Facade {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
+    }
+
+    public void sendChat(final Chat chat) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                proxy.sendChat(chat);
+            }
+        });
+        thread.start();
     }
 
     //temporary method

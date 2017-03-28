@@ -1,51 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bilbo">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.8"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation='vertical'
+        android:background="#66EEEEEE">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.3"
-            android:id="@+id/firstCard"
-            android:clickable="true"/>
+            android:layout_weight="0.25"
+            android:text="@string/dialog_dest_selection_prompt"
+            android:gravity="center"
+            android:textSize="50dp"
+            android:textStyle="bold"/>
 
+<<<<<<< HEAD
         <TextView
+=======
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3"
-            android:id="@+id/secondCard"
-            android:clickable="true"/>
+            android:layout_height="3dp"
+            android:background="#000000">
 
-        <TextView
+        </LinearLayout>
+
+        <LinearLayout
             android:text="TextView"
+>>>>>>> c487e49e53af4c01490c27be4c49a53422964981
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.3"
-            android:id="@+id/thirdCard"
-            android:clickable="true"/>
+            android:layout_weight="0.7"
+            android:orientation="vertical">
+
+            <TextView
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:id="@+id/firstCard"
+                android:clickable="true"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#333333">
+
+            </LinearLayout>
+
+            <TextView
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:id="@+id/secondCard"
+                android:clickable="true"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#333333">
+
+            </LinearLayout>
+
+            <TextView
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:id="@+id/thirdCard"
+                android:clickable="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:layout_marginBottom="5dp">
+
+            <Button
+                android:text="@string/done_button"
+                android:textStyle="bold"
+                android:textSize="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:id="@+id/doneButton"
+                android:layout_weight="1"
+                android:enabled="false" />
+        </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2">
-
-        <Button
-            android:text="@string/done_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/doneButton"
-            android:layout_weight="1"
-            android:enabled="false"/>
-    </LinearLayout>
-
 
 </LinearLayout>

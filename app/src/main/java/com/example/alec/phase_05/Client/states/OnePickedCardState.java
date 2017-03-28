@@ -25,7 +25,7 @@ public class OnePickedCardState implements GameState {
 
 
     @Override
-    public void drawTrainCardFromDeck(String player) throws StateWarning {
+    public void drawTrainCardFromDeck() throws StateWarning {
         // draw train card
         System.out.println("another card added from the deck");
         facade.drawTrainCard();
@@ -34,7 +34,7 @@ public class OnePickedCardState implements GameState {
     }
 
     @Override
-    public void pickTrainCard(String player, int cardIndex) throws StateWarning {
+    public void pickTrainCard(int cardIndex) throws StateWarning {
         System.out.println("Another card picked from the face up cards.");
         // pick train card
         // check not rainbow card.
@@ -49,22 +49,22 @@ public class OnePickedCardState implements GameState {
     }
 
     @Override
-    public void drawDestinationCard(String player) throws StateWarning {
+    public void drawDestinationCard() throws StateWarning {
         throw new StateWarning("Already drew card. You must get another Train card.");
     }
 
     @Override
-    public void putBackDestinationCard(String player, DestinationCard card) throws StateWarning {
+    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
         throw new StateWarning("Already drew card. You must get another Train card.");
     }
 
     @Override
-    public void claimRoute(String player, int routeId) throws StateWarning {
+    public void claimRoute(int routeId) throws StateWarning {
         throw new StateWarning("Already drew card. You must get another Train card.");
     }
 
     @Override
-    public void endTurn(String player) throws StateWarning {
+    public void endTurn() throws StateWarning {
         throw new StateWarning("Cannot end turn now. You must get another Train card.");
     }
 }

@@ -341,7 +341,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </LinearLayout>  <!-- Player Info Tab -->
 
             <LinearLayout
                 android:id="@+id/routes"
@@ -392,7 +392,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </LinearLayout>  <!-- Routes Tab -->
 
             <LinearLayout
                 android:id="@+id/game_history"
@@ -418,8 +418,7 @@
                         android:layout_height="match_parent"
                         android:background="#AAE0E0E0"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
-            </LinearLayout>
-
+            </LinearLayout>  <!-- Games History Tab -->
 
             <LinearLayout
                 android:id="@+id/bank"
@@ -511,38 +510,61 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
-
+            </LinearLayout>  <!-- Bank Tab -->
 
             <LinearLayout
                 android:id="@+id/mapview"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
+                android:background="@mipmap/old_map"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/map"
-                    android:background="#444444"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/tickettoridemap" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="#AA000000"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/tickettoridemap" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="bottom">
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/twinroute_info"
+                            android:visibility="invisible"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/roundbutton"
+                            android:textSize="16dp"/>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/route_info"
+                            android:layout_margin="5dp"
+                            android:visibility="invisible"
+                            android:background="@drawable/roundbutton"
+                            android:textSize="16dp"/>
+                    </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/placeRoute"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:text="PLACE ROUTE" />
+                </FrameLayout>
 
-            </RelativeLayout>
 
+
+
+            </LinearLayout>  <!-- MapView Tab -->
 
             <LinearLayout
                 android:id="@+id/chat"
@@ -591,7 +613,8 @@
 
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </LinearLayout>  <!-- Chat Tab -->
+
         </FrameLayout>
     </LinearLayout>
 

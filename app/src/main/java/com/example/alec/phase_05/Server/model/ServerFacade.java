@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Server.command.ServerResult;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
+import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameDescription;
@@ -30,8 +31,8 @@ public class ServerFacade implements IServer {
      *
      * @return current instance of ServerFacade
      */
-    public static ServerFacade getInstance() {
-        if (instance == null) {
+    public static ServerFacade getInstance(){
+        if(instance == null){
             instance = new ServerFacade();
         }
         return instance;
@@ -116,9 +117,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public boolean registerUser(String username, String password) {
-        PlayerCredentials player = new PlayerCredentials(username, password);
-        System.out.println("TEST RESGISTER USER " + player.getUsername() + " " + player.getPassword());
-        return model.addPlayer(player);
+        return model.addPlayer(new PlayerCredentials(username, password));
     }
 
     /**
@@ -142,11 +141,12 @@ public class ServerFacade implements IServer {
 //        String[] colors = new String[numOfPlayers];
 //        players[0] = hostPlayer;
 //        colors[0] = hostColor;
-
         IServerGame game = model.createGame(gameName, numOfPlayers);
+
         Player player = new Player(playerName);
         player.setColor(hostColor);
         int position = game.addPlayerAtNextPosition(player);
+
         if (position == -1)
             return null;
         return GameStateFactory.gameToGameState(game);
@@ -324,7 +324,16 @@ public class ServerFacade implements IServer {
 
     @Override
     public boolean finishTurn(String playerName, int gameId) {
-        return false; //TODO
+        return true;
+    }
+
+    @Override
+    public boolean sendChat(Chat chat) {
+//        IServerGame game = model.getGame(chat.getGameID());
+//        if(game == null) return false;
+//        IPlayer player = game.getPlayerByName(chat.getName());
+//        if(player == null) return false;
+        return true;
     }
 
     /**
