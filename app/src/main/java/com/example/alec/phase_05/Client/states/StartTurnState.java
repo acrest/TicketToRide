@@ -86,6 +86,7 @@ public class StartTurnState implements GameState {
                     "claim that route. Please draw a train card or destination card.");
         } else {
             currentPlayer.removeCardsOfType(route.getType(), route.getLength());
+            System.out.println("ROUTE CLAIMED");
             facade.claimRoute(routeId);
             state.setTurnState(new EndTurnState(state));
         }
