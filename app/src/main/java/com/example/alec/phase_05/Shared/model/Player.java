@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Shared.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Player extends AbstractPlayer {
@@ -27,6 +28,7 @@ public class Player extends AbstractPlayer {
     public void addTrainCard(TrainCard card) {
         trainCards.add(card);
     }
+
     public void removeTrainCard(int index) {
         trainCards.remove(index);
     }
@@ -53,6 +55,27 @@ public class Player extends AbstractPlayer {
 
     public List<DestinationCard> getDestinationCards() {
         return destinationCards;
+    }
+
+    public boolean removeCardsOfType(TrainType cardType, int cardCount) {
+        Iterator<TrainCard> it = trainCards.iterator();
+        while (cardCount > 0 && it.hasNext()) {
+            if (it.next().getType().equals(cardType)) {
+                it.remove();
+                cardCount--;
+            }
+        }
+        return cardCount == 0;
+    }
+
+    public int countCardsOfType(TrainType type) {
+        int count = 0;
+        for (TrainCard card : trainCards) {
+            if (card.getType().equals(type)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     @Override

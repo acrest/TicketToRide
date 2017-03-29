@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class ServerProxyCommandLine {
     public static void main(String [] args){
-        ClientCommunicator.getInstance().setServerIP("10.24.67.25");
+        ClientCommunicator.getInstance().setServerIP("192.168.122.1");
         ServerProxyCommandLine commandLine = new ServerProxyCommandLine();
         commandLine.start();
     }
