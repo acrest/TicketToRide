@@ -430,11 +430,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View view) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState){
-                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState) {  //Check not wild.
-                        presenter.drawTrainCard();
-                        Toast.makeText(getApplicationContext(), "Card added to hand!", Toast.LENGTH_SHORT).show();
-                    }
+                if(state instanceof StartTurnState || state instanceof OneDrawnCardState){
+                    presenter.drawTrainCard();
+//                    Toast.makeText(getApplicationContext(), "Card added to hand!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -445,7 +443,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
                 if(state instanceof StartTurnState){
                     presenter.drawDestinationCard();
-                    Toast.makeText(getApplicationContext(), "Dest Card added to hand!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Dest Card added to hand!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -454,14 +452,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState){
-                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState){  //Check not wild.
-                        presenter.pickTrainCard(0);
-                        Toast.makeText(getApplicationContext(), "Card added to hand!",
-                                Toast.LENGTH_SHORT).show();
-                        // setImageButton(card1Button, card.getType());
-                        //switchStateByTrainPicked(state);
-                    }
+                if(state instanceof StartTurnState || state instanceof OnePickedCardState){
+                    presenter.pickTrainCard(0);
+//                    Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                            Toast.LENGTH_SHORT).show();
+                    // setImageButton(card1Button, card.getType());
+                    //switchStateByTrainPicked(state);
                 }
             }
         });
@@ -470,14 +466,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState){
-                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState){  //Check not wild.
-                        presenter.pickTrainCard(1);
-                        Toast.makeText(getApplicationContext(), "Card added to hand!",
-                                Toast.LENGTH_SHORT).show();
-                        // setImageButton(card2Button, card.getType());
-                        //switchStateByTrainPicked(state);
-                    }
+                if(state instanceof StartTurnState || state instanceof OnePickedCardState){
+                    presenter.pickTrainCard(1);
+//                    Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                            Toast.LENGTH_SHORT).show();
+                    // setImageButton(card1Button, card.getType());
+                    //switchStateByTrainPicked(state);
                 }
             }
         });
@@ -486,14 +480,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState){
-                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState){  //Check not wild.
-                        presenter.pickTrainCard(2);
-                        Toast.makeText(getApplicationContext(), "Card added to hand!",
-                                Toast.LENGTH_SHORT).show();
-                        // setImageButton(card3Button, card.getType());
-                        //switchStateByTrainPicked(state);
-                    }
+                if(state instanceof StartTurnState || state instanceof OnePickedCardState){
+                    presenter.pickTrainCard(2);
+//                    Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                            Toast.LENGTH_SHORT).show();
+                    // setImageButton(card1Button, card.getType());
+                    //switchStateByTrainPicked(state);
                 }
             }
         });
@@ -502,14 +494,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState){
-                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState){  //Check not wild.
-                        presenter.pickTrainCard(3);
-                        Toast.makeText(getApplicationContext(), "Card added to hand!",
-                                Toast.LENGTH_SHORT).show();
-                        // setImageButton(card4Button, card.getType());
-                        //switchStateByTrainPicked(state);
-                    }
+                if(state instanceof StartTurnState || state instanceof OnePickedCardState){
+                    presenter.pickTrainCard(3);
+//                    Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                            Toast.LENGTH_SHORT).show();
+                    // setImageButton(card1Button, card.getType());
+                    //switchStateByTrainPicked(state);
                 }
             }
         });
@@ -518,14 +508,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState){
-                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState){  //Check not wild.
-                        presenter.pickTrainCard(4);
-                        Toast.makeText(getApplicationContext(), "Card added to hand!",
-                                Toast.LENGTH_SHORT).show();
-                        // setImageButton(card5Button, card.getType());
-                        //switchStateByTrainPicked(state);
-                    }
+                if(state instanceof StartTurnState || state instanceof OnePickedCardState){
+                    presenter.pickTrainCard(4);
+//                    Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                            Toast.LENGTH_SHORT).show();
+                    // setImageButton(card1Button, card.getType());
+                    //switchStateByTrainPicked(state);
                 }
             }
         });
