@@ -24,10 +24,12 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
 
     private ITicketToRideListener listener;
     private ClientModel model;
+    private boolean initPick;
 
     public PresenterTicketToRide(ITicketToRideListener listener) {
         this.listener = listener;
         model = ClientModel.getInstance();
+        initPick = true;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     public void claimRoute(int routeID) {
         try {
             model.doClaimRoute(routeID);
-            model.setLongestPath();
+//            model.setLongestPath();
         } catch (StateWarning e) {
             listener.handleWarning(e);
         }
@@ -142,11 +144,16 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             model.addDestinationCard(card);
         }
         for (DestinationCard card : notChosen) {
+            Facade.getInstance().putBackDestinationCard(card);
+        }
+        if(!initPick) {
             try {
-                model.doPutBackDestinationCard(card);
-            } catch (StateWarning e) {
-                listener.handleWarning(e);
+                model.doEndTurn();
+            } catch(StateWarning warning) {
+                listener.handleWarning(warning);
             }
+        } else {
+            initPick = false;
         }
     }
 

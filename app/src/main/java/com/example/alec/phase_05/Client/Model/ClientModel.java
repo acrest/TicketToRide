@@ -297,7 +297,7 @@ public class ClientModel extends Observable {
         IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null) return;
         currentGame.getRouteByID(routeId).setOwner(player);
-        setLongestPath();
+//        setLongestPath();
         notifyPropertyChanges(GAME_MAP);
     }
 
