@@ -5,6 +5,7 @@ import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -50,6 +51,7 @@ public class ClientModel extends Observable {
     public static String PLAYER_TURN_START = "player turn start";
     public static String GAME_FINISHED = "game finished";
     public static String GAME_FINISHED_REQUEST = "game finished request";
+    public static String GAME_STATE = "game state";
 
     public int longestRoad;
     public Player playerWithLongestRoute;
@@ -295,7 +297,7 @@ public class ClientModel extends Observable {
         IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null) return;
         currentGame.getRouteByID(routeId).setOwner(player);
-        setLongestPath();
+//        setLongestPath();
         notifyPropertyChanges(GAME_MAP);
     }
 
@@ -452,6 +454,16 @@ public class ClientModel extends Observable {
                 notifyPropertyChanges(DISPLAY_HAND);
             }
         }
+    }
+
+    public GameState getGameState() {
+        if(currentGame == null) return null;
+        return currentGame.getTurnState();
+    }
+
+    public void notifyGameStateChange() {
+        if(currentGame==null) return;
+        notifyPropertyChanges(GAME_STATE);
     }
 
     public void clearCardChoices() {

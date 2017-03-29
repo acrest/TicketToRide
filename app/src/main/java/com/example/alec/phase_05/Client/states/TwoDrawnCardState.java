@@ -51,4 +51,9 @@ public class TwoDrawnCardState implements GameState {
         facade.finishTurn();
         state.setTurnState(new EndTurnState(state));
     }
+
+    @Override
+    public String toString() {
+        return "Two Cards Drawn";
+    }
 }

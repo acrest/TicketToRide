@@ -53,4 +53,9 @@ public class RainbowCardState implements GameState {
         facade.finishTurn();
         state.setTurnState(new EndTurnState(state));
     }
+
+    @Override
+    public String toString() {
+        return "Rainbow Card Picked";
+    }
 }

@@ -100,7 +100,7 @@ public class StartScreenActivity extends AppCompatActivity {
                 }
             }
         });
-        
+
     }
 
     private void setIpAndTrains(){

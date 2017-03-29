@@ -9,6 +9,7 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
@@ -23,18 +24,20 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
 
     private ITicketToRideListener listener;
     private ClientModel model;
+    private boolean initPick;
 
     public PresenterTicketToRide(ITicketToRideListener listener) {
         this.listener = listener;
         model = ClientModel.getInstance();
+        initPick = true;
     }
 
     @Override
     public void drawTrainCard() {
         try {
             model.doDrawTrainCardFromDeck();
-        } catch (Exception e) {
-
+        } catch (StateWarning e) {
+            listener.handleWarning(e);
         }
     }
 
@@ -42,8 +45,8 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     public void pickTrainCard(int deckID) {
         try {
             model.doPickTrainCard(deckID);
-        } catch (Exception e) {
-
+        } catch (StateWarning e) {
+            listener.handleWarning(e);
         }
     }
 
@@ -51,25 +54,23 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     public void claimRoute(int routeID) {
         try {
             model.doClaimRoute(routeID);
-            model.setLongestPath();
-        } catch (Exception e) {
-
+//            model.setLongestPath();
+        } catch (StateWarning e) {
+            listener.handleWarning(e);
         }
     }
 
     @Override
     public void returnDestinationCard(DestinationCard card) {
-        try {
-            model.doPutBackDestinationCard(card);
-        } catch (Exception e) {
-        }
+        Facade.getInstance().putBackDestinationCard(card);
     }
 
     @Override
     public void drawDestinationCard() {
         try {
             model.doDrawDestinationCard();
-        } catch (Exception e) {
+        } catch (StateWarning e) {
+            listener.handleWarning(e);
         }
     }
 
@@ -77,7 +78,8 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     public void endTurn() {
         try {
             model.doDrawTrainCardFromDeck();
-        } catch (Exception e) {
+        } catch (StateWarning e) {
+            listener.handleWarning(e);
         }
     }
 
@@ -116,6 +118,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             cards.add(model.getVisibleTrainCard(i));
         }
         listener.updateFaceupTrainCards(cards);
+        listener.updateGameState(model.getGameState());
     }
 
     @Override
@@ -141,11 +144,16 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             model.addDestinationCard(card);
         }
         for (DestinationCard card : notChosen) {
+            Facade.getInstance().putBackDestinationCard(card);
+        }
+        if(!initPick) {
             try {
-                model.doPutBackDestinationCard(card);
-            } catch (Exception e) {
-
+                model.doEndTurn();
+            } catch(StateWarning warning) {
+                listener.handleWarning(warning);
             }
+        } else {
+            initPick = false;
         }
     }
 
@@ -246,6 +254,9 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         }
         if (u.needUpdate(ClientModel.GAME_FINISHED)) {
             listener.onGameFinished();
+        }
+        if(u.needUpdate(ClientModel.GAME_STATE)) {
+            listener.updateGameState(model.getGameState());
         }
     }
 

@@ -44,6 +44,7 @@ public class ReturnDestinationState implements GameState {
             throw new StateWarning("Attempt to return too many destination cards.");
         facade.putBackDestinationCard(card);
         cardsReturned++;
+        facade.finishTurn();
         state.setTurnState(new EndTurnState(state));
     }
 
@@ -57,6 +58,10 @@ public class ReturnDestinationState implements GameState {
         System.out.println("Cards returned. Ending turn.");
         facade.finishTurn();
         state.setTurnState(new EndTurnState(state));
+    }
 
+    @Override
+    public String toString() {
+        return "Returned Destination Card(s)";
     }
 }

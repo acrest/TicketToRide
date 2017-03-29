@@ -12,12 +12,14 @@
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
-            android:layout_height="30dp" />
+            android:layout_height="0dp"
+            android:layout_weight="0.05"/>
 
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="0dp"
+            android:layout_weight="0.88">
 
             <LinearLayout
                 android:id="@+id/player_info"
@@ -335,13 +337,15 @@
                             android:id="@+id/longest_route_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="24dp"
+                            android:paddingBottom="10dp"
                             android:textColor="#FFF" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </LinearLayout>  <!-- Player Info Tab -->
 
             <LinearLayout
                 android:id="@+id/routes"
@@ -392,7 +396,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </LinearLayout>  <!-- Routes Tab -->
 
             <LinearLayout
                 android:id="@+id/game_history"
@@ -418,8 +422,7 @@
                         android:layout_height="match_parent"
                         android:background="#AAE0E0E0"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
-            </LinearLayout>
-
+            </LinearLayout>  <!-- Games History Tab -->
 
             <LinearLayout
                 android:id="@+id/bank"
@@ -430,30 +433,6 @@
                 android:background="@mipmap/old_map">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp">
-
-                    <ImageButton
-                        android:id="@+id/deck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:paddingRight="20dp"
-                        android:src="@drawable/back" />
-
-                    <ImageButton
-                        android:id="@+id/destdeck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:paddingLeft="20dp"
-                        android:src="@drawable/ticket" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="15dp"
@@ -462,66 +441,105 @@
                     android:layout_marginTop="15dp"
                     android:background="#AA000000"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <ImageButton
-                        android:id="@+id/card2"
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:src="@drawable/back" />
+                        android:layout_marginTop="15dp">
+
+                        <Button
+                            android:id="@+id/deck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/back"
+                            android:text = "draw train card"
+                            android:textStyle="bold"
+                            android:textColor="#ffffff" />
+
+                        <Space
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent" />
+
+                        <Button
+                            android:id="@+id/destdeck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ticket"
+                            android:text = "draw destination card"
+                            android:textStyle="bold"
+                            android:textColor="#ffffff" />
+
+                    </LinearLayout>
 
 
-                    <ImageButton
-                        android:id="@+id/card1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:src="@drawable/back" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/card2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/back" />
 
 
-                    <ImageButton
-                        android:id="@+id/card3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:src="@drawable/back" />
+                        <ImageButton
+                            android:id="@+id/card1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/back" />
 
 
-                    <ImageButton
+                        <ImageButton
+                            android:id="@+id/card3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/back" />
 
-                        android:id="@+id/card4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:src="@drawable/back" />
+
+                        <ImageButton
+
+                            android:id="@+id/card4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/back" />
 
 
-                    <ImageButton
-                        android:id="@+id/card5"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:src="@drawable/back" />
+                        <ImageButton
+                            android:id="@+id/card5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/back" />
 
+                    </LinearLayout>
                 </LinearLayout>
 
-            </LinearLayout>
-
+            </LinearLayout>  <!-- Bank Tab -->
 
             <LinearLayout
                 android:id="@+id/mapview"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:background="@mipmap/old_map"
                 android:orientation="horizontal">
-
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -564,13 +582,7 @@
 
                 </FrameLayout>
 
-
-
-
-            </LinearLayout>
-
-
-
+            </LinearLayout>  <!-- MapView Tab -->
 
             <LinearLayout
                 android:id="@+id/chat"
@@ -619,10 +631,27 @@
 
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </FrameLayout>
-    </LinearLayout>
+            </LinearLayout>  <!-- Chat Tab -->
 
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.07"
+            android:background="#AAAAAA">
+
+            <TextView
+                android:id="@+id/state_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Turn state option."
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="25dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </TabHost>
 

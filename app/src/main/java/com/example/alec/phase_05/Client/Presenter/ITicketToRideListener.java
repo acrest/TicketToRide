@@ -3,6 +3,8 @@ package com.example.alec.phase_05.Client.Presenter;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
@@ -37,4 +39,8 @@ public interface ITicketToRideListener {
     void onTurnStart();
 
     void onGameFinished();
+
+    void updateGameState(GameState state);
+
+    void handleWarning(StateWarning warning);
 }

@@ -54,4 +54,9 @@ public class OneDrawnOnePickedCardState implements GameState {
         facade.finishTurn();
         state.setTurnState(new EndTurnState(state));
     }
+
+    @Override
+    public String toString() {
+        return "One Card Drawn And One Picked";
+    }
 }

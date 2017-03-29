@@ -50,6 +50,7 @@ public class StartTurnState implements GameState {
         TrainCard pickedCard = state.getVisibleCard(cardIndex);
         if(pickedCard == null) return; //no card in that spot
         if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
+            facade.finishTurn();
             state.setTurnState(new EndTurnState(state));
         } else {
             state.setTurnState(new OnePickedCardState(state));
@@ -88,6 +89,7 @@ public class StartTurnState implements GameState {
             currentPlayer.removeCardsOfType(route.getType(), route.getLength());
             System.out.println("ROUTE CLAIMED");
             facade.claimRoute(routeId);
+            facade.finishTurn();
             state.setTurnState(new EndTurnState(state));
         }
     }
@@ -96,5 +98,10 @@ public class StartTurnState implements GameState {
     public void endTurn() throws StateWarning {
         throw new StateWarning("You must either draw train cards, " +
                 "draw destination cards, or claim a route before you can end your turn.");
+    }
+
+    @Override
+    public String toString() {
+        return "Your Turn";
     }
 }

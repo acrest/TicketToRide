@@ -53,10 +53,12 @@ import com.example.alec.phase_05.Shared.model.Deck;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.MyPoint;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.Route;
+import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
@@ -110,6 +112,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     ImageButton card5Button;
     Button placeRoutesButton;
     private EditText mEditTextChat;
+    private TextView stateIndicator;
     private TextView boxCountView;
     private TextView passengerCountView;
     private TextView tankerCountView;
@@ -390,6 +393,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
         mBuilder.setView(mView);
         destinationDialog = mBuilder.create();
+
+        stateIndicator = (TextView) findViewById(R.id.state_indicator);
     }
 
     private void setOnCreateOnCreateListeners(){
@@ -1116,6 +1121,16 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void onGameFinished() {
         startActivity(new Intent(TicketToRideActivity.this, TicketToRideEndGameActivity.class));
+    }
+
+    @Override
+    public void updateGameState(GameState state) {
+        stateIndicator.setText(state.toString());
+    }
+
+    @Override
+    public void handleWarning(StateWarning warning) {
+        Toast.makeText(TicketToRideActivity.this, warning.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     private void displayCardChoiceDialog() {
