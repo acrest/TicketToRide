@@ -1077,11 +1077,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateFaceupTrainCards(List<TrainCard> cards) {
-        /*setImageButton(card1Button, cards.get(0).getType());
+        setImageButton(card1Button, cards.get(0).getType());
         setImageButton(card2Button, cards.get(1).getType());
         setImageButton(card3Button, cards.get(2).getType());
         setImageButton(card4Button, cards.get(3).getType());
-        setImageButton(card5Button, cards.get(4).getType());*/
+        setImageButton(card5Button, cards.get(4).getType());
     }
 
     @Override
