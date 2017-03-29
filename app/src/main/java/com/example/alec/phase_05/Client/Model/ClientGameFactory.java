@@ -31,7 +31,7 @@ public final class ClientGameFactory {
                 } else {
                     game.setPlayer(i, new OtherPlayer(players[i]));
                 }
-                player.setTrainCount(Facade.getInstance().getTrainCount());
+                game.getPlayer(i).setTrainCount(Facade.getInstance().getTrainCount());
             }
         }
         for (Player player : players) {

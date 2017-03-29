@@ -134,7 +134,7 @@ public class ClientFacade {
                 } else {
                     model.setPlayer(i, new OtherPlayer(player));
                 }
-                player.setTrainCount(Facade.getInstance().getTrainCount());
+                model.getPlayer(i).setTrainCount(Facade.getInstance().getTrainCount());
             }
         }
         TrainCard[] visibleTrainCards = gameInfo.getVisibleTrainCards();
