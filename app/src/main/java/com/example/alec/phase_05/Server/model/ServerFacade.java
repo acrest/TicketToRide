@@ -357,8 +357,7 @@ public class ServerFacade implements IServer {
     public boolean returnDestinationCard(String playerName, int gameId, DestinationCard card) {
         IServerGame game = model.getGame(gameId);
         if (game == null) return false;
-        IServerBank bank = (IServerBank) game;
-        bank.addDestinationCardToBottom(card);
+        game.addDestinationCardToBottom(card);
         return true;
     }
 
@@ -378,7 +377,6 @@ public class ServerFacade implements IServer {
     public boolean discardTrainCard(String playerName, int gameId, TrainCard card) {
         IServerGame game = model.getGame(gameId);
         if (game == null) return false;
-        IServerBank bank = (IServerBank) game;
         return true;
     }
 

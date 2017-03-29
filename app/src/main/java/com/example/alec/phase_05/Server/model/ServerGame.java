@@ -73,4 +73,9 @@ public class ServerGame extends Game implements IServerGame {
     public GameMap getMap() {
         return getGameMap();
     }
+
+    @Override
+    public void addDestinationCardToBottom(DestinationCard card) {
+        ((IServerBank) getBank()).addDestinationCardToBottom(card);
+    }
 }
