@@ -461,6 +461,10 @@ public class ClientModel extends Observable {
         }
     }
 
+    public void updateTrainCardDisplay() {
+        notifyPropertyChanges(PLAYER_TRAIN_CARDS);
+    }
+
     public GameState getGameState() {
         if(currentGame == null) return null;
         return currentGame.getTurnState();
