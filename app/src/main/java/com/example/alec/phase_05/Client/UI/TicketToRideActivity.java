@@ -8,13 +8,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Picture;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.annotation.BoolRes;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -33,9 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,20 +54,17 @@ import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.IPlayer;
-import com.example.alec.phase_05.Shared.model.MyPoint;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
-import static com.example.alec.phase_05.Shared.model.TrainType.ANY;
 import static com.example.alec.phase_05.Shared.model.TrainType.BOX;
 import static com.example.alec.phase_05.Shared.model.TrainType.CABOOSE;
 import static com.example.alec.phase_05.Shared.model.TrainType.COAL;
 import static com.example.alec.phase_05.Shared.model.TrainType.FREIGHT;
 import static com.example.alec.phase_05.Shared.model.TrainType.HOPPER;
-import static com.example.alec.phase_05.Shared.model.TrainType.LOCOMOTIVE;
 import static com.example.alec.phase_05.Shared.model.TrainType.PASSENGER;
 import static com.example.alec.phase_05.Shared.model.TrainType.REEFER;
 import static com.example.alec.phase_05.Shared.model.TrainType.TANKER;
@@ -141,7 +132,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView firstCard;
     private TextView secondCard;
     private TextView thirdCard;
-    private int destinationCoiceCount;
+    private TextView destinationPrompt;
+    private int destinationChoiceCount;
     private TextView longest_route_player;
     TabHost mTabHost;
     private AlertDialog destinationDialog;
@@ -398,13 +390,15 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //        placeRoutesButton = (Button) findViewById(R.id.placeRoute);
 
         firstCard = (TextView) mView.findViewById(R.id.firstCard);
+        destinationPrompt = (TextView) mView.findViewById(R.id.choose_destination_prompt);
+
         secondCard = (TextView) mView.findViewById(R.id.secondCard);
         thirdCard = (TextView) mView.findViewById(R.id.thirdCard);
         dialogDestinationButton = (Button) mView.findViewById(R.id.doneButton);
         dialogBeginTurnButton = (Button) mBeginTurnView.findViewById(R.id.dialog_begin_turn_button);
         dialogMapButton = (Button) mMapView.findViewById(R.id.dialog_map_button);
 
-        destinationCoiceCount = 2;
+        destinationChoiceCount = 2;
         destCardChoices = new HashMap<>();
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
         mBuilder.setView(mView);
@@ -579,6 +573,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View view) {
                 Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
                 presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
+                firstCard.setBackgroundColor(Color.TRANSPARENT);
+                secondCard.setBackgroundColor(Color.TRANSPARENT);
+                thirdCard.setBackgroundColor(Color.TRANSPARENT);
+                dialogDestinationButton.setEnabled(false);
                 destinationDialog.dismiss();
 
             }
@@ -1225,20 +1223,20 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void pickDestinationCards(List<DestinationCard> cards) {
-        destinationCoiceCount = 1;
+        destinationChoiceCount = 1;
 
         cardChoices = cards;
 
-        displayCardChoiceDialog();
+        displayCardChoiceDialog(false);
     }
 
     @Override
     public void initPickDestinationCards(List<DestinationCard> cards) {
-        destinationCoiceCount = 2;
+        destinationChoiceCount = 2;
 
         cardChoices = cards;
 
-        displayCardChoiceDialog();
+        displayCardChoiceDialog(true);
     }
 
     @Override
@@ -1286,14 +1284,16 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         longest_route_player.setText(presenter.longestPath());
     }
 
-    private void displayCardChoiceDialog() {
+    private void displayCardChoiceDialog(boolean firstTurn) {
         destCardChoices.put(firstCard, false);
         destCardChoices.put(secondCard, false);
         destCardChoices.put(thirdCard, false);
         firstCard.setText(cardChoices.get(0).toString());
         secondCard.setText(cardChoices.get(1).toString());
         thirdCard.setText(cardChoices.get(2).toString());
-
+        if (!firstTurn){
+            destinationPrompt.setText("CHOOSE AT LEAST 1 DESTINATION CARDS");
+        }
         destinationDialog.show();
     }
 
@@ -1771,7 +1771,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             count++;
         }
 
-        if(count >= destinationCoiceCount){
+        System.out.println("the number of destinationCards " + destinationChoiceCount);
+        if(count >= destinationChoiceCount){
             dialogDestinationButton.setEnabled(true);
         }
         else{
