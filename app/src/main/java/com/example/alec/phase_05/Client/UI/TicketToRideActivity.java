@@ -439,6 +439,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         destinationDialog = mBuilder.create();
 
         stateIndicator = (TextView) findViewById(R.id.state_indicator);
+        destinationPrompt = (TextView) findViewById(R.id.choose_destination_prompt);
     }
 
     private void setOnCreateOnCreateListeners(){
