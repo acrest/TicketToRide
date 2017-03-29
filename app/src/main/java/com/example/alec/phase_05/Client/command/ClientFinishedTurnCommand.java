@@ -15,7 +15,7 @@ public class ClientFinishedTurnCommand extends FinishedTurnCommand {
 
     @Override
     public Result execute() {
-        ClientFacade.getInstance().finishTurn();
+        ClientFacade.getInstance().finishTurn(getPlayerName());
         return null;
     }
 }
