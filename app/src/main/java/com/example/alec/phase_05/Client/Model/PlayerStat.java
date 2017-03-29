@@ -42,6 +42,29 @@ public class PlayerStat {
         this.points = points;
     }
 
+    public void addRoutePoints(int routeLength){
+        switch(routeLength){
+            case(1):
+                points += 1;
+                break;
+            case(2):
+                points += 2;
+                break;
+            case(3):
+                points += 4;
+                break;
+            case(4):
+                points += 7;
+                break;
+            case(5):
+                points += 10;
+                break;
+            case(6):
+                points += 15;
+                break;
+        }
+    }
+
     public int getTrainCount() {
         return trainCount;
     }
