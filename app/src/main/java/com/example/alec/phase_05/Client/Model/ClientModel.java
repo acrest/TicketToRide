@@ -52,6 +52,7 @@ public class ClientModel extends Observable {
     public static String GAME_FINISHED = "game finished";
     public static String GAME_FINISHED_REQUEST = "game finished request";
     public static String GAME_STATE = "game state";
+    public static String ROUTE = "route";
 
     public int longestRoad;
     public Player playerWithLongestRoute;
@@ -514,6 +515,9 @@ public class ClientModel extends Observable {
         return longestPath;
     }
 
-    public void setLongestPath() { longestPath = currentGame.getMap().findLongestRoute(); }
+    public void setLongestPath() {
+        longestPath = currentGame.getMap().findLongestRoute();
+        notifyPropertyChanges(ROUTE);
+    }
 
 }
