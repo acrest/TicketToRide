@@ -36,11 +36,12 @@ public class OneDrawnCardState implements GameState {
     @Override
     public void pickTrainCard(int cardIndex) throws StateWarning {
 // pick train card
+        System.out.println("inside pick train card");
         System.out.println("Train card picked from face up cards.");
         // check not rainbow card.
         TrainCard pickedCard = state.getVisibleCard(cardIndex);
         if(pickedCard == null) {
-            throw new StateWarning("There is not card in that spot.");
+            throw new StateWarning("There is no card in that spot.");
         }
         if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
             throw new StateWarning("Cannot draw a rainbow card if you already have picked a card.");
