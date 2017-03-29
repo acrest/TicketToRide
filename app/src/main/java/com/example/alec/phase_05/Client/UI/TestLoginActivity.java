@@ -28,7 +28,7 @@ import java.util.Map;
 public class TestLoginActivity extends Activity implements ILogInListener {
 
     private Button mLogInButton;
-    private EditText mNumberOfPlayers;
+    //private EditText mNumberOfPlayers;
     private IPresenterLogIn presenter;
     private int numPlayers;
 
@@ -42,18 +42,20 @@ public class TestLoginActivity extends Activity implements ILogInListener {
 
         presenter = new PresenterLogIn(this);
 
-        mNumberOfPlayers= (EditText) findViewById(R.id.number_of_players_test);
+     //   mNumberOfPlayers= (EditText) findViewById(R.id.number_of_players_test);
 
         mLogInButton = (Button) findViewById(R.id.log_in_button_test);
         mLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 System.out.println("the button is pressed");
                 if (!mNumberOfPlayers.getText().toString().isEmpty()) {
                     numPlayers = Integer.valueOf(mNumberOfPlayers.getText().toString());
                 } else {
                     Toast.makeText(TestLoginActivity.this, "You did not specify number of players. Defaulting to 2 players.", Toast.LENGTH_SHORT).show();
                 }
+                */
                 loginUsers();
             }
         });

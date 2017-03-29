@@ -71,7 +71,10 @@ public class Player extends AbstractPlayer {
     public int countCardsOfType(TrainType type) {
         int count = 0;
         for (TrainCard card : trainCards) {
-            if (card.getType().equals(type)) {
+            if (type.equals(TrainType.ANY)){
+                count++;
+            }
+            else if (card.getType().equals(type) || card.getType().equals(TrainType.LOCOMOTIVE)) {
                 count++;
             }
         }
