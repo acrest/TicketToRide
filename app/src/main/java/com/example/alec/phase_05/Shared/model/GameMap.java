@@ -73,50 +73,63 @@ public class GameMap {
         ArrayList<Player> playerList = new ArrayList<Player>();
         Map<Player, Integer> longestPlayerMap = new HashMap<Player, Integer>();
         Map<Player, ArrayList<Route>> routesToPlayersMap = new HashMap<Player, ArrayList<Route>>();
-        for(int i = 1; i <= 100; i++ ) {//Maybe this should be set to number of Routes not magic number 100 or routes.size() or something
+        System.out.println("GAME MAP");
+        for(int i = 1; i <= numberOfRoutes; i++ ) {//Maybe this should be set to number of Routes not magic number 100 or routes.size() or something
             Route tempRoute = getRouteByID(i);
-            boolean inPList = isInPlayerList(playerList, tempRoute);
-            Player newPlayer = (Player) tempRoute.getOwner();
-            if (!inPList) {
-                playerList.add(newPlayer);
-                ArrayList<Route> newRoutes = new ArrayList<>();
-                routesToPlayersMap.put(newPlayer, newRoutes);
+            if (tempRoute.getOwner() != null) {
+                System.out.println("Route: " + tempRoute.getCity2().getName() + " " + tempRoute.getCity1().getName() + " " +
+                        tempRoute.getOwner().getName());
+                boolean inPList = isInPlayerList(playerList, tempRoute);
+                Player newPlayer = (Player) tempRoute.getOwner();
+                if (!inPList) {
+                    playerList.add(newPlayer);
+                    ArrayList<Route> newRoutes = new ArrayList<>();
+                    routesToPlayersMap.put(newPlayer, newRoutes);
+                }
+                routesToPlayersMap.get(newPlayer).add(tempRoute);
             }
-            routesToPlayersMap.get(newPlayer).add(tempRoute);
-
         }
 
         Player longestPlayer = null;
         int longestRoute = 0;
 
-
+        System.out.println("Out of first for loop game map");
         for(Map.Entry<Player, ArrayList<Route>> entry : routesToPlayersMap.entrySet()) {
             Player player = entry.getKey();
             ArrayList<Route> routeList = entry.getValue();
             ArrayList<Route> visited = new ArrayList<>();
+            System.out.println("F");
             Collections.sort(routeList, new Comparator<Route>() {
                 @Override
                 public int compare(Route o1, Route o2) {
                     return o1.getLength() - o2.getLength();
                 }
             });
+            System.out.println("o");
             for (int i = 0; i < routeList.size(); i++) {
+                System.out.println("r");
                 Route tempRoute = routeList.get(i);
                 if (!visited.contains(tempRoute)) {
+                    System.out.println("l");
                     visited.add(tempRoute);
                     routeList.remove(tempRoute);
                     visited = getLongestRoute(tempRoute, routeList, visited);
                     int longestRouteLength = getVisitedLength(visited);
+                    System.out.println("o");
                     if (longestRouteLength > longestRoute) {
+                        System.out.println("0");
                         longestRoute = longestRouteLength;
                         longestPlayerMap = new HashMap<Player, Integer>();
                         longestPlayerMap.put(player, longestRoute);
                     } else if( longestRouteLength == longestRoute) {
+                        System.out.println("p");
                         longestPlayerMap.put(player, longestRoute);
                     }
+                    System.out.println("s");
                 }
             }
         }
+        System.out.println("OUT OF SECOND LOOP");
         return longestPlayerMap;
     }
 
