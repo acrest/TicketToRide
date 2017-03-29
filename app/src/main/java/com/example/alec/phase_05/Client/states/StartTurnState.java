@@ -95,6 +95,19 @@ public class StartTurnState implements GameState {
         } else {
             currentPlayer.removeCardsOfType(route.getType(), route.getLength());
             System.out.println("ROUTE CLAIMED");
+            List<TrainCard> playersHand = currentPlayer.getTrainCards();
+            int length = route.getLength();
+            for (TrainCard card : playersHand) {
+
+                if (card.getType().equals(route.getType())) {
+                    facade.discardTrainCard(card);
+                    length--;
+                    if (length == 0) {
+                        break;
+                    }
+                }
+
+            }
             facade.claimRoute(routeId);
             facade.finishTurn();
             state.setTurnState(new EndTurnState(state));
