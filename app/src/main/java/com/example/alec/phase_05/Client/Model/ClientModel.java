@@ -370,9 +370,9 @@ public class ClientModel extends Observable {
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
 
-    public void endTurn() {
+    public void endTurn(String playerName) {
         if (currentGame == null) return;
-        currentGame.endTurn();
+        currentGame.endTurn(playerName);
         if (currentGame.isGameFinished()) {
             notifyPropertyChanges(GAME_FINISHED_REQUEST);
         } else if (currentGame.getCurrentPlayerTurn().equals(currentPlayerName)) {

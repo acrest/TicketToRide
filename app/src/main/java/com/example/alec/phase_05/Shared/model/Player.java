@@ -58,26 +58,205 @@ public class Player extends AbstractPlayer {
     }
 
     public boolean removeCardsOfType(TrainType cardType, int cardCount) {
+        if(cardType.equals(TrainType.ANY)){
+            cardCount = removeCardsOfTypeAny(cardCount);
+        }
+        else{
+            Iterator<TrainCard> it = trainCards.iterator();
+            while (cardCount > 0 && it.hasNext()) {
+                if (it.next().getType().equals(cardType)) {
+                    it.remove();
+                    cardCount--;
+                }
+            }
+        }
+
+        return cardCount == 0;
+    }
+
+    private int removeCardsOfTypeAny(int cardCount){
+        TrainType type = giveTrainTypeOfHighestCount();
+
         Iterator<TrainCard> it = trainCards.iterator();
         while (cardCount > 0 && it.hasNext()) {
-            if (it.next().getType().equals(cardType)) {
+            if (it.next().getType().equals(type)) {
                 it.remove();
                 cardCount--;
             }
         }
-        return cardCount == 0;
+
+        return cardCount;
     }
 
     public int countCardsOfType(TrainType type) {
         int count = 0;
+        int anyCount = 0;
+
         for (TrainCard card : trainCards) {
-            if (type.equals(TrainType.ANY)){
+            /*if (type.equals(TrainType.ANY)){ //Has to all be the same color of any type.
                 count++;
-            }
-            else if (card.getType().equals(type) || card.getType().equals(TrainType.LOCOMOTIVE)) {
+            }*/
+            if (card.getType().equals(type) || card.getType().equals(TrainType.LOCOMOTIVE)) {
                 count++;
             }
         }
+
+        anyCount = giveHighestCountOfColors() + numOfWilds();
+        String test = type.toString();
+        String test2 = TrainType.ANY.toString();
+
+        if(anyCount > count){
+            if(test.equals(test2)){
+                return anyCount;
+            }
+        }
+
+        return count;
+    }
+
+    private int giveHighestCountOfColors(){
+        int redCount = 0;
+        int orangeCount = 0;
+        int yellowCount = 0;
+        int greenCount = 0;
+        int blueCount = 0;
+        int purpleCount = 0;
+        int whiteCount = 0;
+        int blackCount = 0;
+
+        for(TrainCard card : trainCards) {
+            if(card.getType().equals(TrainType.CABOOSE)) {
+                greenCount++;
+                //green
+            }
+            if(card.getType().equals(TrainType.TANKER)){
+                orangeCount++;
+            }
+            if(card.getType().equals(TrainType.FREIGHT)){
+                purpleCount++;
+                //purple
+            }
+            if(card.getType().equals(TrainType.PASSENGER)){
+                blueCount++;
+            }
+            if(card.getType().equals(TrainType.REEFER)){
+                whiteCount++;
+            }
+            if(card.getType().equals(TrainType.BOX)){
+                yellowCount++;
+                //yellow
+            }
+            if(card.getType().equals(TrainType.COAL)){
+                redCount++;
+            }
+            if(card.getType().equals(TrainType.HOPPER)){
+                blackCount++;
+            }
+        }
+
+        int count = redCount;
+
+        if(orangeCount>count){
+            count = orangeCount;
+        }
+        if(yellowCount > count){
+            count = yellowCount;
+        }
+        if(greenCount > count){
+            count = greenCount;
+        }
+        if(blueCount > count){
+            count = blueCount;
+        }
+        if(purpleCount > count){
+            count = purpleCount;
+        }
+        if(whiteCount > count){
+            count = whiteCount;
+        }
+        if(blackCount > count){
+            count = blackCount;
+        }
+
+        return count;
+    }
+
+    private TrainType giveTrainTypeOfHighestCount(){
+        int count = giveHighestCountOfColors();
+
+        int redCount = 0;
+        int orangeCount = 0;
+        int yellowCount = 0;
+        int greenCount = 0;
+        int blueCount = 0;
+        int purpleCount = 0;
+        int whiteCount = 0;
+        int blackCount = 0;
+
+        for(TrainCard card : trainCards) {
+            if(card.getType().equals(TrainType.CABOOSE)) {
+                greenCount++;
+                //green
+            }
+            if(card.getType().equals(TrainType.TANKER)){
+                orangeCount++;
+            }
+            if(card.getType().equals(TrainType.FREIGHT)){
+                purpleCount++;
+                //purple
+            }
+            if(card.getType().equals(TrainType.PASSENGER)){
+                blueCount++;
+            }
+            if(card.getType().equals(TrainType.REEFER)){
+                whiteCount++;
+            }
+            if(card.getType().equals(TrainType.BOX)){
+                yellowCount++;
+                //yellow
+            }
+            if(card.getType().equals(TrainType.COAL)){
+                redCount++;
+            }
+            if(card.getType().equals(TrainType.HOPPER)){
+                blackCount++;
+            }
+        }
+
+        if(greenCount == count){
+            return TrainType.CABOOSE;
+        }
+        if(orangeCount == count){
+            return TrainType.TANKER;
+        }
+        if(purpleCount == count){
+            return TrainType.FREIGHT;
+        }
+        if(blueCount == count){
+            return TrainType.PASSENGER;
+        }
+        if(whiteCount == count){
+            return TrainType.REEFER;
+        }
+        if(yellowCount == count){
+            return TrainType.BOX;
+        }
+        if(redCount == count){
+            return TrainType.COAL;
+        }
+
+        return TrainType.HOPPER;
+    }
+
+    private int numOfWilds(){
+        int count = 0;
+
+        for(TrainCard card:trainCards){
+            if(card.getType().equals(TrainType.LOCOMOTIVE)){
+                count++;
+            }
+        }
+
         return count;
     }
 

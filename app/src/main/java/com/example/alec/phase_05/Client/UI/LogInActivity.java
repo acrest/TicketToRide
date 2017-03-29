@@ -42,7 +42,7 @@ public class LogInActivity extends Activity implements ILogInListener {
         mLogInUserNameEditText.setText("ListigaRaven");
         mLogInPasswordEditText.setText("BlueFox");
         mRegisterUserNameEditText.setText("ListigaRaven");
-        mRegisterPasswordEditText.setText("andrew");
+        mRegisterPasswordEditText.setText("BlueFox");
         mRegisterConfirmEditText.setText("BlueFox");
 
         mLogInButton = (Button) findViewById(R.id.log_in_button);
