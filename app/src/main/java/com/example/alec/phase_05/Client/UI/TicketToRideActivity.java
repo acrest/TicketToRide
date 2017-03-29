@@ -159,8 +159,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         setContentView(R.layout.activity_ticket_to_ride);
         Poller.getInstance().setModelPolling();
 
-//        deckButton = (Button) findViewById(R.id.deck);
-//        destDeckButton = (Button) findViewById(R.id.destdeck);
+        deckButton = (Button) findViewById(R.id.deck);
+        destDeckButton = (Button) findViewById(R.id.destdeck);
         card1Button = (ImageButton) findViewById(R.id.card1);
         card2Button = (ImageButton) findViewById(R.id.card2);
         card3Button = (ImageButton) findViewById(R.id.card3);
@@ -409,29 +409,29 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             }
         });
 
-//        deckButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                presenter.drawTrainCard();
+        deckButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.drawTrainCard();
 //                Toast.makeText(getApplicationContext(), "Card added to hand!",
 //                        Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//
-//        destDeckButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                presenter.drawDestinationCard();
+
+            }
+        });
+
+        destDeckButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.drawDestinationCard();
 //                Toast.makeText(getApplicationContext(), "Dest Card added to hand!",
 //                        Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+
+            }
+        });
 
         card1Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.pickTrainCard(0);
-                Toast.makeText(getApplicationContext(), "Card added to hand!",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                        Toast.LENGTH_SHORT).show();
                // setImageButton(card1Button, card.getType());
             }
         });
@@ -439,8 +439,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.pickTrainCard(1);
-                Toast.makeText(getApplicationContext(), "Card added to hand!",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                        Toast.LENGTH_SHORT).show();
                // setImageButton(card2Button, card.getType());
             }
         });
@@ -448,8 +448,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card3Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.pickTrainCard(2);
-                Toast.makeText(getApplicationContext(), "Card added to hand!",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                        Toast.LENGTH_SHORT).show();
               //  setImageButton(card3Button, card.getType());
             }
         });
@@ -457,8 +457,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card4Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.pickTrainCard(3);
-                Toast.makeText(getApplicationContext(), "Card added to hand!",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                        Toast.LENGTH_SHORT).show();
               //  setImageButton(card4Button, card.getType());
             }
         });
@@ -466,8 +466,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         card5Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.pickTrainCard(4);
-                Toast.makeText(getApplicationContext(), "Card added to hand!",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Card added to hand!",
+//                        Toast.LENGTH_SHORT).show();
               //  setImageButton(card5Button, card.getType());
             }
         });
@@ -758,6 +758,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
 
     public void setImageButton(ImageButton button, TrainType id) {
+        if(id == null) {
+            button.setImageResource(R.drawable.back);
+            return;
+        }
         switch (id) {
             case HOPPER:
                 button.setImageResource(R.drawable.black);
@@ -1097,11 +1101,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateFaceupTrainCards(List<TrainCard> cards) {
-        setImageButton(card1Button, cards.get(0).getType());
-        setImageButton(card2Button, cards.get(1).getType());
-        setImageButton(card3Button, cards.get(2).getType());
-        setImageButton(card4Button, cards.get(3).getType());
-        setImageButton(card5Button, cards.get(4).getType());
+        setImageButton(card1Button, cards.get(0) == null ? null : cards.get(0).getType());
+        setImageButton(card2Button, cards.get(1) == null ? null : cards.get(1).getType());
+        setImageButton(card3Button, cards.get(2) == null ? null : cards.get(2).getType());
+        setImageButton(card4Button, cards.get(3) == null ? null : cards.get(3).getType());
+        setImageButton(card5Button, cards.get(4) == null ? null : cards.get(4).getType());
     }
 
     @Override
