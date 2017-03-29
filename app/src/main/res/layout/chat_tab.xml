@@ -4,6 +4,7 @@
     android:layout_width="match_parent">
     <!-- When selected, use grey -->
     <TextView
+        android:id="@+id/chat_tab_text"
         android:text="CHAT"
         android:textColor="@android:color/darker_gray"
         android:state_selected="true"

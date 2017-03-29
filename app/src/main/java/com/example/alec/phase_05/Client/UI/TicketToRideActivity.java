@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.BoolRes;
 import android.support.design.widget.TabLayout;
@@ -46,6 +47,10 @@ import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRide;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRide;
+import com.example.alec.phase_05.Client.states.OneDrawnCardState;
+import com.example.alec.phase_05.Client.states.OneDrawnOnePickedCardState;
+import com.example.alec.phase_05.Client.states.OnePickedCardState;
+import com.example.alec.phase_05.Client.states.StartTurnState;
 import com.example.alec.phase_05.R;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.City;
@@ -130,6 +135,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     View mView;
     View mBeginTurnView;
     View mShowMapView;
+    ImageView originalDestinationMap;
+    TabHost.TabSpec tab6;
 
     private TextView firstCard;
     private TextView secondCard;
@@ -149,6 +156,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     int cabooseCount;
     int locomotiveCount;
     private List<DestinationCard> cardChoices;
+    boolean hasDrawn = false;
 
     Map<TextView, Boolean> destCardChoices;
     private Route currentlySelectedRoute;
@@ -170,22 +178,20 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mBeginTurnView = getLayoutInflater().inflate(R.layout.dialog_begin_turn, null);
         mShowMapView = getLayoutInflater().inflate(R.layout.dialog_map, null);
 
-        setOnCreateFields(mView, mBeginTurnView, mShowMapView);
-        setOnCreateOnCreateListeners();
-
-        setCardCountsZero();
-
         mTabHost = getTabHost();
-
         mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("Player Info").setContent(R.id.player_info));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("Routes").setContent(R.id.routes));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("Game History").setContent(R.id.game_history));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test4").setIndicator("Bank").setContent(R.id.bank));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test5").setIndicator("Map").setContent(R.id.mapview));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test6").setIndicator("Chat").setContent(R.id.chat));
-
+        mTabHost.addTab(tab6 = mTabHost.newTabSpec("tab_test6").setIndicator("Chat").setContent(R.id.chat));
         mTabHost.setCurrentTab(0);
+        //mTabHost.newTabSpec("tab_test6").setIndicator("CHAT", getResources().getDrawable(R.drawable.chat_notice));
 
+        setOnCreateFields(mView, mBeginTurnView, mShowMapView);
+        setOnCreateOnCreateListeners();
+
+        setCardCountsZero();
 //        setTrainCards();
 //        setPlayersStats();
 //        setRoutes();
@@ -196,13 +202,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
        // setCard(card4Button, deck);
        // setCard(card5Button, deck);
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
+        /*AlertDialog.Builder mBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
         destCardChoices = new HashMap<>();
         destCardChoices.put(firstCard, false);
         destCardChoices.put(secondCard, false);
         destCardChoices.put(thirdCard, false);
         mBuilder.setView(mView);
-        dialogDesinationCards = mBuilder.create();
+        dialogDesinationCards = mBuilder.create();*/
 
         AlertDialog.Builder mBeginTurnBuilder = new AlertDialog.Builder(TicketToRideActivity.this);
         mBeginTurnBuilder.setView(mBeginTurnView);
@@ -223,36 +229,27 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         dialogSeeMapButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //observingCard = firstCard;
-                dialogMap.show();
+                observingCard = cardChoices.get(0);
                 showDestinationCanvas(mShowMapView);
-                dialogMap.dismiss();
                 dialogMap.show();
-                showDestinationCanvas(mShowMapView);
             }
         });
         dialogSeeMapButton2 = (Button) mView.findViewById(R.id.dialog_see_map_button2);
         dialogSeeMapButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //observingCard = secondCard;
-                dialogMap.show();
+                observingCard = cardChoices.get(1);
                 showDestinationCanvas(mShowMapView);
-                dialogMap.dismiss();
                 dialogMap.show();
-                showDestinationCanvas(mShowMapView);
             }
         });
         dialogSeeMapButton3 = (Button) mView.findViewById(R.id.dialog_see_map_button3);
         dialogSeeMapButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //observingCard = firstCard;
-                dialogMap.show();
+                observingCard = cardChoices.get(2);
                 showDestinationCanvas(mShowMapView);
-                dialogMap.dismiss();
                 dialogMap.show();
-                showDestinationCanvas(mShowMapView);
             }
         });
 
@@ -277,7 +274,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         });
 
         presenter.updateAll();
-//        dialogDesinationCards.show();
+
+        //dialogDesinationCards.show();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -291,10 +289,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     private void showDestinationCanvas(View mShowMapView){
         ImageView imageView = new ImageView(this);
-        imageView = (ImageView) mShowMapView.findViewById(R.id.dialog_map_image);
+        imageView =(ImageView) mShowMapView.findViewById(R.id.dialog_map_image);
         View map = mShowMapView.findViewById(R.id.dialog_map_image);
 
         if (imageView.getWidth() > 0 && imageView.getHeight() > 0) {
+            /*if(hasDrawn){
+                ((BitmapDrawable)imageView.getDrawable()).getBitmap().recycle();
+            }
+            else{
+                hasDrawn = true;
+            }*/
+
             Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(bmp);
             imageView.draw(c);
@@ -312,6 +317,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             Bitmap something = BitmapFactory.decodeResource(getResources(), R.drawable.star);
             c.drawBitmap(something, cityOnePoint.x - (something.getWidth()/2), cityOnePoint.y - (something.getHeight()/2), null);
             c.drawBitmap(something, cityTwoPoint.x - (something.getWidth()/2), cityTwoPoint.y - (something.getHeight()/2), null);
+
+            /*if(imageView.getDrawable() != null){
+                ((BitmapDrawable)imageView.getDrawable()).getBitmap().recycle();
+            }*/
+
+            /*((BitmapDrawable)imageView.getDrawable()).getBitmap()!= null ;
+
+            if (mBitmap != null && !mBitmap.isRecycled()) {
+                mBitmap.recycle();
+                mBitmap = null;
+            }*/
 
             imageView.setImageBitmap(bmp);
         }
@@ -410,65 +426,107 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         });
 
         deckButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                presenter.drawTrainCard();
-//                Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                        Toast.LENGTH_SHORT).show();
+            @Override
+            public void onClick(View view) {
+                GameState state = ClientModel.getInstance().getGameState();
 
+                if(state instanceof StartTurnState){
+                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState) {  //Check not wild.
+                        presenter.drawTrainCard();
+                        Toast.makeText(getApplicationContext(), "Card added to hand!", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
         destDeckButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.drawDestinationCard();
-//                Toast.makeText(getApplicationContext(), "Dest Card added to hand!",
-//                        Toast.LENGTH_SHORT).show();
+                GameState state = ClientModel.getInstance().getGameState();
 
+                if(state instanceof StartTurnState){
+                    presenter.drawDestinationCard();
+                    Toast.makeText(getApplicationContext(), "Dest Card added to hand!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         card1Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.pickTrainCard(0);
-//                Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                        Toast.LENGTH_SHORT).show();
-               // setImageButton(card1Button, card.getType());
+                GameState state = ClientModel.getInstance().getGameState();
+
+                if(state instanceof StartTurnState){
+                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState){  //Check not wild.
+                        presenter.pickTrainCard(0);
+                        Toast.makeText(getApplicationContext(), "Card added to hand!",
+                                Toast.LENGTH_SHORT).show();
+                        // setImageButton(card1Button, card.getType());
+                        //switchStateByTrainPicked(state);
+                    }
+                }
             }
         });
 
         card2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.pickTrainCard(1);
-//                Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                        Toast.LENGTH_SHORT).show();
-               // setImageButton(card2Button, card.getType());
+                GameState state = ClientModel.getInstance().getGameState();
+
+                if(state instanceof StartTurnState){
+                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState){  //Check not wild.
+                        presenter.pickTrainCard(1);
+                        Toast.makeText(getApplicationContext(), "Card added to hand!",
+                                Toast.LENGTH_SHORT).show();
+                        // setImageButton(card2Button, card.getType());
+                        //switchStateByTrainPicked(state);
+                    }
+                }
             }
         });
 
         card3Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.pickTrainCard(2);
-//                Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                        Toast.LENGTH_SHORT).show();
-              //  setImageButton(card3Button, card.getType());
+                GameState state = ClientModel.getInstance().getGameState();
+
+                if(state instanceof StartTurnState){
+                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState){  //Check not wild.
+                        presenter.pickTrainCard(2);
+                        Toast.makeText(getApplicationContext(), "Card added to hand!",
+                                Toast.LENGTH_SHORT).show();
+                        // setImageButton(card3Button, card.getType());
+                        //switchStateByTrainPicked(state);
+                    }
+                }
             }
         });
 
         card4Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.pickTrainCard(3);
-//                Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                        Toast.LENGTH_SHORT).show();
-              //  setImageButton(card4Button, card.getType());
+                GameState state = ClientModel.getInstance().getGameState();
+
+                if(state instanceof StartTurnState){
+                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState){  //Check not wild.
+                        presenter.pickTrainCard(3);
+                        Toast.makeText(getApplicationContext(), "Card added to hand!",
+                                Toast.LENGTH_SHORT).show();
+                        // setImageButton(card4Button, card.getType());
+                        //switchStateByTrainPicked(state);
+                    }
+                }
             }
         });
 
         card5Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.pickTrainCard(4);
-//                Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                        Toast.LENGTH_SHORT).show();
-              //  setImageButton(card5Button, card.getType());
+                GameState state = ClientModel.getInstance().getGameState();
+
+                if(state instanceof StartTurnState){
+                    if(state instanceof OneDrawnCardState || state instanceof OneDrawnOnePickedCardState || state instanceof OnePickedCardState){  //Check not wild.
+                        presenter.pickTrainCard(4);
+                        Toast.makeText(getApplicationContext(), "Card added to hand!",
+                                Toast.LENGTH_SHORT).show();
+                        // setImageButton(card5Button, card.getType());
+                        //switchStateByTrainPicked(state);
+                    }
+                }
             }
         });
 
@@ -498,11 +556,15 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         routeInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentlySelectedRoute != null) {
+                GameState state = ClientModel.getInstance().getGameState();
+
+                if(state instanceof StartTurnState){
+                    if (currentlySelectedRoute != null) {
 //                    drawRouteLine(currentlySelectedRoute.getCity1(), currentlySelectedRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
-                    presenter.claimRoute(currentlySelectedRoute.getId());
-                    routeInfo.setVisibility(View.INVISIBLE);
-                    twinRouteInfo.setVisibility(View.INVISIBLE);
+                        presenter.claimRoute(currentlySelectedRoute.getId());
+                        routeInfo.setVisibility(View.INVISIBLE);
+                        twinRouteInfo.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
@@ -510,12 +572,16 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         twinRouteInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
-                if (twinRoute.getOwner() == null) {
+                GameState state = ClientModel.getInstance().getGameState();
+
+                if(state instanceof StartTurnState){
+                    Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                    if (twinRoute.getOwner() == null) {
 //                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
-                    presenter.claimRoute(currentlySelectedRoute.getId());
-                    routeInfo.setVisibility(View.INVISIBLE);
-                    twinRouteInfo.setVisibility(View.INVISIBLE);
+                        presenter.claimRoute(currentlySelectedRoute.getId());
+                        routeInfo.setVisibility(View.INVISIBLE);
+                        twinRouteInfo.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
@@ -526,6 +592,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
                 presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
                 destinationDialog.dismiss();
+
             }
         });
 
@@ -574,6 +641,35 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 }
 
                 checkNumSelectedDestCards();
+            }
+        });
+
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String s) {
+                if(s.equals("tab_test1")){
+
+                }
+
+                if(s.equals("tab_test2")){
+
+                }
+
+                if(s.equals("tab_test3")){
+
+                }
+
+                if(s.equals("tab_test4")){
+
+                }
+
+                if(s.equals("tab_test5")){
+
+                }
+
+                if(s.equals("tab_test6")){
+
+                }
             }
         });
     }
@@ -754,8 +850,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         float x = ((xPicWidth * xInput)/ORIGINAL_PIC_WIDTH) + (extraSpace/2);
         return new PointF(x, y);
     }
-
-
 
     public void setImageButton(ImageButton button, TrainType id) {
         if(id == null) {
@@ -1032,6 +1126,27 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //                Toast.makeText(TicketToRideActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
 //
 
+    private void switchStateByTrainPicked(GameState state){
+        if(state instanceof StartTurnState){
+            return;
+        }
+
+        if(state instanceof OneDrawnCardState){
+
+            return;
+        }
+
+        if(state instanceof OnePickedCardState){
+
+            return;
+        }
+
+        if(state instanceof OneDrawnOnePickedCardState){
+
+            return;
+        }
+    }
+
     @Override
     public void updateTrainCards(List<TrainCard> cards) {
         setCardCountsZero();
@@ -1087,6 +1202,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updateChats(List<Chat> chats) {
         mChatRecyclerAdapter.updateListData(chats);
+        //tab6.setIndicator("CHAT",getResources().getDrawable(R.drawable.chat_notice));
     }
 
     @Override
