@@ -333,8 +333,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
     }
 
-    private Map<Player, Integer> getLongestRoutePlayer() {
-        Map<Player, Integer> longestRoutePlayer = presenter.getLongestPlayer();
+    private Map<IPlayer, Integer> getLongestRoutePlayer() {
+        Map<IPlayer, Integer> longestRoutePlayer = presenter.getLongestPlayer();
         return longestRoutePlayer;
     }
 
@@ -1267,14 +1267,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     @Override
-    public void updateLongestPath(Map<Player, Integer> longestRoute) {
+    public void updateLongestPath(Map<IPlayer, Integer> longestRoute) {
         String name = "No one";
         String message = " has the longest route of ";
         boolean firstIter = true;
         String routeLength = "";
         if (longestRoute != null) {
-            for (Map.Entry<Player, Integer> entry : longestRoute.entrySet()) {
-                Player key = entry.getKey();
+            for (Map.Entry<IPlayer, Integer> entry : longestRoute.entrySet()) {
+                IPlayer key = entry.getKey();
                 int value = entry.getValue();
                 if (firstIter) {
                     name = key.getName();
