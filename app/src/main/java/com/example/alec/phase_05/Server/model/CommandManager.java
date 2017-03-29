@@ -55,7 +55,7 @@ public class CommandManager {
         ICommand command;
         if (commandIndex == -1) {
             command = new ServerGameStartedCommand(GameStateFactory.gameToGameState(game));
-            setCommandIndex(playerName, 0);
+            setCommandIndex(playerName, commands.size());
         } else {
             if(commandIndex == commands.size()) {
                 command = null;
