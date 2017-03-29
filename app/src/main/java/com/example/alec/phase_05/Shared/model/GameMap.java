@@ -73,7 +73,7 @@ public class GameMap {
         ArrayList<Player> playerList = new ArrayList<Player>();
         Map<Player, Integer> longestPlayerMap = new HashMap<Player, Integer>();
         Map<Player, ArrayList<Route>> routesToPlayersMap = new HashMap<Player, ArrayList<Route>>();
-        for(int i = 1; i <= 100; i++ ) {
+        for(int i = 1; i <= 100; i++ ) {//Maybe this should be set to number of Routes not magic number 100 or routes.size() or something
             Route tempRoute = getRouteByID(i);
             boolean inPList = isInPlayerList(playerList, tempRoute);
             Player newPlayer = (Player) tempRoute.getOwner();
@@ -116,9 +116,6 @@ public class GameMap {
                     }
                 }
             }
-
-
-
         }
         return longestPlayerMap;
     }
@@ -302,6 +299,10 @@ public class GameMap {
             if(firstCity == city2 || secondCity == city2){
                 return true;
             }
+            //The cities could be flipped so maybe the if should look like this
+            //if((firstCity == city2 && secondCity== city1) || (secondCity == city2 && firstCity==city1)){
+            //    return true;
+            //}
 
             if(markedCities.get(firstCity) != true){
                 markedCities.put(firstCity, true);
