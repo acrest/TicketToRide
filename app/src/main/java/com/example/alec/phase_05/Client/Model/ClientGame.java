@@ -152,31 +152,34 @@ public class ClientGame extends Game implements IClientGame {
     //The player passed to this function is the player whose turn is ending.
     @Override
     public void endTurn() {
-        if(currentPlayerTurn.equals(lastPlayerTurn)) {
-            gameFinished = true;
-            return;
-        }
-        if (currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName()) && lastPlayerTurn == null) {
-            if(getPlayerByName(currentPlayerTurn).getTrainCount() <= 2) {
-                lastPlayerTurn = currentPlayerTurn;
-            }
-        }
+//        if(currentPlayerTurn.equals(lastPlayerTurn)) {
+//            gameFinished = true;
+//            return;
+//        }
+//        if (currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName()) && lastPlayerTurn == null) {
+//            if(getPlayerByName(currentPlayerTurn).getTrainCount() <= 2) {
+//                lastPlayerTurn = currentPlayerTurn;
+//            }
+//        }
         int index = -1;
-        for (int i = 0; i < getNumberPlayers(); i++) {
+        for (int i = 0; i < getMaxPlayers(); i++) {
             IPlayer p = getPlayer(i);
             if (p != null && p.getName().equals(currentPlayerTurn)) {
                 index = i;
                 break;
             }
         }
-        if (index == -1) return;
-        for (int i = index + 1; i != index; i = (i + 1) % getNumberPlayers()) {
+        if (index == -1) {
+            throw new IllegalStateException("Index is -1 in end game");
+        }
+        for (int i = (index + 1) % getMaxPlayers(); i != index; i = (i + 1) % getMaxPlayers()) {
             IPlayer p = getPlayer(i);
             if (p != null) {
                 setCurrentPlayerTurn(p.getName());
-                break;
+                return;
             }
         }
+        throw new IllegalStateException("end of end game");
     }
 
     @Override
