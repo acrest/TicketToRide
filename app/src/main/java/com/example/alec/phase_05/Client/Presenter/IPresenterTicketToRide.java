@@ -3,6 +3,7 @@ package com.example.alec.phase_05.Client.Presenter;
 import com.example.alec.phase_05.Client.Model.PlayerStat;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
+import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -36,7 +37,7 @@ public interface IPresenterTicketToRide extends IPresenter {
 
     void sendChat(Chat chat);
 
-    Map<Player, Integer> getLongestPlayer();
+    Map<IPlayer, Integer> getLongestPlayer();
 
     String longestPath();
 }

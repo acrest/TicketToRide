@@ -13,6 +13,7 @@ import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
@@ -118,7 +119,7 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
     }
 
     @Override
-    public void updateLongestPath(Map<Player, Integer> longestRoute) {
+    public void updateLongestPath(Map<IPlayer, Integer> longestRoute) {
 
     }
 }

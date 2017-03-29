@@ -71,7 +71,7 @@ public class ClientModel extends Observable {
     private IClientGame currentGame;
     private String currentPlayerName;
     private boolean isHost;
-    private Map<Player, Integer> longestPath;
+    private Map<IPlayer, Integer> longestPath;
     private boolean firstCardDraw;
 
     public ClientModel() {
@@ -515,7 +515,7 @@ public class ClientModel extends Observable {
     }
 
 
-    public Map<Player, Integer> getLongestRoute() {
+    public Map<IPlayer, Integer> getLongestRoute() {
         return longestPath;
     }
 

@@ -165,13 +165,13 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     }
 
     @Override
-    public Map<Player, Integer> getLongestPlayer() {
+    public Map<IPlayer, Integer> getLongestPlayer() {
         return model.getLongestRoute();
     }
 
     @Override
     public String longestPath() {
-        Map<Player, Integer> longestRouteInfo = model.getLongestRoute();
+        Map<IPlayer, Integer> longestRouteInfo = model.getLongestRoute();
         String playerName = "";
         int length = 0;
 
@@ -179,8 +179,8 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             System.out.println("PRESENTER no info");
             playerName = "No one ";
         } else {
-            Map.Entry<Player, Integer> entry = longestRouteInfo.entrySet().iterator().next();
-            Player key = entry.getKey();
+            Map.Entry<IPlayer, Integer> entry = longestRouteInfo.entrySet().iterator().next();
+            IPlayer key = entry.getKey();
             length = entry.getValue();
             playerName = key.getName();
             System.out.println(playerName);
