@@ -53,6 +53,6 @@ public class EndTurnState implements GameState {
 
     @Override
     public String toString() {
-        return ClientModel.getInstance().getGame().getCurrentPlayerTurn();
+        return ClientModel.getInstance().getGame().getCurrentPlayerTurn() + "'s Turn";
     }
 }

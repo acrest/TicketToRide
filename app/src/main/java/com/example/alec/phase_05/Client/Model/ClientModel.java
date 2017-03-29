@@ -153,6 +153,7 @@ public class ClientModel extends Observable {
         IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null || !(player instanceof OtherPlayer)) return;
         OtherPlayer otherPlayer = (OtherPlayer) player;
+        System.out.println("addTrainCard with player: " + player.getName());
         otherPlayer.setTrainCardCount(otherPlayer.getTrainCardCount() + 1);
         notifyPropertyChanges(PLAYER_TRAIN_CARDS);
     }
@@ -160,6 +161,7 @@ public class ClientModel extends Observable {
     public void addTrainCard(TrainCard card) {
         IPlayer currentPlayer = getCurrentPlayer();
         if (currentPlayer == null || !(currentPlayer instanceof Player)) return;
+        System.out.println("addTrainCard with currentPlayer: " + currentPlayer.getName());
         ((Player) currentPlayer).addTrainCard(card);
         notifyPropertyChanges(PLAYER_TRAIN_CARDS);
     }
@@ -207,6 +209,7 @@ public class ClientModel extends Observable {
         IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null || !(player instanceof OtherPlayer)) return;
         OtherPlayer otherPlayer = (OtherPlayer) player;
+        System.out.println("addDestinationCard with player: " + player.getName());
         otherPlayer.setDestinationCardCount(otherPlayer.getDestinationCardCount() + 1);
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
@@ -214,6 +217,7 @@ public class ClientModel extends Observable {
     public void addDestinationCard(DestinationCard card) {
         IPlayer currentPlayer = getCurrentPlayer();
         if (currentPlayer == null || !(currentPlayer instanceof Player)) return;
+        System.out.println("addDestinationCard with currentPlayer: " + currentPlayer.getName());
         ((Player) currentPlayer).addDestinationCard(card);
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
     }
