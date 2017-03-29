@@ -424,9 +424,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View view) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState || state instanceof OneDrawnCardState){
+                if(state instanceof StartTurnState || state instanceof OneDrawnCardState || state instanceof OnePickedCardState){
                     presenter.drawTrainCard();
-//                    Toast.makeText(getApplicationContext(), "Card added to hand!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -437,7 +436,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
                 if(state instanceof StartTurnState){
                     presenter.drawDestinationCard();
-//                    Toast.makeText(getApplicationContext(), "Dest Card added to hand!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -446,12 +444,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState || state instanceof OnePickedCardState){
+                if(state instanceof StartTurnState || state instanceof OnePickedCardState || state instanceof OneDrawnCardState){
                     presenter.pickTrainCard(0);
-//                    Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                            Toast.LENGTH_SHORT).show();
-                    // setImageButton(card1Button, card.getType());
-                    //switchStateByTrainPicked(state);
                 }
             }
         });
@@ -460,12 +454,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState || state instanceof OnePickedCardState){
+                if(state instanceof StartTurnState || state instanceof OnePickedCardState || state instanceof OneDrawnCardState){
                     presenter.pickTrainCard(1);
-//                    Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                            Toast.LENGTH_SHORT).show();
-                    // setImageButton(card1Button, card.getType());
-                    //switchStateByTrainPicked(state);
                 }
             }
         });
@@ -474,12 +464,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState || state instanceof OnePickedCardState){
+                if(state instanceof StartTurnState || state instanceof OnePickedCardState || state instanceof OneDrawnCardState){
                     presenter.pickTrainCard(2);
-//                    Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                            Toast.LENGTH_SHORT).show();
-                    // setImageButton(card1Button, card.getType());
-                    //switchStateByTrainPicked(state);
                 }
             }
         });
@@ -488,12 +474,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState || state instanceof OnePickedCardState){
+                if(state instanceof StartTurnState || state instanceof OnePickedCardState || state instanceof OneDrawnCardState){
                     presenter.pickTrainCard(3);
-//                    Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                            Toast.LENGTH_SHORT).show();
-                    // setImageButton(card1Button, card.getType());
-                    //switchStateByTrainPicked(state);
                 }
             }
         });
@@ -502,12 +484,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState || state instanceof OnePickedCardState){
+                if(state instanceof StartTurnState || state instanceof OnePickedCardState || state instanceof OneDrawnCardState){
                     presenter.pickTrainCard(4);
-//                    Toast.makeText(getApplicationContext(), "Card added to hand!",
-//                            Toast.LENGTH_SHORT).show();
-                    // setImageButton(card1Button, card.getType());
-                    //switchStateByTrainPicked(state);
                 }
             }
         });
@@ -572,7 +550,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         dialogDestinationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(TicketToRideActivity.this, "Bilbo Baggins!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TicketToRideActivity.this, "Destination card(s) added to hand", Toast.LENGTH_SHORT).show();
                 presenter.chooseDestinationCards(getChosenDestinationCards(), getNotChosenDestinationCards());
                 firstCard.setBackgroundColor(Color.TRANSPARENT);
                 secondCard.setBackgroundColor(Color.TRANSPARENT);
@@ -1631,7 +1609,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         @Override
         public void onBindViewHolder(StatHolder holder, int position) {
             PlayerStat stat = listData.get(position);
-
             holder.name.setText(stat.getPlayerName());
             holder.name.setTextColor(getColorFromName(stat.getColor()));
             holder.points.setText(Integer.toString(stat.getPoints()));
@@ -1776,7 +1753,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             count++;
         }
 
-        System.out.println("the number of destinationCards " + destinationChoiceCount);
         if(count >= destinationChoiceCount){
             dialogDestinationButton.setEnabled(true);
         }
@@ -1786,31 +1762,3 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 }
 
-/*
-        imageView.setOnTouchListener(new ImageView.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                convertToImageCoord(imageView.getWidth(), imageView.getHeight(),
-                        getResources().getDrawable(R.drawable.ticketmap).getMinimumWidth(),
-                        getResources().getDrawable(R.drawable.ticketmap).getMinimumHeight(),
-                        event.getX(), event.getY());
-                return true;
-            }
-        });
-        final Button drawRoute  = (Button)findViewById(R.id.placeRoute);
-        drawRoute.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                presenter.startDemo();
-//                Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
-//                Canvas c = new Canvas(bmp);
-//                imageView.draw(c);
-//
-//                Paint p = new Paint();
-//                p.setStrokeWidth(8);
-//                p.setColor(Color.WHITE);
-//                p.setAlpha(75);
-//                c.drawLine(88, 0, 188, 100, p);
-//                imageView.setImageBitmap(bmp);
-            }
-        });
-*/
