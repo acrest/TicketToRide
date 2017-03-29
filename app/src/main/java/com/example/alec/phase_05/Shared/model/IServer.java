@@ -50,5 +50,7 @@ public interface IServer {
 
     boolean sendChat(Chat chat);
 
+    boolean setServerTrainCount(int count);
+
     Result executeCommand(ICommand command);
 }

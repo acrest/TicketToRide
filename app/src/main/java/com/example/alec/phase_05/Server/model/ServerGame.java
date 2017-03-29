@@ -7,6 +7,7 @@ import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IChatManager;
+import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
@@ -77,5 +78,17 @@ public class ServerGame extends Game implements IServerGame {
     @Override
     public void addDestinationCardToBottom(DestinationCard card) {
         ((IServerBank) getBank()).addDestinationCardToBottom(card);
+    }
+
+    @Override
+    public void setPlayer(int position, IPlayer player) {
+        player.setTrainCount(ServerModel.getInitialTrainCount());
+        super.setPlayer(position, player);
+    }
+
+    @Override
+    public int addPlayerAtNextPosition(IPlayer player) {
+        player.setTrainCount(ServerModel.getInitialTrainCount());
+        return super.addPlayerAtNextPosition(player);
     }
 }

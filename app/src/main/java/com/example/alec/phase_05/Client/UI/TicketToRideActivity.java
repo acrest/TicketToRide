@@ -1309,7 +1309,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         secondCard.setText(cardChoices.get(1).toString());
         thirdCard.setText(cardChoices.get(2).toString());
         if (!firstTurn){
-            destinationPrompt.setText("CHOOSE AT LEAST 1 DESTINATION CARDS");
+//            destinationPrompt.setText("CHOOSE AT LEAST 1 DESTINATION CARDS");
         }
 
         destinationDialog.setCanceledOnTouchOutside(false);

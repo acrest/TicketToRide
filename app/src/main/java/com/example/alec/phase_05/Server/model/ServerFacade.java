@@ -342,6 +342,12 @@ public class ServerFacade implements IServer {
         return true;
     }
 
+    @Override
+    public boolean setServerTrainCount(int count) {
+        ServerModel.setInitialTrainCount(count);
+        return true;
+    }
+
     /**
      * returns an unwanted destination card to the deck
      *

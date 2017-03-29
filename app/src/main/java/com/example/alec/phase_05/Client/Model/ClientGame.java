@@ -96,6 +96,16 @@ public class ClientGame extends Game implements IClientGame {
     }
 
     @Override
+    public void setNumberOfTrainCards(int num) {
+        ((IClientBank) getBank()).setNumberOfTrainCards(num);
+    }
+
+    @Override
+    public void setNumberOfDestinationCards(int num) {
+        ((IClientBank) getBank()).setNumberOfDestinationCards(num);
+    }
+
+    @Override
     public void setVisibleCard(int index, TrainCard card) {
         ((IClientBank) getBank()).setVisibleCard(index, card);
     }

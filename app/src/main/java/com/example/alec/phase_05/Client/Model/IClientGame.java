@@ -19,6 +19,10 @@ public interface IClientGame extends IGame {
 
     void decNumberOfTrainCards();
 
+    void setNumberOfTrainCards(int num);
+
+    void setNumberOfDestinationCards(int num);
+
     void setVisibleCard(int index, TrainCard card);
 
     GameMap getMap();

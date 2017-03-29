@@ -21,6 +21,7 @@ import com.example.alec.phase_05.Server.command.ServerReturnedDestinationCard;
 import com.example.alec.phase_05.Server.command.ServerSendChatCommand;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.model.IPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,20 +117,21 @@ public class CommandManager {
 
     private ICommand createCorrespondingCommand(GameCommand command) {
         if (command instanceof ServerClaimRouteCommand) {
-            return new ServerClaimedRouteCommand(command.getPlayerName(), ((ServerClaimRouteCommand) command).getRouteId());
+            IPlayer player = game.getPlayerByName(command.getPlayerName());
+            return new ServerClaimedRouteCommand(command.getPlayerName(), ((ServerClaimRouteCommand) command).getRouteId(), game.getNumberOfTrainCards(), player.getTrainCardCount(), player.getTrainCount());
         } else if (command instanceof ServerDiscardTrainCardCommand) {
             return null; //not sure if we are going to use this command
         } else if (command instanceof ServerDrawDestinationCardCommand) {
-            return new ServerDrawnDestinationCardCommand(command.getPlayerName());
+            return new ServerDrawnDestinationCardCommand(command.getPlayerName(), game.getNumberOfDestinationCards());
         } else if (command instanceof ServerDrawTrainCardCommand) {
-            return new ServerDrawnTrainCardCommand(command.getPlayerName());
+            return new ServerDrawnTrainCardCommand(command.getPlayerName(), game.getNumberOfTrainCards());
         } else if (command instanceof ServerFinishTurnCommand) {
             return new ServerFinishedTurnCommand(command.getPlayerName());
         } else if (command instanceof ServerPickTrainCardCommand) {
             int cardIndex = ((ServerPickTrainCardCommand) command).getCardIndex();
-            return new ServerPickedTrainCardCommand(command.getPlayerName(), cardIndex, game.getVisibleCard(cardIndex));
+            return new ServerPickedTrainCardCommand(command.getPlayerName(), cardIndex, game.getVisibleCard(cardIndex), game.getNumberOfTrainCards());
         } else if (command instanceof ServerReturnDestinationCardCommand) {
-            return new ServerReturnedDestinationCard(command.getPlayerName());
+            return new ServerReturnedDestinationCard(command.getPlayerName(), game.getNumberOfDestinationCards());
         } else if (command instanceof ServerSendChatCommand) {
             return new ServerChatSentCommand(((ServerSendChatCommand) command).getChat());
         } else if (command instanceof ServerFinishGameCommand) {

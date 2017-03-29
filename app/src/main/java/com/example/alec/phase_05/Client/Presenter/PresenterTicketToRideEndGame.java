@@ -1,9 +1,11 @@
 package com.example.alec.phase_05.Client.Presenter;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Observable;
 
 /**
@@ -47,7 +49,9 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 
     @Override
     public int getPoints(String playerName) {
-        return model.getPlayerPoints(playerName);
+        int points = model.getPlayerPoints(playerName);
+        GameMap map = model.getMap(); //TODO left off here (about to change xml to "additions" rather than "penalties"
+        return points;
     }
 
     @Override
@@ -57,7 +61,7 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 
     @Override
     public int getTotal(String playerName) {
-        return model.getPlayerPoints(playerName);
+        return getPoints(playerName) - getPenalties(playerName);
     }
 
     @Override
@@ -67,12 +71,41 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 
     @Override
     public String getWinner() {
-        return "Winner Name";
+        //TODO handle ties
+        Iterator<String> playerNames = getPlayerNames();
+        String maxPlayer = null;
+        int maxPoints = Integer.MIN_VALUE;
+        while(playerNames.hasNext()) {
+            String player = playerNames.next();
+            if(maxPlayer == null || getTotal(player) > maxPoints) {
+                maxPoints = getTotal(player);
+                maxPlayer = player;
+            }
+        }
+        if(maxPlayer == null) {
+            return "There is no winner";
+        }
+        return maxPlayer;
     }
 
     @Override
     public String getLongestRouteHolder() {
-        return "Longest Route Holder Name";
+        Map<IPlayer, Integer> longest = model.getLongestRoute();
+        IPlayer maxPlayer = null;
+        int maxLength = -1;
+        for(int i = 0; i < model.getGameMaxPlayers(); i++) {
+            IPlayer player = model.getPlayer(i);
+            if(player != null) {
+                if(maxPlayer == null || longest.get(player) > maxLength) {
+                    maxPlayer = player;
+                    maxLength = longest.get(player);
+                }
+            }
+        }
+        if(maxPlayer == null) {
+            throw new IllegalStateException("end game reached, but there is no longest route holder");
+        }
+        return maxPlayer.getName();
     }
 
     @Override

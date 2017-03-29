@@ -100,17 +100,17 @@ public class ClientFacade {
         }
     }
 
-    public void drawDestinationCard(String playerName) {
+    public void drawDestinationCard(String playerName, int remainingCards) {
         model.decNumOfDestinationCards();
         model.addDestinationCard(playerName);
     }
 
-    public void pickTrainCard(String playerName, int index, TrainCard nextCardInDeck) {
+    public void pickTrainCard(String playerName, int index, TrainCard nextCardInDeck, int remainingCards) {
         model.setVisibleCard(index, nextCardInDeck);
         model.addTrainCard(playerName);
     }
 
-    public void drawTrainCard(String playerName) {
+    public void drawTrainCard(String playerName, int remainingCards) {
         model.decNumOfTrainCards();
         model.addTrainCard(playerName);
     }
@@ -134,7 +134,7 @@ public class ClientFacade {
                 } else {
                     model.setPlayer(i, new OtherPlayer(player));
                 }
-                model.getPlayer(i).setTrainCount(Facade.getInstance().getTrainCount());
+//                model.getPlayer(i).setTrainCount(Facade.getInstance().getTrainCount());
             }
         }
         TrainCard[] visibleTrainCards = gameInfo.getVisibleTrainCards();
@@ -145,7 +145,7 @@ public class ClientFacade {
     }
 
     public void startGame() {
-        Facade.getInstance().drawTrainCard(); //TODO only got 3 train cards once
+        Facade.getInstance().drawTrainCard();
         Facade.getInstance().drawTrainCard();
         Facade.getInstance().drawTrainCard();
         Facade.getInstance().drawTrainCard();
@@ -164,8 +164,11 @@ public class ClientFacade {
         model.tryDisplayHand();
     }
 
-    public void claimRoute(String playerName, int routeId) {
+    public void claimRoute(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains) {
         model.setRouteOwner(playerName, routeId);
+        model.setNumberOfTrainCards(remainingTrainCards);
+        model.setPlayerTrainCardCount(playerName, playerRemainingTrainCards);
+        model.setTrainCount(playerRemainingTrains);
     }
 
 
@@ -178,7 +181,7 @@ public class ClientFacade {
         model.notifyFinishGame();
     }
 
-    public void returnDestinationCard(String playerName) {
+    public void returnDestinationCard(String playerName, int remainingCards) {
         model.removeDestinationCard(playerName);
         model.incNumOfDestinationCards();
     }

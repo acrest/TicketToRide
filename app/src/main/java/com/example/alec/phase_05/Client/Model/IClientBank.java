@@ -14,5 +14,9 @@ public interface IClientBank extends IBank {
 
     void decNumberOfTrainCards();
 
+    void setNumberOfTrainCards(int num);
+
+    void setNumberOfDestinationCards(int num);
+
     void setVisibleCard(int index, TrainCard card);
 }

@@ -10,12 +10,14 @@ public abstract class PickedTrainCardCommand extends BaseCommand {
     private String playerName;
     private int cardIndex;
     private TrainCard nextCard;
+    private int remainingCards;
 
-    public PickedTrainCardCommand(String playerName, int cardIndex, TrainCard nextCard) {
+    public PickedTrainCardCommand(String playerName, int cardIndex, TrainCard nextCard, int remainingCards) {
         super("PickedTrainCard");
         this.playerName = playerName;
         this.cardIndex = cardIndex;
         this.nextCard = nextCard;
+        this.remainingCards = remainingCards;
     }
 
     public String getPlayerName() {
@@ -28,5 +30,9 @@ public abstract class PickedTrainCardCommand extends BaseCommand {
 
     public TrainCard getNextCard() {
         return nextCard;
+    }
+
+    public int getRemainingCards() {
+        return remainingCards;
     }
 }

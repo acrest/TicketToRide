@@ -53,6 +53,7 @@ public class ClientModel extends Observable {
     public static String GAME_FINISHED_REQUEST = "game finished request";
     public static String GAME_STATE = "game state";
     public static String ROUTE = "route";
+    public static String BONUS_POINTS = "bonus points";
 
     public int longestRoad;
     public Player playerWithLongestRoute;
@@ -72,6 +73,7 @@ public class ClientModel extends Observable {
     private String currentPlayerName;
     private boolean isHost;
     private Map<IPlayer, Integer> longestPath;
+    private Map<String, Integer> bonusPoints;
     private boolean firstCardDraw;
 
     public ClientModel() {
@@ -166,6 +168,15 @@ public class ClientModel extends Observable {
         notifyPropertyChanges(PLAYER_TRAIN_CARDS);
     }
 
+    public void setPlayerTrainCardCount(String playerName, int count) {
+        if(currentGame == null) return;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null || !(player instanceof OtherPlayer)) return;
+        OtherPlayer otherPlayer = (OtherPlayer) player;
+        otherPlayer.setTrainCardCount(count);
+        notifyPropertyChanges(PLAYER_TRAIN_CARDS);
+    }
+
     public void setVisibleCard(int index, TrainCard card) {
         if (currentGame == null) return;
         currentGame.setVisibleCard(index, card);
@@ -202,6 +213,16 @@ public class ClientModel extends Observable {
         if (currentGame == null) return;
         currentGame.decNumberOfTrainCards();
         notifyPropertyChanges(NUM_TRAIN_CARDS);
+    }
+
+    public void setNumberOfTrainCards(int num) {
+        if (currentGame == null) return;
+        currentGame.setNumberOfTrainCards(num);
+    }
+
+    public void setNumberOfDestinationCards(int num) {
+        if (currentGame == null) return;
+        currentGame.setNumberOfDestinationCards(num);
     }
 
     public void addDestinationCard(String playerName) {
@@ -368,6 +389,20 @@ public class ClientModel extends Observable {
         OtherPlayer otherPlayer = (OtherPlayer) player;
         otherPlayer.setDestinationCardCount(otherPlayer.getDestinationCardCount() - 1);
         notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
+    }
+
+    //bonus points could be negative. it accounts for destination cards met and not met
+    public int getBonusPoints(String playerName) {
+        if(bonusPoints.containsKey(playerName)) {
+            return bonusPoints.get(playerName);
+        } else {
+            return 0;
+        }
+    }
+
+    public void setBonusPoints(String playerName, int bonusPoints) {
+        this.bonusPoints.put(playerName, bonusPoints);
+        notifyPropertyChanges(BONUS_POINTS);
     }
 
     public void endTurn(String playerName) {
