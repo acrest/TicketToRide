@@ -331,7 +331,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mPlayerStatsView = (RecyclerView) findViewById(R.id.player_stats);
         longest_route_player = (TextView) findViewById(R.id.longest_route_text);
         String longest_route = presenter.longestPath();
-
+        System.out.println("ACTIVITY LONGEST ROUTE IS " + longest_route);
 
         longest_route_player.setText(longest_route);
 
@@ -1151,6 +1151,31 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void handleWarning(StateWarning warning) {
         Toast.makeText(TicketToRideActivity.this, warning.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void updateLongestPath(Map<Player, Integer> longestRoute) {
+//        String name = "No one";
+//        String message = " has the longest route of ";
+//        boolean firstIter = true;
+//        String routeLength = "";
+//        if (longestRoute != null) {
+//            for (Map.Entry<Player, Integer> entry : longestRoute.entrySet()) {
+//                Player key = entry.getKey();
+//                int value = entry.getValue();
+//                if (firstIter) {
+//                    name = key.getName();
+//                    firstIter = false;
+//                } else {
+//                    name = name + ", " + key.getName();
+//                }
+//                routeLength = Integer.toString(value);
+//                System.out.println("Game map PLAYER: " + name + " " + routeLength);
+//            }
+//        }
+//        System.out.println("Activity " + name + " " + routeLength + "!@#$");
+//        System.out.println(presenter.longestPath() + "!!!!!");
+        longest_route_player.setText(presenter.longestPath());
     }
 
     private void displayCardChoiceDialog() {
