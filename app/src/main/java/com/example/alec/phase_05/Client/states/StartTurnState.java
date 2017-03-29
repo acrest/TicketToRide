@@ -84,7 +84,7 @@ public class StartTurnState implements GameState {
         Player currentPlayer = (Player) ClientModel.getInstance().getCurrentPlayer();
         Route route = ClientModel.getInstance().getMap().getRouteByID(routeId);
         System.out.println("STARTTURNSTATE  " + " " + currentPlayer.countCardsOfType(route.getType()));
-        System.out.println("CONTINUING " + route.getType());
+        System.out.println("CONTINUING " + route.getType() + " " + route.getId());
         List<TrainCard> arr = currentPlayer.getTrainCards();
         for (TrainCard tc : arr) {
             System.out.println(tc.getType());

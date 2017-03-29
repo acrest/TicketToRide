@@ -161,9 +161,9 @@ public final class GameComponentFactory {
         routes.put(4, new Route(cities.get("Seattle"), cities.get("Portland"), 1, null, ANY, 4, 3));
         routes.put(5, new Route(cities.get("Vancouver"), cities.get("Calgary"), 3, null, ANY, 5, -1));
         routes.put(6, new Route(cities.get("Seattle"), cities.get("Calgary"), 4, null, ANY, 6, -1));
-        routes.put(7, new Route(cities.get("Calgary"), cities.get("Winnipeg"), 6, null, PASSENGER, 7, -1));
+        routes.put(7, new Route(cities.get("Calgary"), cities.get("Winnipeg"), 6, null, REEFER, 7, -1));
         routes.put(8, new Route(cities.get("Calgary"), cities.get("Helena"), 4, null, ANY, 8, -1));
-        routes.put(9, new Route(cities.get("Seattle"), cities.get("Helena"), 6, null, REEFER, 9, -1));
+        routes.put(9, new Route(cities.get("Seattle"), cities.get("Helena"), 6, null, BOX, 9, -1));
         routes.put(10, new Route(cities.get("Portland"), cities.get("Salt Lake City"), 6, null, TANKER, 10, -1));
         routes.put(11, new Route(cities.get("Portland"), cities.get("San Francisco"), 5, null, CABOOSE, 11, 12));
         routes.put(12, new Route(cities.get("Portland"), cities.get("San Francisco"), 5, null, BOX, 12, 11));
@@ -182,7 +182,7 @@ public final class GameComponentFactory {
         routes.put(25, new Route(cities.get("Salt Lake City"), cities.get("Denver"), 3, null, REEFER, 25, 26));
         routes.put(26, new Route(cities.get("Salt Lake City"), cities.get("Denver"), 3, null, COAL, 26, 25));
         routes.put(27, new Route(cities.get("Salt Lake City"), cities.get("Helena"), 3, null, BOX, 27, -1));
-        routes.put(28, new Route(cities.get("Helena"), cities.get("Winnipeg"), 4, null, TANKER, 28, -1));
+        routes.put(28, new Route(cities.get("Helena"), cities.get("Winnipeg"), 4, null, PASSENGER, 28, -1));
         routes.put(29, new Route(cities.get("Helena"), cities.get("Duluth"), 6, null, FREIGHT, 29, -1));
         routes.put(30, new Route(cities.get("Helena"), cities.get("Omaha"), 5, null, COAL, 30, -1));
         routes.put(31, new Route(cities.get("Helena"), cities.get("Denver"), 4, null, CABOOSE, 31, -1));
