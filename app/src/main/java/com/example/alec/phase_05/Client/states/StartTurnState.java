@@ -14,6 +14,7 @@ import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -82,6 +83,12 @@ public class StartTurnState implements GameState {
         // send in those cards.
         Player currentPlayer = (Player) ClientModel.getInstance().getCurrentPlayer();
         Route route = ClientModel.getInstance().getMap().getRouteByID(routeId);
+        System.out.println("STARTTURNSTATE  " + " " + currentPlayer.countCardsOfType(route.getType()));
+        System.out.println("CONTINUING " + route.getType() + " " + route.getId());
+        List<TrainCard> arr = currentPlayer.getTrainCards();
+        for (TrainCard tc : arr) {
+            System.out.println(tc.getType());
+        }
         if (currentPlayer.countCardsOfType(route.getType()) < route.getLength()) {
             throw new StateWarning("You do not have enough of those cards in your hand to " +
                     "claim that route. Please draw a train card or destination card.");

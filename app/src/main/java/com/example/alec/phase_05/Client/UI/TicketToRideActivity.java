@@ -566,7 +566,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
                     if (twinRoute.getOwner() == null) {
 //                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
-                        presenter.claimRoute(currentlySelectedRoute.getId());
+                        //twin
+                        presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
                         routeInfo.setVisibility(View.INVISIBLE);
                         twinRouteInfo.setVisibility(View.INVISIBLE);
                     }
@@ -782,19 +783,23 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         button.setTextColor(Color.parseColor("#606060"));
 
         if(type == BOX){
-            button.setTextColor(Color.parseColor("#FF00FF"));
+            button.setTextColor(Color.YELLOW);
+
         }
         if(type == PASSENGER){
-            button.setTextColor(Color.WHITE);
+            button.setTextColor(Color.BLUE);
+
         }
         if(type == TANKER){
-            button.setTextColor(Color.BLUE);
+            button.setTextColor(Color.parseColor("#FF8000"));
         }
         if(type == REEFER){
-            button.setTextColor(Color.YELLOW);
+            button.setTextColor(Color.WHITE);
+
         }
         if(type == FREIGHT){
-            button.setTextColor(Color.parseColor("#FF8000"));
+            button.setTextColor(Color.parseColor("#FF00FF"));
+
         }
         if(type == HOPPER){
             button.setTextColor(Color.BLACK);
@@ -1263,26 +1268,26 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateLongestPath(Map<Player, Integer> longestRoute) {
-//        String name = "No one";
-//        String message = " has the longest route of ";
-//        boolean firstIter = true;
-//        String routeLength = "";
-//        if (longestRoute != null) {
-//            for (Map.Entry<Player, Integer> entry : longestRoute.entrySet()) {
-//                Player key = entry.getKey();
-//                int value = entry.getValue();
-//                if (firstIter) {
-//                    name = key.getName();
-//                    firstIter = false;
-//                } else {
-//                    name = name + ", " + key.getName();
-//                }
-//                routeLength = Integer.toString(value);
-//                System.out.println("Game map PLAYER: " + name + " " + routeLength);
-//            }
-//        }
-//        System.out.println("Activity " + name + " " + routeLength + "!@#$");
-//        System.out.println(presenter.longestPath() + "!!!!!");
+        String name = "No one";
+        String message = " has the longest route of ";
+        boolean firstIter = true;
+        String routeLength = "";
+        if (longestRoute != null) {
+            for (Map.Entry<Player, Integer> entry : longestRoute.entrySet()) {
+                Player key = entry.getKey();
+                int value = entry.getValue();
+                if (firstIter) {
+                    name = key.getName();
+                    firstIter = false;
+                } else {
+                    name = name + ", " + key.getName();
+                }
+                routeLength = Integer.toString(value);
+                System.out.println("Game map PLAYER: " + name + " " + routeLength);
+            }
+        }
+        System.out.println("Activity " + name + " " + routeLength + "!@#$");
+        System.out.println(presenter.longestPath() + "!!!!!");
         longest_route_player.setText(presenter.longestPath());
     }
 

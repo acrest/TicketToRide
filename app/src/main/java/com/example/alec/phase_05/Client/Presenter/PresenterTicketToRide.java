@@ -111,6 +111,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             @Override
             public void visitPlayer(IPlayer player) {
                 listener.updatePlayerTrainCount(player.getName(), player.getTrainCount());
+                listener.updateLongestPath(model.getLongestRoute());
             }
         });
         List<TrainCard> cards = new ArrayList<>();
