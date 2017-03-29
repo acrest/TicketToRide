@@ -169,7 +169,8 @@ public class ClientFacade {
 
 
 
-    public void finishTurn() {
+    public void finishTurn(String playerName) {
+        if(playerName.equals(model.getCurrentPlayerName())) return;
         model.endTurn();
     }
 
