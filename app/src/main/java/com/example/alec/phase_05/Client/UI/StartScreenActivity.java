@@ -100,16 +100,14 @@ public class StartScreenActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
+        
     }
 
     private void setIpAndTrains(){
         firstIpAddress.setText("10");
         secondIpAddress.setText("24");
-        thirdIpAddress.setText("66");
-        fourthIpAddress.setText("145");
+        thirdIpAddress.setText("67");
+        fourthIpAddress.setText("45");
     }
 
     private void setTrainCount(){
