@@ -389,11 +389,14 @@ public class ServerFacade implements IServer {
         Route route = game.getRouteByID(routeId);
         int count = route.getLength();
         Iterator<TrainCard> cards = player.getTrainCards().iterator();
+        int trainCount = player.getTrainCount();
         while(cards.hasNext() && count > 0) {
             if(cards.next().getType().equals(route.getType())) {
+                trainCount--;
                 count--;
             }
         }
+        player.setTrainCount(trainCount);
         if(count > 0) return false;
         count = route.getLength();
         cards = player.getTrainCards().iterator();
