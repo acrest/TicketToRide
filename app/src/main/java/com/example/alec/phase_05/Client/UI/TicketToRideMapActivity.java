@@ -13,10 +13,12 @@ import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by clarkpathakis on 2/26/17.
@@ -112,6 +114,11 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
 
     @Override
     public void handleWarning(StateWarning warning) {
+
+    }
+
+    @Override
+    public void updateLongestPath(Map<Player, Integer> longestRoute) {
 
     }
 }
