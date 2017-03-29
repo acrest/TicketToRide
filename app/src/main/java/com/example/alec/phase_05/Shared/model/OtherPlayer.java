@@ -43,4 +43,18 @@ public class OtherPlayer extends AbstractPlayer {
     public void setDestinationCardCount(int destinationCardCount) {
         this.destinationCardCount = destinationCardCount;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof OtherPlayer) {
+            return getName().equals(((OtherPlayer) other).getName());
+        } else if (other instanceof String) {
+            return getName().equals(other);
+        } else if (other instanceof Player) {
+            return getName().equals(((Player) other).getName());
+        } else if (other instanceof IPlayer) {
+            return getName().equals(((IPlayer) other).getName());
+        }
+        return false;
+    }
 }

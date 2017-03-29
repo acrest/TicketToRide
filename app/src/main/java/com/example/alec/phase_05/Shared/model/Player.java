@@ -86,7 +86,11 @@ public class Player extends AbstractPlayer {
         if (other instanceof Player) {
             return getName().equals(((Player) other).getName());
         } else if (other instanceof String) {
-            return getName().equals((String) other);
+            return getName().equals(other);
+        } else if (other instanceof OtherPlayer) {
+            return getName().equals(((OtherPlayer) other).getName());
+        } else if (other instanceof IPlayer) {
+            return getName().equals(((IPlayer) other).getName());
         }
         return false;
     }
