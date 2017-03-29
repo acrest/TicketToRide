@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Shared.model;
 
+import com.example.alec.phase_05.Client.Model.ClientModel;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -85,7 +87,26 @@ public class Player extends AbstractPlayer {
             }
         }
 
+        if(cardCount != 0){
+            removeWilds(cardCount);
+        }
+
         return cardCount;
+    }
+
+    private void removeWilds(int count){
+        for(TrainCard card: trainCards){
+            if(card.getType().equals(TrainType.LOCOMOTIVE))
+            {
+                trainCards.remove(card);
+                ClientModel.getInstance().updateTrainCardDisplay();
+                count--;
+
+                if(count == 0){
+                    return;
+                }
+            }
+        }
     }
 
     public int countCardsOfType(TrainType type) {
