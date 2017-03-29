@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:text="CHOOSE WHICH CARD COLOR YOU WISH TO SPEND"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:id="@+id/wild_route_red"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"
+        android:background="#999900"/>
+
+    <TextView
+        android:id="@+id/wild_route_orange"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"/>
+
+    <TextView
+        android:id="@+id/wild_route_yellow"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"/>
+
+    <TextView
+        android:id="@+id/wild_route_green"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"/>
+
+    <TextView
+        android:id="@+id/wild_route_blue"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"/>
+
+    <TextView
+        android:id="@+id/wild_route_purple"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"/>
+
+    <TextView
+        android:id="@+id/wild_route_white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"/>
+
+    <TextView
+        android:id="@+id/wild_route_black"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"/>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:text=""/>
+        </LinearLayout>
+
+    </LinearLayout>-->
+
+</LinearLayout>

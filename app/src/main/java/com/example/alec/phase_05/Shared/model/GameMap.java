@@ -304,10 +304,6 @@ public class GameMap {
             if(firstCity == city2 || secondCity == city2){
                 return true;
             }
-            //The cities could be flipped so maybe the if should look like this
-            //if((firstCity == city2 && secondCity== city1) || (secondCity == city2 && firstCity==city1)){
-            //    return true;
-            //}
 
             if(markedCities.get(firstCity) != true){
                 markedCities.put(firstCity, true);
