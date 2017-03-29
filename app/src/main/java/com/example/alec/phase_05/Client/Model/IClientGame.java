@@ -39,7 +39,7 @@ public interface IClientGame extends IGame {
 //
 //    void claimRoute(int routeId);
 
-    void endTurn();
+    void endTurn(String playerName);
 
     boolean isGameFinished();
 

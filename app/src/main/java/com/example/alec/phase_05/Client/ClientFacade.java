@@ -170,7 +170,7 @@ public class ClientFacade {
 
 
     public void finishTurn(String playerName) {
-        model.endTurn();
+        model.endTurn(playerName);
     }
 
     public void finishGame() {
