@@ -119,6 +119,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         }
         listener.updateFaceupTrainCards(cards);
         listener.updateGameState(model.getGameState());
+        listener.updateLongestPath(model.getLongestRoute());
     }
 
     @Override
@@ -172,13 +173,16 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         Map<Player, Integer> longestRouteInfo = model.getLongestRoute();
         String playerName = "";
         int length = 0;
+
         if (longestRouteInfo == null) {
+            System.out.println("PRESENTER no info");
             playerName = "No one ";
         } else {
             Map.Entry<Player, Integer> entry = longestRouteInfo.entrySet().iterator().next();
             Player key = entry.getKey();
             length = entry.getValue();
             playerName = key.getName();
+            System.out.println(playerName);
 
             while (longestRouteInfo.entrySet().iterator().hasNext()) {
                 entry = longestRouteInfo.entrySet().iterator().next();
@@ -188,6 +192,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             }
         }
         playerName = playerName + " has the longest route of " + Integer.toString(length);
+        System.out.println("PRESENTER " + playerName);
         return playerName;
     }
 

@@ -514,8 +514,6 @@ public class ClientModel extends Observable {
         return longestPath;
     }
 
-    public void setLongestPath() {
-        longestPath = currentGame.getMap().findLongestRoute();
-    }
+    public void setLongestPath() { longestPath = currentGame.getMap().findLongestRoute(); }
 
 }

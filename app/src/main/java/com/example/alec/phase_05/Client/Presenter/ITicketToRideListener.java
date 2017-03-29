@@ -4,10 +4,12 @@ import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Alec on 2/24/17.
@@ -43,4 +45,6 @@ public interface ITicketToRideListener {
     void updateGameState(GameState state);
 
     void handleWarning(StateWarning warning);
+
+    void updateLongestPath(Map<Player, Integer> longestRoute);
 }
