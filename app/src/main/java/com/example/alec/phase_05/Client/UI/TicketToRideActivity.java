@@ -633,15 +633,35 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             if (pointOnLine(new Point((int)point1.x, (int)point1.y), new Point((int)point2.x, (int)point2.y), selectedPoint) == true){
                 currentlySelectedRoute = currentRoute;
 
-                if(currentlySelectedRoute.getOwner() == null)
+                if((currentlySelectedRoute.getOwner() == null))
                 {
-                    routeInfo.setVisibility(View.VISIBLE);
+                    if (ClientModel.getInstance().getNumberPlayers() <= 3)
+                    {
+                        if (currentlySelectedRoute.getTwinID() != -1 ){
+                            if (ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getOwner() == null){
+                                routeInfo.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        else
+                        {
+                            routeInfo.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    else
+                    {
+                        routeInfo.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 if (currentlySelectedRoute.getTwinID() != -1){
                     Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
                     if(twinRoute.getOwner() == null){
-                        twinRouteInfo.setVisibility(View.VISIBLE);
+                        if ((ClientModel.getInstance().getNumberPlayers() <= 3) && currentlySelectedRoute.getOwner() == null){
+                            twinRouteInfo.setVisibility(View.VISIBLE);
+                        }
+                        else if (ClientModel.getInstance().getNumberPlayers() > 3){
+                            twinRouteInfo.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     routeInfo.setText("  Claim " + currentlySelectedRoute.getCity1().getName() + " to " +
