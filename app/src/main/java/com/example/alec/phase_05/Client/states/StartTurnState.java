@@ -99,13 +99,14 @@ public class StartTurnState implements GameState {
             int length = route.getLength();
             for (TrainCard card : playersHand) {
 
-                if (card.getType().equals(route.getType())) {
+                if (card.getType().equals(route.getType()) || route.getType().equals(TrainType.ANY)) {
                     facade.discardTrainCard(card);
                     length--;
                     if (length == 0) {
                         break;
                     }
                 }
+
 
             }
             facade.claimRoute(routeId);

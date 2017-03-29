@@ -15,6 +15,7 @@ import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.PlayerCredentials;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 import java.util.Iterator;
 import java.util.List;
@@ -392,6 +393,10 @@ public class ServerFacade implements IServer {
         int trainCount = player.getTrainCount();
         while(cards.hasNext() && count > 0) {
             if(cards.next().getType().equals(route.getType())) {
+                trainCount--;
+                count--;
+            }
+            if (route.getType().equals(TrainType.ANY)) {
                 trainCount--;
                 count--;
             }
