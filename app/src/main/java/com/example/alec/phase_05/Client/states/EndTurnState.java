@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.states;
 
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientGame;
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameState;
@@ -52,6 +53,6 @@ public class EndTurnState implements GameState {
 
     @Override
     public String toString() {
-        return "Other Player's Turn";
+        return ClientModel.getInstance().getGame().getCurrentPlayerTurn();
     }
 }
