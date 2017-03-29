@@ -53,4 +53,12 @@ public class City {
         Point convertedPoint = new Point(point.getX(), point.getY());
         return convertedPoint;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof City) {
+            return name.equals(((City) obj).name);
+        }
+        return false;
+    }
 }

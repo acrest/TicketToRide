@@ -73,55 +73,6 @@ public class StartTurnState implements GameState {
         throw new StateWarning("You must draw some destination cards first.");
     }
 
-
-
-    public void removeCardsFromHand(Player player, List<TrainCard> cardsToRemove) {
-        List<TrainCard> cardList = player.getTrainCards();
-        TrainType trainType = cardList.get(0).getType();
-        int size = cardsToRemove.size();
-        for(int i = cardList.size(); i > 0; i--) {
-            TrainCard tempCard = cardList.get(i);
-            if (tempCard.getType().equals(trainType)) {
-                cardList.remove(i);
-                player.removeTrainCard(i);
-                size--;
-                // Add card back to the deck.
-                if (size == 0) {
-                    break;
-                }
-            }
-        }
-    }
-
-
-    public List<TrainCard> findCardsFromHand(Player player, int routeId) {
-        boolean isInHand = false;
-        List<TrainCard> cardList = player.getTrainCards();
-        Route route = state.getRouteByID(routeId);
-        TrainType routeType = route.getType();
-        int numberOfCardsNeeded = route.getLength();
-        List<TrainCard> cardsNeededforRoute = new ArrayList<>();
-        for (int i = 0; i < cardList.size(); i++) {
-            TrainCard tempCard = cardList.get(i);
-            if (tempCard.getType().equals(routeType)) {
-                cardsNeededforRoute.add(tempCard);
-            }
-
-            if (numberOfCardsNeeded == cardsNeededforRoute.size()) {
-                isInHand = true;
-                break;
-            }
-
-        }
-
-        if(isInHand) {
-            return cardsNeededforRoute;
-        }
-        List<TrainCard> emptyList = new ArrayList<>();
-        return emptyList;
-
-    }
-
     @Override
     public void claimRoute(int routeId) throws StateWarning {
         System.out.println("Claiming route.");
@@ -129,18 +80,15 @@ public class StartTurnState implements GameState {
         // get player hand and check that it has the needed cards
         // send in those cards.
         Player currentPlayer = (Player) ClientModel.getInstance().getCurrentPlayer();
-        List<TrainCard> cardsFromHand = findCardsFromHand(currentPlayer, routeId);
-        if (cardsFromHand.size() == 0) {
+        Route route = ClientModel.getInstance().getMap().getRouteByID(routeId);
+        if (currentPlayer.countCardsOfType(route.getType()) < route.getLength()) {
             throw new StateWarning("You do not have enough of those cards in your hand to " +
                     "claim that route. Please draw a train card or destination card.");
         } else {
-            //removeCardsFromHand(currentPlayer, cardsFromHand);
+            currentPlayer.removeCardsOfType(route.getType(), route.getLength());
             facade.claimRoute(routeId);
             state.setTurnState(new EndTurnState(state));
         }
-
-
-
     }
 
     @Override
