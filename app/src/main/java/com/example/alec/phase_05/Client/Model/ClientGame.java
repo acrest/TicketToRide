@@ -145,7 +145,7 @@ public class ClientGame extends Game implements IClientGame {
     public void setCurrentPlayerTurn(String currentPlayerTurn) {
         this.currentPlayerTurn = currentPlayerTurn;
         if(currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName())) {
-            turnState = new StartTurnState(this);
+            setTurnState(new StartTurnState(this));
         }
     }
 
