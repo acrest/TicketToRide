@@ -106,8 +106,8 @@ public class StartScreenActivity extends AppCompatActivity {
     private void setIpAndTrains(){
         firstIpAddress.setText("10");
         secondIpAddress.setText("24");
-        thirdIpAddress.setText("67");
-        fourthIpAddress.setText("45");
+        thirdIpAddress.setText("71");
+        fourthIpAddress.setText("100");
     }
 
     private void setTrainCount(){

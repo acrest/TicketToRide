@@ -26,4 +26,6 @@ public interface IServerGame extends IGame {
     DestinationCard drawDestinationCard(String playerName);
 
     GameMap getMap();
+
+    void addDestinationCardToBottom(DestinationCard card);
 }
