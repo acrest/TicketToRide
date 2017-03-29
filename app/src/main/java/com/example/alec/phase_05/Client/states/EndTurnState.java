@@ -49,4 +49,9 @@ public class EndTurnState implements GameState {
     public void endTurn() throws StateWarning {
         throw new StateWarning("Can't end turn when it's not your turn.");
     }
+
+    @Override
+    public String toString() {
+        return "Other Player's Turn";
+    }
 }

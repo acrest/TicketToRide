@@ -12,6 +12,8 @@ import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 import com.example.alec.phase_05.Shared.model.Chat;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Shared.model.GameState;
+import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
@@ -100,6 +102,16 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
 
     @Override
     public void onGameFinished() {
+
+    }
+
+    @Override
+    public void updateGameState(GameState state) {
+
+    }
+
+    @Override
+    public void handleWarning(StateWarning warning) {
 
     }
 }

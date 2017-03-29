@@ -56,4 +56,6 @@ public interface IClientGame extends IGame {
     void doEndTurn() throws StateWarning;
 
     void setTurnState(GameState state);
+
+    GameState getTurnState();
 }

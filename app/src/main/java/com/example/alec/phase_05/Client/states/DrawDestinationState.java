@@ -55,4 +55,9 @@ public class DrawDestinationState implements GameState {
         facade.finishTurn();
         state.setTurnState(new EndTurnState(state));
     }
+
+    @Override
+    public String toString() {
+        return "Drawn Destination Cards";
+    }
 }

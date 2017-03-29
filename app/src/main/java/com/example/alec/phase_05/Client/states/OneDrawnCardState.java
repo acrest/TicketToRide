@@ -28,6 +28,8 @@ public class OneDrawnCardState implements GameState {
     public void drawTrainCardFromDeck() throws StateWarning  {
         //draw a train card.
         System.out.println("Train card drawn from deck.");
+        facade.drawTrainCard();
+        facade.finishTurn();
         state.setTurnState(new EndTurnState(state));
     }
 
@@ -36,11 +38,15 @@ public class OneDrawnCardState implements GameState {
 // pick train card
         System.out.println("Train card picked from face up cards.");
         // check not rainbow card.
-        facade.pickTrainCard(cardIndex);
         TrainCard pickedCard = state.getVisibleCard(cardIndex);
+        if(pickedCard == null) {
+            throw new StateWarning("There is not card in that spot.");
+        }
         if (pickedCard.getType().equals(TrainType.LOCOMOTIVE)) {
             throw new StateWarning("Cannot draw a rainbow card if you already have picked a card.");
         } else {
+            facade.pickTrainCard(cardIndex);
+            facade.finishTurn();
             state.setTurnState(new EndTurnState(state));
         }
     }
@@ -63,5 +69,10 @@ public class OneDrawnCardState implements GameState {
     @Override
     public void endTurn() throws StateWarning {
         throw new StateWarning("Cannot finish turn yet. You must get another Train card.");
+    }
+
+    @Override
+    public String toString() {
+        return "One Card Drawn";
     }
 }

@@ -72,6 +72,12 @@ public class ClientGame extends Game implements IClientGame {
     @Override
     public void setTurnState(GameState state) {
         turnState = state;
+        ClientModel.getInstance().notifyGameStateChange();
+    }
+
+    @Override
+    public GameState getTurnState() {
+        return turnState;
     }
 
     @Override

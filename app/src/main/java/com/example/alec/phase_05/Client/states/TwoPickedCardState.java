@@ -53,4 +53,9 @@ public class TwoPickedCardState implements GameState {
         facade.finishTurn();
         state.setTurnState(new EndTurnState(state));
     }
+
+    @Override
+    public String toString() {
+        return "Two Cards Picked";
+    }
 }

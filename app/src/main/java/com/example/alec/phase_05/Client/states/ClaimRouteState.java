@@ -52,4 +52,9 @@ public class ClaimRouteState implements GameState {
 
         state.setTurnState((new EndTurnState(state)));
     }
+
+    @Override
+    public String toString() {
+        return "Claimed Route";
+    }
 }
