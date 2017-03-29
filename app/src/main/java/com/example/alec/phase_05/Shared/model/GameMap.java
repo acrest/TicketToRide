@@ -69,11 +69,10 @@ public class GameMap {
     }
 
     public Map<Player, Integer> findLongestRoute() {
-        int numberOfRoutes = 100;
         ArrayList<Player> playerList = new ArrayList<Player>();
         Map<Player, Integer> longestPlayerMap = new HashMap<Player, Integer>();
         Map<Player, ArrayList<Route>> routesToPlayersMap = new HashMap<Player, ArrayList<Route>>();
-        for(int i = 1; i <= numberOfRoutes; i++ ) {//Maybe this should be set to number of Routes not magic number 100 or routes.size() or something
+        for(int i = 1; i <= routes.size(); i++ ) {//Maybe this should be set to number of Routes not magic number 100 or routes.size() or something
             Route tempRoute = getRouteByID(i);
             if (tempRoute.getOwner() != null) {
                 boolean inPList = isInPlayerList(playerList, tempRoute);
