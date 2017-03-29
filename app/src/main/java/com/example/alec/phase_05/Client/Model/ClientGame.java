@@ -147,6 +147,7 @@ public class ClientGame extends Game implements IClientGame {
         if(currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName())) {
             setTurnState(new StartTurnState(this));
         }
+        ClientModel.getInstance().notifyGameStateChange();
     }
 
     //The player passed to this function is the player whose turn is ending.
