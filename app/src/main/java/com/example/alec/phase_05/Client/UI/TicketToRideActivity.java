@@ -274,7 +274,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         });
 
         presenter.updateAll();
-        dialogDesinationCards.show();
+//        dialogDesinationCards.show();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -494,7 +494,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             @Override
             public void onClick(View v) {
                 if (currentlySelectedRoute != null) {
-                    drawRouteLine(currentlySelectedRoute.getCity1(), currentlySelectedRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
+//                    drawRouteLine(currentlySelectedRoute.getCity1(), currentlySelectedRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
                     presenter.claimRoute(currentlySelectedRoute.getId());
                     routeInfo.setVisibility(View.INVISIBLE);
                     twinRouteInfo.setVisibility(View.INVISIBLE);
@@ -507,7 +507,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
                 if (twinRoute.getOwner() == null) {
-                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
+//                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
                     presenter.claimRoute(currentlySelectedRoute.getId());
                     routeInfo.setVisibility(View.INVISIBLE);
                     twinRouteInfo.setVisibility(View.INVISIBLE);

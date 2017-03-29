@@ -22,17 +22,7 @@ public class GameMap {
         this.cities = cities;
         this.routes = routes;
 
-        /*for(int i = 0; i < cities.size(); i++){
-            if(!cityToRoutes.containsKey(cities.get(i))){
-                cityToRoutes.put(cities.get(i), new ArrayList<Route>());
-            }
-        }
-
-        for(int i = 0; i < routes.size(); i++){
-            Route route = routes.get(i);
-            cityToRoutes.get(route.getCity1()).add(route);
-            cityToRoutes.get(route.getCity2()).add(route);
-        }*/
+        cityToRoutes = null;
     }
 
     public City getCityByName(String name){
@@ -265,7 +255,25 @@ public class GameMap {
         return visited;
     }
 
+    private void initCityToRoutes() {
+        cityToRoutes = new HashMap<>();
+
+        for(Map.Entry<String, City> entry : cities.entrySet()) {
+            cityToRoutes.put(entry.getValue(), new ArrayList<Route>());
+        }
+
+        for(int i = 1; i <= routes.size(); i++){
+            Route route = routes.get(i);
+            cityToRoutes.get(route.getCity1()).add(route);
+            cityToRoutes.get(route.getCity2()).add(route);
+        }
+    }
+
     public boolean checkIfDestinationComplete(DestinationCard destinationCard, String player){
+        if(cityToRoutes == null) {
+            initCityToRoutes();
+        }
+
         City city1 = destinationCard.getCity1();
         City city2 = destinationCard.getCity2();
         ArrayList<Route> rootRoutes = new ArrayList<>();
@@ -327,8 +335,8 @@ public class GameMap {
     private Map<City, Boolean> initializeCitiesToFalse(){
         Map<City, Boolean> map = new HashMap<>();
 
-        for(int i = 0; i < cities.size(); i++){
-            map.put(cities.get(i), false);
+        for(City city : cities.values()) {
+            map.put(city, false);
         }
 
         return map;

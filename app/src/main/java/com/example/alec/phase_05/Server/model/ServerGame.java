@@ -7,6 +7,7 @@ import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IChatManager;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 /**
@@ -43,17 +44,29 @@ public class ServerGame extends Game implements IServerGame {
 
     @Override
     public TrainCard drawTrainCard(String playerName) {
-        return ((IServerBank) getBank()).drawTrainCard();
+        Player player = (Player) getPlayerByName(playerName);
+        if(player == null) return null;
+        TrainCard card = ((IServerBank) getBank()).drawTrainCard();
+        player.addTrainCard(card);
+        return card;
     }
 
     @Override
     public TrainCard pickTrainCard(String playerName, int index) {
-        return ((IServerBank) getBank()).drawVisibleTrainCard(index);
+        Player player = (Player) getPlayerByName(playerName);
+        if(player == null) return null;
+        TrainCard card = ((IServerBank) getBank()).drawVisibleTrainCard(index);
+        player.addTrainCard(card);
+        return card;
     }
 
     @Override
     public DestinationCard drawDestinationCard(String playerName) {
-        return ((IServerBank) getBank()).drawDestinationCard();
+        Player player = (Player) getPlayerByName(playerName);
+        if(player == null) return null;
+        DestinationCard card = ((IServerBank) getBank()).drawDestinationCard();
+        player.addDestinationCard(card);
+        return card;
     }
 
     @Override

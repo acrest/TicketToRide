@@ -125,6 +125,7 @@ public class ClientModel extends Observable {
     }
 
     public int getGameMaxPlayers() {
+        if (currentGame == null) return 0;
         return currentGame.getMaxPlayers();
     }
 
@@ -442,7 +443,7 @@ public class ClientModel extends Observable {
             if (firstCardDraw) {
                 //there is a race condition, and this is here to avoid it
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                 }
                 notifyPropertyChanges(INIT_DISPLAY_HAND);
