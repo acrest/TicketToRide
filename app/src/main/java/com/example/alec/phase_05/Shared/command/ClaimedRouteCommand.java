@@ -10,14 +10,16 @@ public abstract class ClaimedRouteCommand extends BaseCommand {
     private int remainingTrainCards;
     private int playerRemainingTrainCards;
     private int playerRemainingTrains;
+    private int playerPoints;
 
-    public ClaimedRouteCommand(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains) {
+    public ClaimedRouteCommand(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains, int playerPoints) {
         super("ClaimedRoute");
         this.playerName = playerName;
         this.routeId = routeId;
         this.remainingTrainCards = remainingTrainCards;
         this.playerRemainingTrainCards = playerRemainingTrainCards;
         this.playerRemainingTrains = playerRemainingTrains;
+        this.playerPoints = playerPoints;
     }
 
     public String getPlayerName() {
@@ -38,5 +40,9 @@ public abstract class ClaimedRouteCommand extends BaseCommand {
 
     public int getPlayerRemainingTrains() {
         return playerRemainingTrains;
+    }
+
+    public int getPlayerPoints() {
+        return playerPoints;
     }
 }

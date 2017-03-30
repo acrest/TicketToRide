@@ -165,11 +165,12 @@ public class ClientFacade {
         model.tryDisplayHand();
     }
 
-    public void claimRoute(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains) {
+    public void claimRoute(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains, int playerPoints) {
         model.setRouteOwner(playerName, routeId);
         model.setNumberOfTrainCards(remainingTrainCards);
         model.setPlayerTrainCardCount(playerName, playerRemainingTrainCards);
-        model.setTrainCount(playerRemainingTrains);
+        model.setTrainCount(playerName, playerRemainingTrains);
+        model.setPlayerPoints(playerName, playerPoints);
     }
 
 
@@ -179,9 +180,9 @@ public class ClientFacade {
     }
 
     public void finishGame(Map<String, Integer> bonusPoints) {
-        for(Map.Entry<String, Integer> entry : bonusPoints.entrySet()) {
-            model.setBonusPoints(entry.getKey(), entry.getValue());
-        }
+//        for(Map.Entry<String, Integer> entry : bonusPoints.entrySet()) {
+//            model.setBonusPoints(entry.getKey(), entry.getValue());
+//        }
         model.notifyFinishGame();
     }
 

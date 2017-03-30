@@ -52,7 +52,8 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 
     @Override
     public int getAdditions(String playerName) {
-        return model.getBonusPoints(playerName);
+//        return model.getBonusPoints(playerName);
+        return 0;
     }
 
     @Override
@@ -86,22 +87,24 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 
     @Override
     public String getLongestRouteHolder() {
-        Map<IPlayer, Integer> longest = model.getLongestRoute();
-        IPlayer maxPlayer = null;
-        int maxLength = -1;
-        for (int i = 0; i < model.getGameMaxPlayers(); i++) {
-            IPlayer player = model.getPlayer(i);
-            if (player != null) {
-                if (maxPlayer == null || longest.get(player) > maxLength) {
-                    maxPlayer = player;
-                    maxLength = longest.get(player);
-                }
-            }
-        }
-        if (maxPlayer == null) {
-            throw new IllegalStateException("end game reached, but there is no longest route holder");
-        }
-        return maxPlayer.getName();
+//        Map<IPlayer, Integer> longest = model.getLongestRoute();
+//        IPlayer maxPlayer = null;
+//        int maxLength = -1;
+//        for (int i = 0; i < model.getGameMaxPlayers(); i++) {
+//            IPlayer player = model.getPlayer(i);
+//            if (player != null) {
+//                if (maxPlayer == null || longest.get(player) > maxLength) {
+//                    maxPlayer = player;
+//                    maxLength = longest.get(player);
+//                }
+//            }
+//        }
+//        if (maxPlayer == null) {
+//            throw new IllegalStateException("end game reached, but there is no longest route holder");
+//        }
+//        return maxPlayer.getName();
+
+        return getPlayerNames().next();
     }
 
     @Override
