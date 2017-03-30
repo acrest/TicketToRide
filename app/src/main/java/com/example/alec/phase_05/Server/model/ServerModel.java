@@ -14,6 +14,16 @@ public class ServerModel {
     //The ID of the next valid game to be assigned
     private static int nextValidGameID = 0;
 
+    private static int initialTrainCount;
+
+    public static void setInitialTrainCount(int count) {
+        initialTrainCount = count;
+    }
+
+    public static int getInitialTrainCount() {
+        return initialTrainCount;
+    }
+
     //Map of the current games running
     private Map<Integer,ServerGame> gamesMap;
     private Map<String,PlayerCredentials> playerMap;

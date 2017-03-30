@@ -13,7 +13,7 @@ public interface IPresenterTicketToRideEndGame extends IPresenter {
 
     int getPoints(String playerName);
 
-    int getPenalties(String playerName);
+    int getAdditions(String playerName);
 
     int getTotal(String playerName);
 

@@ -4,7 +4,7 @@ import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 
 import java.util.Iterator;
-import java.util.Observable;
+import java.util.Map;
 
 /**
  * Created by samuel on 3/22/17.
@@ -34,8 +34,8 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
             public String next() {
                 String player = model.getPlayer(index).getName();
                 int nextIndex = index + 1;
-                while(nextIndex <= model.getGameMaxPlayers()) {
-                    if(nextIndex == model.getGameMaxPlayers() || model.getPlayer(nextIndex) != null) {
+                while (nextIndex <= model.getGameMaxPlayers()) {
+                    if (nextIndex == model.getGameMaxPlayers() || model.getPlayer(nextIndex) != null) {
                         index = nextIndex;
                         break;
                     }
@@ -51,13 +51,13 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
     }
 
     @Override
-    public int getPenalties(String playerName) {
-        return 0;
+    public int getAdditions(String playerName) {
+        return model.getBonusPoints(playerName);
     }
 
     @Override
     public int getTotal(String playerName) {
-        return model.getPlayerPoints(playerName);
+        return getPoints(playerName) + getAdditions(playerName);
     }
 
     @Override
@@ -67,16 +67,51 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 
     @Override
     public String getWinner() {
-        return "Winner Name";
+        //TODO handle ties
+        Iterator<String> playerNames = getPlayerNames();
+        String maxPlayer = null;
+        int maxPoints = Integer.MIN_VALUE;
+        while (playerNames.hasNext()) {
+            String player = playerNames.next();
+            if (maxPlayer == null || getTotal(player) > maxPoints) {
+                maxPoints = getTotal(player);
+                maxPlayer = player;
+            }
+        }
+        if (maxPlayer == null) {
+            return "There is no winner";
+        }
+        return maxPlayer + " Has Won";
     }
 
     @Override
     public String getLongestRouteHolder() {
-        return "Longest Route Holder Name";
+        Map<IPlayer, Integer> longest = model.getLongestRoute();
+        IPlayer maxPlayer = null;
+        int maxLength = -1;
+        for (int i = 0; i < model.getGameMaxPlayers(); i++) {
+            IPlayer player = model.getPlayer(i);
+            if (player != null) {
+                if (maxPlayer == null || longest.get(player) > maxLength) {
+                    maxPlayer = player;
+                    maxLength = longest.get(player);
+                }
+            }
+        }
+        if (maxPlayer == null) {
+            throw new IllegalStateException("end game reached, but there is no longest route holder");
+        }
+        return maxPlayer.getName();
     }
 
     @Override
     public void update(UpdateIndicator updateIndicator) {
-
+        if(updateIndicator.needUpdate(ClientModel.BONUS_POINTS)) {
+            Iterator<String> players = getPlayerNames();
+            while(players.hasNext()) {
+                String player = players.next();
+                listener.updatePlayer(player);
+            }
+        }
     }
 }

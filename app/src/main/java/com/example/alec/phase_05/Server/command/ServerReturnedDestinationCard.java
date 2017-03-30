@@ -8,8 +8,8 @@ import com.example.alec.phase_05.Shared.command.ReturnedDestinationCardCommand;
  */
 
 public class ServerReturnedDestinationCard extends ReturnedDestinationCardCommand {
-    public ServerReturnedDestinationCard(String playerName) {
-        super(playerName);
+    public ServerReturnedDestinationCard(String playerName, int remainingCards) {
+        super(playerName, remainingCards);
     }
 
     @Override

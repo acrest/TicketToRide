@@ -21,7 +21,7 @@
         android:textColor="@android:color/white" />
 
     <TextView
-        android:id="@+id/results_penalties"
+        android:id="@+id/results_additions"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight=".25"

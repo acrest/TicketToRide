@@ -58,4 +58,14 @@ public class ClientBank implements IClientBank {
     public void decNumberOfTrainCards() {
         numberOfTrainCards--;
     }
+
+    @Override
+    public void setNumberOfTrainCards(int num) {
+        numberOfTrainCards = num;
+    }
+
+    @Override
+    public void setNumberOfDestinationCards(int num) {
+        numberOfDestinationCards = num;
+    }
 }
