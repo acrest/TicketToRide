@@ -309,6 +309,7 @@ public class ClientModel extends Observable {
         IPlayer currentPlayer = getCurrentPlayer();
         if (currentPlayer == null) return;
         currentPlayer.setPoints(points);
+        notifyPropertyChanges(PLAYER_POINTS);
     }
 
     public void setPlayerPoints(String playerName, int points) {

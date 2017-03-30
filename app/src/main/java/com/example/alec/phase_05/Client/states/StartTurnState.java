@@ -116,6 +116,7 @@ public class StartTurnState implements GameState {
                 facade.discardTrainCard(card);
             }
             model.setTrainCount(model.getTrainCount() - route.getLength());
+            model.setPlayerPoints(model.getPlayerPoints() + route.getPoints());
             facade.claimRoute(routeId);
             facade.finishTurn();
             state.setTurnState(new EndTurnState(state));

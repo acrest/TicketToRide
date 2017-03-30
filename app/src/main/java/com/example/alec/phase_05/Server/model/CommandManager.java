@@ -118,7 +118,7 @@ public class CommandManager {
     private ICommand createCorrespondingCommand(GameCommand command) {
         if (command instanceof ServerClaimRouteCommand) {
             IPlayer player = game.getPlayerByName(command.getPlayerName());
-            return new ServerClaimedRouteCommand(command.getPlayerName(), ((ServerClaimRouteCommand) command).getRouteId(), game.getNumberOfTrainCards(), player.getTrainCardCount(), player.getTrainCount());
+            return new ServerClaimedRouteCommand(command.getPlayerName(), ((ServerClaimRouteCommand) command).getRouteId(), game.getNumberOfTrainCards(), player.getTrainCardCount(), player.getTrainCount(), player.getPoints());
         } else if (command instanceof ServerDiscardTrainCardCommand) {
             return null; //not sure if we are going to use this command
         } else if (command instanceof ServerDrawDestinationCardCommand) {
@@ -135,7 +135,8 @@ public class CommandManager {
         } else if (command instanceof ServerSendChatCommand) {
             return new ServerChatSentCommand(((ServerSendChatCommand) command).getChat());
         } else if (command instanceof ServerFinishGameCommand) {
-            return new ServerGameFinishedCommand(game.getBonusPoints());
+//            return new ServerGameFinishedCommand(game.getBonusPoints());
+            return new ServerGameFinishedCommand(null);
         }
 
         return null;
