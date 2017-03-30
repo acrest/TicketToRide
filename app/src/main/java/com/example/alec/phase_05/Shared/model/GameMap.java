@@ -267,8 +267,7 @@ public class GameMap {
             cityToRoutes.put(entry.getValue(), new ArrayList<Route>());
         }
 
-        for(int i = 1; i <= routes.size(); i++){
-            Route route = routes.get(i);
+        for(Route route : routes.values()){
             cityToRoutes.get(route.getCity1()).add(route);
             cityToRoutes.get(route.getCity2()).add(route);
         }
@@ -288,18 +287,17 @@ public class GameMap {
 
         for(Route route : routes.values()){
             if(route.getCity1().equals(city1) || route.getCity2().equals(city2)){
-                if(route.getOwner().equals(player)){
+                if(route.getOwner().getName().equals(player)){
                     rootRoutes.add(route);
                 }
             }
         }
 
-        for(int i = 0; i < rootRoutes.size(); i++){
-            Route route = rootRoutes.get(i);
+        for(Route route : routes.values()){
             City firstCity = route.getCity1();
             City secondCity = route.getCity2();
 
-            if(firstCity == city2 || secondCity == city2){
+            if(firstCity.equals(city2) || secondCity.equals(city2)){
                 return true;
             }
 
@@ -307,7 +305,7 @@ public class GameMap {
                 markedCities.put(firstCity, true);
 
                 for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
-                    if(cityToRoutes.get(firstCity).get(j).getOwner().equals(player)){
+                    if(cityToRoutes.get(firstCity).get(j).getOwner().getName().equals(player)){
                         if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities, player)){
                             return true;
                         }
@@ -319,7 +317,7 @@ public class GameMap {
                 markedCities.put(secondCity, true);
 
                 for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
-                    if(cityToRoutes.get(secondCity).get(j).getOwner().equals(player)){
+                    if(cityToRoutes.get(secondCity).get(j).getOwner().getName().equals(player)){
                         if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities, player)){
                             return true;
                         }

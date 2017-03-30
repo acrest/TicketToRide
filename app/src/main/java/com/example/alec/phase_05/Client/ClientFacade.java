@@ -180,9 +180,9 @@ public class ClientFacade {
     }
 
     public void finishGame(Map<String, Integer> bonusPoints) {
-//        for(Map.Entry<String, Integer> entry : bonusPoints.entrySet()) {
-//            model.setBonusPoints(entry.getKey(), entry.getValue());
-//        }
+        for(Map.Entry<String, Integer> entry : bonusPoints.entrySet()) {
+            model.setBonusPoints(entry.getKey(), entry.getValue());
+        }
         model.notifyFinishGame();
     }
 
