@@ -15,6 +15,7 @@ import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Molly on 2/6/2017.
@@ -177,7 +178,10 @@ public class ClientFacade {
         model.endTurn(playerName);
     }
 
-    public void finishGame() {
+    public void finishGame(Map<String, Integer> bonusPoints) {
+        for(Map.Entry<String, Integer> entry : bonusPoints.entrySet()) {
+            model.setBonusPoints(entry.getKey(), entry.getValue());
+        }
         model.notifyFinishGame();
     }
 

@@ -169,7 +169,7 @@ public class ClientModel extends Observable {
     }
 
     public void setPlayerTrainCardCount(String playerName, int count) {
-        if(currentGame == null) return;
+        if (currentGame == null) return;
         IPlayer player = currentGame.getPlayerByName(playerName);
         if (player == null || !(player instanceof OtherPlayer)) return;
         OtherPlayer otherPlayer = (OtherPlayer) player;
@@ -249,10 +249,24 @@ public class ClientModel extends Observable {
         return ((Player) player).getDestinationCards();
     }
 
+    public int getTrainCount() {
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null) return 0;
+        return currentPlayer.getTrainCount();
+    }
+
+    public int getTrainCount(String playerName) {
+        if (currentGame == null) return 0;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null) return 0;
+        return player.getTrainCount();
+    }
+
     public void setTrainCount(int count) {
         IPlayer currentPlayer = getCurrentPlayer();
         if (currentPlayer == null) return;
         currentPlayer.setTrainCount(count);
+        notifyPropertyChanges(PLAYER_TRAIN_COUNT);
     }
 
     public void setTrainCount(String playerName, int count) {
@@ -393,7 +407,7 @@ public class ClientModel extends Observable {
 
     //bonus points could be negative. it accounts for destination cards met and not met
     public int getBonusPoints(String playerName) {
-        if(bonusPoints.containsKey(playerName)) {
+        if (bonusPoints.containsKey(playerName)) {
             return bonusPoints.get(playerName);
         } else {
             return 0;
@@ -501,12 +515,12 @@ public class ClientModel extends Observable {
     }
 
     public GameState getGameState() {
-        if(currentGame == null) return null;
+        if (currentGame == null) return null;
         return currentGame.getTurnState();
     }
 
     public void notifyGameStateChange() {
-        if(currentGame==null) return;
+        if (currentGame == null) return;
         notifyPropertyChanges(GAME_STATE);
     }
 

@@ -1,12 +1,10 @@
 package com.example.alec.phase_05.Client.Presenter;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
-import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Observable;
 
 /**
  * Created by samuel on 3/22/17.
@@ -36,8 +34,8 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
             public String next() {
                 String player = model.getPlayer(index).getName();
                 int nextIndex = index + 1;
-                while(nextIndex <= model.getGameMaxPlayers()) {
-                    if(nextIndex == model.getGameMaxPlayers() || model.getPlayer(nextIndex) != null) {
+                while (nextIndex <= model.getGameMaxPlayers()) {
+                    if (nextIndex == model.getGameMaxPlayers() || model.getPlayer(nextIndex) != null) {
                         index = nextIndex;
                         break;
                     }
@@ -49,19 +47,17 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 
     @Override
     public int getPoints(String playerName) {
-        int points = model.getPlayerPoints(playerName);
-        GameMap map = model.getMap(); //TODO left off here (about to change xml to "additions" rather than "penalties"
-        return points;
+        return model.getPlayerPoints(playerName);
     }
 
     @Override
-    public int getPenalties(String playerName) {
-        return 0;
+    public int getAdditions(String playerName) {
+        return model.getBonusPoints(playerName);
     }
 
     @Override
     public int getTotal(String playerName) {
-        return getPoints(playerName) - getPenalties(playerName);
+        return getPoints(playerName) + getAdditions(playerName);
     }
 
     @Override
@@ -75,17 +71,17 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
         Iterator<String> playerNames = getPlayerNames();
         String maxPlayer = null;
         int maxPoints = Integer.MIN_VALUE;
-        while(playerNames.hasNext()) {
+        while (playerNames.hasNext()) {
             String player = playerNames.next();
-            if(maxPlayer == null || getTotal(player) > maxPoints) {
+            if (maxPlayer == null || getTotal(player) > maxPoints) {
                 maxPoints = getTotal(player);
                 maxPlayer = player;
             }
         }
-        if(maxPlayer == null) {
+        if (maxPlayer == null) {
             return "There is no winner";
         }
-        return maxPlayer;
+        return maxPlayer + " Has Won";
     }
 
     @Override
@@ -93,16 +89,16 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
         Map<IPlayer, Integer> longest = model.getLongestRoute();
         IPlayer maxPlayer = null;
         int maxLength = -1;
-        for(int i = 0; i < model.getGameMaxPlayers(); i++) {
+        for (int i = 0; i < model.getGameMaxPlayers(); i++) {
             IPlayer player = model.getPlayer(i);
-            if(player != null) {
-                if(maxPlayer == null || longest.get(player) > maxLength) {
+            if (player != null) {
+                if (maxPlayer == null || longest.get(player) > maxLength) {
                     maxPlayer = player;
                     maxLength = longest.get(player);
                 }
             }
         }
-        if(maxPlayer == null) {
+        if (maxPlayer == null) {
             throw new IllegalStateException("end game reached, but there is no longest route holder");
         }
         return maxPlayer.getName();
@@ -110,6 +106,12 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 
     @Override
     public void update(UpdateIndicator updateIndicator) {
-
+        if(updateIndicator.needUpdate(ClientModel.BONUS_POINTS)) {
+            Iterator<String> players = getPlayerNames();
+            while(players.hasNext()) {
+                String player = players.next();
+                listener.updatePlayer(player);
+            }
+        }
     }
 }

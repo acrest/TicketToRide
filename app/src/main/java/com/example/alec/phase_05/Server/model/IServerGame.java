@@ -8,6 +8,8 @@ import com.example.alec.phase_05.Shared.model.IChatManager;
 import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
+import java.util.Map;
+
 /**
  * Created by samuel on 2/25/17.
  */
@@ -26,6 +28,8 @@ public interface IServerGame extends IGame {
     DestinationCard drawDestinationCard(String playerName);
 
     GameMap getMap();
+
+    Map<String, Integer> getBonusPoints();
 
     void addDestinationCardToBottom(DestinationCard card);
 }
