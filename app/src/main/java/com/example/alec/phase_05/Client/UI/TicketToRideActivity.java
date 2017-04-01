@@ -1796,5 +1796,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             dialogDestinationButton.setEnabled(false);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        //remove player from game;
+        //Poller.getInstance().setListGamePolling();
+        //super.onBackPressed();
+    }
 }
 
