@@ -3,7 +3,6 @@ package com.example.alec.phase_05.Client.UI;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,6 @@ import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRideEndGame;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideEndGameListener;
 import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRideEndGame;
 import com.example.alec.phase_05.R;
-import com.example.alec.phase_05.Shared.model.IPlayer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -56,6 +54,11 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
         mResults.setAdapter(mResultsAdapter);
     }
 
+    @Override
+    public void updatePlayer(String playerName) {
+        mResultsAdapter.updateEntry(playerName);
+    }
+
     private class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultHolder> {
         private List<ResultEntry> data;
         private LayoutInflater inflater;
@@ -77,8 +80,8 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
             holder.name.setTextColor(getColorFromName(entry.getColor()));
             holder.points.setText(String.format(Locale.getDefault(), "%d", entry.getPoints()));
             holder.points.setTextColor(getColorFromName(entry.getColor()));
-            holder.penalties.setText(String.format(Locale.getDefault(), "%d", entry.getPenalties()));
-            holder.penalties.setTextColor(getColorFromName(entry.getColor()));
+            holder.additions.setText(String.format(Locale.getDefault(), "%d", entry.getAdditions()));
+            holder.additions.setTextColor(getColorFromName(entry.getColor()));
             holder.total.setText(String.format(Locale.getDefault(), "%d", entry.getTotal()));
             holder.total.setTextColor(getColorFromName(entry.getColor()));
         }
@@ -102,10 +105,19 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
             notifyItemInserted(data.size() - 1);
         }
 
+        private void updateEntry(String playerName) {
+            int playerIndex = getPlayerIndex(playerName);
+            if(playerIndex == -1) {
+                throw new IllegalStateException("Attempt to update a nonexistent player in end game gui");
+            }
+            data.set(playerIndex, createEntry(playerName));
+            notifyItemChanged(playerIndex);
+        }
+
         class ResultHolder extends RecyclerView.ViewHolder {
             private TextView name;
             private TextView points;
-            private TextView penalties;
+            private TextView additions;
             private TextView total;
 
             private ResultHolder(View itemView) {
@@ -113,7 +125,7 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
 
                 name = (TextView) itemView.findViewById(R.id.results_name);
                 points = (TextView) itemView.findViewById(R.id.results_points);
-                penalties = (TextView) itemView.findViewById(R.id.results_penalties);
+                additions = (TextView) itemView.findViewById(R.id.results_additions);
                 total = (TextView) itemView.findViewById(R.id.results_total);
             }
         }
@@ -121,7 +133,7 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
 
     private ResultEntry createEntry(String playerName) {
         return new ResultEntry(playerName, presenter.getPoints(playerName),
-                presenter.getPenalties(playerName), presenter.getTotal(playerName), presenter.getColor(playerName));
+                presenter.getAdditions(playerName), presenter.getTotal(playerName), presenter.getColor(playerName));
     }
 
     private static int getColorFromName(String colorName) {
@@ -143,35 +155,35 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
     private static class ResultEntry {
         private String name;
         private int points;
-        private int penalties;
+        private int additions;
         private int total;
         private String color;
 
-        private ResultEntry(String name, int points, int penalties, int total, String color) {
+        private ResultEntry(String name, int points, int additions, int total, String color) {
             this.name = name;
             this.points = points;
-            this.penalties = penalties;
+            this.additions = additions;
             this.total = total;
             this.color = color;
         }
 
-        public String getName() {
+        private String getName() {
             return name;
         }
 
-        public int getPoints() {
+        private int getPoints() {
             return points;
         }
 
-        public int getPenalties() {
-            return penalties;
+        private int getAdditions() {
+            return additions;
         }
 
-        public int getTotal() {
+        private int getTotal() {
             return total;
         }
 
-        public String getColor() {
+        private String getColor() {
             return color;
         }
     }

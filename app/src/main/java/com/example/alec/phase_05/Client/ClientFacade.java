@@ -15,6 +15,7 @@ import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Molly on 2/6/2017.
@@ -100,17 +101,17 @@ public class ClientFacade {
         }
     }
 
-    public void drawDestinationCard(String playerName) {
+    public void drawDestinationCard(String playerName, int remainingCards) {
         model.decNumOfDestinationCards();
         model.addDestinationCard(playerName);
     }
 
-    public void pickTrainCard(String playerName, int index, TrainCard nextCardInDeck) {
+    public void pickTrainCard(String playerName, int index, TrainCard nextCardInDeck, int remainingCards) {
         model.setVisibleCard(index, nextCardInDeck);
         model.addTrainCard(playerName);
     }
 
-    public void drawTrainCard(String playerName) {
+    public void drawTrainCard(String playerName, int remainingCards) {
         model.decNumOfTrainCards();
         model.addTrainCard(playerName);
     }
@@ -134,7 +135,7 @@ public class ClientFacade {
                 } else {
                     model.setPlayer(i, new OtherPlayer(player));
                 }
-                model.getPlayer(i).setTrainCount(Facade.getInstance().getTrainCount());
+//                model.getPlayer(i).setTrainCount(Facade.getInstance().getTrainCount());
             }
         }
         TrainCard[] visibleTrainCards = gameInfo.getVisibleTrainCards();
@@ -145,7 +146,7 @@ public class ClientFacade {
     }
 
     public void startGame() {
-        Facade.getInstance().drawTrainCard(); //TODO only got 3 train cards once
+        Facade.getInstance().drawTrainCard();
         Facade.getInstance().drawTrainCard();
         Facade.getInstance().drawTrainCard();
         Facade.getInstance().drawTrainCard();
@@ -164,8 +165,12 @@ public class ClientFacade {
         model.tryDisplayHand();
     }
 
-    public void claimRoute(String playerName, int routeId) {
+    public void claimRoute(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains, int playerPoints) {
         model.setRouteOwner(playerName, routeId);
+        model.setNumberOfTrainCards(remainingTrainCards);
+        model.setPlayerTrainCardCount(playerName, playerRemainingTrainCards);
+        model.setTrainCount(playerName, playerRemainingTrains);
+        model.setPlayerPoints(playerName, playerPoints);
     }
 
 
@@ -174,11 +179,14 @@ public class ClientFacade {
         model.endTurn(playerName);
     }
 
-    public void finishGame() {
+    public void finishGame(Map<String, Integer> bonusPoints) {
+//        for(Map.Entry<String, Integer> entry : bonusPoints.entrySet()) {
+//            model.setBonusPoints(entry.getKey(), entry.getValue());
+//        }
         model.notifyFinishGame();
     }
 
-    public void returnDestinationCard(String playerName) {
+    public void returnDestinationCard(String playerName, int remainingCards) {
         model.removeDestinationCard(playerName);
         model.incNumOfDestinationCards();
     }

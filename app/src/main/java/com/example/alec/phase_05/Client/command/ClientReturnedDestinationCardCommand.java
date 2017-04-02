@@ -9,13 +9,13 @@ import com.example.alec.phase_05.Shared.command.ReturnedDestinationCardCommand;
  */
 
 public class ClientReturnedDestinationCardCommand extends ReturnedDestinationCardCommand {
-    public ClientReturnedDestinationCardCommand(String playerName) {
-        super(playerName);
+    public ClientReturnedDestinationCardCommand(String playerName, int remainingCards) {
+        super(playerName, remainingCards);
     }
 
     @Override
     public Result execute() {
-        ClientFacade.getInstance().returnDestinationCard(getPlayerName());
+        ClientFacade.getInstance().returnDestinationCard(getPlayerName(), getRemainingCards());
         return null;
     }
 }

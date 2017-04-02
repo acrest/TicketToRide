@@ -18,6 +18,7 @@ import com.example.alec.phase_05.Client.command.ClientPickTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Client.command.ClientReturnDestinationCardCommand;
 import com.example.alec.phase_05.Client.command.ClientSendChatCommand;
+import com.example.alec.phase_05.Client.command.ClientSetServerTrainCountCommand;
 import com.example.alec.phase_05.Client.command.ClientStartGameCommand;
 import com.example.alec.phase_05.Client.communication.ClientCommunicator;
 import com.example.alec.phase_05.Shared.command.GameDescriptionHolder;
@@ -249,6 +250,11 @@ public class ServerProxy implements IServer {
     @Override
     public boolean sendChat(Chat chat) {
         return executeCommand(new ClientSendChatCommand(chat)).toBoolean();
+    }
+
+    @Override
+    public boolean setServerTrainCount(int count) {
+        return executeCommand(new ClientSetServerTrainCountCommand(count)).toBoolean();
     }
 
     @Override

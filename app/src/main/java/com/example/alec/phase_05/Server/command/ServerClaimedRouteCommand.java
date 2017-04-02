@@ -8,8 +8,8 @@ import com.example.alec.phase_05.Shared.command.Result;
  */
 
 public class ServerClaimedRouteCommand extends ClaimedRouteCommand {
-    public ServerClaimedRouteCommand(String playerName, int routeId) {
-        super(playerName, routeId);
+    public ServerClaimedRouteCommand(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains, int playerPoints) {
+        super(playerName, routeId, remainingTrainCards, playerRemainingTrainCards, playerRemainingTrains, playerPoints);
     }
 
     @Override

@@ -7,8 +7,13 @@ import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IChatManager;
+import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by samuel on 2/25/17.
@@ -75,7 +80,43 @@ public class ServerGame extends Game implements IServerGame {
     }
 
     @Override
+    public Map<String, Integer> getBonusPoints() {
+        Map<String, Integer> bonusPoints = new HashMap<>();
+        Iterator<IPlayer> players = getPlayers().iterator();
+        while(players.hasNext()) {
+            IPlayer player = players.next();
+            bonusPoints.put(player.getName(), getBonusPoints(player));
+        }
+        return bonusPoints;
+    }
+
+    private int getBonusPoints(IPlayer player) {
+        Player realPlayer = (Player) player;
+        int points = 0;
+        for(DestinationCard card : realPlayer.getDestinationCards()) {
+            if (getMap().checkIfDestinationComplete(card,player.getName())) { //causes a crash
+                points += card.getValue();
+            } else {
+                points -= card.getValue();
+            }
+        }
+        return points;
+    }
+
+    @Override
     public void addDestinationCardToBottom(DestinationCard card) {
         ((IServerBank) getBank()).addDestinationCardToBottom(card);
+    }
+
+    @Override
+    public void setPlayer(int position, IPlayer player) {
+        player.setTrainCount(ServerModel.getInitialTrainCount());
+        super.setPlayer(position, player);
+    }
+
+    @Override
+    public int addPlayerAtNextPosition(IPlayer player) {
+        player.setTrainCount(ServerModel.getInitialTrainCount());
+        return super.addPlayerAtNextPosition(player);
     }
 }

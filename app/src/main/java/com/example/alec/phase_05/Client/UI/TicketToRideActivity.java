@@ -47,6 +47,7 @@ import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRide;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRide;
+import com.example.alec.phase_05.Client.states.EndTurnState;
 import com.example.alec.phase_05.Client.states.OneDrawnCardState;
 import com.example.alec.phase_05.Client.states.OneDrawnOnePickedCardState;
 import com.example.alec.phase_05.Client.states.OnePickedCardState;
@@ -1268,7 +1269,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateGameState(GameState state) {
-        stateIndicator.setText(state.toString());
+        if(state instanceof EndTurnState && ClientModel.getInstance().getCurrentPlayer().getName().equals(ClientModel.getInstance().getGame().getCurrentPlayerTurn())){
+
+        }
+        else{
+            stateIndicator.setText(state.toString());
+        }
     }
 
     @Override
@@ -1309,7 +1315,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         secondCard.setText(cardChoices.get(1).toString());
         thirdCard.setText(cardChoices.get(2).toString());
         if (!firstTurn){
-            destinationPrompt.setText("CHOOSE AT LEAST 1 DESTINATION CARDS");
+//            destinationPrompt.setText("CHOOSE AT LEAST 1 DESTINATION CARDS");
         }
 
         destinationDialog.setCanceledOnTouchOutside(false);
@@ -1795,6 +1801,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         else{
             dialogDestinationButton.setEnabled(false);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //remove player from game;
+        //Poller.getInstance().setListGamePolling();
+        //super.onBackPressed();
     }
 }
 

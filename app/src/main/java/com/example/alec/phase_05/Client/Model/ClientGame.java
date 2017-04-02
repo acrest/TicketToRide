@@ -96,6 +96,16 @@ public class ClientGame extends Game implements IClientGame {
     }
 
     @Override
+    public void setNumberOfTrainCards(int num) {
+        ((IClientBank) getBank()).setNumberOfTrainCards(num);
+    }
+
+    @Override
+    public void setNumberOfDestinationCards(int num) {
+        ((IClientBank) getBank()).setNumberOfDestinationCards(num);
+    }
+
+    @Override
     public void setVisibleCard(int index, TrainCard card) {
         ((IClientBank) getBank()).setVisibleCard(index, card);
     }
@@ -144,6 +154,10 @@ public class ClientGame extends Game implements IClientGame {
     @Override
     public void setCurrentPlayerTurn(String currentPlayerTurn) {
         this.currentPlayerTurn = currentPlayerTurn;
+        if(currentPlayerTurn.equals(lastPlayerTurn)) {
+            gameFinished = true;
+            return;
+        }
         if(currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName())) {
             setTurnState(new StartTurnState(this));
         }
@@ -154,10 +168,6 @@ public class ClientGame extends Game implements IClientGame {
     @Override
     public void endTurn(String playerName) {
         if(!playerName.equals(currentPlayerTurn)) throw new IllegalStateException("player \"" + playerName + "\" tried to end turn when it was \"" + currentPlayerTurn + "'s\" turn");
-        if(currentPlayerTurn.equals(lastPlayerTurn)) {
-            gameFinished = true;
-            return;
-        }
         if (currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName()) && lastPlayerTurn == null) {
             if(getPlayerByName(currentPlayerTurn).getTrainCount() <= 2) {
                 lastPlayerTurn = currentPlayerTurn;

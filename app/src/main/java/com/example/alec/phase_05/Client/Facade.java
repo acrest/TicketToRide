@@ -41,6 +41,7 @@ public class Facade {
 
     public void setTrainCount(Integer trainCount) {
         this.trainCount = trainCount;
+        setServerTrainCount(trainCount);
     }
 
     public void setIpAddress(String ipAddress) {
@@ -419,6 +420,16 @@ public class Facade {
             @Override
             public void run() {
                 proxy.sendChat(chat);
+            }
+        });
+        thread.start();
+    }
+
+    public void setServerTrainCount(final int count) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                proxy.setServerTrainCount(count);
             }
         });
         thread.start();

@@ -286,10 +286,8 @@ public class GameMap {
 
         markedCities.put(city1, true);
 
-        for(int i = 0; i < routes.size(); i++){
-            Route route = routes.get(i);
-
-            if(route.getCity1() == city1 || route.getCity2() == city1){
+        for(Route route : routes.values()){
+            if(route.getCity1().equals(city1) || route.getCity2().equals(city2)){
                 if(route.getOwner().equals(player)){
                     rootRoutes.add(route);
                 }

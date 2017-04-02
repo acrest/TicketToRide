@@ -89,12 +89,15 @@ public class StartTurnState implements GameState {
         for (TrainCard tc : arr) {
             System.out.println(tc.getType());
         }
-        if (currentPlayer.countCardsOfType(route.getType()) < route.getLength()) {
+        if (!currentPlayer.hasCardsForRoute(route.getType(), route.getLength())) {
             throw new StateWarning("You do not have enough of those cards in your hand to " +
                     "claim that route. Please draw a train card or destination card.");
+        } else if (currentPlayer.getTrainCount() < route.getLength()) {
+            throw new StateWarning("You do not have enough trains to claim this route.");
         } else {
-            currentPlayer.removeCardsOfType(route.getType(), route.getLength());
+//            currentPlayer.removeCardsOfType(route.getType(), route.getLength());
             System.out.println("ROUTE CLAIMED");
+<<<<<<< HEAD
             List<TrainCard> playersHand = currentPlayer.getTrainCards();
             int length = route.getLength();
             for (TrainCard card : playersHand) {
@@ -108,7 +111,28 @@ public class StartTurnState implements GameState {
                 }
 
 
+=======
+//            List<TrainCard> playersHand = currentPlayer.getTrainCards();
+//            int length = route.getLength();
+//            for (TrainCard card : playersHand) {
+//
+//                if (card.getType().equals(route.getType()) || route.getType().equals(TrainType.ANY)) {
+//                    facade.discardTrainCard(card);
+//                    length--;
+//                    if (length == 0) {
+//                        break;
+//                    }
+//                }
+//
+//
+//            }
+            List<TrainCard> removedCards = currentPlayer.removeCardsForRoute(route.getType(), route.getLength());
+            for(TrainCard card : removedCards) {
+                facade.discardTrainCard(card);
+>>>>>>> 19f61fc96cd8b81007077ef489a117c5710aca72
             }
+            model.setTrainCount(model.getTrainCount() - route.getLength());
+            model.setPlayerPoints(model.getPlayerPoints() + route.getPoints());
             facade.claimRoute(routeId);
             facade.finishTurn();
             state.setTurnState(new EndTurnState(state));

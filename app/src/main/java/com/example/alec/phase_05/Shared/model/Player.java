@@ -3,8 +3,11 @@ package com.example.alec.phase_05.Shared.model;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Player extends AbstractPlayer {
     private ArrayList<TrainCard> trainCards;
@@ -57,6 +60,70 @@ public class Player extends AbstractPlayer {
 
     public List<DestinationCard> getDestinationCards() {
         return destinationCards;
+    }
+
+    private Map<TrainType, Integer> getCardCounts() {
+        Map<TrainType, Integer> counts = new HashMap<>();
+        for(TrainCard card : trainCards) {
+            if(!counts.containsKey(card.getType())) {
+                counts.put(card.getType(), 0);
+            }
+            counts.put(card.getType(), counts.get(card.getType()) + 1);
+        }
+        return counts;
+    }
+
+    public boolean hasCardsForRoute(TrainType routeType, int routeLength) {
+        Map<TrainType, Integer> cardCounts = getCardCounts();
+        int wildCount = cardCounts.containsKey(TrainType.LOCOMOTIVE) ? cardCounts.get(TrainType.LOCOMOTIVE) : 0;
+        if(routeType.equals(TrainType.ANY)) {
+            routeType = getTypeOfMaxCount();
+        }
+        return (routeType != null && cardCounts.containsKey(routeType) && cardCounts.get(routeType) + wildCount >= routeLength) || wildCount >= routeLength;
+    }
+
+    //this method assumes that the player has enough cards
+    //hasCardsForRoute should be called to check this
+    public List<TrainCard> removeCardsForRoute(TrainType routeType, int routeLength) {
+        List<TrainCard> removedCards = new ArrayList<>();
+        if(routeType.equals(TrainType.ANY)) {
+            routeType = getTypeOfMaxCount();
+        }
+
+        Iterator<TrainCard> cards = trainCards.iterator();
+        while(cards.hasNext() && routeLength > 0) {
+            TrainCard card = cards.next();
+            if(card.getType().equals(routeType)) {
+                cards.remove();
+                removedCards.add(card);
+                routeLength--;
+            }
+        }
+
+        cards = trainCards.iterator();
+        while(cards.hasNext() && routeLength > 0) {
+            TrainCard card = cards.next();
+            if(card.getType().equals(TrainType.LOCOMOTIVE)) {
+                cards.remove();
+                removedCards.add(card);
+                routeLength--;
+            }
+        }
+        return removedCards;
+    }
+
+    //will not return LOCOMOTIVE
+    private TrainType getTypeOfMaxCount() {
+        Map<TrainType, Integer> cardCounts = getCardCounts();
+        TrainType maxType = null;
+        int maxCount = 0;
+        for (Map.Entry<TrainType, Integer> cardCount : cardCounts.entrySet()) {
+            if(!cardCount.getKey().equals(TrainType.LOCOMOTIVE) && (maxType == null || cardCount.getValue() > maxCount)) {
+                maxCount = cardCount.getValue();
+                maxType = cardCount.getKey();
+            }
+        }
+        return maxType;
     }
 
     public boolean removeCardsOfType(TrainType cardType, int cardCount) {

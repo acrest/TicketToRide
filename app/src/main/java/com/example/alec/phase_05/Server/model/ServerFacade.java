@@ -342,6 +342,12 @@ public class ServerFacade implements IServer {
         return true;
     }
 
+    @Override
+    public boolean setServerTrainCount(int count) {
+        ServerModel.setInitialTrainCount(count);
+        return true;
+    }
+
     /**
      * returns an unwanted destination card to the deck
      *
@@ -388,30 +394,10 @@ public class ServerFacade implements IServer {
         Player player = (Player) game.getPlayerByName(playerName);
         if (player == null) return false;
         Route route = game.getRouteByID(routeId);
-        int count = route.getLength();
-        Iterator<TrainCard> cards = player.getTrainCards().iterator();
-        int trainCount = player.getTrainCount();
-        while(cards.hasNext() && count > 0) {
-            if(cards.next().getType().equals(route.getType())) {
-                trainCount--;
-                count--;
-            }
-            if (route.getType().equals(TrainType.ANY)) {
-                trainCount--;
-                count--;
-            }
-        }
-        player.setTrainCount(trainCount);
-        if(count > 0) return false;
-        count = route.getLength();
-        cards = player.getTrainCards().iterator();
-        while(count > 0 && cards.hasNext()) {
-            TrainCard card = cards.next();
-            if(card.getType().equals(route.getType())) {
-                count--;
-                cards.remove();
-            }
-        }
+        if(player.getTrainCount() < route.getLength() || !player.hasCardsForRoute(route.getType(), route.getLength())) return false;
+        player.removeCardsOfType(route.getType(), route.getLength());
+        player.setTrainCount(player.getTrainCount() - route.getLength());
+        player.setPoints(player.getPoints() + route.getPoints());
         route.setOwner(player);
         return true;
     }
