@@ -47,6 +47,7 @@ import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRide;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRide;
+import com.example.alec.phase_05.Client.states.EndTurnState;
 import com.example.alec.phase_05.Client.states.OneDrawnCardState;
 import com.example.alec.phase_05.Client.states.OneDrawnOnePickedCardState;
 import com.example.alec.phase_05.Client.states.OnePickedCardState;
@@ -1268,7 +1269,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateGameState(GameState state) {
-        stateIndicator.setText(state.toString());
+        if(state instanceof EndTurnState && ClientModel.getInstance().getCurrentPlayer().getName().equals(ClientModel.getInstance().getGame().getCurrentPlayerTurn())){
+
+        }
+        else{
+            stateIndicator.setText(state.toString());
+        }
     }
 
     @Override
