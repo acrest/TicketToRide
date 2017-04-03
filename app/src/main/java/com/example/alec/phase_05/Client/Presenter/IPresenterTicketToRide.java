@@ -6,6 +6,7 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 import java.util.List;
 import java.util.Map;

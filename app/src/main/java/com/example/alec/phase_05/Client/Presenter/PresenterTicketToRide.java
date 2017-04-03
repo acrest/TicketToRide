@@ -11,6 +11,7 @@ import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 import java.util.ArrayList;
 import java.util.List;
