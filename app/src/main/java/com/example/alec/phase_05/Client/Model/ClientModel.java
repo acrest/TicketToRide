@@ -76,6 +76,7 @@ public class ClientModel extends Observable {
     private Map<IPlayer, Integer> longestPath;
     private Map<String, Integer> bonusPoints;
     private boolean firstCardDraw;
+    private boolean isLastTurns;
     TrainType RouteAnyCardType;
 
     public ClientModel() {
@@ -86,6 +87,7 @@ public class ClientModel extends Observable {
         cardChoices = new ArrayList<>();
         isHost = false;
         firstCardDraw = true;
+        isLastTurns = false;
     }
 
     public IPlayer getCurrentPlayer() {
@@ -594,5 +596,13 @@ public class ClientModel extends Observable {
 
     public void setRouteAnyCardType(TrainType routeAnyCardType) {
         RouteAnyCardType = routeAnyCardType;
+    }
+
+    public boolean isLastTurns() {
+        return isLastTurns;
+    }
+
+    public void setLastTurns(boolean lastTurns) {
+        isLastTurns = lastTurns;
     }
 }
