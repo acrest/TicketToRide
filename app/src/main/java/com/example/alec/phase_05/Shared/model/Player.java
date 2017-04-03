@@ -77,7 +77,7 @@ public class Player extends AbstractPlayer {
         Map<TrainType, Integer> cardCounts = getCardCounts();
         int wildCount = cardCounts.containsKey(TrainType.LOCOMOTIVE) ? cardCounts.get(TrainType.LOCOMOTIVE) : 0;
         if(routeType.equals(TrainType.ANY)) {
-            routeType = getTypeOfMaxCount();
+            routeType = ClientModel.getInstance().getRouteAnyCardType();
         }
         return (routeType != null && cardCounts.containsKey(routeType) && cardCounts.get(routeType) + wildCount >= routeLength) || wildCount >= routeLength;
     }
@@ -87,7 +87,7 @@ public class Player extends AbstractPlayer {
     public List<TrainCard> removeCardsForRoute(TrainType routeType, int routeLength) {
         List<TrainCard> removedCards = new ArrayList<>();
         if(routeType.equals(TrainType.ANY)) {
-            routeType = getTypeOfMaxCount();
+            routeType = ClientModel.getInstance().getRouteAnyCardType();
         }
 
         Iterator<TrainCard> cards = trainCards.iterator();
@@ -126,14 +126,14 @@ public class Player extends AbstractPlayer {
         return maxType;
     }
 
-    public boolean removeCardsOfType(TrainType cardType, int cardCount) {
-        if(cardType.equals(TrainType.ANY)){
-            cardCount = removeCardsOfTypeAny(cardCount);
+    public boolean removeCardsOfType(TrainType trainType, int cardCount, TrainType cardType) {
+        if(trainType.equals(TrainType.ANY)){
+            cardCount = removeCardsOfTypeAny(cardCount, cardType);
         }
         else{
             Iterator<TrainCard> it = trainCards.iterator();
             while (cardCount > 0 && it.hasNext()) {
-                if (it.next().getType().equals(cardType)) {
+                if (it.next().getType().equals(trainType)) {
                     it.remove();
                     cardCount--;
                 }
@@ -143,9 +143,7 @@ public class Player extends AbstractPlayer {
         return cardCount == 0;
     }
 
-    private int removeCardsOfTypeAny(int cardCount){
-        TrainType type = giveTrainTypeOfHighestCount();
-
+    private int removeCardsOfTypeAny(int cardCount, TrainType type){
         Iterator<TrainCard> it = trainCards.iterator();
         while (cardCount > 0 && it.hasNext()) {
             if (it.next().getType().equals(type)) {
@@ -193,7 +191,7 @@ public class Player extends AbstractPlayer {
         String test = type.toString();
         String test2 = TrainType.ANY.toString();
 
-        if(anyCount > count){
+        if(ClientModel.getInstance().getRouteAnyCardType() != null){
             if(test.equals(test2)){
                 return anyCount;
             }
@@ -203,16 +201,25 @@ public class Player extends AbstractPlayer {
     }
 
     private int giveHighestCountOfColors(){
-        int redCount = 0;
-        int orangeCount = 0;
-        int yellowCount = 0;
-        int greenCount = 0;
-        int blueCount = 0;
-        int purpleCount = 0;
-        int whiteCount = 0;
-        int blackCount = 0;
+//        int redCount = 0;
+//        int orangeCount = 0;
+//        int yellowCount = 0;
+//        int greenCount = 0;
+//        int blueCount = 0;
+//        int purpleCount = 0;
+//        int whiteCount = 0;
+//        int blackCount = 0;
+        int count = 0;
 
-        for(TrainCard card : trainCards) {
+        if(ClientModel.getInstance().getRouteAnyCardType() != null){
+            for(TrainCard card: trainCards){
+                if(card.getType().equals(ClientModel.getInstance().getRouteAnyCardType())){
+                    count++;
+                }
+            }
+        }
+
+        /*for(TrainCard card : trainCards) {
             if(card.getType().equals(TrainType.CABOOSE)) {
                 greenCount++;
                 //green
@@ -264,76 +271,9 @@ public class Player extends AbstractPlayer {
         }
         if(blackCount > count){
             count = blackCount;
-        }
+        }*/
 
         return count;
-    }
-
-    private TrainType giveTrainTypeOfHighestCount(){
-        int count = giveHighestCountOfColors();
-
-        int redCount = 0;
-        int orangeCount = 0;
-        int yellowCount = 0;
-        int greenCount = 0;
-        int blueCount = 0;
-        int purpleCount = 0;
-        int whiteCount = 0;
-        int blackCount = 0;
-
-        for(TrainCard card : trainCards) {
-            if(card.getType().equals(TrainType.CABOOSE)) {
-                greenCount++;
-                //green
-            }
-            if(card.getType().equals(TrainType.TANKER)){
-                orangeCount++;
-            }
-            if(card.getType().equals(TrainType.FREIGHT)){
-                purpleCount++;
-                //purple
-            }
-            if(card.getType().equals(TrainType.PASSENGER)){
-                blueCount++;
-            }
-            if(card.getType().equals(TrainType.REEFER)){
-                whiteCount++;
-            }
-            if(card.getType().equals(TrainType.BOX)){
-                yellowCount++;
-                //yellow
-            }
-            if(card.getType().equals(TrainType.COAL)){
-                redCount++;
-            }
-            if(card.getType().equals(TrainType.HOPPER)){
-                blackCount++;
-            }
-        }
-
-        if(greenCount == count){
-            return TrainType.CABOOSE;
-        }
-        if(orangeCount == count){
-            return TrainType.TANKER;
-        }
-        if(purpleCount == count){
-            return TrainType.FREIGHT;
-        }
-        if(blueCount == count){
-            return TrainType.PASSENGER;
-        }
-        if(whiteCount == count){
-            return TrainType.REEFER;
-        }
-        if(yellowCount == count){
-            return TrainType.BOX;
-        }
-        if(redCount == count){
-            return TrainType.COAL;
-        }
-
-        return TrainType.HOPPER;
     }
 
     private int numOfWilds(){

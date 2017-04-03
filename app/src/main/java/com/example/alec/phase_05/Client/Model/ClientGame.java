@@ -19,6 +19,7 @@ import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 /**
  * Created by samuel on 2/25/17.
@@ -149,7 +150,6 @@ public class ClientGame extends Game implements IClientGame {
     public String getCurrentPlayerTurn() {
         return currentPlayerTurn;
     }
-
 
     @Override
     public void setCurrentPlayerTurn(String currentPlayerTurn) {
