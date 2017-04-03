@@ -55,6 +55,7 @@ import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.IPlayer;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
@@ -146,6 +147,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView destinationPrompt;
     private int destinationChoiceCount;
     private TextView longest_route_player;
+    private TextView start_turn_prompt;
     TabHost mTabHost;
     private AlertDialog destinationDialog;
     final Deck deck = new Deck();
@@ -416,6 +418,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         firstCard = (TextView) mView.findViewById(R.id.firstCard);
         destinationPrompt = (TextView) mView.findViewById(R.id.choose_destination_prompt);
+        start_turn_prompt = (TextView) mBeginTurnView.findViewById(R.id.dialog_begin_turn_message);
 
         secondCard = (TextView) mView.findViewById(R.id.secondCard);
         thirdCard = (TextView) mView.findViewById(R.id.thirdCard);
@@ -1395,7 +1398,27 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void onTurnStart() {
+        if(lastTurns()){
+            start_turn_prompt.setText("LAST TURN!");
+        }
         dialogBeginTurn.show();
+    }
+
+    private boolean lastTurns(){
+        int numPlayers = ClientModel.getInstance().getGame().getNumberPlayers();
+        ArrayList<IPlayer> players = new ArrayList<>();
+
+        for(int i = 0; i < numPlayers; i++){
+            players.add(ClientModel.getInstance().getGame().getPlayer(i));
+        }
+
+        for(int i = 0; i < players.size(); i++){
+            if(players.get(i).getTrainCount() < 3){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -1451,7 +1474,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         secondCard.setText(cardChoices.get(1).toString());
         thirdCard.setText(cardChoices.get(2).toString());
         if (!firstTurn){
-//            destinationPrompt.setText("CHOOSE AT LEAST 1 DESTINATION CARDS");
+            destinationPrompt.setText("CHOOSE AT LEAST 1 DESTINATION CARDS");
         }
 
         destinationDialog.setCanceledOnTouchOutside(false);
