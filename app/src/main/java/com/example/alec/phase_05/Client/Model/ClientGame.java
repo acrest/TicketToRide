@@ -29,6 +29,7 @@ public class ClientGame extends Game implements IClientGame {
     private GameState turnState = null;
     private String currentPlayerTurn;
     private String lastPlayerTurn;
+    private boolean oneMoreTurn;
     private boolean gameFinished;
 
     public ClientGame(int id, String name, int maxPlayers, IClientBank bank, GameMap gameMap) {
@@ -37,7 +38,7 @@ public class ClientGame extends Game implements IClientGame {
         turnState = new EndTurnState(this);
         currentPlayerTurn = null;
         gameFinished = false;
-
+        oneMoreTurn = false;
     }
 
     @Override
@@ -154,9 +155,11 @@ public class ClientGame extends Game implements IClientGame {
     @Override
     public void setCurrentPlayerTurn(String currentPlayerTurn) {
         this.currentPlayerTurn = currentPlayerTurn;
-        if(currentPlayerTurn.equals(lastPlayerTurn)) {
+        if(oneMoreTurn){
             gameFinished = true;
-            return;
+        }
+        if(currentPlayerTurn.equals(lastPlayerTurn)) {
+            oneMoreTurn = true;
         }
         if(currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName())) {
             setTurnState(new StartTurnState(this));
@@ -171,6 +174,7 @@ public class ClientGame extends Game implements IClientGame {
         if (currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName()) && lastPlayerTurn == null) {
             if(getPlayerByName(currentPlayerTurn).getTrainCount() <= 2) {
                 lastPlayerTurn = currentPlayerTurn;
+                ClientModel.getInstance().setLastTurns(true);
             }
         }
         int index = -1;
