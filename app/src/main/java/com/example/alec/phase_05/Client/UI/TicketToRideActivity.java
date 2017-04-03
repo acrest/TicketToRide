@@ -673,7 +673,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 }
 
                 if(s.equals("tab_test6")){
-
+                    ((TextView)mTabHost.getTabWidget().getChildAt(5).findViewById(android.R.id.title)).setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }
             }
         });
@@ -1339,6 +1339,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updateChats(List<Chat> chats) {
         mChatRecyclerAdapter.updateListData(chats);
+        if(mTabHost.getCurrentTab() != 5 && chats.size() != 0){
+            ((TextView)mTabHost.getTabWidget().getChildAt(5).findViewById(android.R.id.title)).setCompoundDrawablesWithIntrinsicBounds(R.drawable.chat_notice, 0, 0, 0);
+        }
         //tab6.setIndicator("CHAT",getResources().getDrawable(R.drawable.chat_notice));
     }
 
