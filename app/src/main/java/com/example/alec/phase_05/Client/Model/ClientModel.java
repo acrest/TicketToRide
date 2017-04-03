@@ -227,6 +227,16 @@ public class ClientModel extends Observable {
         currentGame.setNumberOfDestinationCards(num);
     }
 
+    public int getNumberOfTrainCards() {
+        if(currentGame == null) return 0;
+        return currentGame.getNumberOfTrainCards();
+    }
+
+    public int getNumberOfDestinationCards() {
+        if(currentGame == null) return 0;
+        return currentGame.getNumberOfDestinationCards();
+    }
+
     public void addDestinationCard(String playerName) {
         if (currentGame == null) return;
         IPlayer player = currentGame.getPlayerByName(playerName);
@@ -497,19 +507,17 @@ public class ClientModel extends Observable {
         cardChoices.add(card);
     }
 
-    public void tryDisplayHand() {
-        if (cardChoices.size() >= 3) {
-            if (firstCardDraw) {
-                //there is a race condition, and this is here to avoid it
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                }
-                notifyPropertyChanges(INIT_DISPLAY_HAND);
-                firstCardDraw = false;
-            } else {
-                notifyPropertyChanges(DISPLAY_HAND);
+    public void displayHand() {
+        if (firstCardDraw) {
+            //there is a race condition, and this is here to avoid it
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
             }
+            notifyPropertyChanges(INIT_DISPLAY_HAND);
+            firstCardDraw = false;
+        } else {
+            notifyPropertyChanges(DISPLAY_HAND);
         }
     }
 

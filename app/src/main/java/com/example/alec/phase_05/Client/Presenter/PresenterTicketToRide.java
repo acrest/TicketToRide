@@ -78,7 +78,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     @Override
     public void endTurn() {
         try {
-            model.doDrawTrainCardFromDeck();
+            model.doEndTurn();
         } catch (StateWarning e) {
             listener.handleWarning(e);
         }
