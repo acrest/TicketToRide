@@ -7,6 +7,7 @@ import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 /**
  * Created by samuel on 2/25/17.
