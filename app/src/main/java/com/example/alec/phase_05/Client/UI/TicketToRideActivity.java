@@ -185,10 +185,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mTabHost = getTabHost();
         mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("Player Info").setContent(R.id.player_info));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("Destinations").setContent(R.id.routes));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("Game History").setContent(R.id.game_history));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test4").setIndicator("Bank").setContent(R.id.bank));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test5").setIndicator("Map").setContent(R.id.mapview));
         mTabHost.addTab(tab6 = mTabHost.newTabSpec("tab_test6").setIndicator("Chat").setContent(R.id.chat));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("Game History").setContent(R.id.game_history));
         mTabHost.setCurrentTab(0);
         //mTabHost.newTabSpec("tab_test6").setIndicator("CHAT", getResources().getDrawable(R.drawable.chat_notice));
 
