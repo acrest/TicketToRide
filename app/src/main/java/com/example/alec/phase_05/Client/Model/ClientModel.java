@@ -12,6 +12,7 @@ import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,7 @@ public class ClientModel extends Observable {
     private Map<IPlayer, Integer> longestPath;
     private Map<String, Integer> bonusPoints;
     private boolean firstCardDraw;
+    TrainType RouteAnyCardType;
 
     public ClientModel() {
         currentGame = null;
@@ -578,4 +580,11 @@ public class ClientModel extends Observable {
         notifyPropertyChanges(ROUTE);
     }
 
+    public TrainType getRouteAnyCardType() {
+        return RouteAnyCardType;
+    }
+
+    public void setRouteAnyCardType(TrainType routeAnyCardType) {
+        RouteAnyCardType = routeAnyCardType;
+    }
 }

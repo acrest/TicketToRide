@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server.model;
 
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Server.command.ServerResult;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
@@ -395,7 +396,7 @@ public class ServerFacade implements IServer {
         if (player == null) return false;
         Route route = game.getRouteByID(routeId);
         if(player.getTrainCount() < route.getLength() || !player.hasCardsForRoute(route.getType(), route.getLength())) return false;
-        player.removeCardsOfType(route.getType(), route.getLength());
+        player.removeCardsOfType(route.getType(), route.getLength(), ClientModel.getInstance().getRouteAnyCardType());
         player.setTrainCount(player.getTrainCount() - route.getLength());
         player.setPoints(player.getPoints() + route.getPoints());
         route.setOwner(player);

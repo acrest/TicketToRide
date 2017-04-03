@@ -6,6 +6,8 @@ import com.example.alec.phase_05.Client.ServerProxy;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Andrew on 2/9/2017.

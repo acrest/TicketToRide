@@ -8,13 +8,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Picture;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.annotation.BoolRes;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -33,9 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +41,7 @@ import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRide;
 import com.example.alec.phase_05.Client.Presenter.ITicketToRideListener;
 import com.example.alec.phase_05.Client.Presenter.PresenterTicketToRide;
+import com.example.alec.phase_05.Client.states.EndTurnState;
 import com.example.alec.phase_05.Client.states.OneDrawnCardState;
 import com.example.alec.phase_05.Client.states.OneDrawnOnePickedCardState;
 import com.example.alec.phase_05.Client.states.OnePickedCardState;
@@ -60,20 +55,16 @@ import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.IPlayer;
-import com.example.alec.phase_05.Shared.model.MyPoint;
-import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
-import static com.example.alec.phase_05.Shared.model.TrainType.ANY;
 import static com.example.alec.phase_05.Shared.model.TrainType.BOX;
 import static com.example.alec.phase_05.Shared.model.TrainType.CABOOSE;
 import static com.example.alec.phase_05.Shared.model.TrainType.COAL;
 import static com.example.alec.phase_05.Shared.model.TrainType.FREIGHT;
 import static com.example.alec.phase_05.Shared.model.TrainType.HOPPER;
-import static com.example.alec.phase_05.Shared.model.TrainType.LOCOMOTIVE;
 import static com.example.alec.phase_05.Shared.model.TrainType.PASSENGER;
 import static com.example.alec.phase_05.Shared.model.TrainType.REEFER;
 import static com.example.alec.phase_05.Shared.model.TrainType.TANKER;
@@ -143,14 +134,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView firstCard;
     private TextView secondCard;
     private TextView thirdCard;
-    private TextView wildRouteRed;
-    private TextView wildRouteOrange;
-    private TextView wildRouteYellow;
-    private TextView wildRouteGreen;
-    private TextView wildRouteBlue;
-    private TextView wildRoutePurple;
-    private TextView wildRouteWhite;
-    private TextView wildRouteBlack;
+    private TextView anyRouteRed;
+    private TextView anyRouteOrange;
+    private TextView anyRouteYellow;
+    private TextView anyRouteGreen;
+    private TextView anyRouteBlue;
+    private TextView anyRoutePurple;
+    private TextView anyRouteWhite;
+    private TextView anyRouteBlack;
     private int destinationCoiceCount;
     private TextView destinationPrompt;
     private int destinationChoiceCount;
@@ -168,7 +159,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     int cabooseCount;
     int locomotiveCount;
     private List<DestinationCard> cardChoices;
-    boolean hasDrawn = false;
+    boolean isTwinRoute;
 
     Map<TextView, Boolean> destCardChoices;
     private Route currentlySelectedRoute;
@@ -189,11 +180,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mView = getLayoutInflater().inflate(R.layout.dialog_dest_card, null);
         mBeginTurnView = getLayoutInflater().inflate(R.layout.dialog_begin_turn, null);
         mShowMapView = getLayoutInflater().inflate(R.layout.dialog_map, null);
-        mWildDialogView = getLayoutInflater().inflate(R.layout.dialog_wild_route, null);
+        mWildDialogView = getLayoutInflater().inflate(R.layout.dialog_any_route, null);
 
         mTabHost = getTabHost();
         mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("Player Info").setContent(R.id.player_info));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("Routes").setContent(R.id.routes));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("Destinations").setContent(R.id.routes));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("Game History").setContent(R.id.game_history));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test4").setIndicator("Bank").setContent(R.id.bank));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test5").setIndicator("Map").setContent(R.id.mapview));
@@ -201,7 +192,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mTabHost.setCurrentTab(0);
         //mTabHost.newTabSpec("tab_test6").setIndicator("CHAT", getResources().getDrawable(R.drawable.chat_notice));
 
-        setOnCreateFields(mView, mBeginTurnView, mShowMapView);
+        setOnCreateFields(mView, mBeginTurnView, mShowMapView, mWildDialogView);
         setOnCreateOnCreateListeners();
 
         setCardCountsZero();
@@ -355,7 +346,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         return longestRoutePlayer;
     }
 
-    private void setOnCreateFields(View mView, View mBeginTurnView, View mMapView){
+    private void setOnCreateFields(View mView, View mBeginTurnView, View mMapView, View mWildDialogView){
         presenter = new PresenterTicketToRide(this);
 
         mChatRecView = (RecyclerView) findViewById(R.id.rec_chat_list);
@@ -412,14 +403,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         caboosecountView = (TextView) findViewById(R.id.green_cards);
         locomotiveCountView = (TextView) findViewById(R.id.rainbow_cards);
 
-        wildRouteRed = (TextView) findViewById(R.id.wild_route_red);
-        wildRouteRed = (TextView) findViewById(R.id.wild_route_orange);
-        wildRouteRed = (TextView) findViewById(R.id.wild_route_yellow);
-        wildRouteRed = (TextView) findViewById(R.id.wild_route_green);
-        wildRouteRed = (TextView) findViewById(R.id.wild_route_blue);
-        wildRouteRed = (TextView) findViewById(R.id.wild_route_purple);
-        wildRouteRed = (TextView) findViewById(R.id.wild_route_white);
-        wildRouteRed = (TextView) findViewById(R.id.wild_route_black);
+        anyRouteRed = (TextView) mWildDialogView.findViewById(R.id.dialog_any_route_red);
+        anyRouteOrange = (TextView) mWildDialogView.findViewById(R.id.dialog_any_route_orange);
+        anyRouteYellow = (TextView) mWildDialogView.findViewById(R.id.dialog_any_route_yellow);
+        anyRouteGreen = (TextView) mWildDialogView.findViewById(R.id.dialog_any_route_green);
+        anyRouteBlue = (TextView) mWildDialogView.findViewById(R.id.dialog_any_route_blue);
+        anyRoutePurple = (TextView) mWildDialogView.findViewById(R.id.dialog_any_route_purple);
+        anyRouteWhite = (TextView) mWildDialogView.findViewById(R.id.dialog_any_route_white);
+        anyRouteBlack = (TextView) mWildDialogView.findViewById(R.id.dialog_any_route_black);
 
 //        placeRoutesButton = (Button) findViewById(R.id.placeRoute);
 
@@ -554,8 +545,16 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
                 if(state instanceof StartTurnState){
                     if (currentlySelectedRoute != null) {
-//                    drawRouteLine(currentlySelectedRoute.getCity1(), currentlySelectedRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
-                        presenter.claimRoute(currentlySelectedRoute.getId());
+                        isTwinRoute = false;
+
+                        if(currentlySelectedRoute.getType().equals(TrainType.ANY)){
+                            dialogWildRoute.show();
+                        }
+                        else{
+                            ClientModel.getInstance().setRouteAnyCardType(null);
+                            presenter.claimRoute(currentlySelectedRoute.getId());
+                        }
+
                         routeInfo.setVisibility(View.INVISIBLE);
                         twinRouteInfo.setVisibility(View.INVISIBLE);
                     }
@@ -568,16 +567,23 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(state instanceof StartTurnState){
-                    Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
-                    if (twinRoute.getOwner() == null) {
-//                    drawRouteLine(twinRoute.getCity1(), twinRoute.getCity2(), ClientModel.getInstance().getCurrentPlayer().getColor());
-                        //twin
-                        presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
-                        routeInfo.setVisibility(View.INVISIBLE);
-                        twinRouteInfo.setVisibility(View.INVISIBLE);
+                if(currentlySelectedRoute.getType().equals(TrainType.ANY)){
+                    dialogWildRoute.show();
+                }
+                else{
+                    if(state instanceof StartTurnState){
+                        isTwinRoute = true;
+
+                        Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                        if (twinRoute.getOwner() == null) {
+                            ClientModel.getInstance().setRouteAnyCardType(null);
+                            presenter.claimRoute(twinRoute.getId());
+                        }
                     }
                 }
+
+                routeInfo.setVisibility(View.INVISIBLE);
+                twinRouteInfo.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -667,8 +673,136 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 }
 
                 if(s.equals("tab_test6")){
-
+                    ((TextView)mTabHost.getTabWidget().getChildAt(5).findViewById(android.R.id.title)).setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }
+            }
+        });
+
+        anyRouteRed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClientModel.getInstance().setRouteAnyCardType(TrainType.COAL);
+
+                if(isTwinRoute){
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                }
+                else{
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+
+                dialogWildRoute.dismiss();
+            }
+        });
+
+        anyRouteOrange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClientModel.getInstance().setRouteAnyCardType(TrainType.TANKER);
+
+                if(isTwinRoute){
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                }
+                else{
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+
+                dialogWildRoute.dismiss();
+            }
+        });
+
+        anyRouteYellow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClientModel.getInstance().setRouteAnyCardType(TrainType.BOX);
+
+                if(isTwinRoute){
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                }
+                else{
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+
+                dialogWildRoute.dismiss();
+            }
+        });
+
+        anyRouteGreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClientModel.getInstance().setRouteAnyCardType(TrainType.CABOOSE);
+
+                if(isTwinRoute){
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                }
+                else{
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+
+                dialogWildRoute.dismiss();
+            }
+        });
+
+        anyRouteBlue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClientModel.getInstance().setRouteAnyCardType(TrainType.PASSENGER);
+
+                if(isTwinRoute){
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                }
+                else{
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+
+                dialogWildRoute.dismiss();
+            }
+        });
+
+        anyRoutePurple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClientModel.getInstance().setRouteAnyCardType(TrainType.FREIGHT);
+
+                if(isTwinRoute){
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                }
+                else{
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+
+                dialogWildRoute.dismiss();
+            }
+        });
+
+        anyRouteWhite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClientModel.getInstance().setRouteAnyCardType(TrainType.REEFER);
+
+                if(isTwinRoute){
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                }
+                else{
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+
+                dialogWildRoute.dismiss();
+            }
+        });
+
+        anyRouteBlack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClientModel.getInstance().setRouteAnyCardType(TrainType.HOPPER);
+
+                if(isTwinRoute){
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                }
+                else{
+                    presenter.claimRoute(currentlySelectedRoute.getId());
+                }
+
+                dialogWildRoute.dismiss();
             }
         });
     }
@@ -1205,6 +1339,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     @Override
     public void updateChats(List<Chat> chats) {
         mChatRecyclerAdapter.updateListData(chats);
+        if(mTabHost.getCurrentTab() != 5 && chats.size() != 0){
+            ((TextView)mTabHost.getTabWidget().getChildAt(5).findViewById(android.R.id.title)).setCompoundDrawablesWithIntrinsicBounds(R.drawable.chat_notice, 0, 0, 0);
+        }
         //tab6.setIndicator("CHAT",getResources().getDrawable(R.drawable.chat_notice));
     }
 
@@ -1268,7 +1405,12 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateGameState(GameState state) {
-        stateIndicator.setText(state.toString());
+        if(state instanceof EndTurnState && ClientModel.getInstance().getCurrentPlayer().getName().equals(ClientModel.getInstance().getGame().getCurrentPlayerTurn())){
+
+        }
+        else{
+            stateIndicator.setText(state.toString());
+        }
     }
 
     @Override
@@ -1795,6 +1937,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         else{
             dialogDestinationButton.setEnabled(false);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //remove player from game;
+        //Poller.getInstance().setListGamePolling();
+        //super.onBackPressed();
     }
 }
 

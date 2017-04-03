@@ -54,7 +54,8 @@
                 android:background="@android:color/holo_red_dark"
                 android:text="@string/color_red"
                 android:textSize="25sp"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:visibility="invisible"/>
 
         </LinearLayout>
 
@@ -75,7 +76,8 @@
                 android:background="@android:color/holo_blue_dark"
                 android:text="@string/color_blue"
                 android:textSize="25sp"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="invisible"/>
         </LinearLayout>
 
         <LinearLayout
@@ -95,7 +97,8 @@
                 android:background="#FFFF00"
                 android:text="@string/color_yellow"
                 android:textSize="25sp"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="invisible"/>
         </LinearLayout>
 
         <LinearLayout
@@ -115,7 +118,8 @@
                 android:background="@android:color/holo_green_dark"
                 android:text="@string/color_green"
                 android:textSize="25sp"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="invisible"/>
         </LinearLayout>
 
         <LinearLayout
@@ -135,7 +139,8 @@
                 android:background="@android:color/black"
                 android:text="@string/color_black"
                 android:textSize="25sp"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="invisible"/>
         </LinearLayout>
 
     </LinearLayout>
