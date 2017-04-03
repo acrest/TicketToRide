@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:ems="13"
         android:maxLength="13"
+        android:textColor="@android:color/white"
         android:hint="@string/hint_game_name"
         android:textColorHint="@android:color/white"
         android:textSize="25sp"

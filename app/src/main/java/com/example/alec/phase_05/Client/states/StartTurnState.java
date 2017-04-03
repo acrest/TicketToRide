@@ -97,7 +97,7 @@ public class StartTurnState implements GameState {
         } else {
 //            currentPlayer.removeCardsOfType(route.getType(), route.getLength());
             System.out.println("ROUTE CLAIMED");
-<<<<<<< HEAD
+
             List<TrainCard> playersHand = currentPlayer.getTrainCards();
             int length = route.getLength();
             for (TrainCard card : playersHand) {
@@ -111,7 +111,6 @@ public class StartTurnState implements GameState {
                 }
 
 
-=======
 //            List<TrainCard> playersHand = currentPlayer.getTrainCards();
 //            int length = route.getLength();
 //            for (TrainCard card : playersHand) {
@@ -126,17 +125,18 @@ public class StartTurnState implements GameState {
 //
 //
 //            }
-            List<TrainCard> removedCards = currentPlayer.removeCardsForRoute(route.getType(), route.getLength());
-            for(TrainCard card : removedCards) {
-                facade.discardTrainCard(card);
->>>>>>> 19f61fc96cd8b81007077ef489a117c5710aca72
+                List<TrainCard> removedCards = currentPlayer.removeCardsForRoute(route.getType(), route.getLength());
+                for (TrainCard tCard : removedCards) {
+                    facade.discardTrainCard(tCard);
+
+                }
+                model.setTrainCount(model.getTrainCount() - route.getLength());
+                model.setPlayerPoints(model.getPlayerPoints() + route.getPoints());
+                facade.claimRoute(routeId);
+                facade.finishTurn();
+                state.setTurnState(new EndTurnState(state));
+                model.updateTrainCardDisplay();
             }
-            model.setTrainCount(model.getTrainCount() - route.getLength());
-            model.setPlayerPoints(model.getPlayerPoints() + route.getPoints());
-            facade.claimRoute(routeId);
-            facade.finishTurn();
-            state.setTurnState(new EndTurnState(state));
-            model.updateTrainCardDisplay();
         }
     }
 
