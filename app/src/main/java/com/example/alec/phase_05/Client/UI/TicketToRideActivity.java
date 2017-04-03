@@ -1470,9 +1470,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         destCardChoices.put(firstCard, false);
         destCardChoices.put(secondCard, false);
         destCardChoices.put(thirdCard, false);
-        firstCard.setText(cardChoices.get(0).toString());
-        secondCard.setText(cardChoices.get(1).toString());
-        thirdCard.setText(cardChoices.get(2).toString());
+        firstCard.setText(cardChoices.size() >= 1 ? cardChoices.get(0).toString() : "INVALID");
+        secondCard.setText(cardChoices.size() >= 2 ? cardChoices.get(1).toString() : "INVALID");
+        thirdCard.setText(cardChoices.size() >= 3 ? cardChoices.get(2).toString() : "INVALID");
         if (!firstTurn){
             destinationPrompt.setText("CHOOSE AT LEAST 1 DESTINATION CARDS");
         }
@@ -1483,13 +1483,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     private List<DestinationCard> getChosenDestinationCards() {
         List<DestinationCard> chosen = new ArrayList<>();
-        if(destCardChoices.get(firstCard)) {
+        if(destCardChoices.get(firstCard) && cardChoices.size() >= 1) {
             chosen.add(cardChoices.get(0));
         }
-        if(destCardChoices.get(secondCard)) {
+        if(destCardChoices.get(secondCard) && cardChoices.size() >= 2) {
             chosen.add(cardChoices.get(1));
         }
-        if(destCardChoices.get(thirdCard)) {
+        if(destCardChoices.get(thirdCard) && cardChoices.size() >= 3) {
             chosen.add(cardChoices.get(2));
         }
         return chosen;
@@ -1497,13 +1497,13 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     private List<DestinationCard> getNotChosenDestinationCards() {
         List<DestinationCard> notChosen = new ArrayList<>();
-        if(!destCardChoices.get(firstCard)) {
+        if(!destCardChoices.get(firstCard) && cardChoices.size() >= 1) {
             notChosen.add(cardChoices.get(0));
         }
-        if(!destCardChoices.get(secondCard)) {
+        if(!destCardChoices.get(secondCard) && cardChoices.size() >= 2) {
             notChosen.add(cardChoices.get(1));
         }
-        if(!destCardChoices.get(thirdCard)) {
+        if(!destCardChoices.get(thirdCard) && cardChoices.size() >= 3) {
             notChosen.add(cardChoices.get(2));
         }
         return notChosen;
