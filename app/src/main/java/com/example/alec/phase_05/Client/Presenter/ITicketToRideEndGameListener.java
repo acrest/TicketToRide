@@ -6,4 +6,6 @@ package com.example.alec.phase_05.Client.Presenter;
 
 public interface ITicketToRideEndGameListener {
     void updatePlayer(String playerName);
+
+    void returnToGameList();
 }

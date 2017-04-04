@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Client.Presenter;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Client.Poller;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 
 import java.util.Iterator;
@@ -65,6 +66,7 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
         return model.getPlayerByName(playerName).getColor();
     }
 
+    // Get the text displayed at the top of the view.
     @Override
     public String getWinner() {
         //TODO handle ties
@@ -84,28 +86,36 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
         return maxPlayer + " Has Won";
     }
 
+    // Get name of holder of longest route.
     @Override
     public String getLongestRouteHolder() {
-//        Map<IPlayer, Integer> longest = model.getLongestRoute();
-//        IPlayer maxPlayer = null;
-//        int maxLength = -1;
-//        for (int i = 0; i < model.getGameMaxPlayers(); i++) {
-//            IPlayer player = model.getPlayer(i);
-//            if (player != null) {
-//                if (maxPlayer == null || longest.get(player) > maxLength) {
-//                    maxPlayer = player;
-//                    maxLength = longest.get(player);
-//                }
-//            }
-//        }
-//        if (maxPlayer == null) {
-//            throw new IllegalStateException("end game reached, but there is no longest route holder");
-//        }
-//        return maxPlayer.getName();
-
-        return getPlayerNames().next();
+        Map<IPlayer, Integer> longest = model.getLongestRoute();
+        IPlayer maxPlayer = null;
+        int maxLength = -1;
+        for (int i = 0; i < model.getGameMaxPlayers(); i++) {
+            IPlayer player = model.getPlayer(i);
+            if (player != null) {
+                Integer length = longest.get(player);
+                if (maxPlayer == null || length != null && longest.get(player) > maxLength) {
+                    maxPlayer = player;
+                    maxLength = longest.get(player);
+                }
+            }
+        }
+        if (maxPlayer == null) {
+            throw new IllegalStateException("end game reached, but there is no longest route holder");
+        }
+        return maxPlayer.getName();
     }
 
+    // Called when "Return To Menu" button is pressed on the view.
+    @Override
+    public void onReturnButtonPressed() {
+        listener.returnToGameList();
+        Poller.getInstance().setListGamePolling();
+    }
+
+    // Watches for updates in the model which change the player stats.
     @Override
     public void update(UpdateIndicator updateIndicator) {
         if(updateIndicator.needUpdate(ClientModel.BONUS_POINTS)) {

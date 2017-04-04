@@ -130,13 +130,14 @@ public class GameMap {
         for(int i = 0; i < cityToRoutes.get(city).size(); i++){
             Route route = cityToRoutes.get(city).get(i);
 
-            if(route.getOwner().equals(player)){
+            IPlayer owner = route.getOwner();
+            if(owner != null && owner.getName().equals(player)){
 
                 if(route != rootRoute){
                     City firstCity = route.getCity1();
                     City secondCity = route.getCity2();
 
-                    if(firstCity == city2 || secondCity == city2){
+                    if(firstCity.equals(city2) || secondCity.equals(city2)){
                         return true;
                     }
 
@@ -144,8 +145,11 @@ public class GameMap {
                         markedCities.put(firstCity, true);
 
                         for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
-                            if(cityToRoutes.get(firstCity).get(j).getOwner().equals(player)){
-                                if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities, player)){
+
+                            Route route2 = cityToRoutes.get(firstCity).get(j);
+                            IPlayer owner2 = route2.getOwner();
+                            if(owner2 != null && owner2.getName().equals(player)){
+                                if(checkIfDestinationCompleteRec(city2, firstCity, route2, markedCities, player)){
                                     return true;
                                 }
                             }
@@ -156,8 +160,11 @@ public class GameMap {
                         markedCities.put(secondCity, true);
 
                         for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
-                            if(cityToRoutes.get(secondCity).get(j).getOwner().equals(player)){
-                                if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities, player)){
+
+                            Route route2 = cityToRoutes.get(secondCity).get(j);
+                            IPlayer owner2 = route2.getOwner();
+                            if(owner2 != null && owner2.getName().equals(player)){
+                                if(checkIfDestinationCompleteRec(city2, secondCity, route2, markedCities, player)){
                                     return true;
                                 }
                             }
@@ -287,7 +294,8 @@ public class GameMap {
 
         for(Route route : routes.values()){
             if(route.getCity1().equals(city1) || route.getCity2().equals(city2)){
-                if(route.getOwner().getName().equals(player)){
+                IPlayer owner = route.getOwner();
+                if(owner != null && owner.getName().equals(player)){
                     rootRoutes.add(route);
                 }
             }
@@ -305,7 +313,8 @@ public class GameMap {
                 markedCities.put(firstCity, true);
 
                 for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
-                    if(cityToRoutes.get(firstCity).get(j).getOwner().getName().equals(player)){
+                    IPlayer owner = cityToRoutes.get(firstCity).get(j).getOwner();
+                    if(owner != null && owner.getName().equals(player)){
                         if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities, player)){
                             return true;
                         }
@@ -317,7 +326,8 @@ public class GameMap {
                 markedCities.put(secondCity, true);
 
                 for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
-                    if(cityToRoutes.get(secondCity).get(j).getOwner().getName().equals(player)){
+                    IPlayer owner = cityToRoutes.get(secondCity).get(j).getOwner();
+                    if(owner != null && owner.getName().equals(player)){
                         if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities, player)){
                             return true;
                         }
