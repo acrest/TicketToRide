@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.UI;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.alec.phase_05.Client.Presenter.IPresenterTicketToRideEndGame;
@@ -27,6 +29,7 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
     private ResultsAdapter mResultsAdapter;
     private TextView mWinner;
     private TextView mLongestRoute;
+    private Button mReturnButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +55,26 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
 
         mResults.setLayoutManager(new LinearLayoutManager(this));
         mResults.setAdapter(mResultsAdapter);
+
+        mReturnButton = (Button) findViewById(R.id.results_return_button);
+        mReturnButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                presenter.onReturnButtonPressed();
+            }
+        });
     }
 
     @Override
     public void updatePlayer(String playerName) {
         mResultsAdapter.updateEntry(playerName);
+    }
+
+    @Override
+    public void returnToGameList() {
+        Intent intent = new Intent(TicketToRideEndGameActivity.this, GameStationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultHolder> {
