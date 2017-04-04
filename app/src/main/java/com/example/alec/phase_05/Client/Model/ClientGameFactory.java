@@ -20,6 +20,8 @@ public final class ClientGameFactory {
         for (int i = 0; i < cards.length; ++i) {
             bank.setVisibleCard(i, cards[i]);
         }
+        bank.setNumberOfTrainCards(gameInfo.getTrainCardsRemaining());
+        bank.setNumberOfDestinationCards(gameInfo.getDestinationCardsRemaining());
         IClientGame game = new ClientGame(gameInfo.getId(), gameInfo.getName(), gameInfo.getMaxPlayers(),
                 bank, gameInfo.getMap());
         Player[] players = gameInfo.getPlayers();

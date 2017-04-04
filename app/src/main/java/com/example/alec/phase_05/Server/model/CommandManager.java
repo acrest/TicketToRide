@@ -135,8 +135,7 @@ public class CommandManager {
         } else if (command instanceof ServerSendChatCommand) {
             return new ServerChatSentCommand(((ServerSendChatCommand) command).getChat());
         } else if (command instanceof ServerFinishGameCommand) {
-//            return new ServerGameFinishedCommand(game.getBonusPoints());
-            return new ServerGameFinishedCommand(null);
+            return new ServerGameFinishedCommand(game.getBonusPoints());
         }
 
         return null;

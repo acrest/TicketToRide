@@ -52,13 +52,12 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 
     @Override
     public int getAdditions(String playerName) {
-//        return model.getBonusPoints(playerName);
-        return 0;
+        return model.getBonusPoints(playerName);
     }
 
     @Override
     public int getTotal(String playerName) {
-        return getPoints(playerName) + getAdditions(playerName);
+        return getPoints(playerName) + getAdditions(playerName) + (getLongestRouteHolder().equals(playerName) ? 10 : 0);
     }
 
     @Override
