@@ -32,6 +32,7 @@ import com.example.alec.phase_05.Shared.model.GameInfo;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.IServer;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 import java.util.List;
 
@@ -213,8 +214,8 @@ public class ServerProxy implements IServer {
 //    }
 
     @Override
-    public boolean claimRoute(String playerName, int gameID, int routeId) {
-        return executeCommand(new ClientClaimRouteCommand(playerName, gameID, routeId)).toBoolean();
+    public boolean claimRoute(String playerName, int gameID, int routeId, TrainType type) {
+        return executeCommand(new ClientClaimRouteCommand(playerName, gameID, routeId, type)).toBoolean();
     }
 
     @Override

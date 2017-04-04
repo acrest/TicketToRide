@@ -8,6 +8,7 @@ import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameInfo;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 /**
  * Created by clarkpathakis on 2/6/17.
@@ -362,12 +363,12 @@ public class Facade {
 //        }
     }
 
-    public void claimRoute(final int routeId) {
+    public void claimRoute(final int routeId, final TrainType type) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (model.hasCurrentGame()) {
-                    proxy.claimRoute(model.getCurrentPlayerName(), model.getGameID(), routeId);
+                    proxy.claimRoute(model.getCurrentPlayerName(), model.getGameID(), routeId, type);
                 }
             }
         });

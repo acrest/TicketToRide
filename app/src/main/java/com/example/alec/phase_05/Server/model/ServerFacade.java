@@ -389,14 +389,17 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public boolean claimRoute(String playerName, int gameId, int routeId) {
+    public boolean claimRoute(String playerName, int gameId, int routeId, TrainType type) {
         IServerGame game = model.getGame(gameId);
         if (game == null) return false;
         Player player = (Player) game.getPlayerByName(playerName);
         if (player == null) return false;
         Route route = game.getRouteByID(routeId);
-        if(player.getTrainCount() < route.getLength() || !player.hasCardsForRoute(route.getType(), route.getLength())) return false;
-        player.removeCardsOfType(route.getType(), route.getLength(), ClientModel.getInstance().getRouteAnyCardType());
+        if (type == null) {
+            type = route.getType();
+        }
+        if(player.getTrainCount() < route.getLength() || !player.hasCardsForRoute(type, route.getLength())) return false;
+        player.removeCardsOfType(type, route.getLength(), ClientModel.getInstance().getRouteAnyCardType());
         player.setTrainCount(player.getTrainCount() - route.getLength());
         player.setPoints(player.getPoints() + route.getPoints());
         route.setOwner(player);

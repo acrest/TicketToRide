@@ -214,7 +214,7 @@ public class StartTurnState implements GameState {
             System.out.println("player points currently "+model.getPlayerPoints());
             System.out.println("this is added " + route.getPoints());
             model.setPlayerPoints(model.getPlayerPoints() + route.getPoints());
-            facade.claimRoute(routeId);
+            facade.claimRoute(routeId, currentType);
             facade.finishTurn();
             state.setTurnState(new EndTurnState(state));
             model.updateTrainCardDisplay();
