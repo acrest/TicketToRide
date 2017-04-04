@@ -30,7 +30,7 @@ public interface IServer {
 
     GameInfo getGameState(int gameID);
 
-    boolean claimRoute(String playerName, int gameId, int routeId);
+    boolean claimRoute(String playerName, int gameId, int routeId, TrainType type);
 
     TrainCard drawTrainCard(String playerName, int gameId);
 
