@@ -22,4 +22,7 @@ public interface IPresenterTicketToRideEndGame extends IPresenter {
     String getWinner();
 
     String getLongestRouteHolder();
+
+    // Return the user to the game list.
+    void onReturnButtonPressed();
 }

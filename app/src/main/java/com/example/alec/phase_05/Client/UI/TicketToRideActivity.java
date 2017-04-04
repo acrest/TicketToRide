@@ -136,6 +136,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     private TextView firstCard;
     private TextView secondCard;
     private TextView thirdCard;
+    // Need these layouts in to show and hide destination card dialog when there aren't enough cards.
+    private View firstCardLayout;
+    private View secondCardLayout;
+    private View thirdCardLayout;
     private TextView anyRouteRed;
     private TextView anyRouteOrange;
     private TextView anyRouteYellow;
@@ -418,11 +422,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //        placeRoutesButton = (Button) findViewById(R.id.placeRoute);
 
         firstCard = (TextView) mView.findViewById(R.id.firstCard);
+        firstCardLayout = mView.findViewById(R.id.firstCardLayout);
         destinationPrompt = (TextView) mView.findViewById(R.id.choose_destination_prompt);
         start_turn_prompt = (TextView) mBeginTurnView.findViewById(R.id.dialog_begin_turn_message);
 
         secondCard = (TextView) mView.findViewById(R.id.secondCard);
+        secondCardLayout = mView.findViewById(R.id.secondCardLayout);
         thirdCard = (TextView) mView.findViewById(R.id.thirdCard);
+        thirdCardLayout = mView.findViewById(R.id.thirdCardLayout);
         dialogDestinationButton = (Button) mView.findViewById(R.id.doneButton);
         dialogBeginTurnButton = (Button) mBeginTurnView.findViewById(R.id.dialog_begin_turn_button);
         dialogMapButton = (Button) mMapView.findViewById(R.id.dialog_map_button);
@@ -1471,9 +1478,29 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         destCardChoices.put(firstCard, false);
         destCardChoices.put(secondCard, false);
         destCardChoices.put(thirdCard, false);
-        firstCard.setText(cardChoices.size() >= 1 ? cardChoices.get(0).toString() : "INVALID");
-        secondCard.setText(cardChoices.size() >= 2 ? cardChoices.get(1).toString() : "INVALID");
-        thirdCard.setText(cardChoices.size() >= 3 ? cardChoices.get(2).toString() : "INVALID");
+        // Set the text of the boxes to the destination cards's toString if they exist.
+        // Hide boxes when there are less than 3 destination cards.
+        if (cardChoices.size() >= 1) {
+            firstCard.setText(cardChoices.get(0).toString());
+            firstCardLayout.setVisibility(View.VISIBLE);
+        } else {
+            firstCard.setText("INVALID");
+            firstCardLayout.setVisibility(View.GONE);
+        }
+        if (cardChoices.size() >= 2){
+            secondCard.setText(cardChoices.get(1).toString());
+            secondCardLayout.setVisibility(View.VISIBLE);
+        } else {
+            secondCard.setText("INVALID");
+            secondCardLayout.setVisibility(View.GONE);
+        }
+        if (cardChoices.size() >= 3){
+            thirdCard.setText(cardChoices.get(2).toString());
+            thirdCardLayout.setVisibility(View.VISIBLE);
+        } else {
+            thirdCard.setText("INVALID");
+            thirdCardLayout.setVisibility(View.GONE);
+        }
         if (!firstTurn){
             destinationPrompt.setText("CHOOSE AT LEAST 1 DESTINATION CARDS");
         }

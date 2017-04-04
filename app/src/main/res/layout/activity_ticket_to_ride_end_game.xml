@@ -93,5 +93,13 @@
                 android:layout_height="match_parent"
                 android:textColor="@android:color/white" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/results_return_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="@string/return_to_game_list" />
     </LinearLayout>
 </LinearLayout>

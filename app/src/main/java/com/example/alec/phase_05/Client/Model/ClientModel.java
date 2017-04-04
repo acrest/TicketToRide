@@ -15,6 +15,7 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -88,6 +89,7 @@ public class ClientModel extends Observable {
         isHost = false;
         firstCardDraw = true;
         isLastTurns = false;
+        bonusPoints = new HashMap<>();
     }
 
     public IPlayer getCurrentPlayer() {
