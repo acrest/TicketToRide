@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.DestinationCardDeck;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainCardDeck;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +37,33 @@ public class ServerBank implements IServerBank {
         fillVisibleTrainCards();
     }
 
+    private void checkIfAllVisibleRainbow() {
+        int rainbowNumb = 0;
+
+        for (TrainCard card : visibleTrainCards) {
+            if (card.getType().equals(TrainType.LOCOMOTIVE)) {
+                rainbowNumb++;
+            }
+        }
+        if (rainbowNumb == NUM_VISIBLE_TRAIN_CARDS) {
+            for (int i = 0; i < NUM_VISIBLE_TRAIN_CARDS; ++i) {
+                TrainCard card = visibleTrainCards.get(i);
+                discardTrainCard(card);
+                visibleTrainCards.set(i, drawTrainCard());
+            }
+        }
+
+    }
+
     private void fillVisibleTrainCards() {
+
         for (int i = 0; i < NUM_VISIBLE_TRAIN_CARDS; ++i) {
             if (i >= visibleTrainCards.size()) {
                 visibleTrainCards.add(drawTrainCard());
             } else if (visibleTrainCards.get(i) == null) {
                 visibleTrainCards.set(i, drawTrainCard());
             }
+            checkIfAllVisibleRainbow();
         }
     }
 
