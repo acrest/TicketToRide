@@ -51,10 +51,9 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         }
     }
 
-    @Override
-    public void claimRoute(int routeID) {
+    public void claimRoute(int routeID, TrainType type) {
         try {
-            model.doClaimRoute(routeID);
+            model.doClaimRoute(routeID, type);
             model.setLongestPath();
         } catch (StateWarning e) {
             listener.handleWarning(e);

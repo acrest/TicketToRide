@@ -107,8 +107,8 @@ public class StartScreenActivity extends AppCompatActivity {
 
         firstIpAddress.setText("10");
         secondIpAddress.setText("24");
-        thirdIpAddress.setText("65");
-        fourthIpAddress.setText("250");
+        thirdIpAddress.setText("64");
+        fourthIpAddress.setText("220");
 
     }
 

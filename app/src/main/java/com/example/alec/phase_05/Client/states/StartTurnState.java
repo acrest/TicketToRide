@@ -126,32 +126,42 @@ public class StartTurnState implements GameState {
     }
 
     @Override
-    public void claimRoute(int routeId) throws StateWarning {
+    public void claimRoute(int routeId, TrainType type) throws StateWarning {
+        TrainType currentType;
+        Route route = ClientModel.getInstance().getMap().getRouteByID(routeId);
+        if(type != null){
+            currentType = type;
+        }
+        else{
+            currentType = route.getType();
+        }
+
+
         System.out.println("Claiming route.");
         // claim route
         // get player hand and check that it has the needed cards
         // send in those cards.
         Player currentPlayer = (Player) ClientModel.getInstance().getCurrentPlayer();
-        Route route = ClientModel.getInstance().getMap().getRouteByID(routeId);
-        System.out.println("STARTTURNSTATE  " + " " + currentPlayer.countCardsOfType(route.getType()));
-        System.out.println("CONTINUING " + route.getType() + " " + route.getId());
+
+        System.out.println("STARTTURNSTATE  " + " " + currentPlayer.countCardsOfType(currentType));
+        System.out.println("CONTINUING " + currentType.toString() + " " + route.getId());
         List<TrainCard> arr = currentPlayer.getTrainCards();
         for (TrainCard tc : arr) {
             System.out.println(tc.getType());
         }
-        if (!currentPlayer.hasCardsForRoute(route.getType(), route.getLength())) {
+        if (!currentPlayer.hasCardsForRoute(currentType, route.getLength())) {
             throw new StateWarning("You do not have enough of those cards in your hand to " +
                     "claim that route. Please draw a train card or destination card.");
         } else if (currentPlayer.getTrainCount() < route.getLength()) {
             throw new StateWarning("You do not have enough trains to claim this route.");
         } else {
-//            currentPlayer.removeCardsOfType(route.getType(), route.getLength());
+//            currentPlayer.removeCardsOfType(currentType, route.getLength());
             System.out.println("ROUTE CLAIMED");
 //            List<TrainCard> playersHand = currentPlayer.getTrainCards();
 //            int length = route.getLength();
 //            for (TrainCard card : playersHand) {
 //
-//                if (card.getType().equals(route.getType()) || route.getType().equals(TrainType.ANY)) {
+//                if (card.getType().equals(currentType) || currentType.equals(TrainType.ANY)) {
 //                    facade.discardTrainCard(card);
 //                    length--;
 //                    if (length == 0) {
@@ -161,7 +171,7 @@ public class StartTurnState implements GameState {
 //
 //
 //            }
-            List<TrainCard> removedCards = currentPlayer.removeCardsForRoute(route.getType(), route.getLength());
+            List<TrainCard> removedCards = currentPlayer.removeCardsForRoute(currentType, route.getLength());
             for (TrainCard card : removedCards) {
                 facade.discardTrainCard(card);
             }

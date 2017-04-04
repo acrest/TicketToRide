@@ -44,7 +44,7 @@ public class TwoPickedCardState implements GameState {
     }
 
     @Override
-    public void claimRoute(int routeId) throws StateWarning {
+    public void claimRoute(int routeId, TrainType type) throws StateWarning {
         throw new StateWarning("Already drew card. You must end your turn now.");
     }
 
