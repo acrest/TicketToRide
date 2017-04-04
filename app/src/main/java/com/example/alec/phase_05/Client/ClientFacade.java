@@ -162,7 +162,6 @@ public class ClientFacade {
         Facade.getInstance().drawDestinationCard();
         Facade.getInstance().drawDestinationCard();
         model.setGameStarted(); //make sure this is called at the end
-        model.displayHand();
     }
 
     public void addTrainCard(TrainCard card) {

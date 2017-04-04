@@ -57,5 +57,6 @@
     <string name="beginTurn">IT IS NOW YOUR TURN.</string>
     <string name="seeMap">See Map</string>
     <string name="dialog_any_route_prompt">Choose which color to use for route.</string>
+    <string name="return_to_game_list">Return To Games</string>
 
 </resources>
