@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.media.RatingCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -1618,8 +1619,15 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             DestinationCard destinationCard = listData.get(position);
 
             holder.city1.setText(destinationCard.getCity1().getName());
+            holder.city1.setTextSize(24);
+            holder.city1.setTextColor(Color.BLACK);
             holder.city2.setText(destinationCard.getCity2().getName());
+            holder.city2.setTextSize(24);
+            holder.city2.setTextColor(Color.BLACK);
             holder.destination_points.setText(Integer.toString(destinationCard.getValue()));
+            holder.destination_points.setTextSize(24);
+            holder.destination_points.setTextColor(Color.BLACK);
+
         }
 
         @Override
@@ -1789,14 +1797,19 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             PlayerStat stat = listData.get(position);
             holder.name.setText(stat.getPlayerName());
             holder.name.setTextColor(getColorFromName(stat.getColor()));
+            holder.name.setTextSize(20);
             holder.points.setText(Integer.toString(stat.getPoints()));
+            holder.points.setTextSize(20);
             holder.points.setTextColor(getColorFromName(stat.getColor()));
             holder.trainCount.setText(Integer.toString(stat.getTrainCount()));
             holder.trainCount.setTextColor(getColorFromName(stat.getColor()));
+            holder.trainCount.setTextSize(20);
+            holder.trainCards.setTextSize(20);
             holder.trainCards.setText(Integer.toString(stat.getTrainCards()));
             holder.trainCards.setTextColor(getColorFromName(stat.getColor()));
             holder.destinationCards.setText(Integer.toString(stat.getDestinationCards()));
             holder.destinationCards.setTextColor(getColorFromName(stat.getColor()));
+            holder.destinationCards.setTextSize(20);
         }
 
         @Override
@@ -1908,14 +1921,23 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     private void updateTrainCardTextViews(){
         boxCountView.setText(Integer.toString(boxCount));
+        boxCountView.setTextSize(18);
         passengerCountView.setText(Integer.toString(passengerCount));
+        passengerCountView.setTextSize(18);
         tankerCountView.setText(Integer.toString(tankerCount));
+        tankerCountView.setTextSize(18);
         reeferCountView.setText(Integer.toString(reeferCount));
+        reeferCountView.setTextSize(18);
         freightCountView.setText(Integer.toString(freightCount));
+        freightCountView.setTextSize(18);
         hopperCountView.setText(Integer.toString(hopperCount));
+        hopperCountView.setTextSize(18);
         coalCountView.setText(Integer.toString(coalCount));
+        coalCountView.setTextSize(18);
         caboosecountView.setText(Integer.toString(cabooseCount));
+        caboosecountView.setTextSize(18);
         locomotiveCountView.setText(Integer.toString(locomotiveCount));
+        locomotiveCountView.setTextSize(18);
     }
 
     private void checkNumSelectedDestCards(){

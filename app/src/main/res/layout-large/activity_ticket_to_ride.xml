@@ -13,7 +13,7 @@
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.05"/>
+            android:layout_weight="0.07"/>
 
         <FrameLayout
             android:id="@android:id/tabcontent"
@@ -55,10 +55,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:layout_marginTop="15dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -71,9 +69,10 @@
 
                             <ImageView
                                 android:id="@+id/red_train"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@mipmap/red" />
+                                android:layout_width="60dp"
+                                android:layout_height="120dp"
+                                android:rotation="90"
+                                android:src="@drawable/red" />
 
                             <TextView
                                 android:id="@+id/red_cards"
@@ -94,9 +93,10 @@
 
                             <ImageView
                                 android:id="@+id/orange_train"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@mipmap/orange" />
+                                android:layout_width="60dp"
+                                android:layout_height="120dp"
+                                android:rotation="90"
+                                android:src="@drawable/orange" />
 
                             <TextView
                                 android:id="@+id/orange_cards"
@@ -117,9 +117,10 @@
 
                             <ImageView
                                 android:id="@+id/yellow_train"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@mipmap/yellow" />
+                                android:layout_width="60dp"
+                                android:layout_height="120dp"
+                                android:rotation="90"
+                                android:src="@drawable/yellow" />
 
                             <TextView
                                 android:id="@+id/yellow_cards"
@@ -140,9 +141,10 @@
 
                             <ImageView
                                 android:id="@+id/green_train"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@mipmap/green" />
+                                android:layout_width="60dp"
+                                android:layout_height="120dp"
+                                android:rotation="90"
+                                android:src="@drawable/green" />
 
                             <TextView
                                 android:id="@+id/green_cards"
@@ -163,9 +165,10 @@
 
                             <ImageView
                                 android:id="@+id/blue_train"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@mipmap/images" />
+                                android:layout_width="60dp"
+                                android:layout_height="120dp"
+                                android:rotation="90"
+                                android:src="@drawable/blue" />
 
                             <TextView
                                 android:id="@+id/blue_cards"
@@ -186,9 +189,10 @@
 
                             <ImageView
                                 android:id="@+id/purple_train"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@mipmap/purple" />
+                                android:layout_width="60dp"
+                                android:layout_height="120dp"
+                                android:rotation="90"
+                                android:src="@drawable/purple" />
 
                             <TextView
                                 android:id="@+id/purple_cards"
@@ -209,9 +213,10 @@
 
                             <ImageView
                                 android:id="@+id/white_train"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@mipmap/white" />
+                                android:layout_width="60dp"
+                                android:layout_height="120dp"
+                                android:rotation="90"
+                                android:src="@drawable/white" />
 
                             <TextView
                                 android:id="@+id/white_cards"
@@ -232,9 +237,10 @@
 
                             <ImageView
                                 android:id="@+id/black_train"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@mipmap/black" />
+                                android:layout_width="60dp"
+                                android:layout_height="120dp"
+                                android:rotation="90"
+                                android:src="@drawable/black" />
 
                             <TextView
                                 android:id="@+id/black_cards"
@@ -255,9 +261,10 @@
 
                             <ImageView
                                 android:id="@+id/rainbow_train"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@mipmap/rainbow" />
+                                android:layout_width="60dp"
+                                android:layout_height="120dp"
+                                android:rotation="90"
+                                android:src="@drawable/loco" />
 
                             <TextView
                                 android:id="@+id/rainbow_cards"
@@ -561,6 +568,50 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@mipmap/tickettoridemap" />
+                    <!--
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="right">
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/red"/>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/orange"/>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/yellow"/>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/green"/>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/blue"/>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/purple"/>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/black"/>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/white"/>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/loco"/>
+                    </LinearLayout> -->
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
