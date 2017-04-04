@@ -76,6 +76,7 @@ public class ClientModel extends Observable {
     private Map<IPlayer, Integer> longestPath;
     private Map<String, Integer> bonusPoints;
     private boolean firstCardDraw;
+    private boolean isLastTurns;
     TrainType RouteAnyCardType;
 
     public ClientModel() {
@@ -86,6 +87,7 @@ public class ClientModel extends Observable {
         cardChoices = new ArrayList<>();
         isHost = false;
         firstCardDraw = true;
+        isLastTurns = false;
     }
 
     public IPlayer getCurrentPlayer() {
@@ -225,6 +227,16 @@ public class ClientModel extends Observable {
     public void setNumberOfDestinationCards(int num) {
         if (currentGame == null) return;
         currentGame.setNumberOfDestinationCards(num);
+    }
+
+    public int getNumberOfTrainCards() {
+        if(currentGame == null) return 0;
+        return currentGame.getNumberOfTrainCards();
+    }
+
+    public int getNumberOfDestinationCards() {
+        if(currentGame == null) return 0;
+        return currentGame.getNumberOfDestinationCards();
     }
 
     public void addDestinationCard(String playerName) {
@@ -497,19 +509,17 @@ public class ClientModel extends Observable {
         cardChoices.add(card);
     }
 
-    public void tryDisplayHand() {
-        if (cardChoices.size() >= 3) {
-            if (firstCardDraw) {
-                //there is a race condition, and this is here to avoid it
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                }
-                notifyPropertyChanges(INIT_DISPLAY_HAND);
-                firstCardDraw = false;
-            } else {
-                notifyPropertyChanges(DISPLAY_HAND);
+    public void displayHand() {
+        if (firstCardDraw) {
+            //there is a race condition, and this is here to avoid it
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
             }
+            notifyPropertyChanges(INIT_DISPLAY_HAND);
+            firstCardDraw = false;
+        } else {
+            notifyPropertyChanges(DISPLAY_HAND);
         }
     }
 
@@ -586,5 +596,13 @@ public class ClientModel extends Observable {
 
     public void setRouteAnyCardType(TrainType routeAnyCardType) {
         RouteAnyCardType = routeAnyCardType;
+    }
+
+    public boolean isLastTurns() {
+        return isLastTurns;
+    }
+
+    public void setLastTurns(boolean lastTurns) {
+        isLastTurns = lastTurns;
     }
 }

@@ -248,7 +248,7 @@ public final class GameComponentFactory {
         routes.put(91, new Route(cities.get("Nashville"), cities.get("Saint Louis"), 2, null, ANY, 91, -1));
         routes.put(92, new Route(cities.get("Nashville"), cities.get("Little Rock"), 3, null, REEFER, 92, -1));
         routes.put(93, new Route(cities.get("Nashville"), cities.get("Atlanta"), 1, null, ANY, 93, -1));
-        routes.put(94, new Route(cities.get("New Orleans"), cities.get("Little Rock"), 3, null, CABOOSE, 94, -1));
+        routes.put(94, new Route(cities.get("New Orleans"), cities.get("Little Rock"), 2, null, CABOOSE, 94, -1));
         routes.put(95, new Route(cities.get("New Orleans"), cities.get("Miami"), 6, null, COAL, 95, -1));
         routes.put(96, new Route(cities.get("New Orleans"), cities.get("Atlanta"), 4, null, BOX, 96, 97));
         routes.put(97, new Route(cities.get("New Orleans"), cities.get("Atlanta"), 4, null, TANKER, 97, 96));

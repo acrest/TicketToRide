@@ -39,11 +39,11 @@ public class LogInActivity extends Activity implements ILogInListener {
         mRegisterPasswordEditText = (EditText) findViewById(R.id.register_password_edit);
         mRegisterConfirmEditText = (EditText) findViewById(R.id.register_confirm_edit);
 
-        /*mLogInUserNameEditText.setText("andrew");
+        mLogInUserNameEditText.setText("andrew");
         mLogInPasswordEditText.setText("andrew");
         mRegisterUserNameEditText.setText("andrew");
         mRegisterPasswordEditText.setText("andrew");
-        mRegisterConfirmEditText.setText("andrew");*/
+        mRegisterConfirmEditText.setText("andrew");
 
         mLogInUserNameEditText.setText("AlecC");
         mLogInPasswordEditText.setText("A");

@@ -13,12 +13,9 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 public final class GameStateFactory {
 
     public static GameInfo gameToGameState(IServerGame game) {
-        int id = game.getID();
-        String name = game.getName();
         int maxPlayers = game.getMaxPlayers();
         Player[] players = new Player[maxPlayers];
         TrainCard[] visibleTrainCards = new TrainCard[IGame.NUM_VISIBLE_CARDS];
-        GameMap map = game.getMap();
 
         for(int i = 0; i < players.length; ++i) {
             players[i] = (Player) game.getPlayer(i);
@@ -27,7 +24,7 @@ public final class GameStateFactory {
             visibleTrainCards[i] = game.getVisibleCard(i);
         }
 
-        return new GameInfo(id, name, maxPlayers, players, visibleTrainCards, map);
+        return new GameInfo(game.getID(), game.getName(), maxPlayers, players, visibleTrainCards, game.getNumberOfTrainCards(), game.getNumberOfDestinationCards(), game.getMap());
     }
 
     private GameStateFactory() {}

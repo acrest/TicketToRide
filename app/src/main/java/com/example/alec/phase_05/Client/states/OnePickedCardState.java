@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.states;
 
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientGame;
+import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameState;
@@ -28,6 +29,9 @@ public class OnePickedCardState implements GameState {
     public void drawTrainCardFromDeck() throws StateWarning {
         // draw train card
         System.out.println("another card added from the deck");
+        if(ClientModel.getInstance().getNumberOfTrainCards() == 0){
+            throw new StateWarning("No remaining train cards");
+        }
         facade.drawTrainCard();
         facade.finishTurn();
         state.setTurnState(new EndTurnState(state));;
