@@ -13,6 +13,7 @@ public abstract class DrawnTrainCardCommand extends BaseCommand {
     public DrawnTrainCardCommand(String playerName, int remainingCards) {
         super("DrawnTrainCard");
         this.playerName = playerName;
+        this.remainingCards = remainingCards;
     }
 
     public String getPlayerName() {

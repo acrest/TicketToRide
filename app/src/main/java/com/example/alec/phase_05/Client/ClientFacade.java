@@ -102,17 +102,23 @@ public class ClientFacade {
     }
 
     public void drawDestinationCard(String playerName, int remainingCards) {
-        model.decNumOfDestinationCards();
+        model.setNumberOfDestinationCards(remainingCards);
         model.addDestinationCard(playerName);
+        // Display the destination card choices the player has drawn 3 cards or there are no more cards.
+        // The second case occurs when the deck is out and they have only drawn 1 or 2 cards.
+        if (remainingCards == 0 || model.getCardChoices().size() == 3) {
+            model.displayHand();
+        }
     }
 
     public void pickTrainCard(String playerName, int index, TrainCard nextCardInDeck, int remainingCards) {
         model.setVisibleCard(index, nextCardInDeck);
+        model.setNumberOfTrainCards(remainingCards);
         model.addTrainCard(playerName);
     }
 
     public void drawTrainCard(String playerName, int remainingCards) {
-        model.decNumOfTrainCards();
+        model.setNumberOfTrainCards(remainingCards);
         model.addTrainCard(playerName);
     }
 
@@ -142,6 +148,8 @@ public class ClientFacade {
         for (int i = 0; i < players.length; ++i) {
             model.setVisibleCard(i, visibleTrainCards[i]);
         }
+        model.setNumberOfDestinationCards(gameInfo.getDestinationCardsRemaining());
+        model.setNumberOfTrainCards(gameInfo.getTrainCardsRemaining());
         model.setMap(gameInfo.getMap());
     }
 
@@ -154,6 +162,7 @@ public class ClientFacade {
         Facade.getInstance().drawDestinationCard();
         Facade.getInstance().drawDestinationCard();
         model.setGameStarted(); //make sure this is called at the end
+        model.displayHand();
     }
 
     public void addTrainCard(TrainCard card) {
@@ -162,7 +171,6 @@ public class ClientFacade {
 
     public void addDestinationCard(DestinationCard card) {
         model.addCardToChoices(card);
-        model.tryDisplayHand();
     }
 
     public void claimRoute(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains, int playerPoints) {
@@ -180,9 +188,9 @@ public class ClientFacade {
     }
 
     public void finishGame(Map<String, Integer> bonusPoints) {
-//        for(Map.Entry<String, Integer> entry : bonusPoints.entrySet()) {
-//            model.setBonusPoints(entry.getKey(), entry.getValue());
-//        }
+        for(Map.Entry<String, Integer> entry : bonusPoints.entrySet()) {
+            model.setBonusPoints(entry.getKey(), entry.getValue());
+        }
         model.notifyFinishGame();
     }
 
