@@ -563,7 +563,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                         }
                         else{
                             ClientModel.getInstance().setRouteAnyCardType(null);
-                            presenter.claimRoute(currentlySelectedRoute.getId());
+                            presenter.claimRoute(currentlySelectedRoute.getId(), null);
                         }
 
                         routeInfo.setVisibility(View.INVISIBLE);
@@ -588,7 +588,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                         Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
                         if (twinRoute.getOwner() == null) {
                             ClientModel.getInstance().setRouteAnyCardType(null);
-                            presenter.claimRoute(twinRoute.getId());
+                            presenter.claimRoute(twinRoute.getId(), null);
                         }
                     }
                 }
@@ -695,10 +695,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 ClientModel.getInstance().setRouteAnyCardType(TrainType.COAL);
 
                 if(isTwinRoute){
-                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId(), COAL);
                 }
                 else{
-                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    presenter.claimRoute(currentlySelectedRoute.getId(), COAL);
                 }
 
                 dialogWildRoute.dismiss();
@@ -711,10 +711,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 ClientModel.getInstance().setRouteAnyCardType(TrainType.TANKER);
 
                 if(isTwinRoute){
-                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId(), TANKER);
                 }
                 else{
-                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    presenter.claimRoute(currentlySelectedRoute.getId(), TANKER);
                 }
 
                 dialogWildRoute.dismiss();
@@ -727,10 +727,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 ClientModel.getInstance().setRouteAnyCardType(TrainType.BOX);
 
                 if(isTwinRoute){
-                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId(), BOX);
                 }
                 else{
-                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    presenter.claimRoute(currentlySelectedRoute.getId(), BOX);
                 }
 
                 dialogWildRoute.dismiss();
@@ -743,10 +743,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 ClientModel.getInstance().setRouteAnyCardType(TrainType.CABOOSE);
 
                 if(isTwinRoute){
-                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId(), CABOOSE);
                 }
                 else{
-                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    presenter.claimRoute(currentlySelectedRoute.getId(), CABOOSE);
                 }
 
                 dialogWildRoute.dismiss();
@@ -759,10 +759,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 ClientModel.getInstance().setRouteAnyCardType(TrainType.PASSENGER);
 
                 if(isTwinRoute){
-                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId(), PASSENGER);
                 }
                 else{
-                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    presenter.claimRoute(currentlySelectedRoute.getId(), PASSENGER);
                 }
 
                 dialogWildRoute.dismiss();
@@ -775,10 +775,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 ClientModel.getInstance().setRouteAnyCardType(TrainType.FREIGHT);
 
                 if(isTwinRoute){
-                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId(), FREIGHT);
                 }
                 else{
-                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    presenter.claimRoute(currentlySelectedRoute.getId(), FREIGHT);
                 }
 
                 dialogWildRoute.dismiss();
@@ -791,10 +791,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 ClientModel.getInstance().setRouteAnyCardType(TrainType.REEFER);
 
                 if(isTwinRoute){
-                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId(), REEFER);
                 }
                 else{
-                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    presenter.claimRoute(currentlySelectedRoute.getId(), REEFER);
                 }
 
                 dialogWildRoute.dismiss();
@@ -807,10 +807,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 ClientModel.getInstance().setRouteAnyCardType(TrainType.HOPPER);
 
                 if(isTwinRoute){
-                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId());
+                    presenter.claimRoute(ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID()).getId(), HOPPER);
                 }
                 else{
-                    presenter.claimRoute(currentlySelectedRoute.getId());
+                    presenter.claimRoute(currentlySelectedRoute.getId(), HOPPER);
                 }
 
                 dialogWildRoute.dismiss();

@@ -61,9 +61,10 @@ public class ClientGame extends Game implements IClientGame {
         turnState.putBackDestinationCard(card);
     }
 
+
     @Override
-    public void doClaimRoute(int routeId) throws StateWarning {
-        turnState.claimRoute(routeId);
+    public void doClaimRoute(int routeId, TrainType type) throws StateWarning {
+        turnState.claimRoute(routeId, type);
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface GameState {
 
     void putBackDestinationCard(DestinationCard card) throws StateWarning;
 
-    void claimRoute(int routeId) throws StateWarning;
+    void claimRoute(int routeId, TrainType type) throws StateWarning;
 
     void endTurn() throws StateWarning;
 }

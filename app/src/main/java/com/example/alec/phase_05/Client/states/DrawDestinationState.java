@@ -8,6 +8,7 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.StateWarning;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 /**
  * Created by clarkpathakis on 3/22/17.
@@ -46,7 +47,7 @@ public class DrawDestinationState implements GameState {
     }
 
     @Override
-    public void claimRoute(int routeId) throws StateWarning {
+    public void claimRoute(int routeId, TrainType type) throws StateWarning {
         throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
     }
 

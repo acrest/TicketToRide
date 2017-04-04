@@ -325,6 +325,8 @@ public class ClientModel extends Observable {
         IPlayer currentPlayer = getCurrentPlayer();
         if (currentPlayer == null) return;
         currentPlayer.setPoints(points);
+        System.out.println("player is "+currentPlayer.getName());
+        System.out.println("new points are "+currentPlayer.getPoints());
         notifyPropertyChanges(PLAYER_POINTS);
     }
 
@@ -565,7 +567,12 @@ public class ClientModel extends Observable {
 
     public void doClaimRoute(int routeId) throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doClaimRoute(routeId);
+        currentGame.doClaimRoute(routeId, null);
+    }
+
+    public void doClaimRoute(int routeId, TrainType type) throws StateWarning {
+        if (currentGame == null) return;
+        currentGame.doClaimRoute(routeId, type);
     }
 
     public void doEndTurn() throws StateWarning {
