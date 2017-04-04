@@ -1494,7 +1494,6 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             secondCard.setText("INVALID");
             secondCardLayout.setVisibility(View.GONE);
         }
-        thirdCard.setText(cardChoices.size() >= 3 ? cardChoices.get(2).toString() : "INVALID");
         if (cardChoices.size() >= 3){
             thirdCard.setText(cardChoices.get(2).toString());
             thirdCardLayout.setVisibility(View.VISIBLE);
