@@ -13,7 +13,7 @@
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.05"/>
+            android:layout_weight="0.07"/>
 
         <FrameLayout
             android:id="@android:id/tabcontent"
@@ -32,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="15dp"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -369,7 +369,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="0.48"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
@@ -420,7 +420,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="0.48"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
@@ -446,7 +446,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -553,7 +553,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
                     android:orientation="vertical">
 
                     <ImageView
@@ -603,7 +603,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView

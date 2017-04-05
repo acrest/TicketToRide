@@ -225,6 +225,10 @@ public class ServerProxy implements IServer {
 
     @Override
     public TrainCard pickTrainCard(String playerName, int gameId, int index) {
+        System.out.println("PCIT TRAIN CARD COMMAND SERVER PROXY " + playerName + "  " + gameId + " " + index);
+        ClientPickTrainCardCommand cmd = new ClientPickTrainCardCommand(playerName, gameId, index);
+        System.out.println(cmd);
+        System.out.println("WHAT WHAT");
         return (TrainCard) executeCommand(new ClientPickTrainCardCommand(playerName, gameId, index)).toClass(TrainCard.class);
     }
 
