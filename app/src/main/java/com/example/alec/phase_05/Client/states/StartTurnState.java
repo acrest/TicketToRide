@@ -157,20 +157,6 @@ public class StartTurnState implements GameState {
         } else {
 //            currentPlayer.removeCardsOfType(currentType, route.getLength());
             System.out.println("ROUTE CLAIMED");
-
-            List<TrainCard> playersHand = currentPlayer.getTrainCards();
-            int length = route.getLength();
-            for (TrainCard card : playersHand) {
-
-                if (card.getType().equals(route.getType()) || route.getType().equals(TrainType.ANY) || card.getType().equals(TrainType.LOCOMOTIVE)) {
-                    facade.discardTrainCard(card);
-                    length--;
-                    if (length == 0) {
-                        break;
-                    }
-                }
-
-
 //            List<TrainCard> playersHand = currentPlayer.getTrainCards();
 //            int length = route.getLength();
 //            for (TrainCard card : playersHand) {
@@ -185,27 +171,6 @@ public class StartTurnState implements GameState {
 //
 //
 //            }
-
-
-                List<TrainCard> removedCards = currentPlayer.removeCardsForRoute(route.getType(), route.getLength());
-                for (TrainCard tCard : removedCards) {
-                    facade.discardTrainCard(tCard);
-
-                }
-                model.setTrainCount(model.getTrainCount() - route.getLength());
-                model.setPlayerPoints(model.getPlayerPoints() + route.getPoints());
-                facade.claimRoute(routeId);
-                facade.finishTurn();
-                state.setTurnState(new EndTurnState(state));
-                model.updateTrainCardDisplay();
-
-                List<TrainCard> rCards = currentPlayer.removeCardsForRoute(route.getType(), route.getLength());
-                for (TrainCard tcard : removedCards) {
-                    facade.discardTrainCard(tcard);
-
-                }
-            }
-
             List<TrainCard> removedCards = currentPlayer.removeCardsForRoute(currentType, route.getLength());
             for (TrainCard card : removedCards) {
                 facade.discardTrainCard(card);
@@ -220,6 +185,7 @@ public class StartTurnState implements GameState {
             model.updateTrainCardDisplay();
         }
     }
+
     @Override
     public void endTurn() throws StateWarning {
         throw new StateWarning("You must either draw train cards, " +

@@ -57,14 +57,17 @@ public class ServerBank implements IServerBank {
             }
 
 
-            System.out.println("CHECK IF ALL VISIBLE RAINBOAW " + rainbowNumb);
-            if (rainbowNumb == maxNumOfRainbow) {
+            System.out.println("CHECK IF ALL VISIBLE RAINBOAW " + rainbowNumb + maxNumOfRainbow);
+            if (rainbowNumb >= maxNumOfRainbow) {
                 for (int i = 0; i < NUM_VISIBLE_TRAIN_CARDS; ++i) {
                     TrainCard card = visibleTrainCards.get(i);
+                    System.out.println("ITER " + i + " " + card.getType());
                     discardTrainCard(card);
                     visibleTrainCards.set(i, drawTrainCard());
+                    System.out.println("new card is " + visibleTrainCards.get(i).getType());
                 }
             }
+            System.out.println(" ");
         }
     }
 
