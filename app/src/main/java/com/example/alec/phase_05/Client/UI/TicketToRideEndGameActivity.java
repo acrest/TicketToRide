@@ -65,6 +65,13 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detach();
+        presenter = null;
+    }
+
     private String getWinnerText() {
         List<String> winners = presenter.getWinners();
         if(winners.size() == 0) {

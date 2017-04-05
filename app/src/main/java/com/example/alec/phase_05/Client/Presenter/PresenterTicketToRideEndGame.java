@@ -110,13 +110,13 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
     // Get name of holder of longest route.
     @Override
     public List<String> getLongestRouteHolders() {
-        Map<IPlayer, Integer> longest = model.getLongestRoute();
+        Map<String, Integer> longest = model.getLongestRoute();
         List<String> longestRouteHolders = new ArrayList<>();
         int maxLength = getLongestRouteLength();
         for (int i = 0; i < model.getGameMaxPlayers(); i++) {
             IPlayer player = model.getPlayer(i);
             if (player != null) {
-                Integer length = longest.get(player);
+                Integer length = longest.get(player.getName());
                 if (length != null && length == maxLength) {
                     longestRouteHolders.add(player.getName());
                 }
@@ -126,13 +126,13 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
     }
 
     private int getLongestRouteLength() {
-        Map<IPlayer, Integer> longest = model.getLongestRoute();
+        Map<String, Integer> longest = model.getLongestRoute();
         System.out.println("the map has " + longest.size());
         int maxLength = -1;
         for (int i = 0; i < model.getGameMaxPlayers(); i++) {
             IPlayer player = model.getPlayer(i);
             if (player != null) {
-                Integer length = longest.get(player);
+                Integer length = longest.get(player.getName());
                 if ((length != null) && (maxLength == -1 || length > maxLength)) {
                     maxLength = length;
                 }

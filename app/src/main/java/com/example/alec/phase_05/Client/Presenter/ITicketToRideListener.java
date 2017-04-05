@@ -47,5 +47,5 @@ public interface ITicketToRideListener {
 
     void handleWarning(StateWarning warning);
 
-    void updateLongestPath(Map<IPlayer, Integer> longestRoute);
+    void updateLongestPath(Map<String, Integer> longestRoute);
 }

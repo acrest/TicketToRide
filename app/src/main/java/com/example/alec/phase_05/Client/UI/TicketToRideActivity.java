@@ -349,8 +349,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
     }
 
-    private Map<IPlayer, Integer> getLongestRoutePlayer() {
-        Map<IPlayer, Integer> longestRoutePlayer = presenter.getLongestPlayer();
+    private Map<String, Integer> getLongestRoutePlayer() {
+        Map<String, Integer> longestRoutePlayer = presenter.getLongestPlayer();
         return longestRoutePlayer;
     }
 
@@ -1118,6 +1118,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //
 //    }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detach();
+        presenter = null;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -1410,6 +1418,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     drawRouteLine(route.getCity1(), route.getCity2(), owner.getColor(), 11);
                 }
             }
+
+            // Change color of destination cards to indicate if they are met.
+            mRoutesRecyclerAdapter.updateData();
         }
     }
 
@@ -1443,7 +1454,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     private String longestPathString(){
-        Map<IPlayer, Integer> map = ClientModel.getInstance().getLongestRoute();
+        Map<String, Integer> map = ClientModel.getInstance().getLongestRoute();
         if(map != null){
             StringBuilder sb = new StringBuilder();
             int length = 0;
@@ -1457,7 +1468,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     sb.append(", ");
                 }
                 Map.Entry pair = (Map.Entry)it.next();
-                sb.append(((IPlayer)pair.getKey()).getName());
+                sb.append(((String)pair.getKey()));
                 length = (int)pair.getValue();
                 it.remove(); // avoids a ConcurrentModificationException
             }
@@ -1513,28 +1524,28 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     @Override
-    public void updateLongestPath(Map<IPlayer, Integer> longestRoute) {
-        String name = "No one";
-        String message = " has the longest route of ";
-        boolean firstIter = true;
-        String routeLength = "";
-        if (longestRoute != null) {
-            for (Map.Entry<IPlayer, Integer> entry : longestRoute.entrySet()) {
-                IPlayer key = entry.getKey();
-                int value = entry.getValue();
-                if (firstIter) {
-                    name = key.getName();
-                    firstIter = false;
-                } else {
-                    name = name + ", " + key.getName();
-                }
-                routeLength = Integer.toString(value);
-                System.out.println("Game map PLAYER: " + name + " " + routeLength);
-            }
-        }
-        System.out.println("Activity " + name + " " + routeLength + "!@#$");
-        System.out.println(presenter.longestPath() + "!!!!!");
-        //longest_route_player.setText(presenter.longestPath());
+    public void updateLongestPath(Map<String, Integer> longestRoute) {
+//        String name = "No one";
+//        String message = " has the longest route of ";
+//        boolean firstIter = true;
+//        String routeLength = "";
+//        if (longestRoute != null) {
+//            for (Map.Entry<String, Integer> entry : longestRoute.entrySet()) {
+//                String key = entry.getKey();
+//                int value = entry.getValue();
+//                if (firstIter) {
+//                    name = key;
+//                    firstIter = false;
+//                } else {
+//                    name = name + ", " + key;
+//                }
+//                routeLength = Integer.toString(value);
+//                System.out.println("Game map PLAYER: " + name + " " + routeLength);
+//            }
+//        }
+//        System.out.println("Activity " + name + " " + routeLength + "!@#$");
+//        System.out.println(presenter.longestPath() + "!!!!!");
+        longest_route_player.setText(presenter.longestPath());
     }
 
     private void displayCardChoiceDialog(boolean firstTurn) {
@@ -1731,15 +1742,26 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         public void onBindViewHolder(RouteHolder holder, int position) {
             DestinationCard destinationCard = listData.get(position);
 
+            ClientModel model = ClientModel.getInstance();
+            GameMap map = model.getMap();
+            int textColor = Color.BLACK;
+            if (map != null && model.hasCurrentGame()) {
+                if (map.checkIfDestinationComplete2(destinationCard, model.getCurrentPlayerName())) {
+                    textColor = Color.GREEN;
+                } else {
+                    textColor = Color.RED;
+                }
+            }
+
             holder.city1.setText(destinationCard.getCity1().getName());
             holder.city1.setTextSize(24);
-            holder.city1.setTextColor(Color.BLACK);
+            holder.city1.setTextColor(textColor);
             holder.city2.setText(destinationCard.getCity2().getName());
             holder.city2.setTextSize(24);
-            holder.city2.setTextColor(Color.BLACK);
+            holder.city2.setTextColor(textColor);
             holder.destination_points.setText(Integer.toString(destinationCard.getValue()));
             holder.destination_points.setTextSize(24);
-            holder.destination_points.setTextColor(Color.BLACK);
+            holder.destination_points.setTextColor(textColor);
 
         }
 
@@ -1750,6 +1772,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         public void updateListData(List<DestinationCard> newListData) {
             listData = newListData;
+            recyclerView.getRecycledViewPool().clear();
+            notifyDataSetChanged();
+        }
+
+        public void updateData() {
             recyclerView.getRecycledViewPool().clear();
             notifyDataSetChanged();
         }

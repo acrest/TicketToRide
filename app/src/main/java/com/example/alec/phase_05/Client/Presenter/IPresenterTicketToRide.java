@@ -38,7 +38,7 @@ public interface IPresenterTicketToRide extends IPresenter {
 
     void sendChat(Chat chat);
 
-    Map<IPlayer, Integer> getLongestPlayer();
+    Map<String, Integer> getLongestPlayer();
 
     String longestPath();
 }

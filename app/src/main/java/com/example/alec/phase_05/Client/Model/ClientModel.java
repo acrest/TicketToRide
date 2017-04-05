@@ -74,7 +74,7 @@ public class ClientModel extends Observable {
     private IClientGame currentGame;
     private String currentPlayerName;
     private boolean isHost;
-    private Map<IPlayer, Integer> longestPath;
+    private Map<String, Integer> longestPath;
     private Map<String, Integer> bonusPoints;
     private boolean firstCardDraw;
     private boolean isLastTurns;
@@ -602,12 +602,12 @@ public class ClientModel extends Observable {
     }
 
 
-    public Map<IPlayer, Integer> getLongestRoute() {
+    public Map<String, Integer> getLongestRoute() {
         return longestPath;
     }
 
     public void setLongestPath() {
-        longestPath = currentGame.getMap().findLongestRoute();
+        longestPath = currentGame.getMap().findLongestRoute2();
         notifyPropertyChanges(ROUTE);
     }
 

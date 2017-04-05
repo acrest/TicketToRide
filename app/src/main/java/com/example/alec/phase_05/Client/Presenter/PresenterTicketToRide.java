@@ -14,6 +14,7 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -111,7 +112,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             @Override
             public void visitPlayer(IPlayer player) {
                 listener.updatePlayerTrainCount(player.getName(), player.getTrainCount());
-                listener.updateLongestPath(model.getLongestRoute());
+//                listener.updateLongestPath(model.getLongestRoute());
             }
         });
         List<TrainCard> cards = new ArrayList<>();
@@ -166,13 +167,14 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     }
 
     @Override
-    public Map<IPlayer, Integer> getLongestPlayer() {
+    public Map<String, Integer> getLongestPlayer() {
         return model.getLongestRoute();
     }
 
     @Override
     public String longestPath() {
-        Map<IPlayer, Integer> longestRouteInfo = model.getLongestRoute();
+        System.out.println("longest path");
+        Map<String, Integer> longestRouteInfo = model.getLongestRoute();
         String playerName = "";
         int length = 0;
 
@@ -180,17 +182,34 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             System.out.println("PRESENTER no info");
             playerName = "No one ";
         } else {
-            Map.Entry<IPlayer, Integer> entry = longestRouteInfo.entrySet().iterator().next();
-            IPlayer key = entry.getKey();
-            length = entry.getValue();
-            playerName = key.getName();
+            System.out.println("in the else for longest path");
+            Iterator<Map.Entry<String, Integer>> iter = longestRouteInfo.entrySet().iterator();
+            Map.Entry<String, Integer> entry = null;
+            String key = "No one ";
+            if (iter.hasNext()) {
+                entry = iter.next();
+                System.out.println("String key = entry.getKey();");
+                key = entry.getKey();
+                System.out.println("length = entry.getValue();");
+                length = entry.getValue();
+            }
+           // Map.Entry<String, Integer> entry = longestRouteInfo.entrySet().iterator().next();
+
+
+            System.out.println("playerName = key;");
+            playerName = key;
+            System.out.println("in the else for longest path");
             System.out.println(playerName);
 
-            while (longestRouteInfo.entrySet().iterator().hasNext()) {
-                entry = longestRouteInfo.entrySet().iterator().next();
+
+            System.out.println("before iterator");
+            Iterator<Map.Entry<String, Integer>> iterator = longestRouteInfo.entrySet().iterator();
+            while (iterator.hasNext()) {
+                System.out.println("in while");
+                entry = iterator.next();
                 key = entry.getKey();
                 length = entry.getValue();
-                playerName = playerName + ", " + key.getName();
+                playerName = playerName + ", " + key;
             }
         }
         playerName = playerName + " has the longest route of " + Integer.toString(length);
@@ -264,6 +283,9 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         }
         if(u.needUpdate(ClientModel.GAME_STATE)) {
             listener.updateGameState(model.getGameState());
+        }
+        if(u.needUpdate(ClientModel.ROUTE)) {
+            listener.updateLongestPath(model.getLongestRoute());
         }
     }
 
