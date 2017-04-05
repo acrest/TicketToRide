@@ -1433,6 +1433,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void onTurnStart() {
+        System.out.println("hello");
         if(lastTurns()){
             start_turn_prompt.setText("LAST TURN!");
         }
@@ -1442,7 +1443,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     private String longestPathString(){
+        if (ClientModel.getInstance().getLongestRoute() == null){
+            return "No one has the longest route of 0";
+        }
         Map<IPlayer, Integer> map = ClientModel.getInstance().getLongestRoute();
+        System.out.println("size of map is " + map.size());
         StringBuilder sb = new StringBuilder();
         int length = 0;
         int playerCount = 0;
