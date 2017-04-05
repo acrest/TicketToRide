@@ -126,7 +126,11 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
     }
 
     private int getLongestRouteLength() {
+//        if (model.getLongestRoute().size() == 0) {
+//            return 21000;
+//        }
         Map<String, Integer> longest = model.getLongestRoute();
+
         System.out.println("the map has " + longest.size());
         int maxLength = -1;
         for (int i = 0; i < model.getGameMaxPlayers(); i++) {
@@ -141,6 +145,7 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
         if (maxLength == -1) {
             throw new IllegalStateException("End game reached, but no player has longest route.");
         }
+
         return maxLength;
     }
 

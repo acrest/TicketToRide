@@ -111,7 +111,7 @@ public class StartScreenActivity extends AppCompatActivity {
     }
 
     private void setTrainCount(){
-        numTrains.setText("4");
+        numTrains.setText("10");
     }
 
 }
