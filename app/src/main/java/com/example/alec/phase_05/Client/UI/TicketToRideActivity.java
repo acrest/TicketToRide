@@ -1443,7 +1443,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     private String longestPathString(){
         Map<IPlayer, Integer> map = ClientModel.getInstance().getLongestRoute();
-        if(map == null){
+        if(map != null){
             StringBuilder sb = new StringBuilder();
             int length = 0;
             int playerCount = 0;
