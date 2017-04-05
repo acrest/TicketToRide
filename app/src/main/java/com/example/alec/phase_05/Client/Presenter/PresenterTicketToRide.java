@@ -173,6 +173,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
 
     @Override
     public String longestPath() {
+        System.out.println("longest path");
         Map<String, Integer> longestRouteInfo = model.getLongestRoute();
         String playerName = "";
         int length = 0;
@@ -181,14 +182,30 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
             System.out.println("PRESENTER no info");
             playerName = "No one ";
         } else {
-            Map.Entry<String, Integer> entry = longestRouteInfo.entrySet().iterator().next();
-            String key = entry.getKey();
-            length = entry.getValue();
+            System.out.println("in the else for longest path");
+            Iterator<Map.Entry<String, Integer>> iter = longestRouteInfo.entrySet().iterator();
+            Map.Entry<String, Integer> entry = null;
+            String key = "No one ";
+            if (iter.hasNext()) {
+                entry = iter.next();
+                System.out.println("String key = entry.getKey();");
+                key = entry.getKey();
+                System.out.println("length = entry.getValue();");
+                length = entry.getValue();
+            }
+           // Map.Entry<String, Integer> entry = longestRouteInfo.entrySet().iterator().next();
+
+
+            System.out.println("playerName = key;");
             playerName = key;
+            System.out.println("in the else for longest path");
             System.out.println(playerName);
 
+
+            System.out.println("before iterator");
             Iterator<Map.Entry<String, Integer>> iterator = longestRouteInfo.entrySet().iterator();
             while (iterator.hasNext()) {
+                System.out.println("in while");
                 entry = iterator.next();
                 key = entry.getKey();
                 length = entry.getValue();
