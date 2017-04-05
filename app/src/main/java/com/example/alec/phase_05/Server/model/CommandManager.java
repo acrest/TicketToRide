@@ -21,7 +21,9 @@ import com.example.alec.phase_05.Server.command.ServerReturnedDestinationCard;
 import com.example.alec.phase_05.Server.command.ServerSendChatCommand;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.IPlayer;
+import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,8 +130,7 @@ public class CommandManager {
         } else if (command instanceof ServerFinishTurnCommand) {
             return new ServerFinishedTurnCommand(command.getPlayerName());
         } else if (command instanceof ServerPickTrainCardCommand) {
-            int cardIndex = ((ServerPickTrainCardCommand) command).getCardIndex();
-            return new ServerPickedTrainCardCommand(command.getPlayerName(), cardIndex, game.getVisibleCard(cardIndex), game.getNumberOfTrainCards());
+            return new ServerPickedTrainCardCommand(command.getPlayerName(), getVisibleCards(), game.getNumberOfTrainCards());
         } else if (command instanceof ServerReturnDestinationCardCommand) {
             return new ServerReturnedDestinationCard(command.getPlayerName(), game.getNumberOfDestinationCards());
         } else if (command instanceof ServerSendChatCommand) {
@@ -139,6 +140,14 @@ public class CommandManager {
         }
 
         return null;
+    }
+
+    private TrainCard[] getVisibleCards() {
+        TrainCard[] cards = new TrainCard[IGame.NUM_VISIBLE_CARDS];
+        for(int i = 0; i < IGame.NUM_VISIBLE_CARDS; i++){
+            cards[i] = game.getVisibleCard(i);
+        }
+        return cards;
     }
 
     private int getCommandIndex(String playerName) {

@@ -104,15 +104,12 @@ public class ClientFacade {
     public void drawDestinationCard(String playerName, int remainingCards) {
         model.setNumberOfDestinationCards(remainingCards);
         model.addDestinationCard(playerName);
-        // Display the destination card choices the player has drawn 3 cards or there are no more cards.
-        // The second case occurs when the deck is out and they have only drawn 1 or 2 cards.
-        if (remainingCards == 0 || model.getCardChoices().size() == 3) {
-            model.displayHand();
-        }
     }
 
-    public void pickTrainCard(String playerName, int index, TrainCard nextCardInDeck, int remainingCards) {
-        model.setVisibleCard(index, nextCardInDeck);
+    public void pickTrainCard(String playerName, TrainCard[] visibleCards, int remainingCards) {
+        for (int i = 0; i < visibleCards.length; i++) {
+            model.setVisibleCard(i, visibleCards[i]);
+        }
         model.setNumberOfTrainCards(remainingCards);
         model.addTrainCard(playerName);
     }
@@ -169,6 +166,7 @@ public class ClientFacade {
     }
 
     public void addDestinationCard(DestinationCard card) {
+        // The ClientModel will handle showing the card choices once it has enough cards.
         model.addCardToChoices(card);
     }
 

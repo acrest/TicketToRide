@@ -78,6 +78,7 @@ public class ClientModel extends Observable {
     private Map<String, Integer> bonusPoints;
     private boolean firstCardDraw;
     private boolean isLastTurns;
+    private int expectedCardsInHand;
     TrainType RouteAnyCardType;
 
     public ClientModel() {
@@ -90,6 +91,7 @@ public class ClientModel extends Observable {
         firstCardDraw = true;
         isLastTurns = false;
         bonusPoints = new HashMap<>();
+        expectedCardsInHand = 3;
     }
 
     public IPlayer getCurrentPlayer() {
@@ -511,9 +513,19 @@ public class ClientModel extends Observable {
 
     public void addCardToChoices(DestinationCard card) {
         cardChoices.add(card);
+        if(cardChoices.size() == expectedCardsInHand) {
+            displayHand();
+        }
     }
 
-    public void displayHand() {
+    // Tells the model how many cards to get before showing the hand.
+    // This will usually be 3, but it could be less.
+    public void setExpectedHandSize(int cards) {
+        expectedCardsInHand = cards;
+    }
+
+    // Tells the presenter to tell the GUI to display card choices.
+    private void displayHand() {
         if (firstCardDraw) {
             //there is a race condition, and this is here to avoid it
             try {

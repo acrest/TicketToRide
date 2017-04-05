@@ -114,8 +114,10 @@ public class StartTurnState implements GameState {
         if (numToDraw == 0) {
             throw new StateWarning("No remaining cards");
         }
+        ClientModel.getInstance().setExpectedHandSize(numToDraw);
         for (int i = 0; i < numToDraw; i++) {
             facade.drawDestinationCard();
+            ClientModel.getInstance().decNumOfDestinationCards();
         }
         state.setTurnState(new DrawDestinationState(state));
     }
