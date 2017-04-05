@@ -125,6 +125,65 @@ public class GameMap {
         return longestPlayerMap;
     }
 
+    public boolean checkIfDestinationComplete(DestinationCard destinationCard, String player){
+        if(cityToRoutes == null) {
+            initCityToRoutes();
+        }
+
+        City city1 = destinationCard.getCity1();
+        City city2 = destinationCard.getCity2();
+        ArrayList<Route> rootRoutes = new ArrayList<>();
+        Map<City, Boolean> markedCities = initializeCitiesToFalse();
+
+        markedCities.put(city1, true);
+
+        for(Route route : routes.values()){
+            if(route.getCity1().equals(city1) || route.getCity2().equals(city2)){
+                IPlayer owner = route.getOwner();
+                if(owner != null && owner.getName().equals(player)){
+                    rootRoutes.add(route);
+                }
+            }
+        }
+
+        for(Route route : routes.values()){
+            City firstCity = route.getCity1();
+            City secondCity = route.getCity2();
+
+            if(firstCity.equals(city2) || secondCity.equals(city2)){
+                return true;
+            }
+
+            if(markedCities.get(firstCity) != true){
+                markedCities.put(firstCity, true);
+
+                for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
+                    IPlayer owner = cityToRoutes.get(firstCity).get(j).getOwner();
+                    if(owner != null && owner.getName().equals(player)){
+                        if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities, player)){
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            if(markedCities.get(secondCity) != true){
+                markedCities.put(secondCity, true);
+
+                for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
+                    IPlayer owner = cityToRoutes.get(secondCity).get(j).getOwner();
+                    if(owner != null && owner.getName().equals(player)){
+                        if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities, player)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     private boolean checkIfDestinationCompleteRec(City city2, City city, Route rootRoute, Map<City, Boolean> markedCities, String player){
 
         for(int i = 0; i < cityToRoutes.get(city).size(); i++){
@@ -280,64 +339,6 @@ public class GameMap {
         }
     }
 
-    public boolean checkIfDestinationComplete(DestinationCard destinationCard, String player){
-        if(cityToRoutes == null) {
-            initCityToRoutes();
-        }
-
-        City city1 = destinationCard.getCity1();
-        City city2 = destinationCard.getCity2();
-        ArrayList<Route> rootRoutes = new ArrayList<>();
-        Map<City, Boolean> markedCities = initializeCitiesToFalse();
-
-        markedCities.put(city1, true);
-
-        for(Route route : routes.values()){
-            if(route.getCity1().equals(city1) || route.getCity2().equals(city2)){
-                IPlayer owner = route.getOwner();
-                if(owner != null && owner.getName().equals(player)){
-                    rootRoutes.add(route);
-                }
-            }
-        }
-
-        for(Route route : routes.values()){
-            City firstCity = route.getCity1();
-            City secondCity = route.getCity2();
-
-            if(firstCity.equals(city2) || secondCity.equals(city2)){
-                return true;
-            }
-
-            if(markedCities.get(firstCity) != true){
-                markedCities.put(firstCity, true);
-
-                for(int j = 0; j < cityToRoutes.get(firstCity).size(); j++){
-                    IPlayer owner = cityToRoutes.get(firstCity).get(j).getOwner();
-                    if(owner != null && owner.getName().equals(player)){
-                        if(checkIfDestinationCompleteRec(city2, firstCity, cityToRoutes.get(firstCity).get(j), markedCities, player)){
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            if(markedCities.get(secondCity) != true){
-                markedCities.put(secondCity, true);
-
-                for(int j = 0; j < cityToRoutes.get(secondCity).size(); j++){
-                    IPlayer owner = cityToRoutes.get(secondCity).get(j).getOwner();
-                    if(owner != null && owner.getName().equals(player)){
-                        if(checkIfDestinationCompleteRec(city2, secondCity, cityToRoutes.get(secondCity).get(j), markedCities, player)){
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
 
     private Map<City, Boolean> initializeCitiesToFalse(){
         Map<City, Boolean> map = new HashMap<>();

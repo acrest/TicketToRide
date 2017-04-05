@@ -39,17 +39,17 @@ public class LogInActivity extends Activity implements ILogInListener {
         mRegisterPasswordEditText = (EditText) findViewById(R.id.register_password_edit);
         mRegisterConfirmEditText = (EditText) findViewById(R.id.register_confirm_edit);
 
-        mLogInUserNameEditText.setText("andrew");
+        /*mLogInUserNameEditText.setText("andrew");
         mLogInPasswordEditText.setText("andrew");
         mRegisterUserNameEditText.setText("andrew");
         mRegisterPasswordEditText.setText("andrew");
         mRegisterConfirmEditText.setText("andrew");
 
-        mLogInUserNameEditText.setText("AlecC");
-        mLogInPasswordEditText.setText("A");
-        mRegisterUserNameEditText.setText("AlecC");
-        mRegisterPasswordEditText.setText("A");
-        mRegisterConfirmEditText.setText("A");
+        mLogInUserNameEditText.setText("ListigaRaven");
+        mLogInPasswordEditText.setText("BlueFox");
+        mRegisterUserNameEditText.setText("ListigaRaven");
+        mRegisterPasswordEditText.setText("BlueFox");
+        mRegisterConfirmEditText.setText("BlueFox");*/
 
         mLogInButton = (Button) findViewById(R.id.log_in_button);
         mLogInButton.setOnClickListener(new View.OnClickListener() {
@@ -155,3 +155,6 @@ public class LogInActivity extends Activity implements ILogInListener {
         }
     }
 }
+
+
+//Doesnt show train first time.

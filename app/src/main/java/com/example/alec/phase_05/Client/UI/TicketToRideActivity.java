@@ -73,6 +73,7 @@ import static com.example.alec.phase_05.Shared.model.TrainType.TANKER;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -192,10 +193,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         mTabHost = getTabHost();
         mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("Player Info").setContent(R.id.player_info));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("Destinations").setContent(R.id.routes));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test4").setIndicator("Bank").setContent(R.id.bank));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test5").setIndicator("Map").setContent(R.id.mapview));
-        mTabHost.addTab(tab6 = mTabHost.newTabSpec("tab_test6").setIndicator("Chat").setContent(R.id.chat));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("Game History").setContent(R.id.game_history));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("Bank").setContent(R.id.bank));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test4").setIndicator("Map").setContent(R.id.mapview));
+        mTabHost.addTab(tab6 = mTabHost.newTabSpec("tab_test5").setIndicator("Chat").setContent(R.id.chat));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test6").setIndicator("Game History").setContent(R.id.game_history));
         mTabHost.setCurrentTab(0);
         //mTabHost.newTabSpec("tab_test6").setIndicator("CHAT", getResources().getDrawable(R.drawable.chat_notice));
 
@@ -578,13 +579,20 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             public void onClick(View v) {
                 GameState state = ClientModel.getInstance().getGameState();
 
-                if(currentlySelectedRoute.getType().equals(TrainType.ANY)){
-                    dialogWildRoute.show();
-                }
-                else{
-                    if(state instanceof StartTurnState){
-                        isTwinRoute = true;
+                if(currentlySelectedRoute != null){
+                    if(currentlySelectedRoute.getType().equals(TrainType.ANY)){
+                        dialogWildRoute.show();
+                    }
+                    else{
+                        if(state instanceof StartTurnState) {
+                            isTwinRoute = true;
 
+                            Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
+                            if (twinRoute.getOwner() == null) {
+                                ClientModel.getInstance().setRouteAnyCardType(null);
+                                presenter.claimRoute(twinRoute.getId(), null);
+                            }
+                        }
                         Route twinRoute = ClientModel.getInstance().getMap().getRouteByID(currentlySelectedRoute.getTwinID());
                         if (twinRoute.getOwner() == null) {
                             ClientModel.getInstance().setRouteAnyCardType(null);
@@ -680,11 +688,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 }
 
                 if(s.equals("tab_test5")){
-
+                    ((TextView)mTabHost.getTabWidget().getChildAt(4).findViewById(android.R.id.title)).setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }
 
                 if(s.equals("tab_test6")){
-                    ((TextView)mTabHost.getTabWidget().getChildAt(5).findViewById(android.R.id.title)).setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
                 }
             }
         });
@@ -818,7 +826,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         });
     }
 
-    public void drawRouteLine(City city1, City city2, String color) {
+    public void drawRouteLine(City city1, City city2, String color, int lineWidth) {
         ImageView imageView = new ImageView(this);
         imageView = (ImageView) findViewById(R.id.map);
 
@@ -828,7 +836,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             imageView.draw(c);
 
             Paint p = new Paint();
-            p.setStrokeWidth(8);
+            p.setStrokeWidth(lineWidth);
             switch (color.toLowerCase()) {
                 case "black":
                     p.setColor(Color.BLACK);
@@ -1359,7 +1367,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     public void updateChats(List<Chat> chats) {
         mChatRecyclerAdapter.updateListData(chats);
         if(mTabHost.getCurrentTab() != 5 && chats.size() != 0){
-            ((TextView)mTabHost.getTabWidget().getChildAt(5).findViewById(android.R.id.title)).setCompoundDrawablesWithIntrinsicBounds(R.drawable.chat_notice, 0, 0, 0);
+            ((TextView)mTabHost.getTabWidget().getChildAt(4).findViewById(android.R.id.title)).setCompoundDrawablesWithIntrinsicBounds(R.drawable.chat_notice, 0, 0, 0);
         }
         //tab6.setIndicator("CHAT",getResources().getDrawable(R.drawable.chat_notice));
     }
@@ -1385,11 +1393,30 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void updateMap(GameMap map) {
+        Map<Route, Route> drawnRoutes = new HashMap<>();
+
         for (int i = 1; i <= 100; i++) {
             Route route = map.getRouteByID(i);
             IPlayer owner = route.getOwner();
             if (owner != null) {
-                drawRouteLine(route.getCity1(), route.getCity2(), owner.getColor());
+                if(route.getTwinID() != -1){
+                    if(ClientModel.getInstance().getMap().getRouteByID(route.getTwinID()).getOwner() == null){
+                        drawRouteLine(route.getCity1(), route.getCity2(), owner.getColor(), 11);
+                    }
+                    else{
+                        if(!drawnRoutes.containsKey(route)){
+                            drawnRoutes.put(route, route);
+                            drawnRoutes.put(ClientModel.getInstance().getMap().getRouteByID(route.getTwinID()), ClientModel.getInstance().getMap().getRouteByID(route.getTwinID()));
+                            drawRouteLine(route.getCity1(), route.getCity2(), owner.getColor(), 11);
+                        }
+                        else{
+                            drawRouteLine(route.getCity1(), route.getCity2(), owner.getColor(), 5);
+                        }
+                    }
+                }
+                else{
+                    drawRouteLine(route.getCity1(), route.getCity2(), owner.getColor(), 11);
+                }
             }
         }
     }
@@ -1418,6 +1445,38 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
             start_turn_prompt.setText("LAST TURN!");
         }
         dialogBeginTurn.show();
+
+        longest_route_player.setText(longestPathString());
+    }
+
+    private String longestPathString(){
+        Map<IPlayer, Integer> map = ClientModel.getInstance().getLongestRoute();
+        StringBuilder sb = new StringBuilder();
+        int length = 0;
+        int playerCount = 0;
+
+            Iterator it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                playerCount++;
+
+                if(playerCount != 1){
+                    sb.append(", ");
+                }
+                Map.Entry pair = (Map.Entry)it.next();
+                sb.append(((IPlayer)pair.getKey()).getName());
+                length = (int)pair.getValue();
+                it.remove(); // avoids a ConcurrentModificationException
+            }
+
+        if(playerCount == 1){
+            sb.append(" has longest route with " + Integer.toString(length));
+        }
+        else{
+            sb.append(" have longest route with " + Integer.toString(length));
+        }
+
+        return sb.toString();
+
     }
 
     private boolean lastTurns(){
