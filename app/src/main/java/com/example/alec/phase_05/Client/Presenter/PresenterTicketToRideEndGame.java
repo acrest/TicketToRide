@@ -142,9 +142,6 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
                 }
             }
         }
-        if (maxLength == -1) {
-            throw new IllegalStateException("End game reached, but no player has longest route.");
-        }
 
         return maxLength;
     }

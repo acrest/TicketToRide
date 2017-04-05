@@ -1470,7 +1470,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 Map.Entry pair = (Map.Entry)it.next();
                 sb.append(((String)pair.getKey()));
                 length = (int)pair.getValue();
-                it.remove(); // avoids a ConcurrentModificationException
+                //it.remove(); // avoids a ConcurrentModificationException
             }
 
             if(playerCount == 1){
