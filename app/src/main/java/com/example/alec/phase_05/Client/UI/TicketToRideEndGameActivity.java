@@ -43,8 +43,8 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
         mWinner = (TextView) findViewById(R.id.results_winner_text);
         mLongestRoute = (TextView) findViewById(R.id.results_longest_route);
 
-        mWinner.setText(presenter.getWinner());
-        mLongestRoute.setText(presenter.getLongestRouteHolder());
+        mWinner.setText(getWinnerText());
+        mLongestRoute.setText(getLongestRouteText());
 
         List<ResultEntry> entries = new ArrayList<>();
         Iterator<String> players = presenter.getPlayerNames();
@@ -63,6 +63,42 @@ public class TicketToRideEndGameActivity extends Activity implements ITicketToRi
                 presenter.onReturnButtonPressed();
             }
         });
+    }
+
+    private String getWinnerText() {
+        List<String> winners = presenter.getWinners();
+        if(winners.size() == 0) {
+            return "There are no winners";
+        } else if(winners.size() == 1) {
+            return winners.get(0) + " has won";
+        } else if(winners.size() == 2) {
+            return winners.get(0) + " and " + winners.get(1) + " have won";
+        } else {
+            StringBuilder builder = new StringBuilder();
+            for(int i = 0; i < winners.size() - 1; i++) {
+                builder.append(winners.get(i) + ", ");
+            }
+            builder.append("and " + winners.get(winners.size() - 1) + " have won");
+            return builder.toString();
+        }
+    }
+
+    private String getLongestRouteText() {
+        List<String> holders = presenter.getLongestRouteHolders();
+        if(holders.size() == 0) {
+            return "Nobody";
+        } else if(holders.size() == 1) {
+            return holders.get(0);
+        } else if(holders.size() == 2) {
+            return holders.get(0) + " and " + holders.get(1);
+        } else {
+            StringBuilder builder = new StringBuilder();
+            for(int i = 0; i < holders.size() - 1; i++) {
+                builder.append(holders.get(i) + ", ");
+            }
+            builder.append(" and " + holders.get(holders.size() - 1));
+            return builder.toString();
+        }
     }
 
     @Override

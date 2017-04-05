@@ -3,6 +3,7 @@ package com.example.alec.phase_05.Client.Presenter;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by samuel on 3/22/17.
@@ -19,9 +20,9 @@ public interface IPresenterTicketToRideEndGame extends IPresenter {
 
     String getColor(String playerName);
 
-    String getWinner();
+    List<String> getWinners();
 
-    String getLongestRouteHolder();
+    List<String> getLongestRouteHolders();
 
     // Return the user to the game list.
     void onReturnButtonPressed();
