@@ -366,6 +366,7 @@ public class ServerFacade implements IServer {
         IServerGame game = model.getGame(gameId);
         if (game == null) return false;
         game.addDestinationCardToBottom(card);
+        game.removeCardFromPlayerHand(playerName, card);
         return true;
     }
 

@@ -32,4 +32,6 @@ public interface IServerGame extends IGame {
     Map<String, Integer> getBonusPoints();
 
     void addDestinationCardToBottom(DestinationCard card);
+
+    void removeCardFromPlayerHand(String playerName, DestinationCard card);
 }
