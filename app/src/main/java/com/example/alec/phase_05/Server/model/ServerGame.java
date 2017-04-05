@@ -94,7 +94,7 @@ public class ServerGame extends Game implements IServerGame {
         Player realPlayer = (Player) player;
         int points = 0;
         for(DestinationCard card : realPlayer.getDestinationCards()) {
-            if (getMap().checkIfDestinationComplete(card,player.getName())) { //causes a crash
+            if (getMap().checkIfDestinationComplete2(card,player.getName())) { //causes a crash
                 points += card.getValue();
             } else {
                 points -= card.getValue();

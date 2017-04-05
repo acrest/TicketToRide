@@ -1418,6 +1418,9 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     drawRouteLine(route.getCity1(), route.getCity2(), owner.getColor(), 11);
                 }
             }
+
+            // Change color of destination cards to indicate if they are met.
+            mRoutesRecyclerAdapter.updateData();
         }
     }
 
@@ -1739,15 +1742,26 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         public void onBindViewHolder(RouteHolder holder, int position) {
             DestinationCard destinationCard = listData.get(position);
 
+            ClientModel model = ClientModel.getInstance();
+            GameMap map = model.getMap();
+            int textColor = Color.BLACK;
+            if (map != null && model.hasCurrentGame()) {
+                if (map.checkIfDestinationComplete2(destinationCard, model.getCurrentPlayerName())) {
+                    textColor = Color.GREEN;
+                } else {
+                    textColor = Color.RED;
+                }
+            }
+
             holder.city1.setText(destinationCard.getCity1().getName());
             holder.city1.setTextSize(24);
-            holder.city1.setTextColor(Color.BLACK);
+            holder.city1.setTextColor(textColor);
             holder.city2.setText(destinationCard.getCity2().getName());
             holder.city2.setTextSize(24);
-            holder.city2.setTextColor(Color.BLACK);
+            holder.city2.setTextColor(textColor);
             holder.destination_points.setText(Integer.toString(destinationCard.getValue()));
             holder.destination_points.setTextSize(24);
-            holder.destination_points.setTextColor(Color.BLACK);
+            holder.destination_points.setTextColor(textColor);
 
         }
 
@@ -1758,6 +1772,11 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
         public void updateListData(List<DestinationCard> newListData) {
             listData = newListData;
+            recyclerView.getRecycledViewPool().clear();
+            notifyDataSetChanged();
+        }
+
+        public void updateData() {
             recyclerView.getRecycledViewPool().clear();
             notifyDataSetChanged();
         }
