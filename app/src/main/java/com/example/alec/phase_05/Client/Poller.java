@@ -78,6 +78,7 @@ public class Poller {
                         if(games != null) {
                             model.setGameList(games);
                         }
+                        Facade.getInstance().updateGameChanges();
                         break;
                     default:
 
