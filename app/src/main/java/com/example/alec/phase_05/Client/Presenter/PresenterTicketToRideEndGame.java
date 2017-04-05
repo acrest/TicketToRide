@@ -127,6 +127,7 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 
     private int getLongestRouteLength() {
         Map<IPlayer, Integer> longest = model.getLongestRoute();
+        System.out.println("the map has " + longest.size());
         int maxLength = -1;
         for (int i = 0; i < model.getGameMaxPlayers(); i++) {
             IPlayer player = model.getPlayer(i);
