@@ -82,9 +82,7 @@ public class ServerGame extends Game implements IServerGame {
     @Override
     public Map<String, Integer> getBonusPoints() {
         Map<String, Integer> bonusPoints = new HashMap<>();
-        Iterator<IPlayer> players = getPlayers().iterator();
-        while(players.hasNext()) {
-            IPlayer player = players.next();
+        for (IPlayer player : getPlayers()) {
             bonusPoints.put(player.getName(), getBonusPoints(player));
         }
         return bonusPoints;
@@ -93,8 +91,8 @@ public class ServerGame extends Game implements IServerGame {
     private int getBonusPoints(IPlayer player) {
         Player realPlayer = (Player) player;
         int points = 0;
-        for(DestinationCard card : realPlayer.getDestinationCards()) {
-            if (getMap().checkIfDestinationComplete2(card,player.getName())) { //causes a crash
+        for (DestinationCard card : realPlayer.getDestinationCards()) {
+            if (getMap().checkIfDestinationComplete2(card, player.getName())) { //causes a crash
                 points += card.getValue();
             } else {
                 points -= card.getValue();
