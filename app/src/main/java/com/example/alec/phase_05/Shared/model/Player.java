@@ -50,6 +50,10 @@ public class Player extends AbstractPlayer {
         destinationCards.add(card);
     }
 
+    public void removeDestinationCard(DestinationCard card) {
+        destinationCards.remove(card);
+    }
+
     public void removeDestinationCard(int index) {
         destinationCards.remove(index);
     }

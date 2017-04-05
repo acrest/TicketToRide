@@ -107,6 +107,14 @@ public class ServerGame extends Game implements IServerGame {
     }
 
     @Override
+    public void removeCardFromPlayerHand(String playerName, DestinationCard card) {
+        Player player = (Player) getPlayerByName(playerName);
+        if (player != null) {
+            player.removeDestinationCard(card);
+        }
+    }
+
+    @Override
     public void setPlayer(int position, IPlayer player) {
         player.setTrainCount(ServerModel.getInitialTrainCount());
         super.setPlayer(position, player);
