@@ -1110,6 +1110,14 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 //
 //    }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detach();
+        presenter = null;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
