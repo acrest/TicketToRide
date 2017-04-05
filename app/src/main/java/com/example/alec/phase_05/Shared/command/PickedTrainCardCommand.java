@@ -8,15 +8,16 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 
 public abstract class PickedTrainCardCommand extends BaseCommand {
     private String playerName;
-    private int cardIndex;
-    private TrainCard nextCard;
+    // New visible cards resulting from the last pick.
+    // Most of the time would only be one different from the client,
+    // but could potentially be all different in the case of too many wild cards.
+    private TrainCard[] visibleCards;
     private int remainingCards;
 
-    public PickedTrainCardCommand(String playerName, int cardIndex, TrainCard nextCard, int remainingCards) {
+    public PickedTrainCardCommand(String playerName, TrainCard[] visibleCards, int remainingCards) {
         super("PickedTrainCard");
         this.playerName = playerName;
-        this.cardIndex = cardIndex;
-        this.nextCard = nextCard;
+        this.visibleCards = visibleCards;
         this.remainingCards = remainingCards;
     }
 
@@ -24,15 +25,11 @@ public abstract class PickedTrainCardCommand extends BaseCommand {
         return playerName;
     }
 
-    public int getCardIndex() {
-        return cardIndex;
-    }
-
-    public TrainCard getNextCard() {
-        return nextCard;
-    }
-
     public int getRemainingCards() {
         return remainingCards;
+    }
+
+    public TrainCard[] getVisibleCards() {
+        return visibleCards;
     }
 }

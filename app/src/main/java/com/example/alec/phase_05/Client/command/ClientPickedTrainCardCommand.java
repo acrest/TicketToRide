@@ -10,13 +10,13 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
  */
 
 public class ClientPickedTrainCardCommand extends PickedTrainCardCommand {
-    public ClientPickedTrainCardCommand(String playerName, int cardIndex, TrainCard nextCard, int remainingCards) {
-        super(playerName, cardIndex, nextCard, remainingCards);
+    public ClientPickedTrainCardCommand(String playerName, TrainCard[] visibleCards, int remainingCards) {
+        super(playerName, visibleCards, remainingCards);
     }
 
     @Override
     public Result execute() {
-        ClientFacade.getInstance().pickTrainCard(getPlayerName(), getCardIndex(), getNextCard(), getRemainingCards());
+        ClientFacade.getInstance().pickTrainCard(getPlayerName(), getVisibleCards(), getRemainingCards());
         return null;
     }
 }
