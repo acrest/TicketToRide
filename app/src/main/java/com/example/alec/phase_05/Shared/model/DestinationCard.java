@@ -8,9 +8,9 @@ public class DestinationCard {
 
     private City city1;
     private City city2;
-    private Integer value;
+    private int value;
 
-    public DestinationCard(City _city1, City _city2, Integer _value){
+    public DestinationCard(City _city1, City _city2, int _value){
         city1 = _city1;
         city2 = _city2;
         value = _value;
@@ -32,16 +32,25 @@ public class DestinationCard {
         this.city2 = city2;
     }
 
-    public Integer getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
     @Override
     public String toString() {
         return city1.getName() + " to " + city2.getName() + " " + getValue();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof DestinationCard) {
+            DestinationCard card = (DestinationCard) obj;
+            return city1.equals(card.city1) && city2.equals(card.city2) && value == card.value;
+        }
+        return false;
     }
 }
