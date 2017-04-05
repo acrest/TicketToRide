@@ -365,7 +365,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         String longest_route = presenter.longestPath();
         System.out.println("ACTIVITY LONGEST ROUTE IS " + longest_route);
 
-        longest_route_player.setText(longest_route);
+        //longest_route_player.setText(longest_route);
 
 //
 
@@ -1441,6 +1441,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     @Override
     public void onTurnStart() {
+        System.out.println("hello");
         if(lastTurns()){
             start_turn_prompt.setText("LAST TURN!");
         }
@@ -1451,9 +1452,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
 
     private String longestPathString(){
         Map<IPlayer, Integer> map = ClientModel.getInstance().getLongestRoute();
-        StringBuilder sb = new StringBuilder();
-        int length = 0;
-        int playerCount = 0;
+        if(map != null){
+            StringBuilder sb = new StringBuilder();
+            int length = 0;
+            int playerCount = 0;
 
             Iterator it = map.entrySet().iterator();
             while (it.hasNext()) {
@@ -1468,15 +1470,17 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 it.remove(); // avoids a ConcurrentModificationException
             }
 
-        if(playerCount == 1){
-            sb.append(" has longest route with " + Integer.toString(length));
-        }
-        else{
-            sb.append(" have longest route with " + Integer.toString(length));
+            if(playerCount == 1){
+                sb.append(" has longest route with " + Integer.toString(length));
+            }
+            else{
+                sb.append(" have longest route with " + Integer.toString(length));
+            }
+
+            return sb.toString();
         }
 
-        return sb.toString();
-
+        return "";
     }
 
     private boolean lastTurns(){
@@ -1538,7 +1542,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
         System.out.println("Activity " + name + " " + routeLength + "!@#$");
         System.out.println(presenter.longestPath() + "!!!!!");
-        longest_route_player.setText(presenter.longestPath());
+        //longest_route_player.setText(presenter.longestPath());
     }
 
     private void displayCardChoiceDialog(boolean firstTurn) {

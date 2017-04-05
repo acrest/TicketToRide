@@ -54,7 +54,7 @@ public class StartScreenActivity extends AppCompatActivity {
                 }
                 else {
 
-                    if (Integer.parseInt(numTrains.getText().toString()) >= 10 && Integer.parseInt(numTrains.getText().toString()) <= 45) {
+                    if (Integer.parseInt(numTrains.getText().toString()) >= 4 && Integer.parseInt(numTrains.getText().toString()) <= 45) {
                         if (!firstIpAddress.getText().toString().isEmpty()) {
                             Facade.getInstance().setIpAddress(firstIpAddress.getText().toString()+"."+secondIpAddress.getText().toString()+"."+thirdIpAddress.getText().toString()+"."+fourthIpAddress.getText().toString());
                             ClientCommunicator.getInstance().setServerIP(firstIpAddress.getText().toString()+"."+secondIpAddress.getText().toString()+"."+thirdIpAddress.getText().toString()+"."+fourthIpAddress.getText().toString());
@@ -84,7 +84,7 @@ public class StartScreenActivity extends AppCompatActivity {
                     Toast.makeText(StartScreenActivity.this, "Fill out all fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    if (Integer.parseInt(numTrains.getText().toString()) >= 10 && Integer.parseInt(numTrains.getText().toString()) <= 45) {
+                    if (Integer.parseInt(numTrains.getText().toString()) >= 4 && Integer.parseInt(numTrains.getText().toString()) <= 45) {
                         if (!firstIpAddress.getText().toString().isEmpty()) {
                             Facade.getInstance().setIpAddress(firstIpAddress.getText().toString()+"."+secondIpAddress.getText().toString()+"."+thirdIpAddress.getText().toString()+"."+fourthIpAddress.getText().toString());
                             ClientCommunicator.getInstance().setServerIP(firstIpAddress.getText().toString()+"."+secondIpAddress.getText().toString()+"."+thirdIpAddress.getText().toString()+"."+fourthIpAddress.getText().toString());
