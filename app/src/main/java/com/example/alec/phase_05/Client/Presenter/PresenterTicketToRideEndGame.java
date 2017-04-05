@@ -126,9 +126,9 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
     }
 
     private int getLongestRouteLength() {
-        if (model.getLongestRoute().size() == 0) {
-            return 21000;
-        }
+//        if (model.getLongestRoute().size() == 0) {
+//            return 21000;
+//        }
         Map<String, Integer> longest = model.getLongestRoute();
 
         System.out.println("the map has " + longest.size());
