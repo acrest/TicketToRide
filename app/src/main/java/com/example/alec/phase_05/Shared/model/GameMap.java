@@ -72,17 +72,17 @@ public class GameMap {
         return false;
     }
 
-    public Map<IPlayer, Integer> findLongestRoute2() {
-        Map<IPlayer, Integer> longest = new HashMap<>();
+    public Map<String, Integer> findLongestRoute2() {
+        Map<String, Integer> longest = new HashMap<>();
         Map<String, List<Route>> playerRoutes = findRoutesForEachPlayer();
         int maxLongestRoute = -1;
         for (IPlayer player : getAllRouteOwners()) {
             int longestRoute = findLongestPath(playerRoutes.get(player.getName()));
             if (longestRoute > maxLongestRoute) {
                 longest = new HashMap<>();
-                longest.put(player, longestRoute);
+                longest.put(player.getName(), longestRoute);
             } else if (longestRoute == maxLongestRoute) {
-                longest.put(player, longestRoute);
+                longest.put(player.getName(), longestRoute);
             }
         }
         return longest;

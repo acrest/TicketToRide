@@ -349,8 +349,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
         }
     }
 
-    private Map<IPlayer, Integer> getLongestRoutePlayer() {
-        Map<IPlayer, Integer> longestRoutePlayer = presenter.getLongestPlayer();
+    private Map<String, Integer> getLongestRoutePlayer() {
+        Map<String, Integer> longestRoutePlayer = presenter.getLongestPlayer();
         return longestRoutePlayer;
     }
 
@@ -1451,7 +1451,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     private String longestPathString(){
-        Map<IPlayer, Integer> map = ClientModel.getInstance().getLongestRoute();
+        Map<String, Integer> map = ClientModel.getInstance().getLongestRoute();
         if(map != null){
             StringBuilder sb = new StringBuilder();
             int length = 0;
@@ -1465,7 +1465,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                     sb.append(", ");
                 }
                 Map.Entry pair = (Map.Entry)it.next();
-                sb.append(((IPlayer)pair.getKey()).getName());
+                sb.append(((String)pair.getKey()));
                 length = (int)pair.getValue();
                 it.remove(); // avoids a ConcurrentModificationException
             }
@@ -1521,28 +1521,28 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     }
 
     @Override
-    public void updateLongestPath(Map<IPlayer, Integer> longestRoute) {
-        String name = "No one";
-        String message = " has the longest route of ";
-        boolean firstIter = true;
-        String routeLength = "";
-        if (longestRoute != null) {
-            for (Map.Entry<IPlayer, Integer> entry : longestRoute.entrySet()) {
-                IPlayer key = entry.getKey();
-                int value = entry.getValue();
-                if (firstIter) {
-                    name = key.getName();
-                    firstIter = false;
-                } else {
-                    name = name + ", " + key.getName();
-                }
-                routeLength = Integer.toString(value);
-                System.out.println("Game map PLAYER: " + name + " " + routeLength);
-            }
-        }
-        System.out.println("Activity " + name + " " + routeLength + "!@#$");
-        System.out.println(presenter.longestPath() + "!!!!!");
-        //longest_route_player.setText(presenter.longestPath());
+    public void updateLongestPath(Map<String, Integer> longestRoute) {
+//        String name = "No one";
+//        String message = " has the longest route of ";
+//        boolean firstIter = true;
+//        String routeLength = "";
+//        if (longestRoute != null) {
+//            for (Map.Entry<String, Integer> entry : longestRoute.entrySet()) {
+//                String key = entry.getKey();
+//                int value = entry.getValue();
+//                if (firstIter) {
+//                    name = key;
+//                    firstIter = false;
+//                } else {
+//                    name = name + ", " + key;
+//                }
+//                routeLength = Integer.toString(value);
+//                System.out.println("Game map PLAYER: " + name + " " + routeLength);
+//            }
+//        }
+//        System.out.println("Activity " + name + " " + routeLength + "!@#$");
+//        System.out.println(presenter.longestPath() + "!!!!!");
+        longest_route_player.setText(presenter.longestPath());
     }
 
     private void displayCardChoiceDialog(boolean firstTurn) {

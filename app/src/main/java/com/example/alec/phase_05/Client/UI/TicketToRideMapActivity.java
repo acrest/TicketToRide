@@ -119,7 +119,7 @@ public class TicketToRideMapActivity extends AppCompatActivity implements ITicke
     }
 
     @Override
-    public void updateLongestPath(Map<IPlayer, Integer> longestRoute) {
+    public void updateLongestPath(Map<String, Integer> longestRoute) {
 
     }
 }
