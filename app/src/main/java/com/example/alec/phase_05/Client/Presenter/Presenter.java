@@ -32,4 +32,9 @@ public abstract class Presenter implements IPresenter {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(runnable);
     }
+
+    @Override
+    public void detach() {
+        ClientModel.getInstance().deleteObserver(this);
+    }
 }

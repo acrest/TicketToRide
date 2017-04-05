@@ -86,4 +86,12 @@ public class Route {
         }
         return 0;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Route) {
+            return id == ((Route) obj).id;
+        }
+        return false;
+    }
 }
