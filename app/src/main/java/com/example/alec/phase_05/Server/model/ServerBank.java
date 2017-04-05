@@ -4,9 +4,12 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.DestinationCardDeck;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainCardDeck;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.alec.phase_05.Shared.model.TrainType.LOCOMOTIVE;
 
 /**
  * Created by samuel on 2/25/17.
@@ -36,14 +39,52 @@ public class ServerBank implements IServerBank {
         fillVisibleTrainCards();
     }
 
+    private void checkIfAllVisibleRainbow() {
+        int rainbowNumb = 0;
+        int maxNumOfRainbow = 3;
+        System.out.println("WHAT IS GOING ON HERES? " + visibleTrainCards.size());
+        if (visibleTrainCards.size() == NUM_VISIBLE_TRAIN_CARDS) {
+            for (int i = 0; i < NUM_VISIBLE_TRAIN_CARDS; ++i) {
+                System.out.println("ITERATION #" + i + " " + visibleTrainCards.size());
+
+                TrainCard card = visibleTrainCards.get(i);
+                System.out.println(card.getType());
+                if (card.getType().equals(LOCOMOTIVE)) {
+                    System.out.println("IN THE IF");
+                    rainbowNumb++;
+                    System.out.println(rainbowNumb);
+                }
+            }
+
+
+            System.out.println("CHECK IF ALL VISIBLE RAINBOAW " + rainbowNumb + maxNumOfRainbow);
+            if (rainbowNumb >= maxNumOfRainbow) {
+                for (int i = 0; i < NUM_VISIBLE_TRAIN_CARDS; ++i) {
+                    TrainCard card = visibleTrainCards.get(i);
+                    System.out.println("ITER " + i + " " + card.getType());
+                    discardTrainCard(card);
+                    visibleTrainCards.set(i, drawTrainCard());
+                    System.out.println("new card is " + visibleTrainCards.get(i).getType());
+                }
+            }
+            System.out.println(" ");
+        }
+    }
+
     private void fillVisibleTrainCards() {
+
         for (int i = 0; i < NUM_VISIBLE_TRAIN_CARDS; ++i) {
             if (i >= visibleTrainCards.size()) {
                 visibleTrainCards.add(drawTrainCard());
             } else if (visibleTrainCards.get(i) == null) {
                 visibleTrainCards.set(i, drawTrainCard());
+                System.out.println("Card number is " + i + " and is " + visibleTrainCards.get(i));
             }
+            System.out.println("SERVER BANK CHECKING CARDS");
+
         }
+        checkIfAllVisibleRainbow();
+        System.out.println("END FOR LOOP HERE");
     }
 
     @Override

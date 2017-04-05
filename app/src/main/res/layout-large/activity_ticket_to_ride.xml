@@ -32,7 +32,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="15dp"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
+
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -376,14 +377,16 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="0.48"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
+                    android:textColor="@android:color/white"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/routes_list"
                         android:layout_width="match_parent"
                         android:layout_height="370dp"
-                        android:background="#AAE0E0E0"></android.support.v7.widget.RecyclerView>
+                        android:textColor="@android:color/white"
+                        android:background="#F2918F8F"></android.support.v7.widget.RecyclerView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -427,14 +430,16 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="0.48"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
+                    android:textColor="@android:color/white"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/games_history_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#AAE0E0E0"></android.support.v7.widget.RecyclerView>
+                        android:textColor="@android:color/white"
+                        android:background="#F2918F8F"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
             </LinearLayout>  <!-- Games History Tab -->
 
@@ -453,7 +458,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
-                android:background="#AA000000"
+                android:background="#F2918F8F"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -560,7 +565,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
                     android:orientation="vertical">
 
                     <ImageView
@@ -654,7 +659,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
-                    android:background="#AA000000"
+                    android:background="#F2918F8F"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
