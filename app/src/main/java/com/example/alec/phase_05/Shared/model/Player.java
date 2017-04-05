@@ -79,7 +79,7 @@ public class Player extends AbstractPlayer {
         if(routeType.equals(TrainType.ANY)) {
             routeType = ClientModel.getInstance().getRouteAnyCardType();
         }
-        return (routeType != null && cardCounts.containsKey(routeType) && cardCounts.get(routeType) + wildCount >= routeLength) || wildCount >= routeLength;
+        return (routeType != null && cardCounts.containsKey(routeType) && ((cardCounts.get(routeType) + wildCount) >= routeLength)) || wildCount >= routeLength;
     }
 
     //this method assumes that the player has enough cards
