@@ -2,12 +2,16 @@ package com.example.alec.phase_05.Server.communication;
 
 import com.example.alec.phase_05.DAO.DAO_User;
 import com.example.alec.phase_05.Server.command_line.ServerCommandLine;
+import com.example.alec.phase_05.Server.model.ServerFacade;
+import com.example.alec.phase_05.Shared.model.User;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
+import java.util.concurrent.Exchanger;
 
 /**
  * Created by samuel on 2/9/17.
@@ -55,6 +59,20 @@ public class Server {
         System.out.println("Table created successfully");
     }
 
+    private static void loadUsers(){
+        Connection c = null;
+
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
+            ArrayList<User> users = DAO_User.getInstance().getUsers(c);
+            ServerFacade.getInstance().loadUsers(users);
+            System.out.println("Loaded users.");
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
 
     public static void main(String[] args) {
         if (args.length < 1) {
@@ -65,7 +83,9 @@ public class Server {
         //System.out.println("SERVER MAIN " + args[0]);
 
         instantiateTables();
-        
+        DAO_User.getInstance().addUser("Andrew", "programming_wizard");
+        loadUsers();
+
         new Server().run(port);
         new ServerCommandLine().start();
     }

@@ -2,6 +2,8 @@ package com.example.alec.phase_05.DAO;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.alec.phase_05.Shared.model.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -149,7 +151,7 @@ public class DAO_User {
     /** Returns all the data for the users inside the database.
      * @return users stored within database.
      */
-    /*public User[] getUser(){return null;}
+    //public User[] getUser(){return null;}
 
     public  ArrayList<User> getUsers(Connection c)
     {
@@ -160,15 +162,10 @@ public class DAO_User {
             PreparedStatement stmt = c.prepareStatement("Select * from USER");
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                String userName = rs.getString(1);
+                String username = rs.getString(1);
                 String password = rs.getString(2);
-                String email = rs.getString(3);
-                String firstName = rs.getString(4);
-                String lastName = rs.getString(5);
-                String gender = rs.getString(6);
-                String personId = rs.getString(7);
 
-                User user = new User(userName, password, email, firstName, lastName, gender, personId);
+                User user = new User(username, password);
                 users.add(user);
             }
 
@@ -178,5 +175,5 @@ public class DAO_User {
         }
 
         return users;
-    }*/
+    }
 }
