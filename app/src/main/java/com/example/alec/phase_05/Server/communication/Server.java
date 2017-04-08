@@ -67,6 +67,7 @@ public class Server {
             ArrayList<User> users = DAO_User.getInstance().getUsers(c);
             ServerFacade.getInstance().loadUsers(users);
             System.out.println("Loaded users.");
+            c.close();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
@@ -83,7 +84,6 @@ public class Server {
         //System.out.println("SERVER MAIN " + args[0]);
 
         instantiateTables();
-        DAO_User.getInstance().addUser("Andrew", "programming_wizard");
         loadUsers();
 
         new Server().run(port);
