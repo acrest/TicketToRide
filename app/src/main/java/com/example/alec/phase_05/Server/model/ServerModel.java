@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.PlayerCredentials;
+import com.example.alec.phase_05.Shared.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -150,5 +151,12 @@ public class ServerModel {
         IServerGame game = getGame(gameID);
         if(game == null || !game.isGameStarted()) return null;
         return game.recentCommand(playerName);
+    }
+
+    public void loadUsers(ArrayList<User> users){
+        for(int i = 0; i < users.size(); i++){
+            PlayerCredentials player = new PlayerCredentials(users.get(i).getUsername(), users.get(i).getPassword());
+            playerMap.put(users.get(i).getUsername(), player);
+        }
     }
 }
