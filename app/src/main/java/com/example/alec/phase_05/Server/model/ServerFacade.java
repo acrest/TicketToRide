@@ -180,6 +180,18 @@ public class ServerFacade implements IServer {
         return GameStateFactory.gameToGameState(game);
     }
 
+    @Override////LOOOOOOOOK HERE FOR IMPLIMENTATION
+    public GameInfo reJoinGame(String playerName, int gameID, String color) {
+        IServerGame game = model.getGame(gameID);
+        Player player = new Player(playerName);
+        player.setColor(color);
+        if (game == null) return null;
+        int playerPosition = game.addPlayerAtNextPosition(player);
+        //check to see of the player was added successfully
+        if (playerPosition == -1) return null;
+        return GameStateFactory.gameToGameState(game);
+    }
+
     /**
      * gets the list of games from the ServerModel that are available to join
      *
