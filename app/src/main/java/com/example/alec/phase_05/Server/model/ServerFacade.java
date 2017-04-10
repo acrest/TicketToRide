@@ -17,7 +17,9 @@ import com.example.alec.phase_05.Shared.model.PlayerCredentials;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
+import com.example.alec.phase_05.Shared.model.User;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -410,6 +412,10 @@ public class ServerFacade implements IServer {
     @Override
     public List<IPlayer> getLatestPlayers(int gameID) {
         return null;
+    }
+
+    public void loadUsers(ArrayList<User> users){
+        model.loadUsers(users);
     }
 
 //    public ServerGetGameStartedCommand getGameStartedCommand(String playerName, int gameId) {
