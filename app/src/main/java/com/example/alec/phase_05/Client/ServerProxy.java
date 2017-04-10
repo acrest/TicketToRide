@@ -72,7 +72,15 @@ public class ServerProxy implements IServer {
 
     @Override
     public Result executeCommand(ICommand command) {
-        return myCC.executeCommandOnServer(command);
+        Result result;
+        while ((result = myCC.executeCommandOnServer(command)) == null) {
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     /** If the user excists, and the password matches the server's user password, return that player. Else return null.

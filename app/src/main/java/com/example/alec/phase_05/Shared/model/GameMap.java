@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -223,7 +224,7 @@ public class GameMap {
 
     public boolean checkIfDestinationComplete2(DestinationCard card, String player) {
         List<Route> routes = findRoutesForEachPlayer().get(player);
-        if(routes == null) {
+        if (routes == null) {
             // The player has no routes.
             return false;
         }

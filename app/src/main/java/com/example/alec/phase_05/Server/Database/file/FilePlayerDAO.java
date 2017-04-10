@@ -1,5 +1,6 @@
-package com.example.alec.phase_05.Server.Database;
+package com.example.alec.phase_05.Server.Database.file;
 
+import com.example.alec.phase_05.Server.Database.database_interface.PlayerDAO;
 import com.example.alec.phase_05.Shared.model.User;
 
 import java.sql.Connection;
@@ -8,14 +9,14 @@ import java.util.ArrayList;
 /**
  * Created by Andrew on 4/9/2017.
  */
-public class DAO_File implements Database_DAO {
-    private static DAO_File ourInstance = new DAO_File();
+public class FilePlayerDAO implements PlayerDAO {
+    private static FilePlayerDAO ourInstance = new FilePlayerDAO();
 
-    public static DAO_File getInstance() {
+    public static FilePlayerDAO getInstance() {
         return ourInstance;
     }
 
-    private DAO_File() {
+    private FilePlayerDAO() {
     }
 
     @Override
