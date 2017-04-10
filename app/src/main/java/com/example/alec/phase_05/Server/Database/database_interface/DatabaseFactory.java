@@ -8,6 +8,4 @@ public interface DatabaseFactory {
     GameDAO createGameDAO();
 
     PlayerDAO createPlayerDAO();
-
-    void clear();
 }

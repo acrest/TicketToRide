@@ -16,13 +16,7 @@ import java.util.ArrayList;
  * Created by Andrew on 4/9/2017.
  */
 public class SQLitePlayerDAO implements PlayerDAO {
-    private static SQLitePlayerDAO ourInstance = new SQLitePlayerDAO();
-
-    public static SQLitePlayerDAO getInstance() {
-        return ourInstance;
-    }
-
-    private SQLitePlayerDAO() {
+    public SQLitePlayerDAO() {
     }
 
     public void addUser(String username, String password){
@@ -93,20 +87,25 @@ public class SQLitePlayerDAO implements PlayerDAO {
         return users;
     }
 
-    public void loadUsers(){  //Load Users from database to model.
-        Connection c = null;
+    @Override
+    public void clear() {
 
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
-            ArrayList<User> users = getUsers(c);
-            ServerFacade.getInstance().loadUsers(users);
-            System.out.println("Loaded users.");
-            c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-        }
     }
+
+//    public void loadUsers(){  //Load Users from database to model.
+//        Connection c = null;
+//
+//        try {
+//            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
+//            ArrayList<User> users = getUsers(c);
+//            ServerFacade.getInstance().loadUsers(users);
+//            System.out.println("Loaded users.");
+//            c.close();
+//        } catch ( Exception e ) {
+//            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+//            System.exit(0);
+//        }
+//    }
 
     public void instantiateTables()
     {

@@ -15,7 +15,10 @@ public interface PlayerDAO {
 
     void removeUser(String username);
 
-    public ArrayList<User> getUsers(Connection c);
+    ArrayList<User> getUsers(Connection c);
 
-    void loadUsers();  //Load Users from database to model.
+    // Deletes all users.
+    void clear();
+
+//    void loadUsers();  //Load Users from database to model.
 }

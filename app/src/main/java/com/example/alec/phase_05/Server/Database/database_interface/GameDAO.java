@@ -8,19 +8,28 @@ import com.example.alec.phase_05.Shared.command.ICommand;
  */
 
 public interface GameDAO {
+    // Saves game.
     void saveGame(IServerGame game);
 
-    IServerGame getGame();
+    // Gets the blob with gameId.
+    IServerGame getGame(int gameId);
 
-    boolean hasGame();
+    // Checks to see if a game with gameId exists in the database.
+    boolean hasGame(int gameId);
 
-    void deleteGame();
+    // Removes blob with gameId.
+    void clearGame(int gameId);
 
-    void addCommand(ICommand command);
+    // Clears all game blobs.
+    void clearAllGames();
 
-    ICommand getCommand(int index);
+    void addCommand(int gameId, ICommand command);
 
-    int getNumberOfCommands();
+    ICommand getCommand(int gameId, int index);
 
-    void clearCommands();
+    int getNumberOfCommands(int gameId);
+
+    void clearCommands(int gameId);
+
+    void clearAll();
 }

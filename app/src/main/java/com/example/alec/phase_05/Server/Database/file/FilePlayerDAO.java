@@ -10,13 +10,8 @@ import java.util.ArrayList;
  * Created by Andrew on 4/9/2017.
  */
 public class FilePlayerDAO implements PlayerDAO {
-    private static FilePlayerDAO ourInstance = new FilePlayerDAO();
+    public FilePlayerDAO() {
 
-    public static FilePlayerDAO getInstance() {
-        return ourInstance;
-    }
-
-    private FilePlayerDAO() {
     }
 
     @Override
@@ -34,7 +29,12 @@ public class FilePlayerDAO implements PlayerDAO {
         return null;
     }
 
-    public void loadUsers(){  //Load Users from database to model.
+    @Override
+    public void clear() {
 
     }
+
+//    public void loadUsers(){  //Load Users from database to model.
+//
+//    }
 }
