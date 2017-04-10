@@ -9,6 +9,7 @@ import com.example.alec.phase_05.Client.command.ClientFinishGameCommand;
 import com.example.alec.phase_05.Client.command.ClientFinishTurnCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameDescriptionCommand;
+import com.example.alec.phase_05.Client.command.ClientGetGameInfoCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
 import com.example.alec.phase_05.Client.command.ClientGetGameStateCommand;
 import com.example.alec.phase_05.Client.command.ClientGetNextChangeCommand;
@@ -81,6 +82,12 @@ public class ServerProxy implements IServer {
             }
         }
         return result;
+    }
+
+    @Override
+    public GameInfo getGameInfo(int gameId) {
+        return (GameInfo) executeCommand(new ClientGetGameInfoCommand(gameId))
+                .toClass(GameInfo.class);
     }
 
     /** If the user excists, and the password matches the server's user password, return that player. Else return null.

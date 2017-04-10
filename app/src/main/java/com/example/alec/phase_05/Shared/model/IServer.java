@@ -53,4 +53,6 @@ public interface IServer {
     boolean setServerTrainCount(int count);
 
     Result executeCommand(ICommand command);
+
+    GameInfo getGameInfo(int gameId);
 }

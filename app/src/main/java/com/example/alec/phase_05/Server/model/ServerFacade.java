@@ -74,6 +74,13 @@ public class ServerFacade implements IServer {
         return r;
     }
 
+    @Override
+    public GameInfo getGameInfo(int gameId) {
+        IServerGame game = model.getGame(gameId);
+        if (game == null) return null;
+        return GameStateFactory.gameToGameState(game);
+    }
+
     /**
      * Finds the specific player inside the ServerModel
      * @pre username is not null. Username characters are limited to letters, ^, *,  and _.
