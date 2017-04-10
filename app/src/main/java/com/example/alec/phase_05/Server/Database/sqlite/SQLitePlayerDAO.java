@@ -1,5 +1,6 @@
-package com.example.alec.phase_05.Server.Database;
+package com.example.alec.phase_05.Server.Database.sqlite;
 
+import com.example.alec.phase_05.Server.Database.database_interface.PlayerDAO;
 import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.model.User;
 
@@ -14,14 +15,14 @@ import java.util.ArrayList;
 /**
  * Created by Andrew on 4/9/2017.
  */
-public class DAO_Sqlite implements Database_DAO{
-    private static DAO_Sqlite ourInstance = new DAO_Sqlite();
+public class SQLitePlayerDAO implements PlayerDAO {
+    private static SQLitePlayerDAO ourInstance = new SQLitePlayerDAO();
 
-    public static DAO_Sqlite getInstance() {
+    public static SQLitePlayerDAO getInstance() {
         return ourInstance;
     }
 
-    private DAO_Sqlite() {
+    private SQLitePlayerDAO() {
     }
 
     public void addUser(String username, String password){
