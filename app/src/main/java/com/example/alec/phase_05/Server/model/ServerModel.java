@@ -5,6 +5,7 @@ import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.PlayerCredentials;
 import com.example.alec.phase_05.Shared.model.User;
+import com.example.alec.phase_05.Server.Database.Database_DAO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ public class ServerModel {
     private Map<Integer,ServerGame> gamesMap;
     private Map<String,PlayerCredentials> playerMap;
     private static ServerModel _instance;
+    private Database_DAO database;
 
 
     /**
@@ -68,6 +70,7 @@ public class ServerModel {
         if(playerMap.containsKey(playerName))
             return false;
         playerMap.put(playerName,newPlayer);
+        database.addUser(newPlayer.getUsername(), newPlayer.getPassword());
         return true;
     }
 
@@ -158,5 +161,13 @@ public class ServerModel {
             PlayerCredentials player = new PlayerCredentials(users.get(i).getUsername(), users.get(i).getPassword());
             playerMap.put(users.get(i).getUsername(), player);
         }
+    }
+
+    public Database_DAO getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(Database_DAO db) {
+        this.database = db;
     }
 }
