@@ -1,4 +1,5 @@
 package com.example.alec.phase_05.Server.command;
+import java.io.Serializable;
 
 import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.CreateGameCommand;
@@ -8,7 +9,7 @@ import com.example.alec.phase_05.Shared.command.Result;
  * Created by samuel on 2/9/17.
  */
 
-public class ServerCreateGameCommand extends CreateGameCommand {
+public class ServerCreateGameCommand extends CreateGameCommand implements Serializable {
     /**
      * @param gameName        name of game to be created
      * @param numberOfPlayers number of players in game to be created

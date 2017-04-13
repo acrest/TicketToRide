@@ -1,4 +1,5 @@
 package com.example.alec.phase_05.Server.command;
+import java.io.Serializable;
 
 import com.example.alec.phase_05.Shared.command.*;
 import com.example.alec.phase_05.Shared.communication.SerDes;
@@ -7,7 +8,7 @@ import com.example.alec.phase_05.Shared.communication.SerDes;
  * Created by samuel on 2/9/17.
  */
 
-public class ServerResult extends Result {
+public class ServerResult extends Result implements Serializable {
     //this assumes that the server commands are in the same package as this CommandHandler
     public static final String SERVER_COMMAND_PREFIX = ServerResult.class.getPackage().getName() + ".Server";
     public static final String SERVER_COMMAND_SUFFIX = "Command";

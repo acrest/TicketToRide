@@ -8,13 +8,14 @@ import com.example.alec.phase_05.Shared.model.IChatManager;
 import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * Created by samuel on 2/25/17.
  */
 
-public interface IServerGame extends IGame {
+public interface IServerGame extends IGame, Serializable {
     IChatManager getChatManager();
 
     void addCommand(GameCommand command);

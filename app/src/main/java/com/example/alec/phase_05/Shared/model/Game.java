@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by samuel on 2/9/17.
  */
 
-public abstract class Game implements IGame {
+public abstract class Game implements IGame, Serializable {
     private int id;
     private String name;
     private int maxPlayers;

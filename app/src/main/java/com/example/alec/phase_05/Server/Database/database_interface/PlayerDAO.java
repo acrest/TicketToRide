@@ -15,7 +15,7 @@ public interface PlayerDAO {
 
     void removeUser(String username);
 
-    ArrayList<User> getUsers(Connection c);
+    ArrayList<User> getUsers();
 
     // Deletes all users.
     void clear();
