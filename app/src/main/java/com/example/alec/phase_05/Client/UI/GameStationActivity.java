@@ -322,7 +322,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
             holder.inGameLabel.setText(gameDescription.getNumberPlayers() + "/" + gameDescription.getMaxPlayers());
 
             StringBuilder sb = new StringBuilder();
-            if(gameDescription.getNumberPlayers() != 0) {
+            if(gameDescription.getNumberPlayers() != 0 || gameDescription.hasPlayer(ClientModel.getInstance().getCurrentPlayerName())) {
                 for(int i = 0; i < gameDescription.getNumberPlayers(); i++)
                 {
                     sb.append(gameDescription.getPlayers().get(i).getName() + ", ");
