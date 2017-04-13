@@ -16,6 +16,7 @@ import com.example.alec.phase_05.Client.command.ClientGetNextChangeCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientPickTrainCardCommand;
+import com.example.alec.phase_05.Client.command.ClientReJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Client.command.ClientReturnDestinationCardCommand;
 import com.example.alec.phase_05.Client.command.ClientSendChatCommand;
@@ -148,6 +149,13 @@ public class ServerProxy implements IServer {
     public GameInfo joinGame(String playerName, int gameID, String color) {
         System.out.println("inside join game server proxy");
         return (GameInfo) executeCommand(new ClientJoinGameCommand(playerName, gameID, color)).toClass(GameInfo.class);
+    }
+
+
+    @Override
+    public GameInfo reJoinGame(String playerName, int gameID, String color) {
+        System.out.println("inside join game server proxy");
+        return (GameInfo) executeCommand(new ClientReJoinGameCommand(playerName, gameID, color)).toClass(GameInfo.class);
     }
 
     /** Returns a list of games that a specified player is currently in. If the person doesn't excist, or wrong password, return null.

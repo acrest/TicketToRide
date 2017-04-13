@@ -14,6 +14,7 @@
     <string name="create_new_game">CREATE NEW GAME</string>
     <string name="join_new_game">JOIN NEW GAME</string>
     <string name="join_game_button">JOIN GAME</string>
+    <string name="rejoin_game_button">RE-JOIN GAME</string>
     <string name="game_name_tab">Game</string>
     <string name="players_tab">Players</string>
     <string name="in_game_tab">In Game</string>

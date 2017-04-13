@@ -34,7 +34,9 @@ public class ClientModel extends Observable {
     public static String CREATE_GAME_SUCCESS = "create game success";
     public static String CREATE_GAME_FAILURE = "create game failure";
     public static String JOIN_GAME_SUCCESS = "join game success";
+    public static String REJOIN_GAME_SUCCESS = "rejoin game success";
     public static String JOIN_GAME_FAILURE = "join game failure";
+    public static String REJOIN_GAME_FAILURE = "rejoin game failure";
     public static String NUM_PLAYERS_IN_GAME = "num players in game";
     public static String CURRENT_GAME = "current game";
     public static String PLAYER_IN_GAME = "player in game";
@@ -470,6 +472,15 @@ public class ClientModel extends Observable {
             notifyPropertyChanges(JOIN_GAME_SUCCESS);
         } else {
             notifyPropertyChanges(JOIN_GAME_FAILURE);
+        }
+    }
+
+    public void setReJoinGameSuccess(boolean success) {
+        if (success) {
+            isHost = false;
+            notifyPropertyChanges(REJOIN_GAME_SUCCESS);
+        } else {
+            notifyPropertyChanges(REJOIN_GAME_FAILURE);
         }
     }
 

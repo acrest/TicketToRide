@@ -88,7 +88,7 @@
                 android:id="@+id/create_game_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:padding="25dp"
                 android:text="@string/create_game_button"
                 android:textSize="13dp"/>
@@ -97,9 +97,18 @@
                 android:id="@+id/join_game_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:padding="25dp"
                 android:text="@string/join_game_button"
+                android:textSize="13dp"
+                />
+            <Button
+                android:id="@+id/rejoin_game_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:padding="25dp"
+                android:text="@string/rejoin_game_button"
                 android:textSize="13dp"
                 />
 
