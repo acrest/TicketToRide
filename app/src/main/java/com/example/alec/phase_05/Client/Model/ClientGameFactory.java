@@ -1,6 +1,9 @@
 package com.example.alec.phase_05.Client.Model;
 
 import com.example.alec.phase_05.Client.Facade;
+import com.example.alec.phase_05.Client.states.DrawDestinationState;
+import com.example.alec.phase_05.Client.states.OneDrawnCardState;
+import com.example.alec.phase_05.Client.states.StartTurnState;
 import com.example.alec.phase_05.Shared.model.GameInfo;
 import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -39,11 +42,14 @@ public final class ClientGameFactory {
                 } else if(i == playerTurnIndex) {
                     if(playerStatus == PlayerTurnStatus.DESTINATION) {
                         //get destination cards and call for destination modle to pop up
+                        game.setTurnState(new DrawDestinationState((ClientGame) game));
                     } else if (playerStatus == PlayerTurnStatus.TRAIN) {
                         //set client state to one card picked.
                         // tell user to pick one more train card.
+                        game.setTurnState(new OneDrawnCardState((ClientGame) game));
                     } else {
                         //set client state to start turn state.
+                        game.setTurnState(new StartTurnState((ClientGame) game));
                     }
                 }
 
