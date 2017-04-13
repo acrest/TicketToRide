@@ -7,9 +7,11 @@ import com.example.alec.phase_05.Shared.model.Player;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -51,5 +53,37 @@ public class Blob_Generator {
         }
 
         return null;
+    }
+
+    public static void andrewSerialize(Object o){
+        try {
+            FileOutputStream fileOut =
+                    new FileOutputStream("FileDatabase");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(o);
+            out.close();
+            fileOut.close();
+            System.out.println("Serialized data is saved in FileDatabase.txt");
+        }catch(IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    public static Object andrewDeserialize(){
+        try {
+            FileInputStream fileIn = new FileInputStream("FileDatabase");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Object o = (Object) in.readObject();
+            in.close();
+            fileIn.close();
+            System.out.println("Deserialized data from FileDatabase.txt");
+            return o;
+        }catch(IOException i) {
+            i.printStackTrace();
+            return null;
+        }catch(ClassNotFoundException c) {
+            c.printStackTrace();
+            return null;
+        }
     }
 }
