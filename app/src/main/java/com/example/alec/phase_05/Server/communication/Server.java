@@ -41,6 +41,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
+
         if (args.length < 2) {
             System.out.println("Usage: run_server <port> <persistence>");
             System.exit(1);
