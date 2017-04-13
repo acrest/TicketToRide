@@ -27,13 +27,13 @@ public class Blob_Generator {
         return null;
     }
 
-    public String serialize(Object o){
+    public static byte[] serialize(Object o){
         try {
             ByteArrayOutputStream bo = new ByteArrayOutputStream();
             ObjectOutputStream so = new ObjectOutputStream(bo);
             so.writeObject(o);
             so.flush();
-            return bo.toString();
+            return bo.toByteArray();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -41,9 +41,8 @@ public class Blob_Generator {
         return null;
     }
 
-    public Object deserialize(String s){
+    public static Object deserialize(byte[] b){
         try {
-            byte b[] = s.getBytes();
             ByteArrayInputStream bi = new ByteArrayInputStream(b);
             ObjectInputStream si = new ObjectInputStream(bi);
             return si.readObject();
