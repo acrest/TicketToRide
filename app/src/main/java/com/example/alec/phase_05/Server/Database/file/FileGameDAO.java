@@ -86,24 +86,46 @@ public class FileGameDAO implements GameDAO {
 
     @Override
     public ICommand getCommand(int gameId, int index) {
-//        try {
-//            Foe;
-//        }
-        return null;
+        try {
+            FileInputStream in = new FileInputStream(new File("game" + gameId + "/command" + index));
+            ByteArrayOutputStream data = new ByteArrayOutputStream();
+            int read;
+            byte[] buffer = new byte[128];
+            while((read = in.read(buffer)) >= 0) {
+                data.write(buffer, 0, read);
+            }
+            return (ICommand) Blob_Generator.deserialize(data.toByteArray());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public int getNumberOfCommands(int gameId) {
-        return 0;
+        int count = 0;
+        for (String fileName : new File("game" + gameId).list()) {
+            if (fileName.substring(0, 7).equals("command")) {
+                count++;
+            }
+        }
+        return count;
     }
 
     @Override
     public void clearCommands(int gameId) {
-
+        for (File file : new File("game" + gameId).listFiles()) {
+            if (file.getName().substring(0, 7).equals("command")) {
+                file.delete();
+            }
+        }
     }
 
     @Override
     public void clearAll() {
-
+        for (File file : new File(".").listFiles()) {
+            if (file.getName().substring(0, 4).equals("game")) {
+                file.delete();
+            }
+        }
     }
 }
