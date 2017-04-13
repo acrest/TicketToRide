@@ -15,6 +15,7 @@ public class GameInfo {
     private int trainCardsRemaining;
     private int destinationCardsRemaining;
     private GameMap map;
+    private int playerTurnIndex;
 
 
     public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, int trainCardsRemaining, int destinationCardsRemaining, GameMap map) {
@@ -26,6 +27,7 @@ public class GameInfo {
         this.trainCardsRemaining = trainCardsRemaining;
         this.destinationCardsRemaining = destinationCardsRemaining;
         this.map = map;
+        playerTurnIndex = 0;
     }
 
     public int getId() {
@@ -59,5 +61,14 @@ public class GameInfo {
 
     public int getDestinationCardsRemaining() {
         return destinationCardsRemaining;
+    }
+
+    public void updateIndex() {
+        playerTurnIndex++;
+        playerTurnIndex = playerTurnIndex % maxPlayers;
+    }
+
+    public int getPlayerTurnIndex() {
+        return playerTurnIndex;
     }
 }
