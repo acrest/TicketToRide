@@ -16,4 +16,6 @@ public class ClientPickTrainCardCommand extends PickTrainCardCommand {
     public Result execute() {
         return null;
     }
+
+
 }

@@ -21,4 +21,9 @@ public class ServerClaimRouteCommand extends ClaimRouteCommand {
         result.setResultObject(ServerFacade.getInstance().claimRoute(getPlayerName(), getGameId(), getRouteId(), getRouteType()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().claimRoute(getPlayerName(), getGameId(), getRouteId(), getRouteType());
+    }
 }

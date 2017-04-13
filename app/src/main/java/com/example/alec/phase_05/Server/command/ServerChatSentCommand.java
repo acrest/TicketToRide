@@ -17,4 +17,9 @@ public class ServerChatSentCommand extends ChatSentCommand {
     public Result execute() {
         return null;
     }
+
+    @Override
+    public void reExecute() {
+
+    }
 }
