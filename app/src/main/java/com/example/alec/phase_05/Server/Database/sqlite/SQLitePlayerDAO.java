@@ -1,5 +1,6 @@
-package com.example.alec.phase_05.Server.Database;
+package com.example.alec.phase_05.Server.Database.sqlite;
 
+import com.example.alec.phase_05.Server.Database.database_interface.PlayerDAO;
 import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.model.User;
 
@@ -14,14 +15,8 @@ import java.util.ArrayList;
 /**
  * Created by Andrew on 4/9/2017.
  */
-public class DAO_Sqlite implements Database_DAO{
-    private static DAO_Sqlite ourInstance = new DAO_Sqlite();
-
-    public static DAO_Sqlite getInstance() {
-        return ourInstance;
-    }
-
-    private DAO_Sqlite() {
+public class SQLitePlayerDAO implements PlayerDAO {
+    public SQLitePlayerDAO() {
     }
 
     public void addUser(String username, String password){
@@ -92,20 +87,25 @@ public class DAO_Sqlite implements Database_DAO{
         return users;
     }
 
-    public void loadUsers(){  //Load Users from database to model.
-        Connection c = null;
+    @Override
+    public void clear() {
 
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
-            ArrayList<User> users = getUsers(c);
-            ServerFacade.getInstance().loadUsers(users);
-            System.out.println("Loaded users.");
-            c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-        }
     }
+
+//    public void loadUsers(){  //Load Users from database to model.
+//        Connection c = null;
+//
+//        try {
+//            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
+//            ArrayList<User> users = getUsers(c);
+//            ServerFacade.getInstance().loadUsers(users);
+//            System.out.println("Loaded users.");
+//            c.close();
+//        } catch ( Exception e ) {
+//            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+//            System.exit(0);
+//        }
+//    }
 
     public void instantiateTables()
     {

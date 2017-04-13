@@ -92,6 +92,10 @@ public class TestGameStationActivity extends Activity implements IGameStationLis
     }
 
     @Override
+    public void reJoinGameSuccess(boolean success) {
+    }
+
+    @Override
     public void createGameSuccess(boolean success) {
         if(success) {
             System.out.println("There is success!!");

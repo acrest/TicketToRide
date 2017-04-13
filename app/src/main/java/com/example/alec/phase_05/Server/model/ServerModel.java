@@ -5,7 +5,7 @@ import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.PlayerCredentials;
 import com.example.alec.phase_05.Shared.model.User;
-import com.example.alec.phase_05.Server.Database.Database_DAO;
+import com.example.alec.phase_05.Server.Database.database_interface.PlayerDAO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class ServerModel {
     private Map<Integer,ServerGame> gamesMap;
     private Map<String,PlayerCredentials> playerMap;
     private static ServerModel _instance;
-    private Database_DAO database;
+    private PlayerDAO database;
 
 
     /**
@@ -153,6 +153,7 @@ public class ServerModel {
     public ICommand getNextCommand(String playerName, int gameID) {
         IServerGame game = getGame(gameID);
         if(game == null || !game.isGameStarted()) return null;
+        System.out.println("poller is sent from " + playerName);
         return game.recentCommand(playerName);
     }
 
@@ -163,11 +164,11 @@ public class ServerModel {
         }
     }
 
-    public Database_DAO getDatabase() {
+    public PlayerDAO getDatabase() {
         return database;
     }
 
-    public void setDatabase(Database_DAO db) {
+    public void setDatabase(PlayerDAO db) {
         this.database = db;
     }
 }

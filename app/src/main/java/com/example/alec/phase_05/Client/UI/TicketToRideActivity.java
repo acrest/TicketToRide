@@ -1419,9 +1419,10 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 }
             }
 
-            // Change color of destination cards to indicate if they are met.
-            mRoutesRecyclerAdapter.updateData();
         }
+
+        // Change color of destination cards to indicate if they are met.
+        mRoutesRecyclerAdapter.updateData();
     }
 
     @Override

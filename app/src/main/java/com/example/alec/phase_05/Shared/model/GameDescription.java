@@ -35,6 +35,16 @@ public class GameDescription {
         return players;
     }
 
+    public boolean hasPlayer(String name){
+        for (int i = 0;i < players.size(); i++){
+            if (players.get(i).getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public int getMaxPlayers() {
         return maxPlayers;
     }
