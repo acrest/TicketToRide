@@ -7,8 +7,6 @@ import com.example.alec.phase_05.Server.Database.database_interface.PlayerDAO;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +28,9 @@ public class Database {
 
     public static boolean init(String persistence) {
         Map<String, String> registry = loadRegistry();
+        if (registry == null) {
+            return false;
+        }
         if (registry.containsKey(persistence)) {
             DatabaseFactory factory = loadFactory(registry.get(persistence));
             if (factory != null) {

@@ -86,8 +86,11 @@ public class ServerProxy implements IServer {
 
     @Override
     public GameInfo getGameInfo(int gameId) {
-        return (GameInfo) executeCommand(new ClientGetGameInfoCommand(gameId))
-                .toClass(GameInfo.class);
+        Result result;
+        do {
+            result = executeCommand(new ClientGetGameInfoCommand(gameId));
+        } while (result == null);
+        return (GameInfo) result.toClass(GameInfo.class);
     }
 
     /** If the user excists, and the password matches the server's user password, return that player. Else return null.
@@ -131,8 +134,11 @@ public class ServerProxy implements IServer {
     public GameInfo createGame(String playerName, int numOfPlayers, String gameName, String hostColor) {
         System.out.println("inside server proxy create game");
         System.out.println("inside " + gameName + " " + numOfPlayers +  " " + playerName + " " + hostColor);
-        return (GameInfo) executeCommand(new ClientCreateGameCommand(gameName, numOfPlayers, playerName, hostColor))
-                .toClass(GameInfo.class);
+        Result result;
+        do {
+            result = executeCommand(new ClientCreateGameCommand(gameName, numOfPlayers, playerName, hostColor));
+        } while(result == null);
+        return (GameInfo) result.toClass(GameInfo.class);
     }
 
     /** Join a player into a game that is already created.
@@ -147,7 +153,11 @@ public class ServerProxy implements IServer {
     @Override
     public GameInfo joinGame(String playerName, int gameID, String color) {
         System.out.println("inside join game server proxy");
-        return (GameInfo) executeCommand(new ClientJoinGameCommand(playerName, gameID, color)).toClass(GameInfo.class);
+        Result result;
+        do {
+            result = executeCommand(new ClientJoinGameCommand(playerName, gameID, color));
+        } while(result == null);
+        return (GameInfo) result.toClass(GameInfo.class);
     }
 
     /** Returns a list of games that a specified player is currently in. If the person doesn't excist, or wrong password, return null.
@@ -157,8 +167,11 @@ public class ServerProxy implements IServer {
      */
     @Override
     public List<GameDescription> getGames() {
-        return ((GameDescriptionHolder) executeCommand(new ClientGetGameListCommand())
-                .toClass(GameDescriptionHolder.class)).getGameDescriptions();
+        Result result;
+        do {
+            result = executeCommand(new ClientGetGameListCommand());
+        } while (result == null);
+        return ((GameDescriptionHolder) result.toClass(GameDescriptionHolder.class)).getGameDescriptions();
     }
 
     /** Returns a game description given a user in the game and the id.
@@ -170,7 +183,11 @@ public class ServerProxy implements IServer {
      */
     @Override
     public GameDescription getGameDescription(int gameID) {
-        return (GameDescription) executeCommand(new ClientGetGameDescriptionCommand(gameID)).toClass(GameDescription.class);
+        Result result;
+        do {
+            result = executeCommand(new ClientGetGameDescriptionCommand(gameID));
+        } while(result == null);
+        return (GameDescription) result.toClass(GameDescription.class);
     }
 
     /** Returns a list of players that are currently inside a game.
@@ -194,7 +211,11 @@ public class ServerProxy implements IServer {
      */
     @Override
     public Game getGame(int gameID) {
-        return (Game) executeCommand(new ClientGetGameCommand(gameID)).toClass(Game.class);
+        Result result;
+        do {
+            result = executeCommand(new ClientGetGameCommand(gameID));
+        } while(result == null);
+        return (Game) result.toClass(Game.class);
     }
 
     /** Returns a list of current commands on the game back to the user.
@@ -214,12 +235,20 @@ public class ServerProxy implements IServer {
 
     @Override
     public ICommand getNextCommand(String playerName, int gameID) {
-        return executeCommand(new ClientGetNextChangeCommand(playerName, gameID)).toCommand();
+        Result result;
+        do {
+            result = executeCommand(new ClientGetNextChangeCommand(playerName, gameID));
+        } while (result == null);
+        return result.toCommand();
     }
 
     @Override
     public GameInfo getGameState(int gameID) {
-        return (GameInfo) executeCommand(new ClientGetGameStateCommand(gameID)).toClass(GameInfo.class);
+        Result result;
+        do {
+            result = executeCommand(new ClientGetGameStateCommand(gameID));
+        } while(result == null);
+        return (GameInfo) result.toClass(GameInfo.class);
     }
 
     //temporary method
@@ -230,12 +259,20 @@ public class ServerProxy implements IServer {
 
     @Override
     public boolean claimRoute(String playerName, int gameID, int routeId, TrainType type) {
-        return executeCommand(new ClientClaimRouteCommand(playerName, gameID, routeId, type)).toBoolean();
+        Result result;
+        do {
+            result = executeCommand(new ClientClaimRouteCommand(playerName, gameID, routeId, type));
+        } while(result == null);
+        return result.toBoolean();
     }
 
     @Override
     public TrainCard drawTrainCard(String playerName, int gameId) {
-        return (TrainCard) executeCommand(new ClientDrawTrainCardCommand(playerName, gameId)).toClass(TrainCard.class);
+        Result result;
+        do {
+            result = executeCommand(new ClientDrawTrainCardCommand(playerName, gameId));
+        } while(result == null);
+        return (TrainCard) result.toClass(TrainCard.class);
     }
 
     @Override
@@ -244,46 +281,82 @@ public class ServerProxy implements IServer {
         ClientPickTrainCardCommand cmd = new ClientPickTrainCardCommand(playerName, gameId, index);
         System.out.println(cmd);
         System.out.println("WHAT WHAT");
-        return (TrainCard) executeCommand(new ClientPickTrainCardCommand(playerName, gameId, index)).toClass(TrainCard.class);
+        Result result;
+        do {
+            result = executeCommand(new ClientPickTrainCardCommand(playerName, gameId, index));
+        } while(result == null);
+        return (TrainCard) result.toClass(TrainCard.class);
     }
 
     @Override
     public DestinationCard drawDestinationCard(String playerName, int gameId) {
-        return (DestinationCard) executeCommand(new ClientDrawDestinationCardCommand(playerName, gameId)).toClass(DestinationCard.class);
+        Result result;
+        do {
+            result = executeCommand(new ClientDrawDestinationCardCommand(playerName, gameId));
+        } while(result == null);
+        return (DestinationCard) result.toClass(DestinationCard.class);
     }
 
     @Override
     public boolean startGame(int gameId) {
-        return executeCommand(new ClientStartGameCommand(gameId)).toBoolean();
+        Result result;
+        do {
+            result = executeCommand(new ClientStartGameCommand(gameId));
+        } while(result == null);
+        return result.toBoolean();
     }
 
     @Override
     public boolean finishTurn(String playerName, int gameId) {
-        return executeCommand(new ClientFinishTurnCommand(playerName, gameId)).toBoolean();
+        Result result;
+        do {
+            result = executeCommand(new ClientFinishTurnCommand(playerName, gameId));
+        } while(result == null);
+        return result.toBoolean();
     }
 
     @Override
     public boolean finishGame(String playerName, int gameId) {
-        return executeCommand(new ClientFinishGameCommand(playerName, gameId)).toBoolean();
+        Result result;
+        do {
+            result = executeCommand(new ClientFinishGameCommand(playerName, gameId));
+        } while(result == null);
+        return result.toBoolean();
     }
 
     @Override
     public boolean sendChat(Chat chat) {
-        return executeCommand(new ClientSendChatCommand(chat)).toBoolean();
+        Result result;
+        do {
+            result = executeCommand(new ClientSendChatCommand(chat));
+        } while(result == null);
+        return result.toBoolean();
     }
 
     @Override
     public boolean setServerTrainCount(int count) {
-        return executeCommand(new ClientSetServerTrainCountCommand(count)).toBoolean();
+        Result result;
+        do {
+            result = executeCommand(new ClientSetServerTrainCountCommand(count));
+        } while(result == null);
+        return result.toBoolean();
     }
 
     @Override
     public boolean returnDestinationCard(String playerName, int gameId, DestinationCard card){
-        return executeCommand(new ClientReturnDestinationCardCommand(playerName, gameId, card)).toBoolean();
+        Result result;
+        do {
+            result = executeCommand(new ClientReturnDestinationCardCommand(playerName, gameId, card));
+        } while(result == null);
+        return result.toBoolean();
     }
 
     @Override
     public boolean discardTrainCard(String playerName, int gameId, TrainCard card) {
-        return executeCommand(new ClientDiscardTrainCardCommand(playerName, gameId, card)).toBoolean();
+        Result result;
+        do {
+            result = executeCommand(new ClientDiscardTrainCardCommand(playerName, gameId, card));
+        } while(result == null);
+        return result.toBoolean();
     }
 }

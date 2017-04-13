@@ -6,3 +6,4 @@
 
 # and the .gitignore file
 !/.gitignore
+!/plugin_registry.txt
