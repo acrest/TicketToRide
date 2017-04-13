@@ -19,7 +19,7 @@ public class GameInfo {
     private PlayerTurnStatus playerStatus;
 
 
-    public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, int trainCardsRemaining, int destinationCardsRemaining, GameMap map) {
+    public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, int trainCardsRemaining, int destinationCardsRemaining, GameMap map, int gamePlayerIndex, PlayerTurnStatus playerStatus) {
         this.id = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
@@ -28,7 +28,8 @@ public class GameInfo {
         this.trainCardsRemaining = trainCardsRemaining;
         this.destinationCardsRemaining = destinationCardsRemaining;
         this.map = map;
-        playerTurnIndex = 0;
+        playerTurnIndex = gamePlayerIndex;
+        this.playerStatus = playerStatus;
     }
 
     public int getId() {

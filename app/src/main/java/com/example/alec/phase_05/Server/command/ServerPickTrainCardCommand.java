@@ -9,6 +9,8 @@ import com.example.alec.phase_05.Shared.command.Result;
  */
 
 public class ServerPickTrainCardCommand extends PickTrainCardCommand {
+
+
     public ServerPickTrainCardCommand(String playerName, int gameID, int cardIndex) {
         super(playerName, gameID, cardIndex);
     }
@@ -19,4 +21,11 @@ public class ServerPickTrainCardCommand extends PickTrainCardCommand {
         result.setResultObject(ServerFacade.getInstance().pickTrainCard(getPlayerName(), getGameId(), getCardIndex()));
         return result;
     }
+
+    @Override
+    public void reExecute(){
+        ServerFacade.getInstance().pickTrainCard(getPlayerName(), getGameId(), getCardIndex());
+    }
+
+
 }

@@ -19,4 +19,6 @@ public class ClientChatSentCommand extends ChatSentCommand {
         ClientFacade.getInstance().chatSent(getChat());
         return null;
     }
+
+
 }

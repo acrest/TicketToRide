@@ -9,26 +9,36 @@ import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IChatManager;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
+import com.example.alec.phase_05.Shared.model.PlayerTurnStatus;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static com.example.alec.phase_05.Shared.model.PlayerTurnStatus.DESTINATION;
+import static com.example.alec.phase_05.Shared.model.PlayerTurnStatus.START;
+import static com.example.alec.phase_05.Shared.model.PlayerTurnStatus.TRAIN;
+
 /**
  * Created by samuel on 2/25/17.
  */
 
 public class ServerGame extends Game implements IServerGame {
+    private PlayerTurnStatus turnStatus;
+    private int playerTurnIndex;
     private CommandManager commandManager;
     private IChatManager chatManager;
     private GameState gameState;
+    private int totalPlayers;
 
     public ServerGame(int id, String name, int maxPlayers, CommandManager commandManager, IChatManager chatManager, IServerBank bank, GameMap gameMap) {
         super(id, name, maxPlayers, bank, gameMap);
         this.commandManager = commandManager;
         this.chatManager = chatManager;
-
+        turnStatus = START;
+        playerTurnIndex = 0;
+        totalPlayers = maxPlayers;
         commandManager.setGame(this);
     }
 
@@ -124,5 +134,31 @@ public class ServerGame extends Game implements IServerGame {
     public int addPlayerAtNextPosition(IPlayer player) {
         player.setTrainCount(ServerModel.getInitialTrainCount());
         return super.addPlayerAtNextPosition(player);
+    }
+
+    public void incrementPlayerIndex(){
+        playerTurnIndex++;
+    }
+
+    public void setStartStatus(){
+        turnStatus = START;
+    }
+
+    public void setDestinationStatus(){
+        turnStatus = DESTINATION;
+    }
+
+    public void setTrainStatus(){
+        turnStatus = TRAIN;
+    }
+
+    @Override
+    public PlayerTurnStatus getTurnStatus() {
+        return turnStatus;
+    }
+
+    @Override
+    public int getPlayerTurnIndex() {
+        return playerTurnIndex%totalPlayers;
     }
 }

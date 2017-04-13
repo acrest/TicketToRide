@@ -19,4 +19,9 @@ public class ServerJoinGameCommand  extends JoinGameCommand {
         result.setResultObject(ServerFacade.getInstance().joinGame(getPlayerName(), getGameId(), getColor()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().joinGame(getPlayerName(), getGameId(), getColor());
+    }
 }
