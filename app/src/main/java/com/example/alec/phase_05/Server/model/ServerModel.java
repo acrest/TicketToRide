@@ -153,6 +153,7 @@ public class ServerModel {
     public ICommand getNextCommand(String playerName, int gameID) {
         IServerGame game = getGame(gameID);
         if(game == null || !game.isGameStarted()) return null;
+        System.out.println("poller is sent from " + playerName);
         return game.recentCommand(playerName);
     }
 

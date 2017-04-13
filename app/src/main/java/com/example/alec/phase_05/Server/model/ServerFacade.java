@@ -29,6 +29,10 @@ import java.util.List;
  */
 public class ServerFacade implements IServer {
     private static ServerFacade instance;
+    private int commandCounter;
+    private int fullCounter = 10;
+    private String currentPlayerName;
+    private ArrayList<GameCommand> commandList;
 
     /**
      * Returns the singleton instance of the ServerFacade and creates one if it has not been created
@@ -45,7 +49,9 @@ public class ServerFacade implements IServer {
     private ServerModel model;
 
     public ServerFacade() {
+        commandList = new ArrayList<GameCommand>();
         model = ServerModel.getInstance();
+        commandCounter = 0;
     }
 
     /**
@@ -64,10 +70,20 @@ public class ServerFacade implements IServer {
         if (command instanceof GameCommand) {
             GameCommand gameCommand = (GameCommand) command;
             ServerGame game = model.getGame(gameCommand.getGameId());
+            String playerName = gameCommand.getPlayerName();
             if (game != null) {
                 game.addCommand(gameCommand);
             }
             r = gameCommand.execute();
+            commandCounter++;
+            currentPlayerName = playerName;
+            commandList.add(gameCommand);
+            // TODO: Save commandList to database file
+            if (commandCounter == fullCounter) {
+                // TODO: upadate blob, reset command List
+                commandList.clear();
+                commandCounter = 0;
+            }
         } else {
             r = command.execute();
         }
