@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Shared.model.GameDescription;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
@@ -46,6 +47,11 @@ public class MockPresenterGameStation extends Presenter implements IPresenterGam
     public void joinGame(int gameID, String color) {
         Log.d("MockPresenter", "called joinGame with color = " + color);
         listener.joinGameSuccess(true);
+    }
+
+    @Override
+    public void reJoinGame(int gameID, String color) {
+        Facade.getInstance().reJoinGame(gameID, color);
     }
 
     @Override
