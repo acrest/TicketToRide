@@ -10,7 +10,7 @@ public abstract class ReturnDestinationCardsCommand extends GameCommand {
     private DestinationCard[] cards;
 
     public ReturnDestinationCardsCommand(String playerName, int gameID, DestinationCard[] cards) {
-        super("ReturnDestinationCard", playerName, gameID);
+        super("ReturnDestinationCards", playerName, gameID);
         this.cards = cards;
     }
 
