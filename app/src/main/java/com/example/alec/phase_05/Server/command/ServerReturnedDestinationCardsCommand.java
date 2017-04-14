@@ -8,8 +8,8 @@ import com.example.alec.phase_05.Shared.command.ReturnedDestinationCardsCommand;
  * Created by samuel on 3/16/17.
  */
 
-public class ServerReturnedDestinationCards extends ReturnedDestinationCardsCommand implements Serializable {
-    public ServerReturnedDestinationCards(String playerName, int remainingCards) {
+public class ServerReturnedDestinationCardsCommand extends ReturnedDestinationCardsCommand implements Serializable {
+    public ServerReturnedDestinationCardsCommand(String playerName, int remainingCards) {
         super(playerName, remainingCards);
     }
 
