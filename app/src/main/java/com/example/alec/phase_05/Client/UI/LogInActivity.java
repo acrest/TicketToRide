@@ -39,11 +39,11 @@ public class LogInActivity extends Activity implements ILogInListener {
         mRegisterPasswordEditText = (EditText) findViewById(R.id.register_password_edit);
         mRegisterConfirmEditText = (EditText) findViewById(R.id.register_confirm_edit);
 
-        /*mLogInUserNameEditText.setText("Andrew");
-        mLogInPasswordEditText.setText("myPassword");
-        mRegisterUserNameEditText.setText("Andrew");
-        mRegisterPasswordEditText.setText("myPassword");
-        mRegisterConfirmEditText.setText("myPassword");
+        mLogInUserNameEditText.setText("a");
+        mLogInPasswordEditText.setText("a");
+        mRegisterUserNameEditText.setText("a");
+        mRegisterPasswordEditText.setText("a");
+        mRegisterConfirmEditText.setText("a");
 
         /*mLogInUserNameEditText.setText("ListigaRaven");
         mLogInPasswordEditText.setText("ListigaRaven");
@@ -76,6 +76,7 @@ public class LogInActivity extends Activity implements ILogInListener {
                 if (!mRegisterUserNameEditText.getText().toString().isEmpty() && !mRegisterPasswordEditText.getText().toString().isEmpty() && !mRegisterConfirmEditText.getText().toString().isEmpty()) {
                     if (isValidRegister()) {
                         if (mRegisterPasswordEditText.getText().toString().equals(mRegisterConfirmEditText.getText().toString())) {
+                            System.out.println("going to presenter");
                             presenter.register(mRegisterUserNameEditText.getText().toString(), mRegisterPasswordEditText.getText().toString());
                         }
                     } else {

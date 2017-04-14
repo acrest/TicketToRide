@@ -74,6 +74,7 @@ public class ServerProxy implements IServer {
 
     @Override
     public Result executeCommand(ICommand command) {
+        System.out.println("executing command");
         Result result;
         while ((result = myCC.executeCommandOnServer(command)) == null) {
             try {
@@ -116,6 +117,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean registerUser(String username, String password) {
+        System.out.println("register user in proxy server");
         Result result = executeCommand(new ClientRegisterCommand(username, password));
         return result != null && result.toBoolean();
     }
@@ -177,10 +179,10 @@ public class ServerProxy implements IServer {
      * @return A list of games for the specified person.
      */
     @Override
-    public List<GameDescription> getGames() {
+    public List<GameDescription> getGames(String playerName) {
         Result result;
         do {
-            result = executeCommand(new ClientGetGameListCommand());
+            result = executeCommand(new ClientGetGameListCommand(playerName));
         } while (result == null);
         return ((GameDescriptionHolder) result.toClass(GameDescriptionHolder.class)).getGameDescriptions();
     }

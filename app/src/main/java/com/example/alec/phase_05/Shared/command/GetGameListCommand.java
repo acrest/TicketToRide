@@ -5,7 +5,15 @@ package com.example.alec.phase_05.Shared.command;
  */
 
 public abstract class GetGameListCommand extends BaseCommand {
-    public GetGameListCommand() {
+    private String playerName;
+    public GetGameListCommand(String name) {
         super("GetGameList");
+        playerName = name;
+    }
+
+
+
+    public String getPlayerName(){
+        return playerName;
     }
 }

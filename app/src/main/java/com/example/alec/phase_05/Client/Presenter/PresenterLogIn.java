@@ -21,6 +21,7 @@ public class PresenterLogIn extends Presenter implements IPresenterLogIn {
 
     @Override
     public void logIn(String username, String password) {
+        System.out.println("in presenter login");
         Facade.getInstance().login(username, password);
     }
 

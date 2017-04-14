@@ -93,6 +93,7 @@ public class ClientFacade {
     }
 
     public void login(String username, boolean success) {
+        System.out.println("In client facade login");
         model.setLoginSuccess(success);
         if (success) {
             model.setCurrentPlayerName(username);
@@ -103,6 +104,7 @@ public class ClientFacade {
     }
 
     public void register(String username, boolean success) {
+        System.out.println("In client facade register");
         model.setRegisterSuccess(success);
         if (success) {
             model.setCurrentPlayerName(username);
