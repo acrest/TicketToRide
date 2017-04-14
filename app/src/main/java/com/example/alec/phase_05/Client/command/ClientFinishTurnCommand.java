@@ -16,4 +16,9 @@ public class ClientFinishTurnCommand extends FinishTurnCommand {
     public Result execute() {
         return null;
     }
+
+    @Override
+    public void reExecute() {
+
+    }
 }

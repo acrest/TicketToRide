@@ -18,4 +18,9 @@ public class ClientClaimRouteCommand extends ClaimRouteCommand {
     public Result execute() {
         return null;
     }
+
+    @Override
+    public void reExecute() {
+
+    }
 }

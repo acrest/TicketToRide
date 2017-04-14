@@ -17,4 +17,9 @@ public class ClientSendChatCommand extends SendChatCommand {
     public Result execute() {
         return null;
     }
+
+    @Override
+    public void reExecute() {
+
+    }
 }

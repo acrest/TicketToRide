@@ -16,4 +16,9 @@ public class ClientFinishGameCommand extends FinishGameCommand {
     public Result execute() {
         return null;
     }
+
+    @Override
+    public void reExecute() {
+
+    }
 }
