@@ -74,7 +74,6 @@ public class Poller {
 
                         break;
                     case 3:
-                        System.out.println("playername in poller is "+model.getCurrentPlayerName());
                         List<GameDescription> games = server.getGames(model.getCurrentPlayerName());
                         if(games != null) {
                             model.setGameList(games);
