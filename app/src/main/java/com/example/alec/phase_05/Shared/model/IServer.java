@@ -18,7 +18,7 @@ public interface IServer {
 
     GameInfo joinGame(String playerName, int gameID, String color);
 
-    GameInfo reJoinGame(String playerName, int gameID, String color);
+    GameInfo reJoinGame(String playerName, int gameID);
 
     List<GameDescription> getGames();
 

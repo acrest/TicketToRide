@@ -198,12 +198,12 @@ public class Facade {
     }
 
 
-    public void reJoinGame(final int gameID, final String color) {
+    public void reJoinGame(final int gameID) {
         // System.out.println("the facade join game " + proxy.getGames());
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                clientFacade.reJoinGame(proxy.reJoinGame(model.getCurrentPlayerName(), gameID, color));
+                clientFacade.reJoinGame(proxy.reJoinGame(model.getCurrentPlayerName(), gameID));
             }
         });
         thread.start();
