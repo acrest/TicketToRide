@@ -583,14 +583,14 @@ public class ClientModel extends Observable {
         currentGame.doPickTrainCard(cardIndex);
     }
 
-    public void doDrawDestinationCard() throws StateWarning {
+    public void doDrawDestinationCards() throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doDrawDestinationCard();
+        currentGame.doDrawDestinationCards();
     }
 
-    public void doPutBackDestinationCard(DestinationCard card) throws StateWarning {
+    public void doPutBackDestinationCards(DestinationCard[] cards) throws StateWarning {
         if (currentGame == null) return;
-        currentGame.doPutBackDestinationCard(card);
+        currentGame.doPutBackDestinationCards(cards);
     }
 
     public void doClaimRoute(int routeId) throws StateWarning {

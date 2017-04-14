@@ -17,12 +17,12 @@ public class ServerDrawDestinationCardCommand extends DrawDestinationCardsComman
     @Override
     public Result execute() {
         Result result = new ServerResult();
-        result.setResultObject(ServerFacade.getInstance().drawDestinationCard(getPlayerName(), getGameId()));
+        result.setResultObject(ServerFacade.getInstance().drawDestinationCards(getPlayerName(), getGameId()));
         return result;
     }
 
     @Override
     public void reExecute() {
-        ServerFacade.getInstance().drawDestinationCard(getPlayerName(), getGameId());
+        ServerFacade.getInstance().drawDestinationCards(getPlayerName(), getGameId());
     }
 }

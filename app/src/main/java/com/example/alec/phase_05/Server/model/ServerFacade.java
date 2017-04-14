@@ -328,9 +328,9 @@ public class ServerFacade implements IServer {
 
     @Override
     public TrainCard drawTrainCard(String playerName, int gameId) {
-        IServerGame game = model.getGame(gameId);
-        model.getGame(gameId).setTrainStatus();
+        ServerGame game = model.getGame(gameId);
         if (game == null) return null;
+        game.setTrainStatus();
         return game.drawTrainCard(playerName);
     }
 
@@ -346,9 +346,9 @@ public class ServerFacade implements IServer {
      */
     @Override
     public DestinationCard[] drawDestinationCards(String playerName, int gameID) {
-        model.getGame(gameID).setDestinationStatus();
-        IServerGame game = model.getGame(gameID);
+        ServerGame game = model.getGame(gameID);
         if (game == null) return null;
+        game.setDestinationStatus();
         return game.drawDestinationCards(playerName);
     }
 
@@ -369,8 +369,10 @@ public class ServerFacade implements IServer {
 
     @Override
     public boolean finishTurn(String playerName, int gameId) {
-        model.getGame(gameId).incrementPlayerIndex();
-        model.getGame(gameId).setStartStatus();
+        ServerGame game = model.getGame(gameId);
+        if (game == null) return false;
+        game.incrementPlayerIndex();
+        game.setStartStatus();
         return true;
     }
 

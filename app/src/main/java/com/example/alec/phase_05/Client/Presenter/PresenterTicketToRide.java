@@ -62,14 +62,14 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
     }
 
     @Override
-    public void returnDestinationCard(DestinationCard card) {
-        Facade.getInstance().putBackDestinationCard(card);
+    public void returnDestinationCards(DestinationCard[] cards) {
+        Facade.getInstance().putBackDestinationCards(cards);
     }
 
     @Override
-    public void drawDestinationCard() {
+    public void drawDestinationCards() {
         try {
-            model.doDrawDestinationCard();
+            model.doDrawDestinationCards();
         } catch (StateWarning e) {
             listener.handleWarning(e);
         }
@@ -146,9 +146,7 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         for (DestinationCard card : chosen) {
             model.addDestinationCard(card);
         }
-        for (DestinationCard card : notChosen) {
-            Facade.getInstance().putBackDestinationCard(card);
-        }
+        Facade.getInstance().putBackDestinationCards(notChosen.toArray(new DestinationCard[notChosen.size()]));
         model.clearCardChoices();
         if(!initPick) {
             try {

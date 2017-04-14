@@ -68,8 +68,22 @@ public class ClientFacade {
         if (gameInfo != null) {
             model.setReJoinGameSuccess(true);
             model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
+
+            // Tell GUI to display cards if the current player has card choices.
+            // This would happen if they were in the middle of choosing cards when they left.
+            List<DestinationCard> cardChoices = model.getCardChoices();
+            if (cardChoices.size() > 0) {
+                // This is a bit of a hack.
+                // Calling setCardChoices will call displayHand which will tell the GUI to show the dialog.
+                // The model will wait a little while before asking the presenter to show the dialog,
+                // which will hopefully make sure that the presenter and GUI are ready before they are
+                // told to show the choices.
+                // If they are not ready, the dialog will not show.
+                model.setCardChoices(cardChoices.toArray(new DestinationCard[cardChoices.size()]));
+            }
+
             model.setHost(false);
-            Poller.getInstance().setPlayerWatingPolling();
+            Poller.getInstance().setModelPolling();
         } else {
             model.setJoinGameSuccess(false);
         }
