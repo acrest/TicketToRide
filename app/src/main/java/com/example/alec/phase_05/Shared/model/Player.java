@@ -3,6 +3,8 @@ package com.example.alec.phase_05.Shared.model;
 import com.example.alec.phase_05.Client.Model.ClientModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -78,6 +80,16 @@ public class Player extends AbstractPlayer {
 
     public List<DestinationCard> getCardChoices() {
         return cardChoices;
+    }
+
+    public void setCardChoices(Collection<DestinationCard> choices) {
+        cardChoices.clear();
+        cardChoices.addAll(choices);
+    }
+
+    public void setCardChoices(DestinationCard[] choices) {
+        cardChoices.clear();
+        Collections.addAll(cardChoices, choices);
     }
 
     public void clearCardChoices() {

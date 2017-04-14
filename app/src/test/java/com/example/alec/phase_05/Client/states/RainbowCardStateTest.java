@@ -63,7 +63,7 @@ public class RainbowCardStateTest {
 
         GameState state = new RainbowCardState(new ClientGame(9, "andrew", 5, new ClientBank(), new GameMap(new HashMap<String, City>(), new HashMap<Integer, Route>())));
         try {
-            state.drawDestinationCard();
+            state.drawDestinationCards();
             test = false;
         } catch (StateWarning stateWarning) {
             System.out.println(stateWarning.toString());
@@ -80,7 +80,7 @@ public class RainbowCardStateTest {
 
         GameState state = new RainbowCardState(new ClientGame(9, "andrew", 5, new ClientBank(), new GameMap(new HashMap<String, City>(), new HashMap<Integer, Route>())));
         try {
-            state.putBackDestinationCard(new DestinationCard(new City("New Mexico", new MyPoint(0, 0)), new City("Salt Lake", new MyPoint(2, 3)), 2));
+            state.putBackDestinationCards(new DestinationCard[]{new DestinationCard(new City("New Mexico", new MyPoint(0, 0)), new City("Salt Lake", new MyPoint(2, 3)), 2)});
             test = false;
         } catch (StateWarning stateWarning) {
             System.out.println(stateWarning.toString());

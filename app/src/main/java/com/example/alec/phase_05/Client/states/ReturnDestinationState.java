@@ -35,15 +35,15 @@ public class ReturnDestinationState implements GameState {
     }
 
     @Override
-    public void drawDestinationCard() throws StateWarning {
+    public void drawDestinationCards() throws StateWarning {
         throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
+    public void putBackDestinationCards(DestinationCard[] cards) throws StateWarning {
         if(cardsReturned == 2)
             throw new StateWarning("Attempt to return too many destination cards.");
-        facade.putBackDestinationCard(card);
+        facade.putBackDestinationCards(cards);
         cardsReturned++;
         facade.finishTurn();
         state.setTurnState(new EndTurnState(state));

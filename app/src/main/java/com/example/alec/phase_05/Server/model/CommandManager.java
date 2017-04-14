@@ -1,13 +1,12 @@
 package com.example.alec.phase_05.Server.model;
 
-import com.example.alec.phase_05.Client.command.ClientPickedTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerChatSentCommand;
 import com.example.alec.phase_05.Server.command.ServerClaimRouteCommand;
 import com.example.alec.phase_05.Server.command.ServerClaimedRouteCommand;
 import com.example.alec.phase_05.Server.command.ServerDiscardTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawDestinationCardCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawTrainCardCommand;
-import com.example.alec.phase_05.Server.command.ServerDrawnDestinationCardCommand;
+import com.example.alec.phase_05.Server.command.ServerDrawnDestinationCardsCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawnTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerFinishGameCommand;
 import com.example.alec.phase_05.Server.command.ServerFinishTurnCommand;
@@ -16,8 +15,8 @@ import com.example.alec.phase_05.Server.command.ServerGameFinishedCommand;
 import com.example.alec.phase_05.Server.command.ServerGameStartedCommand;
 import com.example.alec.phase_05.Server.command.ServerPickTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerPickedTrainCardCommand;
-import com.example.alec.phase_05.Server.command.ServerReturnDestinationCardCommand;
-import com.example.alec.phase_05.Server.command.ServerReturnedDestinationCard;
+import com.example.alec.phase_05.Server.command.ServerReturnDestinationCardsCommand;
+import com.example.alec.phase_05.Server.command.ServerReturnedDestinationCards;
 import com.example.alec.phase_05.Server.command.ServerSendChatCommand;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
@@ -125,15 +124,15 @@ public class CommandManager implements Serializable {
         } else if (command instanceof ServerDiscardTrainCardCommand) {
             return null; //not sure if we are going to use this command
         } else if (command instanceof ServerDrawDestinationCardCommand) {
-            return new ServerDrawnDestinationCardCommand(command.getPlayerName(), game.getNumberOfDestinationCards());
+            return new ServerDrawnDestinationCardsCommand(command.getPlayerName(), game.getNumberOfDestinationCards());
         } else if (command instanceof ServerDrawTrainCardCommand) {
             return new ServerDrawnTrainCardCommand(command.getPlayerName(), game.getNumberOfTrainCards());
         } else if (command instanceof ServerFinishTurnCommand) {
             return new ServerFinishedTurnCommand(command.getPlayerName());
         } else if (command instanceof ServerPickTrainCardCommand) {
             return new ServerPickedTrainCardCommand(command.getPlayerName(), getVisibleCards(), game.getNumberOfTrainCards());
-        } else if (command instanceof ServerReturnDestinationCardCommand) {
-            return new ServerReturnedDestinationCard(command.getPlayerName(), game.getNumberOfDestinationCards());
+        } else if (command instanceof ServerReturnDestinationCardsCommand) {
+            return new ServerReturnedDestinationCards(command.getPlayerName(), game.getNumberOfDestinationCards());
         } else if (command instanceof ServerSendChatCommand) {
             return new ServerChatSentCommand(((ServerSendChatCommand) command).getChat());
         } else if (command instanceof ServerFinishGameCommand) {

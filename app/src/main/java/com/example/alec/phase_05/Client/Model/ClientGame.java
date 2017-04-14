@@ -52,13 +52,13 @@ public class ClientGame extends Game implements IClientGame {
     }
 
     @Override
-    public void doDrawDestinationCard() throws StateWarning {
-        turnState.drawDestinationCard();
+    public void doDrawDestinationCards() throws StateWarning {
+        turnState.drawDestinationCards();
     }
 
     @Override
-    public void doPutBackDestinationCard(DestinationCard card) throws StateWarning {
-        turnState.putBackDestinationCard(card);
+    public void doPutBackDestinationCards(DestinationCard[] cards) throws StateWarning {
+        turnState.putBackDestinationCards(cards);
     }
 
 

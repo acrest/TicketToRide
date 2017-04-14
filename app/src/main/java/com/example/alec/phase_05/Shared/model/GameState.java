@@ -10,9 +10,9 @@ public interface GameState {
 
     void pickTrainCard(int cardIndex) throws StateWarning;
 
-    void drawDestinationCard() throws StateWarning;
+    void drawDestinationCards() throws StateWarning;
 
-    void putBackDestinationCard(DestinationCard card) throws StateWarning;
+    void putBackDestinationCards(DestinationCard[] card) throws StateWarning;
 
     void claimRoute(int routeId, TrainType type) throws StateWarning;
 

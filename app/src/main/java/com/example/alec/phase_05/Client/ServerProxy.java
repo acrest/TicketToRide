@@ -3,7 +3,7 @@ package com.example.alec.phase_05.Client;
 import com.example.alec.phase_05.Client.command.ClientClaimRouteCommand;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientDiscardTrainCardCommand;
-import com.example.alec.phase_05.Client.command.ClientDrawDestinationCardCommand;
+import com.example.alec.phase_05.Client.command.ClientDrawDestinationCardsCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientFinishGameCommand;
 import com.example.alec.phase_05.Client.command.ClientFinishTurnCommand;
@@ -18,7 +18,7 @@ import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientPickTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientReJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
-import com.example.alec.phase_05.Client.command.ClientReturnDestinationCardCommand;
+import com.example.alec.phase_05.Client.command.ClientReturnDestinationCardsCommand;
 import com.example.alec.phase_05.Client.command.ClientSendChatCommand;
 import com.example.alec.phase_05.Client.command.ClientSetServerTrainCountCommand;
 import com.example.alec.phase_05.Client.command.ClientStartGameCommand;
@@ -302,12 +302,12 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public DestinationCard drawDestinationCard(String playerName, int gameId) {
+    public DestinationCard[] drawDestinationCards(String playerName, int gameId) {
         Result result;
         do {
-            result = executeCommand(new ClientDrawDestinationCardCommand(playerName, gameId));
+            result = executeCommand(new ClientDrawDestinationCardsCommand(playerName, gameId));
         } while(result == null);
-        return (DestinationCard) result.toClass(DestinationCard.class);
+        return (DestinationCard[]) result.toClass(DestinationCard[].class);
     }
 
     @Override
@@ -356,10 +356,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public boolean returnDestinationCard(String playerName, int gameId, DestinationCard card){
+    public boolean returnDestinationCards(String playerName, int gameId, DestinationCard[] cards){
         Result result;
         do {
-            result = executeCommand(new ClientReturnDestinationCardCommand(playerName, gameId, card));
+            result = executeCommand(new ClientReturnDestinationCardsCommand(playerName, gameId, cards));
         } while(result == null);
         return result.toBoolean();
     }
