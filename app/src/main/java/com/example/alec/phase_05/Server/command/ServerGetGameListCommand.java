@@ -14,12 +14,15 @@ import java.util.List;
  */
 
 public class ServerGetGameListCommand extends GetGameListCommand implements Serializable {
-    public ServerGetGameListCommand() {}
+
+    public ServerGetGameListCommand(String name) {
+        super(name);
+    }
 
     @Override
     public Result execute() {
         Result result = new ServerResult();
-        result.setResultObject(new GameDescriptionHolder(ServerFacade.getInstance().getGames()));
+        result.setResultObject(new GameDescriptionHolder(ServerFacade.getInstance().getGames(getPlayerName())));
         return result;
     }
 }
