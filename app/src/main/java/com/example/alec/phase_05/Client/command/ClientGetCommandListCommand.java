@@ -16,4 +16,9 @@ public class ClientGetCommandListCommand extends GetCommandListCommand {
     public Result execute() {
         return null;
     }
+
+    @Override
+    public void reExecute() {
+
+    }
 }

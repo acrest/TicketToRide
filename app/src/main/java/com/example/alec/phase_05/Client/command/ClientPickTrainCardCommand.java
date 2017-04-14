@@ -18,4 +18,8 @@ public class ClientPickTrainCardCommand extends PickTrainCardCommand {
     }
 
 
+    @Override
+    public void reExecute() {
+
+    }
 }

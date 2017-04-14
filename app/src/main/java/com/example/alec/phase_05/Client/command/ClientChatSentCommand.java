@@ -21,4 +21,8 @@ public class ClientChatSentCommand extends ChatSentCommand {
     }
 
 
+    @Override
+    public void reExecute() {
+
+    }
 }

@@ -19,4 +19,9 @@ public class ClientDrawTrainCardCommand extends DrawTrainCardCommand {
     public Result execute() {
         return null;
     }
+
+    @Override
+    public void reExecute() {
+
+    }
 }

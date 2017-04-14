@@ -17,4 +17,9 @@ public class ClientDrawDestinationCardCommand extends DrawDestinationCardCommand
     public Result execute() {
         return null;
     }
+
+    @Override
+    public void reExecute() {
+
+    }
 }

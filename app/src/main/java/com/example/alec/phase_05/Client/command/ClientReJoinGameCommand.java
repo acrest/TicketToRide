@@ -23,4 +23,9 @@ public class ClientReJoinGameCommand extends JoinGameCommand {
     {
         return null;
     }
+
+    @Override
+    public void reExecute() {
+
+    }
 }
