@@ -337,11 +337,11 @@ public class ServerFacade implements IServer {
      * @post the player recieves a train card and the trainCard deck is decremented
      */
     @Override
-    public DestinationCard drawDestinationCard(String playerName, int gameID) {
+    public DestinationCard[] drawDestinationCards(String playerName, int gameID) {
         model.getGame(gameID).setDestinationStatus();
         IServerGame game = model.getGame(gameID);
         if (game == null) return null;
-        return game.drawDestinationCard(playerName);
+        return game.drawDestinationCards(playerName);
     }
 
     /**
@@ -391,7 +391,7 @@ public class ServerFacade implements IServer {
      *
      * @param playerName the username of the player
      * @param gameId     the id of the game
-     * @param card       the card to be returned
+     * @param cards       the cards to be returned
      * @return true if the game exists, false otherwise
      * @pre playerName is not null, username characters are limited to letters, ^, *,  and _
      * @pre gameId is a non negative int
@@ -399,11 +399,13 @@ public class ServerFacade implements IServer {
      * @post the returned destinationCard is added to the deck and removed from the player's hand
      */
     @Override
-    public boolean returnDestinationCard(String playerName, int gameId, DestinationCard card) {
+    public boolean returnDestinationCards(String playerName, int gameId, DestinationCard[] cards) {
         IServerGame game = model.getGame(gameId);
         if (game == null) return false;
-        game.addDestinationCardToBottom(card);
-        game.removeCardFromPlayerHand(playerName, card);
+        for (DestinationCard card : cards) {
+            game.addDestinationCardToBottom(card);
+        }
+        game.clearChoices(playerName);
         return true;
     }
 

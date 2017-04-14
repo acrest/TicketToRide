@@ -58,12 +58,12 @@ public class OnePickedCardState implements GameState {
     }
 
     @Override
-    public void drawDestinationCard() throws StateWarning {
+    public void drawDestinationCards() throws StateWarning {
         throw new StateWarning("Already drew card. You must get another Train card.");
     }
 
     @Override
-    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
+    public void putBackDestinationCards(DestinationCard[] cards) throws StateWarning {
         throw new StateWarning("Already drew card. You must get another Train card.");
     }
 

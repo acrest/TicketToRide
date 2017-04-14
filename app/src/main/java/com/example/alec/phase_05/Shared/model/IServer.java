@@ -40,9 +40,9 @@ public interface IServer {
 
     TrainCard pickTrainCard(String playerName, int gameId, int index);
 
-    DestinationCard drawDestinationCard(String playerName, int gameId);
+    DestinationCard[] drawDestinationCards(String playerName, int gameId);
 
-    boolean returnDestinationCard(String playerName, int gameId, DestinationCard card);
+    boolean returnDestinationCards(String playerName, int gameId, DestinationCard[] card);
 
     boolean startGame(int gameId);
 

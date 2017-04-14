@@ -32,12 +32,12 @@ public class ClaimRouteState implements GameState {
     }
 
     @Override
-    public void drawDestinationCard() throws StateWarning {
+    public void drawDestinationCards() throws StateWarning {
         throw new StateWarning("You claimed a route. You must end your turn.");
     }
 
     @Override
-    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
+    public void putBackDestinationCards(DestinationCard[] cards) throws StateWarning {
         throw new StateWarning("You claimed a route. You must end your turn.");
     }
 

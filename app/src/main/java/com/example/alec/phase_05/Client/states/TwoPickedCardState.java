@@ -34,12 +34,12 @@ public class TwoPickedCardState implements GameState {
     }
 
     @Override
-    public void drawDestinationCard() throws StateWarning {
+    public void drawDestinationCards() throws StateWarning {
         throw new StateWarning("Cannot draw any more cards. You must end your turn now.");
     }
 
     @Override
-    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
+    public void putBackDestinationCards(DestinationCard[] cards) throws StateWarning {
         throw new StateWarning("Cannot draw any more cards. You must end your turn now.");
     }
 

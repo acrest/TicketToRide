@@ -313,12 +313,12 @@ public class Facade {
 //        }
     }
 
-    public void drawDestinationCard() {
+    public void drawDestinationCards() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (model.hasCurrentGame()) {
-                    clientFacade.addDestinationCard(proxy.drawDestinationCard(model.getCurrentPlayerName(), model.getGameID()));
+                    clientFacade.addDestinationCards(proxy.drawDestinationCards(model.getCurrentPlayerName(), model.getGameID()));
                 }
             }
         });
@@ -417,12 +417,12 @@ public class Facade {
         thread.start();
     }
 
-    public void putBackDestinationCard(final DestinationCard card) {
+    public void putBackDestinationCards(final DestinationCard[] cards) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (model.hasCurrentGame()) {
-                    proxy.returnDestinationCard(model.getCurrentPlayerName(), model.getGameID(), card);
+                    proxy.returnDestinationCards(model.getCurrentPlayerName(), model.getGameID(), cards);
                 }
             }
         });

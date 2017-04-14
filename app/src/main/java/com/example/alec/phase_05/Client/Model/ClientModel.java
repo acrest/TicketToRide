@@ -522,14 +522,14 @@ public class ClientModel extends Observable {
         return ((Player) currentPlayer).getCardChoices();
     }
 
-    public void addCardToChoices(DestinationCard card) {
+    public void setCardChoices(DestinationCard[] cards) {
         IPlayer currentPlayer = getCurrentPlayer();
         if (currentPlayer == null || !(currentPlayer instanceof Player)) return;
         Player p = (Player) currentPlayer;
-        p.addCardChoice(card);
-        if(p.getCardChoices().size() == expectedCardsInHand) {
+        p.setCardChoices(cards);
+//        if(p.getCardChoices().size() == expectedCardsInHand) {
             displayHand();
-        }
+//        }
     }
 
     // Tells the model how many cards to get before showing the hand.

@@ -166,9 +166,7 @@ public class ClientFacade {
         Facade.getInstance().drawTrainCard();
         Facade.getInstance().drawTrainCard();
         Facade.getInstance().drawTrainCard();
-        Facade.getInstance().drawDestinationCard();
-        Facade.getInstance().drawDestinationCard();
-        Facade.getInstance().drawDestinationCard();
+        Facade.getInstance().drawDestinationCards();
         model.setGameStarted(); //make sure this is called at the end
     }
 
@@ -176,9 +174,9 @@ public class ClientFacade {
         model.addTrainCard(card);
     }
 
-    public void addDestinationCard(DestinationCard card) {
+    public void addDestinationCards(DestinationCard[] cards) {
         // The ClientModel will handle showing the card choices once it has enough cards.
-        model.addCardToChoices(card);
+        model.setCardChoices(cards);
     }
 
     public void claimRoute(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains, int playerPoints) {

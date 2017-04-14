@@ -40,4 +40,8 @@ public interface IServerGame extends IGame, Serializable {
     public PlayerTurnStatus getTurnStatus();
 
     public int getPlayerTurnIndex();
+
+    void clearChoices(String playerName);
+
+    DestinationCard[] drawDestinationCards(String playerName);
 }
