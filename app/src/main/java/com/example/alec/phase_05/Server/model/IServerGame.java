@@ -6,6 +6,7 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
 import com.example.alec.phase_05.Shared.model.GameMap;
 import com.example.alec.phase_05.Shared.model.IChatManager;
 import com.example.alec.phase_05.Shared.model.IGame;
+import com.example.alec.phase_05.Shared.model.PlayerTurnStatus;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.io.Serializable;
@@ -35,4 +36,8 @@ public interface IServerGame extends IGame, Serializable {
     void addDestinationCardToBottom(DestinationCard card);
 
     void removeCardFromPlayerHand(String playerName, DestinationCard card);
+
+    public PlayerTurnStatus getTurnStatus();
+
+    public int getPlayerTurnIndex();
 }

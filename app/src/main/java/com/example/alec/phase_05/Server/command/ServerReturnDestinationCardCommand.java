@@ -21,4 +21,9 @@ public class ServerReturnDestinationCardCommand extends ReturnDestinationCardCom
         result.setResultObject(ServerFacade.getInstance().returnDestinationCard(getPlayerName(), getGameId(), getCard()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().returnDestinationCard(getPlayerName(), getGameId(), getCard());
+    }
 }

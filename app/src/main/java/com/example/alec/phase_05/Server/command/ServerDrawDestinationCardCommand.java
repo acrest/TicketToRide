@@ -21,4 +21,9 @@ public class ServerDrawDestinationCardCommand extends DrawDestinationCardCommand
         result.setResultObject(ServerFacade.getInstance().drawDestinationCard(getPlayerName(), getGameId()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().drawDestinationCard(getPlayerName(), getGameId());
+    }
 }

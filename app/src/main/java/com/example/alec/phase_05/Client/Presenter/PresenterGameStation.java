@@ -28,6 +28,11 @@ public class PresenterGameStation extends Presenter implements IPresenterGameSta
 
 
     @Override
+    public void reJoinGame(int gameID, String color) {
+        Facade.getInstance().reJoinGame(gameID, color);
+    }
+
+    @Override
     public void createGame(String hostColor, String gameName, int numberOfPlayers) {
         Facade.getInstance().createGame(numberOfPlayers, gameName, hostColor);
     }
@@ -57,6 +62,12 @@ public class PresenterGameStation extends Presenter implements IPresenterGameSta
         }
         if(u.needUpdate(ClientModel.JOIN_GAME_FAILURE)) {
             listener.joinGameSuccess(false);
+        }
+        if(u.needUpdate(ClientModel.REJOIN_GAME_SUCCESS)) {
+            listener.reJoinGameSuccess(true);
+        }
+        if(u.needUpdate(ClientModel.REJOIN_GAME_FAILURE)) {
+            listener.reJoinGameSuccess(false);
         }
     }
 

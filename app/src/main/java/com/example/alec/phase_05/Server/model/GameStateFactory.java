@@ -24,7 +24,7 @@ public final class GameStateFactory {
             visibleTrainCards[i] = game.getVisibleCard(i);
         }
 
-        return new GameInfo(game.getID(), game.getName(), maxPlayers, players, visibleTrainCards, game.getNumberOfTrainCards(), game.getNumberOfDestinationCards(), game.getMap());
+        return new GameInfo(game.getID(), game.getName(), maxPlayers, players, visibleTrainCards, game.getNumberOfTrainCards(), game.getNumberOfDestinationCards(), game.getMap(), game.getPlayerTurnIndex(), game.getTurnStatus());
     }
 
     private GameStateFactory() {}

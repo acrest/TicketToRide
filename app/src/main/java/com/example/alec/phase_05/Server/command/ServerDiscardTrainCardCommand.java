@@ -21,4 +21,9 @@ public class ServerDiscardTrainCardCommand extends DiscardTrainCardCommand imple
         result.setResultObject(ServerFacade.getInstance().discardTrainCard(getPlayerName(), getGameId(), getCard()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().discardTrainCard(getPlayerName(), getGameId(), getCard());
+    }
 }

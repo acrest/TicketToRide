@@ -21,4 +21,9 @@ public class ServerDrawTrainCardCommand extends DrawTrainCardCommand implements 
         result.setResultObject(ServerFacade.getInstance().drawTrainCard(getPlayerName(), getGameId()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().drawTrainCard(getPlayerName(), getGameId());
+    }
 }

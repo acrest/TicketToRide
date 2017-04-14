@@ -20,4 +20,9 @@ public class ServerFinishTurnCommand extends FinishTurnCommand implements Serial
         result.setResultObject(ServerFacade.getInstance().finishTurn(getPlayerName(), getGameId()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().finishTurn(getPlayerName(), getGameId());
+    }
 }

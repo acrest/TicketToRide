@@ -21,4 +21,9 @@ public class ServerSendChatCommand extends SendChatCommand implements Serializab
         result.setResultObject(ServerFacade.getInstance().sendChat(getChat()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().sendChat(getChat());
+    }
 }

@@ -1,28 +1,27 @@
 package com.example.alec.phase_05.Server.command;
-import java.io.Serializable;
 
 import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.JoinGameCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 
 /**
- * Created by samuel on 2/9/17.
+ * Created by Alec on 4/10/17.
  */
 
-public class ServerJoinGameCommand  extends JoinGameCommand implements Serializable {
-    public ServerJoinGameCommand(String playerName, int gameID, String color) {
+public class ServerReJoinGameCommand extends JoinGameCommand {
+    public ServerReJoinGameCommand(String playerName, int gameID, String color) {
         super(playerName, gameID, color);
     }
 
     @Override
     public Result execute() {
         Result result = new ServerResult();
-        result.setResultObject(ServerFacade.getInstance().joinGame(getPlayerName(), getGameId(), getColor()));
+        result.setResultObject(ServerFacade.getInstance().reJoinGame(getPlayerName(), getGameId(), getColor()));
         return result;
     }
 
     @Override
     public void reExecute() {
-        ServerFacade.getInstance().joinGame(getPlayerName(), getGameId(), getColor());
+        ServerFacade.getInstance().reJoinGame(getPlayerName(), getGameId(), getColor());
     }
 }

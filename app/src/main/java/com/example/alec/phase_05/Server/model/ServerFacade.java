@@ -203,6 +203,18 @@ public class ServerFacade implements IServer {
         return GameStateFactory.gameToGameState(game);
     }
 
+    @Override////LOOOOOOOOK HERE FOR IMPLIMENTATION
+    public GameInfo reJoinGame(String playerName, int gameID, String color) {
+        IServerGame game = model.getGame(gameID);
+        Player player = new Player(playerName);
+        player.setColor(color);
+        if (game == null) return null;
+        int playerPosition = game.addPlayerAtNextPosition(player);
+        //check to see of the player was added successfully
+        if (playerPosition == -1) return null;
+        return GameStateFactory.gameToGameState(game);
+    }
+
     /**
      * gets the list of games from the ServerModel that are available to join
      *
@@ -306,6 +318,7 @@ public class ServerFacade implements IServer {
     @Override
     public TrainCard pickTrainCard(String playerName, int gameID, int index) {
         IServerGame game = model.getGame(gameID);
+        model.getGame(gameID).setTrainStatus();
         if (game == null) return null;
         return game.pickTrainCard(playerName, index);
     }
@@ -313,6 +326,7 @@ public class ServerFacade implements IServer {
     @Override
     public TrainCard drawTrainCard(String playerName, int gameId) {
         IServerGame game = model.getGame(gameId);
+        model.getGame(gameId).setTrainStatus();
         if (game == null) return null;
         return game.drawTrainCard(playerName);
     }
@@ -329,6 +343,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public DestinationCard drawDestinationCard(String playerName, int gameID) {
+        model.getGame(gameID).setDestinationStatus();
         IServerGame game = model.getGame(gameID);
         if (game == null) return null;
         return game.drawDestinationCard(playerName);
@@ -351,6 +366,8 @@ public class ServerFacade implements IServer {
 
     @Override
     public boolean finishTurn(String playerName, int gameId) {
+        model.getGame(gameId).incrementPlayerIndex();
+        model.getGame(gameId).setStartStatus();
         return true;
     }
 

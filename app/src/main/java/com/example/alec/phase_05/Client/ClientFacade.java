@@ -64,6 +64,17 @@ public class ClientFacade {
         }
     }
 
+    public void reJoinGame(GameInfo gameInfo) {
+        if (gameInfo != null) {
+            model.setReJoinGameSuccess(true);
+            model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
+            model.setHost(false);
+            Poller.getInstance().setPlayerWatingPolling();
+        } else {
+            model.setJoinGameSuccess(false);
+        }
+    }
+
     public void setCurrentGameDescription(GameDescription description) {
         for (int i = 0; i < model.getGameMaxPlayers(); ++i) {
             model.setPlayer(i, null);

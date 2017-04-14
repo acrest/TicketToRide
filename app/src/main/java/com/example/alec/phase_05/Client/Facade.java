@@ -197,6 +197,24 @@ public class Facade {
 //        }
     }
 
+
+    public void reJoinGame(final int gameID, final String color) {
+        // System.out.println("the facade join game " + proxy.getGames());
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                clientFacade.reJoinGame(proxy.reJoinGame(model.getCurrentPlayerName(), gameID, color));
+            }
+        });
+        thread.start();
+//        try {
+//            thread.join();
+//            poller.setPlayerWatingPolling();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+    }
+
     /**
      * Call to get the games in the Game Station
      *

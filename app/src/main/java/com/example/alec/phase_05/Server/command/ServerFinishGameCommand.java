@@ -20,4 +20,9 @@ public class ServerFinishGameCommand extends FinishGameCommand implements Serial
         result.setResultObject(ServerFacade.getInstance().finishGame(getPlayerName(), getGameId()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().finishGame(getPlayerName(), getGameId());
+    }
 }

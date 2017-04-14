@@ -34,7 +34,7 @@ import java.util.List;
 public class GameStationActivity extends Activity implements IGameStationListener {
     private RecyclerView mGameRecView;
     private DerpAdapter mAdapter;
-    private Button mCreateGameButton, mJoinGameButton;
+    private Button mCreateGameButton, mJoinGameButton, mReJoinGameButton;
     private Button mButtonDialogRed, mButtonDialogBlue, mButtonDialogYellow, mButtonDialogGreen, mButtonDialogBlack;
     private View selectedColor = null;
     private int selectedGameID = -1;
@@ -53,7 +53,6 @@ public class GameStationActivity extends Activity implements IGameStationListene
         mAdapter = new DerpAdapter(ClientModel.getInstance().getGameList(), this);
         mGameRecView.setAdapter(mAdapter);
 
-        mCreateGameButton = (Button) findViewById(R.id.create_game_button);
         mCreateGameButton = (Button) findViewById(R.id.create_game_button);
         mCreateGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +137,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
 
         mJoinGameButton = (Button) findViewById(R.id.join_game_button);
         mJoinGameButton.setEnabled(false);
+        mReJoinGameButton.setEnabled(false);
         mJoinGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,6 +197,68 @@ public class GameStationActivity extends Activity implements IGameStationListene
             }
         });
 
+
+
+
+        mReJoinGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedGameID = mAdapter.getSelectedGameID();
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(GameStationActivity.this);
+                final View mView = getLayoutInflater().inflate(R.layout.dialog_join_game, null);
+//
+//                mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
+//                mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);
+//                mButtonDialogYellow = (Button) mView.findViewById(R.id.join_game_button_yellow);
+//                mButtonDialogGreen = (Button) mView.findViewById(R.id.join_game_button_green);
+//                mButtonDialogBlack = (Button) mView.findViewById(R.id.join_game_button_black);
+//                final Button mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
+//                final Button mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);
+//                final Button mButtonDialogYellow = (Button) mView.findViewById(R.id.join_game_button_yellow);
+//                final Button mButtonDialogGreen = (Button) mView.findViewById(R.id.join_game_button_green);
+//                final Button mButtonDialogBlack = (Button) mView.findViewById(R.id.join_game_button_black);
+
+//                mBuilder.setView(mView);
+//                final AlertDialog dialog = mBuilder.create();
+//                dialog.show();
+
+//                mButtonDialogRed.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        joinGame(mView.findViewById(R.id.join_game_button_red), mView, dialog);
+//                    }
+//                });
+//
+//                mButtonDialogBlue.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        joinGame(mView.findViewById(R.id.join_game_button_blue), mView, dialog);
+//                    }
+//                });
+//
+//                mButtonDialogYellow.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        joinGame(mView.findViewById(R.id.join_game_button_yellow), mView, dialog);
+//                    }
+//                });
+//
+//                mButtonDialogGreen.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        joinGame(mView.findViewById(R.id.join_game_button_green), mView, dialog);
+//                    }
+//                });
+//
+//                mButtonDialogBlack.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        joinGame(mView.findViewById(R.id.join_game_button_black), mView, dialog);
+//                    }
+//                });
+            }
+        });
+
         presenter = new PresenterGameStation(this);
     }
 
@@ -217,6 +279,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
             }
             selectedIndex = INVALID_INDEX;
             mJoinGameButton.setEnabled(false);
+            mReJoinGameButton.setEnabled(false);
         }
 
         public DerpAdapter(List<GameDescription> listData, Context c)
@@ -259,7 +322,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
             holder.inGameLabel.setText(gameDescription.getNumberPlayers() + "/" + gameDescription.getMaxPlayers());
 
             StringBuilder sb = new StringBuilder();
-            if(gameDescription.getNumberPlayers() != 0) {
+            if(gameDescription.getNumberPlayers() != 0 || gameDescription.hasPlayer(ClientModel.getInstance().getCurrentPlayerName())) {
                 for(int i = 0; i < gameDescription.getNumberPlayers(); i++)
                 {
                     sb.append(gameDescription.getPlayers().get(i).getName() + ", ");
@@ -535,9 +598,23 @@ public class GameStationActivity extends Activity implements IGameStationListene
             Intent i = new Intent(GameStationActivity.this, LobbyActivity.class);  //Poller is causing crash here.
             mAdapter.cancelSelected();
             mJoinGameButton.setEnabled(false);
+            mReJoinGameButton.setEnabled(false);
             startActivity(i);
         } else {
             Toast.makeText(this, "Failed to join game", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void reJoinGameSuccess(boolean success) {
+        if(success) {
+            Intent i = new Intent(GameStationActivity.this, TicketToRideActivity.class);  //Poller is causing crash here.
+            mAdapter.cancelSelected();
+            mJoinGameButton.setEnabled(false);
+            mReJoinGameButton.setEnabled(false);
+            startActivity(i);
+        } else {
+            Toast.makeText(this, "Failed to rejoin game", Toast.LENGTH_SHORT).show();
         }
     }
 

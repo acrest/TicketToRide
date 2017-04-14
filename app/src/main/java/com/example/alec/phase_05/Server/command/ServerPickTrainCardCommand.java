@@ -20,4 +20,11 @@ public class ServerPickTrainCardCommand extends PickTrainCardCommand implements 
         result.setResultObject(ServerFacade.getInstance().pickTrainCard(getPlayerName(), getGameId(), getCardIndex()));
         return result;
     }
+
+    @Override
+    public void reExecute(){
+        ServerFacade.getInstance().pickTrainCard(getPlayerName(), getGameId(), getCardIndex());
+    }
+
+
 }

@@ -30,4 +30,6 @@ public abstract class GameCommand extends BaseCommand {
     public String getPlayerName() {
         return playerName;
     }
+
+    public abstract void reExecute();
 }

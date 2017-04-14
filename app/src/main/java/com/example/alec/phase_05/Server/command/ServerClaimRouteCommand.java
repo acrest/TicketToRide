@@ -22,4 +22,9 @@ public class ServerClaimRouteCommand extends ClaimRouteCommand implements Serial
         result.setResultObject(ServerFacade.getInstance().claimRoute(getPlayerName(), getGameId(), getRouteId(), getRouteType()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().claimRoute(getPlayerName(), getGameId(), getRouteId(), getRouteType());
+    }
 }

@@ -4,7 +4,7 @@ package com.example.alec.phase_05.Shared.model;
  * Created by samuel on 3/13/17.
  */
 
-public class PlayerCredentials {
+public class PlayerCredentials implements java.io.Serializable {
     private String username;
     private String password;
 
