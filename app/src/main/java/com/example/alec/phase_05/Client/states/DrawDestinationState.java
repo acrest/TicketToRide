@@ -2,10 +2,7 @@ package com.example.alec.phase_05.Client.states;
 
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.Model.ClientGame;
-import com.example.alec.phase_05.Client.Model.ClientModel;
-import com.example.alec.phase_05.Shared.command.DrawDestinationCardCommand;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
-import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameState;
 import com.example.alec.phase_05.Shared.model.StateWarning;
 import com.example.alec.phase_05.Shared.model.TrainType;
@@ -35,14 +32,14 @@ public class DrawDestinationState implements GameState {
     }
 
     @Override
-    public void drawDestinationCard() throws StateWarning {
+    public void drawDestinationCards() throws StateWarning {
         throw new StateWarning("You already drew a destination card. Pick if you want to return some.");
     }
 
     @Override
-    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
+    public void putBackDestinationCards(DestinationCard[] cards) throws StateWarning {
         System.out.println("Putting back destination card(s).");
-        facade.putBackDestinationCard(card);
+        facade.putBackDestinationCards(cards);
         state.setTurnState(new ReturnDestinationState(state, 1));
     }
 

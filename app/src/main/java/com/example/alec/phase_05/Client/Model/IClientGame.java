@@ -52,9 +52,9 @@ public interface IClientGame extends IGame {
 
     void doPickTrainCard(int cardIndex) throws StateWarning;
 
-    void doDrawDestinationCard() throws StateWarning;
+    void doDrawDestinationCards() throws StateWarning;
 
-    void doPutBackDestinationCard(DestinationCard card) throws StateWarning;
+    void doPutBackDestinationCards(DestinationCard[] card) throws StateWarning;
 
     void doClaimRoute(int routeId, TrainType type) throws StateWarning;
 

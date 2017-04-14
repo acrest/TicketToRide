@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Client.Model;
 
 import com.example.alec.phase_05.Client.Facade;
 import com.example.alec.phase_05.Client.states.DrawDestinationState;
+import com.example.alec.phase_05.Client.states.EndTurnState;
 import com.example.alec.phase_05.Client.states.OneDrawnCardState;
 import com.example.alec.phase_05.Client.states.StartTurnState;
 import com.example.alec.phase_05.Shared.model.GameInfo;
@@ -39,22 +40,33 @@ public final class ClientGameFactory {
                 if (player.getName().equals(ClientModel.getInstance().getCurrentPlayerName())) {
                     game.setPlayer(i, player);
 
-                } else if(i == playerTurnIndex) {
-                    if(playerStatus == PlayerTurnStatus.DESTINATION) {
-                        //get destination cards and call for destination modle to pop up
-                        game.setTurnState(new DrawDestinationState((ClientGame) game));
-                    } else if (playerStatus == PlayerTurnStatus.TRAIN) {
-                        //set client state to one card picked.
-                        // tell user to pick one more train card.
-                        game.setTurnState(new OneDrawnCardState((ClientGame) game));
-                    } else {
-                        //set client state to start turn state.
-                        game.setTurnState(new StartTurnState((ClientGame) game));
+                    // Check to see if it the current's player turn.
+                    if(i == playerTurnIndex) {
+                        if(playerStatus == PlayerTurnStatus.DESTINATION) {
+                            //get destination cards and call for destination modle to pop up
+                            game.setTurnState(new DrawDestinationState((ClientGame) game));
+                        } else if (playerStatus == PlayerTurnStatus.TRAIN) {
+                            //set client state to one card picked.
+                            // tell user to pick one more train card.
+                            game.setTurnState(new OneDrawnCardState((ClientGame) game));
+                        } else {
+                            //set client state to start turn state.
+                            game.setTurnState(new StartTurnState((ClientGame) game));
+                        }
+                    }
+
+                } else {
+                    game.setPlayer(i, new OtherPlayer(players[i]));
+
+                    // See if it is this player's turn.
+                    if(playerTurnIndex == i) {
+                        game.setTurnState(new EndTurnState((ClientGame) game));
                     }
                 }
 
-                else {
-                    game.setPlayer(i, new OtherPlayer(players[i]));
+                // Set the current player name if it is this player's turn.
+                if (playerTurnIndex == i) {
+                    game.setCurrentPlayerTurn(players[i].getName());
                 }
                 //game.getPlayer(i).setTrainCount(Facade.getInstance().getTrainCount());
             }

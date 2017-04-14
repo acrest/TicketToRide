@@ -13,8 +13,11 @@ import com.example.alec.phase_05.Shared.model.PlayerTurnStatus;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import static com.example.alec.phase_05.Shared.model.PlayerTurnStatus.DESTINATION;
@@ -158,5 +161,27 @@ public class ServerGame extends Game implements IServerGame {
     @Override
     public int getPlayerTurnIndex() {
         return playerTurnIndex%getNumberPlayers();
+    }
+
+    @Override
+    public void clearChoices(String playerName) {
+        Player player = (Player) getPlayerByName(playerName);
+        if (player != null) {
+            player.clearCardChoices();
+        }
+    }
+
+    @Override
+    public DestinationCard[] drawDestinationCards(String playerName) {
+        Player player = (Player) getPlayerByName(playerName);
+        ArrayList<DestinationCard> cards = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            DestinationCard card = ((IServerBank) getBank()).drawDestinationCard();
+            if (card != null) {
+                player.addCardChoice(card);
+                cards.add(card);
+            }
+        }
+        return cards.toArray(new DestinationCard[cards.size()]);
     }
 }

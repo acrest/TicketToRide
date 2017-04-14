@@ -22,9 +22,9 @@ public interface IPresenterTicketToRide extends IPresenter {
 
     void claimRoute(int routeID, TrainType type);
 
-    void drawDestinationCard();
+    void drawDestinationCards();
 
-    void returnDestinationCard(DestinationCard cardID);
+    void returnDestinationCards(DestinationCard[] cards);
 
     void endTurn();
 

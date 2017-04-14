@@ -6,12 +6,12 @@ import com.example.alec.phase_05.Shared.model.DestinationCard;
  * Created by samuel on 3/2/17.
  */
 
-public abstract class DrawnDestinationCardCommand extends BaseCommand {
+public abstract class DrawnDestinationCardsCommand extends BaseCommand {
     private String playerName;
     private int remainingCards;
 
-    public DrawnDestinationCardCommand(String playerName, int remainingCards) {
-        super("DrawnDestinationCard");
+    public DrawnDestinationCardsCommand(String playerName, int remainingCards) {
+        super("DrawnDestinationCards");
         this.playerName = playerName;
         this.remainingCards = remainingCards;
     }

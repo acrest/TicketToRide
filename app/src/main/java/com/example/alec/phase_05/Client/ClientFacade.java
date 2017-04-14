@@ -69,8 +69,22 @@ public class ClientFacade {
             System.out.println("in reJoinGame in ClientFacade");
             model.setReJoinGameSuccess(true);
             model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
+
+            // Tell GUI to display cards if the current player has card choices.
+            // This would happen if they were in the middle of choosing cards when they left.
+            List<DestinationCard> cardChoices = model.getCardChoices();
+            if (cardChoices.size() > 0) {
+                // This is a bit of a hack.
+                // Calling setCardChoices will call displayHand which will tell the GUI to show the dialog.
+                // The model will wait a little while before asking the presenter to show the dialog,
+                // which will hopefully make sure that the presenter and GUI are ready before they are
+                // told to show the choices.
+                // If they are not ready, the dialog will not show.
+                model.setCardChoices(cardChoices.toArray(new DestinationCard[cardChoices.size()]));
+            }
+
             model.setHost(false);
-            Poller.getInstance().setPlayerWatingPolling();
+            Poller.getInstance().setModelPolling();
         } else {
             model.setJoinGameSuccess(false);
         }
@@ -169,9 +183,7 @@ public class ClientFacade {
         Facade.getInstance().drawTrainCard();
         Facade.getInstance().drawTrainCard();
         Facade.getInstance().drawTrainCard();
-        Facade.getInstance().drawDestinationCard();
-        Facade.getInstance().drawDestinationCard();
-        Facade.getInstance().drawDestinationCard();
+        Facade.getInstance().drawDestinationCards();
         model.setGameStarted(); //make sure this is called at the end
     }
 
@@ -179,9 +191,9 @@ public class ClientFacade {
         model.addTrainCard(card);
     }
 
-    public void addDestinationCard(DestinationCard card) {
+    public void addDestinationCards(DestinationCard[] cards) {
         // The ClientModel will handle showing the card choices once it has enough cards.
-        model.addCardToChoices(card);
+        model.setCardChoices(cards);
     }
 
     public void claimRoute(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains, int playerPoints) {

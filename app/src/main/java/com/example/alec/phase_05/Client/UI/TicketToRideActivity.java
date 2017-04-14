@@ -472,7 +472,7 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 GameState state = ClientModel.getInstance().getGameState();
 
                 if(state instanceof StartTurnState){
-                    presenter.drawDestinationCard();
+                    presenter.drawDestinationCards();
                 }
             }
         });

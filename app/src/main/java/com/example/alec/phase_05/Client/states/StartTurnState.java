@@ -107,7 +107,7 @@ public class StartTurnState implements GameState {
     }
 
     @Override
-    public void drawDestinationCard() throws StateWarning {
+    public void drawDestinationCards() throws StateWarning {
         System.out.println("Drawing a destination card.");
         // draw destination card
         int numToDraw = Math.min(model.getNumberOfDestinationCards(), 3);
@@ -116,14 +116,14 @@ public class StartTurnState implements GameState {
         }
         ClientModel.getInstance().setExpectedHandSize(numToDraw);
         for (int i = 0; i < numToDraw; i++) {
-            facade.drawDestinationCard();
             ClientModel.getInstance().decNumOfDestinationCards();
         }
+        facade.drawDestinationCards();
         state.setTurnState(new DrawDestinationState(state));
     }
 
     @Override
-    public void putBackDestinationCard(DestinationCard card) throws StateWarning {
+    public void putBackDestinationCards(DestinationCard[] cards) throws StateWarning {
         throw new StateWarning("You must draw some destination cards first.");
     }
 
