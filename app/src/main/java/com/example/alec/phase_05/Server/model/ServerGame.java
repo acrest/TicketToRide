@@ -30,8 +30,6 @@ public class ServerGame extends Game implements IServerGame {
     private int playerTurnIndex;
     private CommandManager commandManager;
     private IChatManager chatManager;
-    private GameState gameState;
-    private int totalPlayers;
 
     public ServerGame(int id, String name, int maxPlayers, CommandManager commandManager, IChatManager chatManager, IServerBank bank, GameMap gameMap) {
         super(id, name, maxPlayers, bank, gameMap);
@@ -39,7 +37,6 @@ public class ServerGame extends Game implements IServerGame {
         this.chatManager = chatManager;
         turnStatus = START;
         playerTurnIndex = 0;
-        totalPlayers = maxPlayers;
         commandManager.setGame(this);
     }
 
@@ -160,6 +157,6 @@ public class ServerGame extends Game implements IServerGame {
 
     @Override
     public int getPlayerTurnIndex() {
-        return playerTurnIndex%totalPlayers;
+        return playerTurnIndex%getNumberPlayers();
     }
 }

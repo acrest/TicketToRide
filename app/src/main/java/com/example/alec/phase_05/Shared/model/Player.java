@@ -12,12 +12,14 @@ import java.util.Map;
 public class Player extends AbstractPlayer {
     private ArrayList<TrainCard> trainCards;
     private ArrayList<DestinationCard> destinationCards;
+    private ArrayList<DestinationCard> cardChoices;
 
 
     public Player(String name) {
         super(name);
         trainCards = new ArrayList<>();
         destinationCards = new ArrayList<>();
+        cardChoices = new ArrayList<>();
     }
 
     @Override
@@ -64,6 +66,22 @@ public class Player extends AbstractPlayer {
 
     public List<DestinationCard> getDestinationCards() {
         return destinationCards;
+    }
+
+    public void addCardChoice(DestinationCard card) {
+        cardChoices.add(card);
+    }
+
+    public void removeCardChoice(DestinationCard card) {
+        cardChoices.remove(card);
+    }
+
+    public List<DestinationCard> getCardChoices() {
+        return cardChoices;
+    }
+
+    public void clearCardChoices() {
+        cardChoices.clear();
     }
 
     private Map<TrainType, Integer> getCardCounts() {

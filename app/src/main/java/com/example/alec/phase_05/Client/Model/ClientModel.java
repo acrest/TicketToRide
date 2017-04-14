@@ -72,7 +72,6 @@ public class ClientModel extends Observable {
 
     private List<GameDescription> gameList;
     private List<Chat> chats;
-    private List<DestinationCard> cardChoices;
     private IClientGame currentGame;
     private String currentPlayerName;
     private boolean isHost;
@@ -88,7 +87,6 @@ public class ClientModel extends Observable {
         currentPlayerName = null;
         gameList = null;
         chats = new ArrayList<>();
-        cardChoices = new ArrayList<>();
         isHost = false;
         firstCardDraw = true;
         isLastTurns = false;
@@ -519,12 +517,17 @@ public class ClientModel extends Observable {
     }
 
     public List<DestinationCard> getCardChoices() {
-        return cardChoices;
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null || !(currentPlayer instanceof Player)) return null;
+        return ((Player) currentPlayer).getCardChoices();
     }
 
     public void addCardToChoices(DestinationCard card) {
-        cardChoices.add(card);
-        if(cardChoices.size() == expectedCardsInHand) {
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null || !(currentPlayer instanceof Player)) return;
+        Player p = (Player) currentPlayer;
+        p.addCardChoice(card);
+        if(p.getCardChoices().size() == expectedCardsInHand) {
             displayHand();
         }
     }
@@ -565,7 +568,9 @@ public class ClientModel extends Observable {
     }
 
     public void clearCardChoices() {
-        cardChoices.clear();
+        IPlayer currentPlayer = getCurrentPlayer();
+        if (currentPlayer == null || !(currentPlayer instanceof Player)) return;
+        ((Player) currentPlayer).clearCardChoices();
     }
 
     public void doDrawTrainCardFromDeck() throws StateWarning {
