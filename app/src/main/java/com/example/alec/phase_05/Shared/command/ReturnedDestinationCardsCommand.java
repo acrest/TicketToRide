@@ -9,7 +9,7 @@ public abstract class ReturnedDestinationCardsCommand extends BaseCommand {
     private int remainingCards;
 
     public ReturnedDestinationCardsCommand(String playerName, int remainingCards) {
-        super("ReturnedDestinationCard");
+        super("ReturnedDestinationCards");
         this.playerName = playerName;
         this.remainingCards = remainingCards;
     }
