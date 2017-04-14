@@ -74,7 +74,6 @@ public class ServerProxy implements IServer {
 
     @Override
     public Result executeCommand(ICommand command) {
-        System.out.println("executing command");
         Result result;
         while ((result = myCC.executeCommandOnServer(command)) == null) {
             try {

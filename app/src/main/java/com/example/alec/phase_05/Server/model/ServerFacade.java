@@ -215,6 +215,7 @@ public class ServerFacade implements IServer {
     public GameInfo reJoinGame(String playerName, int gameID) {
         IServerGame game = model.getGame(gameID);
         if (game == null) return null;
+        System.out.println("rejoin in server facade with game "+gameID+" and player "+playerName);
         return GameStateFactory.gameToGameState(game);
     }
 
