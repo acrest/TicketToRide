@@ -8,7 +8,10 @@ import com.example.alec.phase_05.Shared.command.Result;
  */
 
 public class ClientGetGameListCommand extends GetGameListCommand {
-    public ClientGetGameListCommand() {}
+
+    public ClientGetGameListCommand(String name) {
+        super(name);
+    }
 
     /**
      * Does nothing.
@@ -21,4 +24,5 @@ public class ClientGetGameListCommand extends GetGameListCommand {
     {
         return null;
     }
+
 }

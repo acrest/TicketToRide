@@ -1,8 +1,10 @@
 package com.example.alec.phase_05.Server.model;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
+import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
 import com.example.alec.phase_05.Server.command.ServerResult;
 import com.example.alec.phase_05.Shared.command.GameCommand;
+import com.example.alec.phase_05.Shared.command.GetGameListCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.command.Result;
 import com.example.alec.phase_05.Shared.model.Chat;
@@ -85,6 +87,11 @@ public class ServerFacade implements IServer {
                 commandCounter = 0;
             }
         } else {
+            if(command instanceof GetGameListCommand){
+
+                model.currentPlayer = ((GetGameListCommand) command).getPlayerName();
+                System.out.println("In server facade current player is set to "+model.currentPlayer);
+            }
             r = command.execute();
         }
         return r;
@@ -144,6 +151,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public boolean registerUser(String username, String password) {
+        System.out.println("in registerUser server facade");
         return model.addPlayer(new PlayerCredentials(username, password));
     }
 
@@ -218,9 +226,9 @@ public class ServerFacade implements IServer {
      * @pre gameId is a non negative int
      */
     @Override
-    public List<GameDescription> getGames() {
+    public List<GameDescription> getGames(String playerName) {
         //{"password":"55","userName":"andrew","commandName":"GetGameList"}
-        return model.getGameDescriptions();
+        return model.getGameDescriptions(playerName);
     }
 
     /**

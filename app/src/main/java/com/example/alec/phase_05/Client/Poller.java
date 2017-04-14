@@ -74,7 +74,7 @@ public class Poller {
 
                         break;
                     case 3:
-                        List<GameDescription> games = server.getGames();
+                        List<GameDescription> games = server.getGames(model.getCurrentPlayerName());
                         if(games != null) {
                             model.setGameList(games);
                         }

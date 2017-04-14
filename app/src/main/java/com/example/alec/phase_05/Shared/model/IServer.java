@@ -20,7 +20,7 @@ public interface IServer {
 
     GameInfo reJoinGame(String playerName, int gameID);
 
-    List<GameDescription> getGames();
+    List<GameDescription> getGames(String playerName);
 
     GameDescription getGameDescription(int gameID);
 

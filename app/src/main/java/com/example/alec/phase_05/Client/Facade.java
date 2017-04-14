@@ -78,6 +78,7 @@ public class Facade {
      * @return true if the player was successfully logged in, if not returns false.
      */
     public void login(final String username, final String password) {
+        System.out.println("in facade login");
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -224,7 +225,7 @@ public class Facade {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                clientFacade.updateGameList(proxy.getGames());
+                clientFacade.updateGameList(proxy.getGames(model.getCurrentPlayerName()));
             }
         });
         thread.start();

@@ -137,6 +137,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
 
         mJoinGameButton = (Button) findViewById(R.id.join_game_button);
         mJoinGameButton.setEnabled(false);
+        mReJoinGameButton = (Button) findViewById(R.id.rejoin_game_button);
         mReJoinGameButton.setEnabled(false);
         mJoinGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -435,15 +436,25 @@ public class GameStationActivity extends Activity implements IGameStationListene
             public void onClick(View view) {
                 if(selectedIndex == INVALID_INDEX)
                 {
+                    System.out.println("set to true");
                     mJoinGameButton.setEnabled(true);
                 }
                 else
                 {
+                    System.out.println("in else");
                     DerpHolder holder = getSelectedHolder();
                     holder.setSelected(false);
                 }
 
                 selectedIndex = getAdapterPosition();
+                if(listData.get(selectedIndex).hasPlayer(ClientModel.getInstance().getCurrentPlayerName())){
+                    System.out.println("has current player");
+                    mReJoinGameButton.setEnabled(true);
+                }
+                else{
+                    System.out.println("doesn't have player");
+                    mReJoinGameButton.setEnabled(false);
+                }
                 setSelected(true);
             }
 

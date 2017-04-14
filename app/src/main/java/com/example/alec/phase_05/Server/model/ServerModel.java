@@ -1,8 +1,11 @@
 package com.example.alec.phase_05.Server.model;
 
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameComponentFactory;
 import com.example.alec.phase_05.Shared.model.GameDescription;
+import com.example.alec.phase_05.Shared.model.IPlayer;
+import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.PlayerCredentials;
 import com.example.alec.phase_05.Shared.model.User;
 import com.example.alec.phase_05.Server.Database.database_interface.PlayerDAO;
@@ -13,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ServerModel {
+    public String currentPlayer;
     //The ID of the next valid game to be assigned
     private static int nextValidGameID = 0;
 
@@ -121,14 +125,35 @@ public class ServerModel {
      * Gives a list with all the games available to join
      * @return list of available games, meaning games created but not full or started yet.
      */
-    public List<GameDescription> getGameDescriptions() {
+    public List<GameDescription> getGameDescriptions(String playerName) {
+        playerName = this.currentPlayer;
         List<GameDescription> gameDescriptions = new ArrayList<>();
+        System.out.println("beginning of function for "+playerName);
         for (ServerGame game : gamesMap.values()) {
+            System.out.println("in first for loop player is "+playerName);
             if (game.getMaxPlayers() != game.getNumberPlayers() && !game.isGameStarted()){
                 gameDescriptions.add(game.getGameDescription());
             }
+            else{
+                if(checkIfPlayerJoined(playerName,game)){
+                    System.out.println("checking from getGameDescriptions");
+                    gameDescriptions.add(game.getGameDescription());
+                }
+            }
         }
         return gameDescriptions;
+    }
+
+    public boolean checkIfPlayerJoined(String playerName, ServerGame game){
+        System.out.println("in the check for name and name is: "+playerName);
+        for(IPlayer player : game.getPlayers()){
+            System.out.println("in the check for name and check is "+player.getName());
+            if(player.getName().equals(playerName)){
+                System.out.println("return true");
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

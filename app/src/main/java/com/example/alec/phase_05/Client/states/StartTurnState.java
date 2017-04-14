@@ -190,9 +190,9 @@ public class StartTurnState implements GameState {
 
     @Override
     public void endTurn() throws StateWarning {
-        state.setTurnState(new EndTurnState(state));
-        //throw new StateWarning("You must either draw train cards, " +
-        //        "draw destination cards, or claim a route before you can end your turn.");
+        //state.setTurnState(new EndTurnState(state));
+        throw new StateWarning("You must either draw train cards, " +
+                "draw destination cards, or claim a route before you can end your turn.");
     }
 
     @Override
