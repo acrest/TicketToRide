@@ -30,7 +30,7 @@ public class ServerModel {
     private Map<Integer,ServerGame> gamesMap;
     private Map<String,PlayerCredentials> playerMap;
     private static ServerModel _instance;
-    private PlayerDAO database;
+//    private PlayerDAO database;
 
 
     /**
@@ -41,11 +41,11 @@ public class ServerModel {
         gamesMap = new HashMap<>();
 
         //uncomment these to automate login
-        playerMap.put("Alec", new PlayerCredentials("Alec", "a"));
-        playerMap.put("Molly", new PlayerCredentials("Molly", "m"));
-        playerMap.put("Clark", new PlayerCredentials("Clark", "c"));
-        playerMap.put("Andrew", new PlayerCredentials("Andrew", "ac"));
-        playerMap.put("Sam", new PlayerCredentials("Sam", "s"));
+        //playerMap.put("Alec", new PlayerCredentials("Alec", "a"));
+        //playerMap.put("Molly", new PlayerCredentials("Molly", "m"));
+        //playerMap.put("Clark", new PlayerCredentials("Clark", "c"));
+        //playerMap.put("Andrew", new PlayerCredentials("Andrew", "ac"));
+        //playerMap.put("Sam", new PlayerCredentials("Sam", "s"));
     }
 
     /**
@@ -70,7 +70,7 @@ public class ServerModel {
         if(playerMap.containsKey(playerName))
             return false;
         playerMap.put(playerName,newPlayer);
-        database.addUser(newPlayer.getUsername(), newPlayer.getPassword());
+//        database.addUser(newPlayer.getUsername(), newPlayer.getPassword());
         return true;
     }
 
@@ -164,11 +164,11 @@ public class ServerModel {
         }
     }
 
-    public PlayerDAO getDatabase() {
-        return database;
-    }
-
-    public void setDatabase(PlayerDAO db) {
-        this.database = db;
-    }
+//    public PlayerDAO getDatabase() {
+//        return database;
+//    }
+//
+//    public void setDatabase(PlayerDAO db) {
+//        this.database = db;
+//    }
 }
