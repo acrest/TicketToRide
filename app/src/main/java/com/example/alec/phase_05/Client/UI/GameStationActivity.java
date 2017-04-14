@@ -137,6 +137,7 @@ public class GameStationActivity extends Activity implements IGameStationListene
 
         mJoinGameButton = (Button) findViewById(R.id.join_game_button);
         mJoinGameButton.setEnabled(false);
+        mReJoinGameButton = (Button) findViewById(R.id.rejoin_game_button);
         mReJoinGameButton.setEnabled(false);
         mJoinGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
