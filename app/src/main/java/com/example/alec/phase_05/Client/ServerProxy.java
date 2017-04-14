@@ -163,9 +163,12 @@ public class ServerProxy implements IServer {
 
 
     @Override
-    public GameInfo reJoinGame(String playerName, int gameID, String color) {
-        System.out.println("inside join game server proxy");
-        return (GameInfo) executeCommand(new ClientReJoinGameCommand(playerName, gameID, color)).toClass(GameInfo.class);
+    public GameInfo reJoinGame(String playerName, int gameID) {
+        Result result;
+        do {
+            result = executeCommand(new ClientReJoinGameCommand(playerName, gameID));
+        } while (result == null);
+        return (GameInfo) result.toClass(GameInfo.class);
     }
 
     /** Returns a list of games that a specified player is currently in. If the person doesn't excist, or wrong password, return null.

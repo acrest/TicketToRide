@@ -3,11 +3,13 @@ package com.example.alec.phase_05.Server.command;
 import com.example.alec.phase_05.Shared.command.ClaimedRouteCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 
+import java.io.Serializable;
+
 /**
  * Created by samuel on 3/16/17.
  */
 
-public class ServerClaimedRouteCommand extends ClaimedRouteCommand {
+public class ServerClaimedRouteCommand extends ClaimedRouteCommand implements Serializable {
     public ServerClaimedRouteCommand(String playerName, int routeId, int remainingTrainCards, int playerRemainingTrainCards, int playerRemainingTrains, int playerPoints) {
         super(playerName, routeId, remainingTrainCards, playerRemainingTrainCards, playerRemainingTrains, playerPoints);
     }

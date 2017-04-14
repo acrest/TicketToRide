@@ -1,4 +1,5 @@
 package com.example.alec.phase_05.Server.command;
+import java.io.Serializable;
 
 import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.GetGameCommand;
@@ -9,7 +10,7 @@ import com.example.alec.phase_05.Shared.model.Game;
  * Created by samuel on 2/14/17.
  */
 
-public class ServerGetGameCommand extends GetGameCommand {
+public class ServerGetGameCommand extends GetGameCommand implements Serializable {
     public ServerGetGameCommand(int gameId) {
         super(gameId);
     }

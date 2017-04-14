@@ -12,6 +12,7 @@ import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.PlayerTurnStatus;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

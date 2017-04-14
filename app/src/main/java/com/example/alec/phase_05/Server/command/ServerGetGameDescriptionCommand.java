@@ -1,4 +1,5 @@
 package com.example.alec.phase_05.Server.command;
+import java.io.Serializable;
 
 import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.GetGameDescriptionCommand;
@@ -9,7 +10,7 @@ import com.example.alec.phase_05.Shared.model.GameDescription;
  * Created by samuel on 2/14/17.
  */
 
-public class ServerGetGameDescriptionCommand extends GetGameDescriptionCommand {
+public class ServerGetGameDescriptionCommand extends GetGameDescriptionCommand implements Serializable {
     public ServerGetGameDescriptionCommand(int gameID) {
         super(gameID);
     }

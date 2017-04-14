@@ -65,27 +65,32 @@ public class SQLitePlayerDAO implements PlayerDAO {
         System.out.println("Operation done successfully");
     }
 
-    public ArrayList<User> getUsers(Connection c){
-        ArrayList<User> users = new ArrayList<>();
-
-        try {
-            PreparedStatement stmt = c.prepareStatement("Select * from USER");
-            ResultSet rs = stmt.executeQuery();
-            while(rs.next()){
-                String username = rs.getString(1);
-                String password = rs.getString(2);
-
-                User user = new User(username, password);
-                users.add(user);
-            }
-
-            stmt.close();
-        } catch (SQLException e) {
-
-        }
-
-        return users;
+    @Override
+    public ArrayList<User> getUsers() {
+        return null;
     }
+
+    //    public ArrayList<User> getUsers(Connection c){
+//        ArrayList<User> users = new ArrayList<>();
+//
+//        try {
+//            PreparedStatement stmt = c.prepareStatement("Select * from USER");
+//            ResultSet rs = stmt.executeQuery();
+//            while(rs.next()){
+//                String username = rs.getString(1);
+//                String password = rs.getString(2);
+//
+//                User user = new User(username, password);
+//                users.add(user);
+//            }
+//
+//            stmt.close();
+//        } catch (SQLException e) {
+//
+//        }
+//
+//        return users;
+//    }
 
     @Override
     public void clear() {

@@ -10,7 +10,7 @@ public interface IPresenterGameStation extends IPresenter {
 
     void joinGame(int gameID, String color);
 
-    void reJoinGame(int gameID, String color);
+    void reJoinGame(int gameID);
 
     void createGame(String hostColor, String gameName, int numberOfPlayers);
 

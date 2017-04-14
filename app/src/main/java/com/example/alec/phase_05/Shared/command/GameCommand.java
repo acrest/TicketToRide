@@ -1,5 +1,7 @@
 package com.example.alec.phase_05.Shared.command;
 
+import java.io.Serializable;
+
 /**
  * Holds a game id so the server knows which game the client is in.
  * Created by samuel on 2/3/17.

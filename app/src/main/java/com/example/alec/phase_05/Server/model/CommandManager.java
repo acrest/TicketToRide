@@ -25,6 +25,7 @@ import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ import java.util.TreeMap;
 /**
  * Created by Andrew on 2/20/2017.
  */
-public class CommandManager {
+public class CommandManager implements Serializable {
     private Map<String, Integer> playerIndex;
     private List<GameCommand> commands;
     private IServerGame game;

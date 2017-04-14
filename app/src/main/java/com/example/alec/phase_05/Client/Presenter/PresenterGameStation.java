@@ -28,8 +28,8 @@ public class PresenterGameStation extends Presenter implements IPresenterGameSta
 
 
     @Override
-    public void reJoinGame(int gameID, String color) {
-        Facade.getInstance().reJoinGame(gameID, color);
+    public void reJoinGame(int gameID) {
+        Facade.getInstance().reJoinGame(gameID);
     }
 
     @Override

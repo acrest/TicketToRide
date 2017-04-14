@@ -1,4 +1,5 @@
 package com.example.alec.phase_05.Server.command;
+import java.io.Serializable;
 
 import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.RegisterCommand;
@@ -8,7 +9,7 @@ import com.example.alec.phase_05.Shared.command.Result;
  * Created by samuel on 2/9/17.
  */
 
-public class ServerRegisterCommand extends RegisterCommand {
+public class ServerRegisterCommand extends RegisterCommand implements Serializable {
     /**
      * @param username username of client
      * @param password password of client
