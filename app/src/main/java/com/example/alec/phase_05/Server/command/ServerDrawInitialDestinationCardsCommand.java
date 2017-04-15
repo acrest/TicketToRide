@@ -10,20 +10,20 @@ import java.io.Serializable;
  * Created by Alec on 4/15/17.
  */
 
-public class ServerDrawInitialDestinationCardCommand extends DrawInitialDestinationCommand implements Serializable {
-    public ServerDrawInitialDestinationCardCommand(String playerName, int gameID) {
+public class ServerDrawInitialDestinationCardsCommand extends DrawInitialDestinationCommand implements Serializable {
+    public ServerDrawInitialDestinationCardsCommand(String playerName, int gameID) {
         super(playerName, gameID);
     }
 
     @Override
     public Result execute() {
         Result result = new ServerResult();
-        result.setResultObject(ServerFacade.getInstance().drawInitDestinationCards(getPlayerName(), getGameId()));
+        result.setResultObject(ServerFacade.getInstance().drawInitialDestinationCards(getPlayerName(), getGameId()));
         return result;
     }
 
     @Override
     public void reExecute() {
-        ServerFacade.getInstance().drawInitDestinationCards(getPlayerName(), getGameId());
+        ServerFacade.getInstance().drawInitialDestinationCards(getPlayerName(), getGameId());
     }
 }
