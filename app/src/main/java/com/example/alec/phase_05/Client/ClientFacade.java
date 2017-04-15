@@ -178,11 +178,11 @@ public class ClientFacade {
     }
 
     public void startGame() {
-        Facade.getInstance().drawTrainCard();
-        Facade.getInstance().drawTrainCard();
-        Facade.getInstance().drawTrainCard();
-        Facade.getInstance().drawTrainCard();
-        Facade.getInstance().drawDestinationCards();
+        Facade.getInstance().drawInitialTrainCard();
+        Facade.getInstance().drawInitialTrainCard();
+        Facade.getInstance().drawInitialTrainCard();
+        Facade.getInstance().drawInitialTrainCard();
+        Facade.getInstance().drawInitialDestinationCards();
         model.setGameStarted(); //make sure this is called at the end
     }
 

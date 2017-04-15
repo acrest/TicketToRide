@@ -23,7 +23,7 @@ public final class GameStateFactory {
         for(int i = 0; i < visibleTrainCards.length; ++i) {
             visibleTrainCards[i] = game.getVisibleCard(i);
         }
-
+        System.out.println("in gamestatefactory the game status is "+game.getTurnStatus());
         return new GameInfo(game.getID(), game.getName(), maxPlayers, players, visibleTrainCards, game.getNumberOfTrainCards(), game.getNumberOfDestinationCards(), game.getMap(), game.getPlayerTurnIndex(), game.getTurnStatus());
     }
 
