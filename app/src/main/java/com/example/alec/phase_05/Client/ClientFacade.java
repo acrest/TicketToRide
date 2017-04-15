@@ -66,6 +66,7 @@ public class ClientFacade {
 
     public void reJoinGame(GameInfo gameInfo) {
         if (gameInfo != null) {
+            System.out.println("in reJoinGame in ClientFacade");
             model.setReJoinGameSuccess(true);
             model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
 

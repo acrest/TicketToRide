@@ -206,58 +206,6 @@ public class GameStationActivity extends Activity implements IGameStationListene
             public void onClick(View view) {
                 selectedGameID = mAdapter.getSelectedGameID();
                 presenter.reJoinGame(selectedGameID);
-//                AlertDialog.Builder mBuilder = new AlertDialog.Builder(GameStationActivity.this);
-//                final View mView = getLayoutInflater().inflate(R.layout.dialog_join_game, null);
-//
-//                mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
-//                mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);
-//                mButtonDialogYellow = (Button) mView.findViewById(R.id.join_game_button_yellow);
-//                mButtonDialogGreen = (Button) mView.findViewById(R.id.join_game_button_green);
-//                mButtonDialogBlack = (Button) mView.findViewById(R.id.join_game_button_black);
-//                final Button mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
-//                final Button mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);
-//                final Button mButtonDialogYellow = (Button) mView.findViewById(R.id.join_game_button_yellow);
-//                final Button mButtonDialogGreen = (Button) mView.findViewById(R.id.join_game_button_green);
-//                final Button mButtonDialogBlack = (Button) mView.findViewById(R.id.join_game_button_black);
-
-//                mBuilder.setView(mView);
-//                final AlertDialog dialog = mBuilder.create();
-//                dialog.show();
-
-//                mButtonDialogRed.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        joinGame(mView.findViewById(R.id.join_game_button_red), mView, dialog);
-//                    }
-//                });
-//
-//                mButtonDialogBlue.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        joinGame(mView.findViewById(R.id.join_game_button_blue), mView, dialog);
-//                    }
-//                });
-//
-//                mButtonDialogYellow.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        joinGame(mView.findViewById(R.id.join_game_button_yellow), mView, dialog);
-//                    }
-//                });
-//
-//                mButtonDialogGreen.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        joinGame(mView.findViewById(R.id.join_game_button_green), mView, dialog);
-//                    }
-//                });
-//
-//                mButtonDialogBlack.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        joinGame(mView.findViewById(R.id.join_game_button_black), mView, dialog);
-//                    }
-//                });
             }
         });
 
@@ -437,23 +385,20 @@ public class GameStationActivity extends Activity implements IGameStationListene
             public void onClick(View view) {
                 if(selectedIndex == INVALID_INDEX)
                 {
-                    System.out.println("set to true");
                     mJoinGameButton.setEnabled(true);
                 }
                 else
                 {
-                    System.out.println("in else");
                     DerpHolder holder = getSelectedHolder();
                     holder.setSelected(false);
                 }
 
                 selectedIndex = getAdapterPosition();
                 if(listData.get(selectedIndex).hasPlayer(ClientModel.getInstance().getCurrentPlayerName())){
-                    System.out.println("has current player");
                     mReJoinGameButton.setEnabled(true);
+                    mJoinGameButton.setEnabled(false);
                 }
                 else{
-                    System.out.println("doesn't have player");
                     mReJoinGameButton.setEnabled(false);
                 }
                 setSelected(true);
