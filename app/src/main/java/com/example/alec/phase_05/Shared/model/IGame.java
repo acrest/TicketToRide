@@ -40,6 +40,4 @@ public interface IGame {
     boolean isGameStarted();
 
     void setGameStarted();
-
-    void setGameState(GameState gameState);
 }

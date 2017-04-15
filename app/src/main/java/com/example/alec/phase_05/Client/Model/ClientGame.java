@@ -168,6 +168,11 @@ public class ClientGame extends Game implements IClientGame {
         ClientModel.getInstance().notifyGameStateChange();
     }
 
+    // Needed for rejoining the game.
+    public void setCurrentPlayerTurnDirect(String currentPlayerTurn) {
+        this.currentPlayerTurn = currentPlayerTurn;
+    }
+
     //The player passed to this function is the player whose turn is ending.
     @Override
     public void endTurn(String playerName) {

@@ -16,6 +16,7 @@ import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.IServer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.PlayerCredentials;
+import com.example.alec.phase_05.Shared.model.PlayerTurnStatus;
 import com.example.alec.phase_05.Shared.model.Route;
 import com.example.alec.phase_05.Shared.model.TrainCard;
 import com.example.alec.phase_05.Shared.model.TrainType;
@@ -321,9 +322,14 @@ public class ServerFacade implements IServer {
      */
     @Override
     public TrainCard pickTrainCard(String playerName, int gameID, int index) {
-        IServerGame game = model.getGame(gameID);
-        model.getGame(gameID).setTrainStatus();
+        ServerGame game = model.getGame(gameID);
         if (game == null) return null;
+        if(game.getTurnStatus()== PlayerTurnStatus.START) {
+            game.setTrainStatus();
+        }
+        else{
+            game.setStartStatus();
+        }
         return game.pickTrainCard(playerName, index);
     }
 
@@ -331,7 +337,13 @@ public class ServerFacade implements IServer {
     public TrainCard drawTrainCard(String playerName, int gameId) {
         ServerGame game = model.getGame(gameId);
         if (game == null) return null;
-        game.setTrainStatus();
+        if(game.getTurnStatus()== PlayerTurnStatus.START) {
+            game.setTrainStatus();
+        }
+        else{
+            game.setStartStatus();
+        }
+
         return game.drawTrainCard(playerName);
     }
 
@@ -349,7 +361,12 @@ public class ServerFacade implements IServer {
     public DestinationCard[] drawDestinationCards(String playerName, int gameID) {
         ServerGame game = model.getGame(gameID);
         if (game == null) return null;
-        game.setDestinationStatus();
+        if(game.getTurnStatus()== PlayerTurnStatus.START) {
+            game.setDestinationStatus();
+        }
+        else{
+            game.setStartStatus();
+        }
         return game.drawDestinationCards(playerName);
     }
 
@@ -416,7 +433,7 @@ public class ServerFacade implements IServer {
         for (DestinationCard card : cards) {
             game.addDestinationCardToBottom(card);
         }
-        game.clearChoices(playerName);
+        game.transferChoices(playerName, cards);
         return true;
     }
 

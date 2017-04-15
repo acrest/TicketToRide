@@ -4,9 +4,9 @@ import com.example.alec.phase_05.Server.command.ServerChatSentCommand;
 import com.example.alec.phase_05.Server.command.ServerClaimRouteCommand;
 import com.example.alec.phase_05.Server.command.ServerClaimedRouteCommand;
 import com.example.alec.phase_05.Server.command.ServerDiscardTrainCardCommand;
-import com.example.alec.phase_05.Server.command.ServerDrawDestinationsCardCommand;
+import com.example.alec.phase_05.Server.command.ServerDrawDestinationCardsCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawTrainCardCommand;
-import com.example.alec.phase_05.Server.command.ServerDrawnDestinationsCardsCommand;
+import com.example.alec.phase_05.Server.command.ServerDrawnDestinationCardsCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawnTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerFinishGameCommand;
 import com.example.alec.phase_05.Server.command.ServerFinishTurnCommand;
@@ -123,8 +123,8 @@ public class CommandManager implements Serializable {
             return new ServerClaimedRouteCommand(command.getPlayerName(), ((ServerClaimRouteCommand) command).getRouteId(), game.getNumberOfTrainCards(), player.getTrainCardCount(), player.getTrainCount(), player.getPoints());
         } else if (command instanceof ServerDiscardTrainCardCommand) {
             return null; //not sure if we are going to use this command
-        } else if (command instanceof ServerDrawDestinationsCardCommand) {
-            return new ServerDrawnDestinationsCardsCommand(command.getPlayerName(), game.getNumberOfDestinationCards());
+        } else if (command instanceof ServerDrawDestinationCardsCommand) {
+            return new ServerDrawnDestinationCardsCommand(command.getPlayerName(), game.getNumberOfDestinationCards());
         } else if (command instanceof ServerDrawTrainCardCommand) {
             return new ServerDrawnTrainCardCommand(command.getPlayerName(), game.getNumberOfTrainCards());
         } else if (command instanceof ServerFinishTurnCommand) {

@@ -66,15 +66,9 @@ public final class ClientGameFactory {
 
                 // Set the current player name if it is this player's turn.
                 if (playerTurnIndex == i) {
-                    game.setCurrentPlayerTurn(players[i].getName());
+                    ((ClientGame) game).setCurrentPlayerTurnDirect(players[i].getName());
                 }
                 //game.getPlayer(i).setTrainCount(Facade.getInstance().getTrainCount());
-            }
-        }
-        for (Player player : players) {
-            if (player != null) {
-                game.setCurrentPlayerTurn(player.getName());
-                break;
             }
         }
 

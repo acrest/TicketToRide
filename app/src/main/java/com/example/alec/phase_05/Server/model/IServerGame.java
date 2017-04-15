@@ -41,7 +41,7 @@ public interface IServerGame extends IGame, Serializable {
 
     public int getPlayerTurnIndex();
 
-    void clearChoices(String playerName);
+    void transferChoices(String playerName, DestinationCard[] returnedCards);
 
     DestinationCard[] drawDestinationCards(String playerName);
 }

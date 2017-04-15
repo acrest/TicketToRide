@@ -148,34 +148,33 @@ public class ClientFacade {
     }
 
     public void setGameInfo(GameInfo gameInfo) {
-        if (!model.hasCurrentGame()) {
+//        if (!model.hasCurrentGame()) {
             model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
-            return;
-        }
-        if (model.getGameID() != gameInfo.getId() ||
-                !model.getGameName().equals(gameInfo.getName()) ||
-                model.getGameMaxPlayers() != gameInfo.getMaxPlayers()) {
-            throw new IllegalArgumentException("gameInfo must have the same name, id, and max players as the current game");
-        }
-        Player[] players = gameInfo.getPlayers();
-        for (int i = 0; i < players.length; ++i) {
-            Player player = players[i];
-            if (player != null) {
-                if (player.getName().equals(model.getCurrentPlayerName())) {
-                    model.setPlayer(i, player);
-                } else {
-                    model.setPlayer(i, new OtherPlayer(player));
-                }
-//                model.getPlayer(i).setTrainCount(Facade.getInstance().getTrainCount());
-            }
-        }
-        TrainCard[] visibleTrainCards = gameInfo.getVisibleTrainCards();
-        for (int i = 0; i < players.length; ++i) {
-            model.setVisibleCard(i, visibleTrainCards[i]);
-        }
-        model.setNumberOfDestinationCards(gameInfo.getDestinationCardsRemaining());
-        model.setNumberOfTrainCards(gameInfo.getTrainCardsRemaining());
-        model.setMap(gameInfo.getMap());
+//            return;
+//        }
+//        if (model.getGameID() != gameInfo.getId() ||
+//                !model.getGameName().equals(gameInfo.getName()) ||
+//                model.getGameMaxPlayers() != gameInfo.getMaxPlayers()) {
+//            throw new IllegalArgumentException("gameInfo must have the same name, id, and max players as the current game");
+//        }
+//        Player[] players = gameInfo.getPlayers();
+//        for (int i = 0; i < players.length; ++i) {
+//            Player player = players[i];
+//            if (player != null) {
+//                if (player.getName().equals(model.getCurrentPlayerName())) {
+//                    model.setPlayer(i, player);
+//                } else {
+//                    model.setPlayer(i, new OtherPlayer(player));
+//                }
+//            }
+//        }
+//        TrainCard[] visibleTrainCards = gameInfo.getVisibleTrainCards();
+//        for (int i = 0; i < players.length; ++i) {
+//            model.setVisibleCard(i, visibleTrainCards[i]);
+//        }
+//        model.setNumberOfDestinationCards(gameInfo.getDestinationCardsRemaining());
+//        model.setNumberOfTrainCards(gameInfo.getTrainCardsRemaining());
+//        model.setMap(gameInfo.getMap());
     }
 
     public void startGame() {
@@ -192,7 +191,7 @@ public class ClientFacade {
     }
 
     public void addDestinationCards(DestinationCard[] cards) {
-        // The ClientModel will handle showing the card choices once it has enough cards.
+        // The ClientModel will handle showing the card choices.
         model.setCardChoices(cards);
     }
 

@@ -8,8 +8,8 @@ import com.example.alec.phase_05.Shared.command.Result;
  * Created by Alec on 4/10/17.
  */
 
-public class ClientReJoinGameCommand extends RejoinGameCommand {
-    public ClientReJoinGameCommand(String playerName, int gameId) {
+public class ClientRejoinGameCommand extends RejoinGameCommand {
+    public ClientRejoinGameCommand(String playerName, int gameId) {
         super(playerName, gameId);
     }
 
