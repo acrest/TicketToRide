@@ -40,7 +40,7 @@ public class DrawDestinationState implements GameState {
     public void putBackDestinationCards(DestinationCard[] cards) throws StateWarning {
         System.out.println("Putting back destination card(s).");
         facade.putBackDestinationCards(cards);
-        state.setTurnState(new ReturnDestinationState(state, 1));
+        state.setTurnState(new EndTurnState(state));
     }
 
     @Override

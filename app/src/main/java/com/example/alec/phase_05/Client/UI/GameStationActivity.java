@@ -205,8 +205,9 @@ public class GameStationActivity extends Activity implements IGameStationListene
             @Override
             public void onClick(View view) {
                 selectedGameID = mAdapter.getSelectedGameID();
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(GameStationActivity.this);
-                final View mView = getLayoutInflater().inflate(R.layout.dialog_join_game, null);
+                presenter.reJoinGame(selectedGameID);
+//                AlertDialog.Builder mBuilder = new AlertDialog.Builder(GameStationActivity.this);
+//                final View mView = getLayoutInflater().inflate(R.layout.dialog_join_game, null);
 //
 //                mButtonDialogRed = (Button) mView.findViewById(R.id.join_game_button_red);
 //                mButtonDialogBlue = (Button) mView.findViewById(R.id.join_game_button_blue);

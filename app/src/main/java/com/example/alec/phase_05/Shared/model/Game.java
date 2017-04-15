@@ -16,7 +16,6 @@ public abstract class Game implements IGame, Serializable {
     private IBank bank;
     private GameMap gameMap;
     private boolean gameStarted;
-    private GameState state;
 
     public Game(int id, String name, int maxPlayers, IBank bank, GameMap gameMap) {
         this.id = id;
@@ -160,10 +159,6 @@ public abstract class Game implements IGame, Serializable {
     public void setGameStarted() {
         gameStarted = true;
     }
-
-
-    @Override
-    public void setGameState(GameState gameState) { state = gameState;}
 
     protected IBank getBank() {
         return bank;

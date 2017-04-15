@@ -164,9 +164,15 @@ public class ServerGame extends Game implements IServerGame {
     }
 
     @Override
-    public void clearChoices(String playerName) {
+    public void transferChoices(String playerName, DestinationCard[] returnedCards) {
         Player player = (Player) getPlayerByName(playerName);
         if (player != null) {
+            for (DestinationCard returned : returnedCards) {
+                player.removeCardChoice(returned);
+            }
+            for (DestinationCard choice : player.getCardChoices()) {
+                player.addDestinationCard(choice);
+            }
             player.clearCardChoices();
         }
     }
