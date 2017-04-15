@@ -18,12 +18,12 @@ public class ServerDrawInitialTrainCardCommand extends DrawInitialTrainCommand i
     @Override
     public Result execute() {
         Result result = new ServerResult();
-        result.setResultObject(ServerFacade.getInstance().drawInitTrainCard(getPlayerName(), getGameId()));
+        result.setResultObject(ServerFacade.getInstance().drawInitialTrainCard(getPlayerName(), getGameId()));
         return result;
     }
 
     @Override
     public void reExecute() {
-        ServerFacade.getInstance().drawInitTrainCard(getPlayerName(), getGameId());
+        ServerFacade.getInstance().drawInitialTrainCard(getPlayerName(), getGameId());
     }
 }

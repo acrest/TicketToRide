@@ -5,6 +5,7 @@ import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientDiscardTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawDestinationCardsCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawInitialDestinationCardsCommand;
+import com.example.alec.phase_05.Client.command.ClientDrawInitialTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientFinishGameCommand;
 import com.example.alec.phase_05.Client.command.ClientFinishTurnCommand;
@@ -292,7 +293,7 @@ public class ServerProxy implements IServer {
     public TrainCard drawInitialTrainCard(String playerName, int gameId) {
         Result result;
         do {
-            result = executeCommand(new ClientDrawInitialDestinationCardsCommand(playerName, gameId));
+            result = executeCommand(new ClientDrawInitialTrainCardCommand(playerName, gameId));
         } while(result == null);
         return (TrainCard) result.toClass(TrainCard.class);
     }

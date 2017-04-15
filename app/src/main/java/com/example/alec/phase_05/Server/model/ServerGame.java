@@ -60,6 +60,7 @@ public class ServerGame extends Game implements IServerGame {
 
     @Override
     public TrainCard drawTrainCard(String playerName) {
+        System.out.println("drawing train card");
         Player player = (Player) getPlayerByName(playerName);
         if(player == null) return null;
         TrainCard card = ((IServerBank) getBank()).drawTrainCard();
@@ -181,6 +182,7 @@ public class ServerGame extends Game implements IServerGame {
     public DestinationCard[] drawDestinationCards(String playerName) {
         Player player = (Player) getPlayerByName(playerName);
         ArrayList<DestinationCard> cards = new ArrayList<>();
+        System.out.println("drawing destination cards");
         for (int i = 0; i < 3; i++) {
             DestinationCard card = ((IServerBank) getBank()).drawDestinationCard();
             if (card != null) {
