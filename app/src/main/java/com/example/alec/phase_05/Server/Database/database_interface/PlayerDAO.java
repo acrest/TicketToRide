@@ -20,5 +20,7 @@ public interface PlayerDAO {
     // Deletes all users.
     void clear();
 
+    void setUp();
+
 //    void loadUsers();  //Load Users from database to model.
 }

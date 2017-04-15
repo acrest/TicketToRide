@@ -144,4 +144,8 @@ public class FileGameDAO implements GameDAO {
             }
         }
     }
+
+    public void setUp(){
+
+    }
 }

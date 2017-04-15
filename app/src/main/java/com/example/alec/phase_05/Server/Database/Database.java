@@ -3,10 +3,13 @@ package com.example.alec.phase_05.Server.Database;
 import com.example.alec.phase_05.Server.Database.database_interface.DatabaseFactory;
 import com.example.alec.phase_05.Server.Database.database_interface.GameDAO;
 import com.example.alec.phase_05.Server.Database.database_interface.PlayerDAO;
+import com.example.alec.phase_05.Server.Database.sqlite.SQLitePlayerDAO;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,9 +38,6 @@ public class Database {
             DatabaseFactory factory = loadFactory(registry.get(persistence));
             if (factory != null) {
                 init(factory);
-                if(persistence.equals("sqlite")){
-                    initJDCB();
-                }
                 return true;
             } else {
                 return false;
@@ -50,6 +50,8 @@ public class Database {
     private static void init(DatabaseFactory factory) {
         playerDAO = factory.createPlayerDAO();
         gameDAO = factory.createGameDAO();
+        playerDAO.setUp();
+        gameDAO.setUp();
     }
 
     private static Map<String, String> loadRegistry() {
@@ -76,13 +78,5 @@ public class Database {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private static void initJDCB(){
-        try {
-            Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

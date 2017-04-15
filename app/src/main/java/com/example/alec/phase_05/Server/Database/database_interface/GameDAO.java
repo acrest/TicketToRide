@@ -32,4 +32,6 @@ public interface GameDAO {
     void clearCommands(int gameId);
 
     void clearAll();
+
+    void setUp();
 }
