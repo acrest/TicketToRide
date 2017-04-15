@@ -35,6 +35,9 @@ public class Database {
             DatabaseFactory factory = loadFactory(registry.get(persistence));
             if (factory != null) {
                 init(factory);
+                if(persistence.equals("sqlite")){
+                    initJDCB();
+                }
                 return true;
             } else {
                 return false;
@@ -73,5 +76,13 @@ public class Database {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static void initJDCB(){
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

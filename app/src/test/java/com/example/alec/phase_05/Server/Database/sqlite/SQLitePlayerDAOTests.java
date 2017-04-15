@@ -38,15 +38,15 @@ public class SQLitePlayerDAOTests {
 
     @Test
     public void testAddUser() {
-        Database.getPlayerDAO().addUser("a", "test1");
+        Database.getPlayerDAO().addUser("ThisWorks", "Sweet!");
 
         assertTrue(new File("players/a").exists());
     }
 
     @Test
     public void testRemoveUser() {
-        Database.getPlayerDAO().addUser("b", "test2");
-        Database.getPlayerDAO().removeUser("b");
+        Database.getPlayerDAO().addUser("Hello", "test2");
+        Database.getPlayerDAO().removeUser("Hello");
 
         assertFalse(new File("players/b").exists());
     }
