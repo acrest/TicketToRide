@@ -25,7 +25,7 @@ import static junit.framework.Assert.fail;
 public class FileGameDAOTests {
     @BeforeClass
     public static void setUp() {
-        Database.init("file");
+        Database.init("file", true);
     }
 
     @AfterClass

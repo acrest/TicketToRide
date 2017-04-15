@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Server.model;
 
 import com.example.alec.phase_05.Client.Model.ClientModel;
 import com.example.alec.phase_05.Client.command.ClientGetGameListCommand;
+import com.example.alec.phase_05.Server.Database.Database;
 import com.example.alec.phase_05.Server.command.ServerResult;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.GetGameListCommand;
@@ -32,10 +33,8 @@ import java.util.List;
  */
 public class ServerFacade implements IServer {
     private static ServerFacade instance;
-    private int commandCounter;
     private int fullCounter = 10;
     private String currentPlayerName;
-    private ArrayList<GameCommand> commandList;
 
     /**
      * Returns the singleton instance of the ServerFacade and creates one if it has not been created
@@ -52,9 +51,7 @@ public class ServerFacade implements IServer {
     private ServerModel model;
 
     public ServerFacade() {
-        commandList = new ArrayList<GameCommand>();
         model = ServerModel.getInstance();
-        commandCounter = 0;
     }
 
     /**
@@ -78,15 +75,19 @@ public class ServerFacade implements IServer {
                 game.addCommand(gameCommand);
             }
             r = gameCommand.execute();
-            commandCounter++;
-            currentPlayerName = playerName;
-            commandList.add(gameCommand);
-            // TODO: Save commandList to database file
-            if (commandCounter == fullCounter) {
-                // TODO: upadate blob, reset command List
-                commandList.clear();
-                commandCounter = 0;
+
+            // Check if adding one will go over the limit.
+            if (Database.getGameDAO().getNumberOfCommands(gameCommand.getGameId()) + 1 == fullCounter) {
+                // Delete all commands and save a new game blob.
+                Database.getGameDAO().clearCommands(gameCommand.getGameId());
+                Database.getGameDAO().clearGame(gameCommand.getGameId());
+                Database.getGameDAO().saveGame(game);
+            } else {
+                // Add one more command to the database.
+                Database.getGameDAO().addCommand(gameCommand.getGameId(), gameCommand);
             }
+
+            currentPlayerName = playerName;
         } else {
             if(command instanceof GetGameListCommand){
 

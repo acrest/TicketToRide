@@ -9,3 +9,5 @@
 
 # and the build.gradle file
 !/build.gradle
+
+!/libs/

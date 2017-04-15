@@ -24,7 +24,7 @@ import static junit.framework.Assert.fail;
 public class FilePlayerDAOTests {
     @BeforeClass
     public static void setUp() {
-        Database.init("file");
+        Database.init("file", true);
     }
 
     @AfterClass

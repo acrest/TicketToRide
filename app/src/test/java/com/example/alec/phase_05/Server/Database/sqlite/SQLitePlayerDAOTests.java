@@ -23,7 +23,7 @@ import static junit.framework.Assert.fail;
 public class SQLitePlayerDAOTests {
     @BeforeClass
     public static void setUp() {
-        Database.init("sqlite");
+        Database.init("sqlite", true);
     }
 
     @AfterClass
