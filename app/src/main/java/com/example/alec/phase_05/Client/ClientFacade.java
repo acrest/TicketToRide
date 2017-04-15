@@ -191,7 +191,7 @@ public class ClientFacade {
     }
 
     public void addDestinationCards(DestinationCard[] cards) {
-        // The ClientModel will handle showing the card choices once it has enough cards.
+        // The ClientModel will handle showing the card choices.
         model.setCardChoices(cards);
     }
 

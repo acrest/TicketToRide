@@ -24,7 +24,7 @@ import static junit.framework.Assert.fail;
 public class SQLiteGameDAOTests {
     @BeforeClass
     public static void setUp() {
-        Database.init("file");
+        Database.init("sqlite");
     }
 
     @AfterClass
@@ -37,12 +37,7 @@ public class SQLiteGameDAOTests {
         ServerGame game = new ServerGame(1, "hello", 3, new CommandManager(), null, null, null);
         Database.getGameDAO().saveGame(game);
 
-        try {
-            File gameFile = new File("game1/game");
-            assertTrue(gameFile.exists());
-        } catch(Exception e) {
-            fail();
-        }
+        Database.getGameDAO().hasGame(1);
     }
 
     @Test
