@@ -331,12 +331,46 @@ public class Facade {
 //        }
     }
 
+    public void drawInitialDestinationCards() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (model.hasCurrentGame()) {
+                    clientFacade.addDestinationCards(proxy.drawInitialDestinationCards(model.getCurrentPlayerName(), model.getGameID()));
+                }
+            }
+        });
+        thread.start();
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+    }
+
     public void drawTrainCard() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (model.hasCurrentGame()) {
                     clientFacade.addTrainCard(proxy.drawTrainCard(model.getCurrentPlayerName(), model.getGameID()));
+                }
+            }
+        });
+        thread.start();
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    public void drawInitialTrainCard() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (model.hasCurrentGame()) {
+                    clientFacade.addTrainCard(proxy.drawInitialTrainCard(model.getCurrentPlayerName(), model.getGameID()));
                 }
             }
         });

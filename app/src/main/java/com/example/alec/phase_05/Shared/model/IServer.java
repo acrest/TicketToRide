@@ -36,11 +36,15 @@ public interface IServer {
 
     TrainCard drawTrainCard(String playerName, int gameId);
 
+    TrainCard drawInitialTrainCard(String playerName, int gameId);
+
     boolean discardTrainCard(String playerName, int gameId, TrainCard card);
 
     TrainCard pickTrainCard(String playerName, int gameId, int index);
 
     DestinationCard[] drawDestinationCards(String playerName, int gameId);
+
+    DestinationCard[] drawInitialDestinationCards(String playerName, int gameId);
 
     boolean returnDestinationCards(String playerName, int gameId, DestinationCard[] card);
 

@@ -347,6 +347,13 @@ public class ServerFacade implements IServer {
         return game.drawTrainCard(playerName);
     }
 
+    @Override
+    public TrainCard drawInitialTrainCard(String playerName, int gameId) {
+        ServerGame game = model.getGame(gameId);
+        if (game == null) return null;
+        return game.drawTrainCard(playerName);
+    }
+
     /**
      * draws a destination card for the current player
      *
@@ -367,6 +374,13 @@ public class ServerFacade implements IServer {
         else{
             game.setStartStatus();
         }
+        return game.drawDestinationCards(playerName);
+    }
+
+    @Override
+    public DestinationCard[] drawInitialDestinationCards(String playerName, int gameID) {
+        ServerGame game = model.getGame(gameID);
+        if (game == null) return null;
         return game.drawDestinationCards(playerName);
     }
 

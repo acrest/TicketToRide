@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Client.command.ClientClaimRouteCommand;
 import com.example.alec.phase_05.Client.command.ClientCreateGameCommand;
 import com.example.alec.phase_05.Client.command.ClientDiscardTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawDestinationCardsCommand;
+import com.example.alec.phase_05.Client.command.ClientDrawInitialDestinationCardsCommand;
 import com.example.alec.phase_05.Client.command.ClientDrawTrainCardCommand;
 import com.example.alec.phase_05.Client.command.ClientFinishGameCommand;
 import com.example.alec.phase_05.Client.command.ClientFinishTurnCommand;
@@ -288,6 +289,15 @@ public class ServerProxy implements IServer {
     }
 
     @Override
+    public TrainCard drawInitialTrainCard(String playerName, int gameId) {
+        Result result;
+        do {
+            result = executeCommand(new ClientDrawInitialDestinationCardsCommand(playerName, gameId));
+        } while(result == null);
+        return (TrainCard) result.toClass(TrainCard.class);
+    }
+
+    @Override
     public TrainCard pickTrainCard(String playerName, int gameId, int index) {
         System.out.println("PCIT TRAIN CARD COMMAND SERVER PROXY " + playerName + "  " + gameId + " " + index);
         ClientPickTrainCardCommand cmd = new ClientPickTrainCardCommand(playerName, gameId, index);
@@ -305,6 +315,15 @@ public class ServerProxy implements IServer {
         Result result;
         do {
             result = executeCommand(new ClientDrawDestinationCardsCommand(playerName, gameId));
+        } while(result == null);
+        return (DestinationCard[]) result.toClass(DestinationCard[].class);
+    }
+
+    @Override
+    public DestinationCard[] drawInitialDestinationCards(String playerName, int gameId) {
+        Result result;
+        do {
+            result = executeCommand(new ClientDrawInitialDestinationCardsCommand(playerName, gameId));
         } while(result == null);
         return (DestinationCard[]) result.toClass(DestinationCard[].class);
     }
