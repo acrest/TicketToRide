@@ -15,6 +15,12 @@ import java.util.ArrayList;
  * Created by Andrew on 4/9/2017.
  */
 public class FilePlayerDAO implements PlayerDAO {
+
+    @Override
+    public void setUp(){
+
+    }
+
     public FilePlayerDAO() {
 
     }
