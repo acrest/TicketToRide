@@ -5,6 +5,8 @@ import com.example.alec.phase_05.Server.command.ServerClaimRouteCommand;
 import com.example.alec.phase_05.Server.command.ServerClaimedRouteCommand;
 import com.example.alec.phase_05.Server.command.ServerDiscardTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawDestinationCardsCommand;
+import com.example.alec.phase_05.Server.command.ServerDrawInitialDestinationCardsCommand;
+import com.example.alec.phase_05.Server.command.ServerDrawInitialTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawTrainCardCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawnDestinationCardsCommand;
 import com.example.alec.phase_05.Server.command.ServerDrawnTrainCardCommand;
@@ -131,6 +133,10 @@ public class CommandManager implements Serializable {
         } else if (command instanceof ServerDrawDestinationCardsCommand) {
             return new ServerDrawnDestinationCardsCommand(command.getPlayerName(), game.getNumberOfDestinationCards());
         } else if (command instanceof ServerDrawTrainCardCommand) {
+            return new ServerDrawnTrainCardCommand(command.getPlayerName(), game.getNumberOfTrainCards());
+        } else if (command instanceof ServerDrawInitialDestinationCardsCommand) {
+            return new ServerDrawnDestinationCardsCommand(command.getPlayerName(), game.getNumberOfDestinationCards());
+        } else if (command instanceof ServerDrawInitialTrainCardCommand) {
             return new ServerDrawnTrainCardCommand(command.getPlayerName(), game.getNumberOfTrainCards());
         } else if (command instanceof ServerFinishTurnCommand) {
             return new ServerFinishedTurnCommand(command.getPlayerName());

@@ -16,6 +16,20 @@ import java.util.ArrayList;
  * Created by Andrew on 4/9/2017.
  */
 public class SQLitePlayerDAO implements PlayerDAO {
+    @Override
+    public void setUp(){
+        Connection c = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
+            System.out.println("Opened database successfully");
+            createTableUser(c);
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public SQLitePlayerDAO() {
     }
 

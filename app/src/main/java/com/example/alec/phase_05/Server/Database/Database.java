@@ -10,10 +10,13 @@ import com.example.alec.phase_05.Server.model.ServerModel;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.model.PlayerCredentials;
 import com.example.alec.phase_05.Shared.model.User;
+import com.example.alec.phase_05.Server.Database.sqlite.SQLitePlayerDAO;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,6 +61,8 @@ public class Database {
     private static void init(DatabaseFactory factory, boolean clearDatabase) {
         playerDAO = factory.createPlayerDAO();
         gameDAO = factory.createGameDAO();
+        playerDAO.setUp();
+        gameDAO.setUp();
         if (clearDatabase) {
             playerDAO.clear();
             gameDAO.clearAll();
@@ -119,13 +124,5 @@ public class Database {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private static void initJDCB(){
-        try {
-            Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }
