@@ -16,7 +16,7 @@ import com.example.alec.phase_05.Client.command.ClientGetNextChangeCommand;
 import com.example.alec.phase_05.Client.command.ClientJoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientLoginCommand;
 import com.example.alec.phase_05.Client.command.ClientPickTrainCardCommand;
-import com.example.alec.phase_05.Client.command.ClientReJoinGameCommand;
+import com.example.alec.phase_05.Client.command.ClientRejoinGameCommand;
 import com.example.alec.phase_05.Client.command.ClientRegisterCommand;
 import com.example.alec.phase_05.Client.command.ClientReturnDestinationCardsCommand;
 import com.example.alec.phase_05.Client.command.ClientSendChatCommand;
@@ -168,7 +168,7 @@ public class ServerProxy implements IServer {
     public GameInfo reJoinGame(String playerName, int gameID) {
         Result result;
         do {
-            result = executeCommand(new ClientReJoinGameCommand(playerName, gameID));
+            result = executeCommand(new ClientRejoinGameCommand(playerName, gameID));
         } while (result == null);
         return (GameInfo) result.toClass(GameInfo.class);
     }
