@@ -78,6 +78,14 @@ public class ServerModel {
         return true;
     }
 
+    public boolean addGame(ServerGame game) {
+        if (gamesMap.containsKey(game.getID())) {
+            return false;
+        }
+        gamesMap.put(game.getID(), game);
+        return true;
+    }
+
     /**
      * Checks to see if the game already exists by ID, if
      * it doesn't exist, it adds it to the gamesMap

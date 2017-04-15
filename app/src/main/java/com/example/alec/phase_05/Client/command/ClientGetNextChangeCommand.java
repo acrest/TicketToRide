@@ -16,4 +16,9 @@ public class ClientGetNextChangeCommand extends GetNextChangeCommand {
     public Result execute() {
         return null;
     }
+
+    @Override
+    public void reExecute() {
+
+    }
 }

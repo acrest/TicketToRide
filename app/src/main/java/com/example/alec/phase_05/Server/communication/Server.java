@@ -58,7 +58,8 @@ public class Server {
 //            ServerModel.getInstance().setDatabase(FilePlayerDAO.getInstance());
 //            FilePlayerDAO.getInstance().loadUsers();
 //        }
-        if (!Database.init(args[1])) {
+        boolean clearDatabase = args.length >= 3 && args[2].equals("clear");
+        if (!Database.init(args[1], clearDatabase)) {
             System.out.println("Invalid persistence");
             System.exit(1);
         }

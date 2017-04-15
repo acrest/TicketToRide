@@ -10,8 +10,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.File;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -24,7 +22,7 @@ import static junit.framework.Assert.fail;
 public class SQLiteGameDAOTests {
     @BeforeClass
     public static void setUp() {
-        Database.init("sqlite");
+        Database.init("sqlite", true);
     }
 
     @AfterClass
@@ -37,7 +35,7 @@ public class SQLiteGameDAOTests {
         ServerGame game = new ServerGame(1, "hello", 3, new CommandManager(), null, null, null);
         Database.getGameDAO().saveGame(game);
 
-        Database.getGameDAO().hasGame(1);
+        assertTrue(Database.getGameDAO().hasGame(1));
     }
 
     @Test

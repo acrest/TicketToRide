@@ -20,4 +20,9 @@ public class ServerGetNextChangeCommand extends GetNextChangeCommand implements 
         result.setResultObject(ServerFacade.getInstance().getNextCommand(getPlayerName(), getGameId()));
         return result;
     }
+
+    @Override
+    public void reExecute() {
+        ServerFacade.getInstance().getNextCommand(getPlayerName(), getGameId());
+    }
 }

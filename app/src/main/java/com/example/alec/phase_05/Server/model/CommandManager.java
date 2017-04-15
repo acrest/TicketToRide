@@ -63,8 +63,13 @@ public class CommandManager implements Serializable {
             if(commandIndex == commands.size()) {
                 command = null;
             } else {
-                command = createCorrespondingCommand(commands.get(commandIndex));
-                setCommandIndex(playerName, commandIndex + 1);
+                // Searches for a corresponding command that is not null
+                command = null;
+                do {
+                    command = createCorrespondingCommand(commands.get(commandIndex));
+                    commandIndex++;
+                } while (command == null && commandIndex < commands.size());
+                setCommandIndex(playerName, commandIndex);
             }
         }
         return command;
