@@ -78,6 +78,7 @@ public class ClientModel extends Observable {
     private Map<String, Integer> longestPath;
     private Map<String, Integer> bonusPoints;
     private boolean firstCardDraw;
+    private boolean firstCardPick;
     private boolean isLastTurns;
     private int expectedCardsInHand;
     TrainType RouteAnyCardType;
@@ -89,6 +90,7 @@ public class ClientModel extends Observable {
         chats = new ArrayList<>();
         isHost = false;
         firstCardDraw = true;
+        firstCardPick = true;
         isLastTurns = false;
         bonusPoints = new HashMap<>();
         expectedCardsInHand = 3;
@@ -530,6 +532,24 @@ public class ClientModel extends Observable {
 //        if(p.getCardChoices().size() == expectedCardsInHand) {
             displayHand();
 //        }
+    }
+
+    // This is needed by the ClientFacade reJoinGame() method.
+    public void setFirstCardDraw(boolean first) {
+        firstCardDraw = first;
+    }
+
+    public boolean isFirstCardDraw() {
+        return firstCardDraw;
+    }
+
+    // Needed by presenters.
+    public void setFirstCardPick(boolean first) {
+        firstCardPick = first;
+    }
+
+    public boolean isFirstCardPick() {
+        return firstCardPick;
     }
 
     // Tells the model how many cards to get before showing the hand.

@@ -45,6 +45,8 @@ public class ClientFacade {
             System.out.println("in clientfacade");
             model.setCreateGameSuccess(true);
             model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
+
+            // Give this client permission to start the game from the lobby.
             model.setHost(true);
             Poller.getInstance().setPlayerWatingPolling();
         } else {
@@ -57,6 +59,10 @@ public class ClientFacade {
         if (gameInfo != null) {
             model.setJoinGameSuccess(true);
             model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
+
+            // Don't allow this client to start the game from the lobby.
+            // Prevents multiple clients from attempting to start a game
+            // when the game reaches its max players.
             model.setHost(false);
             Poller.getInstance().setPlayerWatingPolling();
         } else {
@@ -67,8 +73,15 @@ public class ClientFacade {
     public void reJoinGame(GameInfo gameInfo) {
         if (gameInfo != null) {
             System.out.println("in reJoinGame in ClientFacade");
+            // Tells presenters to move to TicketToRideActivity.
             model.setReJoinGameSuccess(true);
+            // Make current game in sync with GameInfo the server sent.
             model.setCurrentGame(ClientGameFactory.createGame(gameInfo));
+
+            // Tell the ClientModel if we have finished drawing our initial destination cards yet.
+            // Without this the ClientModel will always assume we are drawing initial cards when we rejoin.
+            model.setFirstCardDraw(!gameInfo.getHaveDrawnInitialDestinationCards().contains(model.getCurrentPlayerName()));
+            model.setFirstCardPick(!gameInfo.getHaveDrawnInitialDestinationCards().contains(model.getCurrentPlayerName()));
 
             // Tell GUI to display cards if the current player has card choices.
             // This would happen if they were in the middle of choosing cards when they left.
@@ -80,13 +93,23 @@ public class ClientFacade {
                 // which will hopefully make sure that the presenter and GUI are ready before they are
                 // told to show the choices.
                 // If they are not ready, the dialog will not show.
+                if (!model.isFirstCardDraw()) {
+                    // Sleep to wait for presenter to be ready.
+                    // Only need to do this when it is not the first draw,
+                    // since the first draw does it automatically.
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 model.setCardChoices(cardChoices.toArray(new DestinationCard[cardChoices.size()]));
             }
 
             model.setHost(false);
             Poller.getInstance().setModelPolling();
         } else {
-            model.setJoinGameSuccess(false);
+            model.setReJoinGameSuccess(false);
         }
     }
 

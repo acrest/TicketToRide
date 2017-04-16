@@ -184,6 +184,9 @@ public class ServerFacade implements IServer {
         player.setColor(hostColor);
         int position = game.addPlayerAtNextPosition(player);
 
+        // Add new game to database.
+        Database.getGameDAO().saveGame(game);
+
         if (position == -1)
             return null;
         return GameStateFactory.gameToGameState(game);
@@ -443,12 +446,13 @@ public class ServerFacade implements IServer {
      */
     @Override
     public boolean returnDestinationCards(String playerName, int gameId, DestinationCard[] cards) {
-        IServerGame game = model.getGame(gameId);
+        ServerGame game = model.getGame(gameId);
         if (game == null) return false;
         for (DestinationCard card : cards) {
             game.addDestinationCardToBottom(card);
         }
         game.transferChoices(playerName, cards);
+        game.setHasDrawnInitialDestinationCards(playerName);
         return true;
     }
 

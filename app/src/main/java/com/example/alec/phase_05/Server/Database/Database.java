@@ -46,9 +46,6 @@ public class Database {
             DatabaseFactory factory = loadFactory(registry.get(persistence));
             if (factory != null) {
                 init(factory, clearDatabase);
-                if(persistence.equals("sqlite")){
-                    initJDCB();
-                }
                 return true;
             } else {
                 return false;

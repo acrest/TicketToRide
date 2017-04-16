@@ -11,6 +11,7 @@ import com.example.alec.phase_05.Shared.model.TrainCard;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by samuel on 2/25/17.
@@ -44,4 +45,6 @@ public interface IServerGame extends IGame, Serializable {
     void transferChoices(String playerName, DestinationCard[] returnedCards);
 
     DestinationCard[] drawDestinationCards(String playerName);
+
+    Set<String> getHaveDrawnInitialDestinationCards();
 }

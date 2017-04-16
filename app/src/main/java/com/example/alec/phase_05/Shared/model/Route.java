@@ -1,10 +1,12 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.io.Serializable;
+
 /**
  * Created by samuel on 2/23/17.
  */
 
-public class Route {
+public class Route implements Serializable {
 
     private City city1, city2;
     private int length;

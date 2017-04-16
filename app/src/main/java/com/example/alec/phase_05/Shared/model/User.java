@@ -1,10 +1,12 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Andrew on 4/8/2017.
  */
 
-public class User {
+public class User implements Serializable {
     private String username;
     private String password;
 

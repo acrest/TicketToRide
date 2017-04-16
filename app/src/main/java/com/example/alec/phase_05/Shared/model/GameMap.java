@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,7 +19,7 @@ import static com.example.alec.phase_05.R.id.start;
  * Created by samuel on 2/23/17.
  */
 
-public class GameMap {
+public class GameMap implements Serializable {
     private Map<String, City> cities;
     private Map<Integer, Route> routes;
     private Map<String, ArrayList<Route>> cityToRoutes;

@@ -1,10 +1,12 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Andrew on 2/20/2017.
  */
 
-public class DestinationCard {
+public class DestinationCard implements Serializable {
 
     private City city1;
     private City city2;

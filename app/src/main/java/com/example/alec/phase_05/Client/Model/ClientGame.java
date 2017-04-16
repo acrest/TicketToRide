@@ -176,7 +176,7 @@ public class ClientGame extends Game implements IClientGame {
     //The player passed to this function is the player whose turn is ending.
     @Override
     public void endTurn(String playerName) {
-        if(!playerName.equals(currentPlayerTurn)) throw new IllegalStateException("player \"" + playerName + "\" tried to end turn when it was \"" + currentPlayerTurn + "'s\" turn");
+//        if(!playerName.equals(currentPlayerTurn)) throw new IllegalStateException("player \"" + playerName + "\" tried to end turn when it was \"" + currentPlayerTurn + "'s\" turn");
         if (currentPlayerTurn.equals(ClientModel.getInstance().getCurrentPlayerName()) && lastPlayerTurn == null) {
             if(getPlayerByName(currentPlayerTurn).getTrainCount() <= 2) {
                 lastPlayerTurn = currentPlayerTurn;

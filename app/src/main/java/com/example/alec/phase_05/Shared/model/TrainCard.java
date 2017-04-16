@@ -1,10 +1,12 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Andrew on 2/20/2017.
  */
 
-public class TrainCard {
+public class TrainCard implements Serializable {
     private TrainType type;
     private int ID;
 

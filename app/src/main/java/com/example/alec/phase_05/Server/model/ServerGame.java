@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server.model;
 
+import com.example.alec.phase_05.Server.command.ServerDiscardTrainCardCommand;
 import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.DestinationCard;
@@ -16,9 +17,11 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static com.example.alec.phase_05.Shared.model.PlayerTurnStatus.DESTINATION;
 import static com.example.alec.phase_05.Shared.model.PlayerTurnStatus.START;
@@ -33,6 +36,7 @@ public class ServerGame extends Game implements IServerGame {
     private int playerTurnIndex;
     private CommandManager commandManager;
     private IChatManager chatManager;
+    private Set<String> haveDrawnInitialDestinationCards;
 
     public ServerGame(int id, String name, int maxPlayers, CommandManager commandManager, IChatManager chatManager, IServerBank bank, GameMap gameMap) {
         super(id, name, maxPlayers, bank, gameMap);
@@ -40,6 +44,7 @@ public class ServerGame extends Game implements IServerGame {
         this.chatManager = chatManager;
         turnStatus = START;
         playerTurnIndex = 0;
+        haveDrawnInitialDestinationCards = new HashSet<>();
         commandManager.setGame(this);
     }
 
@@ -191,5 +196,18 @@ public class ServerGame extends Game implements IServerGame {
             }
         }
         return cards.toArray(new DestinationCard[cards.size()]);
+    }
+
+    @Override
+    public Set<String> getHaveDrawnInitialDestinationCards() {
+        return haveDrawnInitialDestinationCards;
+    }
+
+    public boolean hasDrawnInitialDestinationCards(String playerName) {
+        return haveDrawnInitialDestinationCards.contains(playerName);
+    }
+
+    public void setHasDrawnInitialDestinationCards(String playerName) {
+        haveDrawnInitialDestinationCards.add(playerName);
     }
 }

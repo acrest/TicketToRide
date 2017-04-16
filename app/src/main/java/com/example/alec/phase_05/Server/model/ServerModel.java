@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Server.model;
 
+import com.example.alec.phase_05.Server.Database.Database;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.Game;
 import com.example.alec.phase_05.Shared.model.GameComponentFactory;
@@ -74,7 +75,7 @@ public class ServerModel {
         if(playerMap.containsKey(playerName))
             return false;
         playerMap.put(playerName,newPlayer);
-//        database.addUser(newPlayer.getUsername(), newPlayer.getPassword());
+        Database.getPlayerDAO().addUser(newPlayer.getUsername(), newPlayer.getPassword());
         return true;
     }
 

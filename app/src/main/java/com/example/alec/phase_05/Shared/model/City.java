@@ -2,11 +2,13 @@ package com.example.alec.phase_05.Shared.model;
 
 import android.graphics.Point;
 
+import java.io.Serializable;
+
 /**
  * Created by Alec on 2/21/17.
  */
 
-public class City {
+public class City implements Serializable {
 
     private String name;
     private MyPoint point;
