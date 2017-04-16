@@ -1,10 +1,12 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Alec on 2/24/17.
  */
 
-public class Chat {
+public class Chat implements Serializable {
     private Integer ID;
     private String name;
     private Integer gameID;

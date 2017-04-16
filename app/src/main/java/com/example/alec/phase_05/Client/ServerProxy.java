@@ -76,15 +76,7 @@ public class ServerProxy implements IServer {
 
     @Override
     public Result executeCommand(ICommand command) {
-        Result result;
-        while ((result = myCC.executeCommandOnServer(command)) == null) {
-            try {
-                Thread.sleep(1000);
-            } catch(InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
+        return myCC.executeCommandOnServer(command);
     }
 
     @Override

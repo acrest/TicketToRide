@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Shared.model;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by samuel on 3/2/17.
@@ -17,9 +18,10 @@ public class GameInfo {
     private GameMap map;
     private int playerTurnIndex;
     private PlayerTurnStatus playerStatus;
+    private Set<String> haveDrawnInitialDestinationCards;
 
 
-    public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, int trainCardsRemaining, int destinationCardsRemaining, GameMap map, int gamePlayerIndex, PlayerTurnStatus playerStatus) {
+    public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, int trainCardsRemaining, int destinationCardsRemaining, GameMap map, int gamePlayerIndex, PlayerTurnStatus playerStatus, Set<String> haveDrawnInitialDestinationCards) {
         this.id = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
@@ -30,6 +32,7 @@ public class GameInfo {
         this.map = map;
         playerTurnIndex = gamePlayerIndex;
         this.playerStatus = playerStatus;
+        this.haveDrawnInitialDestinationCards = haveDrawnInitialDestinationCards;
     }
 
     public int getId() {
@@ -81,4 +84,7 @@ public class GameInfo {
         return playerStatus;
     }
 
+    public Set<String> getHaveDrawnInitialDestinationCards() {
+        return haveDrawnInitialDestinationCards;
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by samuel on 3/16/17.
  */
 
-public class TrainCardDeck {
+public class TrainCardDeck implements Serializable {
     private List<TrainCard> cards;
 
     public TrainCardDeck(){

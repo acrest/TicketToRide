@@ -8,7 +8,7 @@ import java.util.List;
  * Created by samuel on 2/9/17.
  */
 
-public abstract class Game implements IGame, Serializable {
+public abstract class Game implements IGame {
     private int id;
     private String name;
     private int maxPlayers;

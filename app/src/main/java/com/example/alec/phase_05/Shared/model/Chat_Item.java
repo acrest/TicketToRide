@@ -1,10 +1,12 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Andrew on 3/2/2017.
  */
 
-public class Chat_Item
+public class Chat_Item implements Serializable
 {
     String message;
     String color;

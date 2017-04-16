@@ -1,10 +1,12 @@
 package com.example.alec.phase_05.Shared.model;
 
+import java.io.Serializable;
+
 /**
  * Created by samuel on 2/22/17.
  */
 
-public interface IGame {
+public interface IGame extends Serializable {
     int NUM_VISIBLE_CARDS = 5;
 
     int getID();

@@ -148,14 +148,14 @@ public class PresenterTicketToRide extends Presenter implements IPresenterTicket
         }
         Facade.getInstance().putBackDestinationCards(notChosen.toArray(new DestinationCard[notChosen.size()]));
         model.clearCardChoices();
-        if(!initPick) {
+        if (!model.isFirstCardPick()) {
             try {
                 model.doEndTurn();
             } catch(StateWarning warning) {
                 listener.handleWarning(warning);
             }
         } else {
-            initPick = false;
+            model.setFirstCardPick(false);
         }
     }
 
