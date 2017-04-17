@@ -43,7 +43,7 @@ public class Server {
     public static void main(String[] args) {
 
         if (args.length < 2) {
-            System.out.println("Usage: run_server <port> <persistence>");
+            System.out.println("Usage: run_server <port> <persistence> [clear]");
             System.exit(1);
         }
         String port = args[0];
