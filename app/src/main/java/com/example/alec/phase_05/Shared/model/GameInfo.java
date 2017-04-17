@@ -15,13 +15,13 @@ public class GameInfo {
     private TrainCard[] visibleTrainCards;
     private int trainCardsRemaining;
     private int destinationCardsRemaining;
-    private GameMap map;
+    private GameMapInfo map;
     private int playerTurnIndex;
     private PlayerTurnStatus playerStatus;
     private Set<String> haveDrawnInitialDestinationCards;
 
 
-    public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, int trainCardsRemaining, int destinationCardsRemaining, GameMap map, int gamePlayerIndex, PlayerTurnStatus playerStatus, Set<String> haveDrawnInitialDestinationCards) {
+    public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, int trainCardsRemaining, int destinationCardsRemaining, GameMapInfo map, int gamePlayerIndex, PlayerTurnStatus playerStatus, Set<String> haveDrawnInitialDestinationCards) {
         this.id = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
@@ -55,7 +55,7 @@ public class GameInfo {
         return visibleTrainCards;
     }
 
-    public GameMap getMap() {
+    public GameMapInfo getMap() {
         return map;
     }
 

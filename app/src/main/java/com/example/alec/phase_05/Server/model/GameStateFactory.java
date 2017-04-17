@@ -2,6 +2,7 @@ package com.example.alec.phase_05.Server.model;
 
 import com.example.alec.phase_05.Shared.model.GameInfo;
 import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Shared.model.GameMapInfo;
 import com.example.alec.phase_05.Shared.model.IGame;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.TrainCard;
@@ -24,7 +25,7 @@ public final class GameStateFactory {
             visibleTrainCards[i] = game.getVisibleCard(i);
         }
         System.out.println("in gamestatefactory the game status is "+game.getTurnStatus());
-        return new GameInfo(game.getID(), game.getName(), maxPlayers, players, visibleTrainCards, game.getNumberOfTrainCards(), game.getNumberOfDestinationCards(), game.getMap(), game.getPlayerTurnIndex(), game.getTurnStatus(), game.getHaveDrawnInitialDestinationCards());
+        return new GameInfo(game.getID(), game.getName(), maxPlayers, players, visibleTrainCards, game.getNumberOfTrainCards(), game.getNumberOfDestinationCards(), new GameMapInfo(game.getMap()), game.getPlayerTurnIndex(), game.getTurnStatus(), game.getHaveDrawnInitialDestinationCards());
     }
 
     private GameStateFactory() {}
