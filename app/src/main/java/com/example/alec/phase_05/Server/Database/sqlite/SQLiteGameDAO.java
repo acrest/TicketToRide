@@ -6,13 +6,16 @@ import com.example.alec.phase_05.Server.Database.Blob_Generator;
 import com.example.alec.phase_05.Server.Database.database_interface.GameDAO;
 import com.example.alec.phase_05.Server.model.IServerGame;
 import com.example.alec.phase_05.Shared.command.ICommand;
+import com.example.alec.phase_05.Shared.model.User;
 
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Created by samuel on 4/10/17.
@@ -27,7 +30,7 @@ public class SQLiteGameDAO implements GameDAO {
     public void setUp(){
         Connection c = null;
         try {
-            Class.forName("org.sqlite.JDBC");
+            //Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
             System.out.println("Opened database successfully");
             createTableGame(c);
@@ -39,16 +42,20 @@ public class SQLiteGameDAO implements GameDAO {
 
     @Override
     public void saveGame(IServerGame game) {
-        /*Connection c = null;
+        Connection c = null;
         byte[] gameBlobBytes = Blob_Generator.serialize(game);
 
         try {
             c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
 
-            SQLiteStatement p = sqlite.compileStatement("insert into memes(img, name) values(?)");
+            PreparedStatement prep = c.prepareStatement( "insert into GAME values (?, ?);");
+            prep.setInt(1, game.getID());
+            prep.setBytes(2, gameBlobBytes);
+            prep.addBatch();
 
-            p.bindBlob(1, gameBlobBytes);
-            p.execute();
+            //c.setAutoCommit(false);
+            prep.executeBatch();
+            //c.setAutoCommit(true);
 
             c.close();
 
@@ -59,16 +66,67 @@ public class SQLiteGameDAO implements GameDAO {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-        }*/
+        }
     }
 
     @Override
     public IServerGame getGame(int gameId) {
+        Connection c = null;
+        PreparedStatement stmt = null;
+
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
+            c.setAutoCommit(false);
+
+            stmt = c.prepareStatement("Select * from GAME");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt(1);
+
+                if(id == gameId){
+                    byte[] gameBytes = rs.getBytes(2);
+
+                    c.close();
+                    return (IServerGame) Blob_Generator.deserialize(gameBytes);
+                }
+            }
+
+            stmt.close();
+            c.close();
+        } catch (SQLException e) {
+            //c.close();
+        }
+
         return null;
     }
 
     @Override
-    public boolean hasGame(int gameId) {
+    public boolean hasGame(int gameId)
+    {
+        Connection c = null;
+        PreparedStatement stmt = null;
+
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
+            c.setAutoCommit(false);
+
+            stmt = c.prepareStatement("Select * from GAME");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt(1);
+
+                if(id == gameId){
+                    c.close();
+                    return true;
+                }
+            }
+
+            stmt.close();
+            c.close();
+        } catch (SQLException e) {
+
+        }
+
         return false;
     }
 
@@ -79,7 +137,7 @@ public class SQLiteGameDAO implements GameDAO {
 
     @Override
     public void clearAllGames() {
-
+        dropTableGame();
     }
 
     @Override
@@ -89,11 +147,44 @@ public class SQLiteGameDAO implements GameDAO {
 
     @Override
     public ICommand getCommand(int gameId, int index) {
+        Connection c = null;
+        PreparedStatement stmt = null;
+
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
+            c.setAutoCommit(false);
+
+            stmt = c.prepareStatement("Select * from GAME");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt(1);
+
+                if(id == gameId){
+                    byte[] gameBytes = rs.getBytes(2);
+
+                    c.close();
+                    IServerGame game = (IServerGame) Blob_Generator.deserialize(gameBytes);
+                    return game.getCommand(index);
+                }
+            }
+
+            stmt.close();
+            c.close();
+        } catch (SQLException e) {
+            //c.close();
+        }
+
         return null;
     }
 
     @Override
     public int getNumberOfCommands(int gameId) {
+        IServerGame game = getGame(gameId);
+
+        if(game != null){
+            return game.getCommandSize();
+        }
+
         return 0;
     }
 
@@ -112,7 +203,8 @@ public class SQLiteGameDAO implements GameDAO {
         try {
             Statement stmt = c.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS GAME" +
-                    "(  game    BLOB    NOT NULL)";
+                    "(  id    INTEGER    NOT NULL," +
+                    "   game    BLOB    NOT NULL)";
             stmt.executeUpdate(sql);
             stmt.close();
         } catch (SQLException e) {

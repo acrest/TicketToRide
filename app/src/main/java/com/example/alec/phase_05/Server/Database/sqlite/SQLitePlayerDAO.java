@@ -100,6 +100,7 @@ public class SQLitePlayerDAO implements PlayerDAO {
             }
 
             stmt.close();
+            c.close();
         } catch (SQLException e) {
 
         }
