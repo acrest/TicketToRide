@@ -131,8 +131,23 @@ public class SQLiteGameDAO implements GameDAO {
     }
 
     @Override
-    public void clearGame(int gameId) {
+    public void clearGame(int gameId) {    //????????????????????????????????????????
+        Connection c = null;
+        PreparedStatement stmt = null;
 
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
+            c.setAutoCommit(false);
+
+            stmt = c.prepareStatement("DELETE FROM GAME WHERE id = " + gameId);
+            //String sql = "DELETE from GAME where id= " + gameId + ";";
+            stmt.executeQuery();
+
+            stmt.close();
+            c.close();
+        } catch (SQLException e) {
+            //c.close();
+        }
     }
 
     @Override
@@ -141,12 +156,12 @@ public class SQLiteGameDAO implements GameDAO {
     }
 
     @Override
-    public void addCommand(int gameId, ICommand command) {
+    public void addCommand(int gameId, ICommand command) {    //??????????????????????????????
 
     }
 
     @Override
-    public ICommand getCommand(int gameId, int index) {
+    public ICommand getCommand(int gameId, int index) {      //??????????????????????????????
         Connection c = null;
         PreparedStatement stmt = null;
 
@@ -178,7 +193,7 @@ public class SQLiteGameDAO implements GameDAO {
     }
 
     @Override
-    public int getNumberOfCommands(int gameId) {
+    public int getNumberOfCommands(int gameId) {     //?????????????????????????????????
         IServerGame game = getGame(gameId);
 
         if(game != null){
@@ -189,7 +204,7 @@ public class SQLiteGameDAO implements GameDAO {
     }
 
     @Override
-    public void clearCommands(int gameId) {
+    public void clearCommands(int gameId) {        //????????????????????????????????????
 
     }
 

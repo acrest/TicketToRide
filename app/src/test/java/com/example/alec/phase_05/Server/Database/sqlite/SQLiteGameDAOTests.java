@@ -39,6 +39,16 @@ public class SQLiteGameDAOTests {
     }
 
     @Test
+    public void testRemoveSingleGame(){
+        ServerGame game = new ServerGame(1, "hello", 3, new CommandManager(), null, null, null);
+        Database.getGameDAO().saveGame(game);
+
+        Database.getGameDAO().clearGame(1);
+
+        assertFalse(Database.getGameDAO().hasGame(1));
+    }
+
+    @Test
     public void testGetGame() {
         ServerGame game = new ServerGame(1, "hello", 3, new CommandManager(), null, null, null);
         Database.getGameDAO().saveGame(game);
