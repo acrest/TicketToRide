@@ -6,10 +6,18 @@ import com.example.alec.phase_05.Client.states.EndTurnState;
 import com.example.alec.phase_05.Client.states.OneDrawnCardState;
 import com.example.alec.phase_05.Client.states.StartTurnState;
 import com.example.alec.phase_05.Shared.model.GameInfo;
+import com.example.alec.phase_05.Shared.model.GameMap;
+import com.example.alec.phase_05.Shared.model.GameMapInfo;
+import com.example.alec.phase_05.Shared.model.IPlayer;
 import com.example.alec.phase_05.Shared.model.OtherPlayer;
 import com.example.alec.phase_05.Shared.model.Player;
 import com.example.alec.phase_05.Shared.model.PlayerTurnStatus;
+import com.example.alec.phase_05.Shared.model.Route;
+import com.example.alec.phase_05.Shared.model.RouteInfo;
 import com.example.alec.phase_05.Shared.model.TrainCard;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by samuel on 3/2/17.
@@ -28,7 +36,7 @@ public final class ClientGameFactory {
         bank.setNumberOfTrainCards(gameInfo.getTrainCardsRemaining());
         bank.setNumberOfDestinationCards(gameInfo.getDestinationCardsRemaining());
         IClientGame game = new ClientGame(gameInfo.getId(), gameInfo.getName(), gameInfo.getMaxPlayers(),
-                bank, gameInfo.getMap());
+                bank, createGameMap(gameInfo.getPlayers(), gameInfo.getMap()));
 
         int playerTurnIndex = gameInfo.getPlayerTurnIndex();
         PlayerTurnStatus playerStatus = gameInfo.getPlayerTurnStatus();
@@ -41,8 +49,8 @@ public final class ClientGameFactory {
                     game.setPlayer(i, player);
 
                     // Check to see if it the current's player turn.
-                    if(i == playerTurnIndex) {
-                        if(playerStatus == PlayerTurnStatus.DESTINATION) {
+                    if (i == playerTurnIndex) {
+                        if (playerStatus == PlayerTurnStatus.DESTINATION) {
                             //get destination cards and call for destination modle to pop up
                             game.setTurnState(new DrawDestinationState((ClientGame) game));
                         } else if (playerStatus == PlayerTurnStatus.TRAIN) {
@@ -59,7 +67,7 @@ public final class ClientGameFactory {
                     game.setPlayer(i, new OtherPlayer(players[i]));
 
                     // See if it is this player's turn.
-                    if(playerTurnIndex == i) {
+                    if (playerTurnIndex == i) {
                         game.setTurnState(new EndTurnState((ClientGame) game));
                     }
                 }
@@ -79,8 +87,24 @@ public final class ClientGameFactory {
         return new ClientBank();
     }
 
-    private void ClientGameFactory() {
+    private static GameMap createGameMap(Player[] players, GameMapInfo info) {
+        Map<Integer, Route> routes = new HashMap<>();
+        for (Map.Entry<Integer, RouteInfo> entry : info.getRoutes().entrySet()) {
+            RouteInfo routeInfo = entry.getValue();
+            IPlayer player = null;
+            for (int i = 0; i < players.length; i++) {
+                if (players[i] != null && players[i].getName().equals(routeInfo.getOwner())) {
+                    // Found the player.
+                    player = players[i];
+                    break;
+                }
+            }
+            Route route = new Route(routeInfo.getCity1(), routeInfo.getCity2(), routeInfo.getLength(), player, routeInfo.getType(), routeInfo.getId(), routeInfo.getTwinID());
+            routes.put(entry.getKey(), route);
+        }
+        return new GameMap(info.getCities(), routes);
     }
 
-
+    private void ClientGameFactory() {
+    }
 }

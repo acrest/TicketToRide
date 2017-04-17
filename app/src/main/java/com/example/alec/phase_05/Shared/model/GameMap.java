@@ -28,6 +28,10 @@ public class GameMap implements Serializable {
         this.routes = routes;
     }
 
+    public Map<String, City> getCities() {
+        return cities;
+    }
+
     public City getCityByName(String name){
         return cities.get(name);
     }

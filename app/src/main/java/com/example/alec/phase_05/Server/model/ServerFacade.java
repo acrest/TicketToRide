@@ -486,7 +486,7 @@ public class ServerFacade implements IServer {
             type = route.getType();
         }
         if(player.getTrainCount() < route.getLength() || !player.hasCardsForRoute(type, route.getLength())) return false;
-        player.removeCardsOfType(type, route.getLength(), ClientModel.getInstance().getRouteAnyCardType());
+        player.removeCardsForRoute(type, route.getLength());
         player.setTrainCount(player.getTrainCount() - route.getLength());
         player.setPoints(player.getPoints() + route.getPoints());
         route.setOwner(player);
