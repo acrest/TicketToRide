@@ -53,9 +53,18 @@ public class ServerGame extends Game implements IServerGame {
         return chatManager;
     }
 
+    public int getCommandSize(){
+        return commandManager.getCommandSize();
+    }
+
     @Override
     public void addCommand(GameCommand command) {
         commandManager.addCommand(command);
+    }
+
+    @Override
+    public GameCommand getCommand(int index){
+        return commandManager.getCommand(index);
     }
 
     @Override
