@@ -22,13 +22,10 @@ import static com.example.alec.phase_05.R.id.start;
 public class GameMap implements Serializable {
     private Map<String, City> cities;
     private Map<Integer, Route> routes;
-    private Map<String, ArrayList<Route>> cityToRoutes;
 
     public GameMap(Map<String, City> cities, Map<Integer, Route> routes) {
         this.cities = cities;
         this.routes = routes;
-
-        cityToRoutes = null;
     }
 
     public City getCityByName(String name){
@@ -145,11 +142,7 @@ public class GameMap implements Serializable {
     }
 
     private List<Route> getRoutesConnectedToCity(String city) {
-        if(cityToRoutes == null) {
-            initCityToRoutes();
-        }
-
-        return cityToRoutes.get(city);
+        return getCityToRoutes().get(city);
     }
 
     private Map<String, List<Route>> findRoutesForEachPlayer() {
@@ -268,9 +261,7 @@ public class GameMap implements Serializable {
     }
 
     public boolean checkIfDestinationComplete(DestinationCard destinationCard, String player){
-        if(cityToRoutes == null) {
-            initCityToRoutes();
-        }
+        Map<String, ArrayList<Route>> cityToRoutes = getCityToRoutes();
 
         City city1 = destinationCard.getCity1();
         City city2 = destinationCard.getCity2();
@@ -327,6 +318,7 @@ public class GameMap implements Serializable {
     }
 
     private boolean checkIfDestinationCompleteRec(City city2, City city, Route rootRoute, Map<String, Boolean> markedCities, String player){
+        Map<String, ArrayList<Route>> cityToRoutes = getCityToRoutes();
 
         for(int i = 0; i < cityToRoutes.get(city.getName()).size(); i++){
             Route route = cityToRoutes.get(city.getName()).get(i);
@@ -468,8 +460,8 @@ public class GameMap implements Serializable {
         return visited;
     }
 
-    private void initCityToRoutes() {
-        cityToRoutes = new HashMap<>();
+    private Map<String, ArrayList<Route>> getCityToRoutes() {
+        Map<String, ArrayList<Route>> cityToRoutes = new HashMap<>();
 
         for(Map.Entry<String, City> entry : cities.entrySet()) {
             cityToRoutes.put(entry.getKey(), new ArrayList<Route>());
@@ -479,6 +471,8 @@ public class GameMap implements Serializable {
             cityToRoutes.get(route.getCity1().getName()).add(route);
             cityToRoutes.get(route.getCity2().getName()).add(route);
         }
+
+        return cityToRoutes;
     }
 
 
