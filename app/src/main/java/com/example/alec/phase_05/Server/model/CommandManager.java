@@ -172,4 +172,16 @@ public class CommandManager implements Serializable {
     private void setCommandIndex(String playerName, int index) {
         playerIndex.put(playerName, index);
     }
+
+    public int getCommandSize(){
+        return commands.size();
+    }
+
+    public GameCommand getCommand(int index){
+        if(index >= 0 && index < commands.size()){
+            return commands.get(index);
+        }
+
+        return null;
+    }
 }

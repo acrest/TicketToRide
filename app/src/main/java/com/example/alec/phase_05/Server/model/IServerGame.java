@@ -20,7 +20,11 @@ import java.util.Set;
 public interface IServerGame extends IGame, Serializable {
     IChatManager getChatManager();
 
+    int getCommandSize();
+
     void addCommand(GameCommand command);
+
+    GameCommand getCommand(int index);
 
     ICommand recentCommand(String playerName);
 
