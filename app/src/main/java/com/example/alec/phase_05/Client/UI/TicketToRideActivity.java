@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -684,6 +685,24 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
                 }
 
                 if(s.equals("tab_test4")){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            android.os.Handler h = new android.os.Handler(Looper.getMainLooper());
+                            h.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateMap(ClientModel.getInstance().getMap());
+                                }
+                            });
+
+                        }
+                    }).start();
 
                 }
 
@@ -829,6 +848,8 @@ public class TicketToRideActivity extends TabActivity implements ITicketToRideLi
     public void drawRouteLine(City city1, City city2, String color, int lineWidth) {
         ImageView imageView = new ImageView(this);
         imageView = (ImageView) findViewById(R.id.map);
+        System.out.println("width is "+imageView.getWidth());
+        System.out.println("height is "+imageView.getHeight());
 
         if (imageView.getWidth() > 0 && imageView.getHeight() > 0) {
             Bitmap bmp = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
