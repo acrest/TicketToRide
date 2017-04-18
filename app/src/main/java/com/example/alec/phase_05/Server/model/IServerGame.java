@@ -28,6 +28,8 @@ public interface IServerGame extends IGame, Serializable {
 
     ICommand recentCommand(String playerName);
 
+    void clearCommands();
+
     TrainCard drawTrainCard(String playerName);
 
     TrainCard pickTrainCard(String playerName, int index);

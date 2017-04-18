@@ -184,4 +184,8 @@ public class CommandManager implements Serializable {
 
         return null;
     }
+
+    public void clearCommands(){
+        commands.clear();
+    }
 }

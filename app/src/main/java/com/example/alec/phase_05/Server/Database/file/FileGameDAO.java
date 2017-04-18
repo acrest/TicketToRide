@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Server.Database.Blob_Generator;
 import com.example.alec.phase_05.Server.Database.FileUtility;
 import com.example.alec.phase_05.Server.Database.database_interface.GameDAO;
 import com.example.alec.phase_05.Server.model.IServerGame;
+import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 
 import java.io.ByteArrayInputStream;
@@ -88,7 +89,7 @@ public class FileGameDAO implements GameDAO {
     }
 
     @Override
-    public void addCommand(int gameId, ICommand command) {
+    public void addCommand(int gameId, GameCommand command) {
         try {
             FileOutputStream out = new FileOutputStream(new File(getGameDirectory(gameId), "command" + getNumberOfCommands(gameId)));
             out.write(Blob_Generator.serialize(command));

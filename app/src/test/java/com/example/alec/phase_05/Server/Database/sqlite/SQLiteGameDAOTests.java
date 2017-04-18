@@ -1,10 +1,16 @@
 package com.example.alec.phase_05.Server.Database.sqlite;
 
+import com.example.alec.phase_05.Client.command.ClientChatSentCommand;
+import com.example.alec.phase_05.Client.command.ClientClaimRouteCommand;
 import com.example.alec.phase_05.Server.Database.Database;
+import com.example.alec.phase_05.Server.command.ServerChatSentCommand;
 import com.example.alec.phase_05.Server.command.ServerCreateGameCommand;
 import com.example.alec.phase_05.Server.model.CommandManager;
 import com.example.alec.phase_05.Server.model.IServerGame;
 import com.example.alec.phase_05.Server.model.ServerGame;
+import com.example.alec.phase_05.Shared.command.ClaimRouteCommand;
+import com.example.alec.phase_05.Shared.model.Chat;
+import com.example.alec.phase_05.Shared.model.TrainType;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -39,6 +45,16 @@ public class SQLiteGameDAOTests {
     }
 
     @Test
+    public void testRemoveSingleGame(){
+        ServerGame game = new ServerGame(1, "hello", 3, new CommandManager(), null, null, null);
+        Database.getGameDAO().saveGame(game);
+
+        Database.getGameDAO().clearGame(1);
+
+        assertFalse(Database.getGameDAO().hasGame(1));
+    }
+
+    @Test
     public void testGetGame() {
         ServerGame game = new ServerGame(1, "hello", 3, new CommandManager(), null, null, null);
         Database.getGameDAO().saveGame(game);
@@ -60,13 +76,12 @@ public class SQLiteGameDAOTests {
 
     @Test
     public void testGetNumberOfCommands() {
-        Database.getGameDAO().addCommand(2, new ServerCreateGameCommand("hello", 3, "s", "red"));
-        Database.getGameDAO().addCommand(2, new ServerCreateGameCommand("hello", 3, "s", "red"));
-        Database.getGameDAO().addCommand(2, new ServerCreateGameCommand("hello", 3, "s", "red"));
-        Database.getGameDAO().addCommand(2, new ServerCreateGameCommand("hello", 3, "s", "red"));
-        Database.getGameDAO().addCommand(2, new ServerCreateGameCommand("hello", 3, "s", "red"));
-        Database.getGameDAO().addCommand(2, new ServerCreateGameCommand("hello", 3, "s", "red"));
+        ServerGame game = new ServerGame(2, "hello", 3, new CommandManager(), null, null, null);
+        Database.getGameDAO().saveGame(game);
 
-        assertEquals(Database.getGameDAO().getNumberOfCommands(2), 6);
+        Database.getGameDAO().addCommand(2, new ClientClaimRouteCommand("Andrew", 1, 1, TrainType.ANY));
+        Database.getGameDAO().addCommand(2, new ClientChatSentCommand(new Chat("Alex", 1, "hello", "blue")));
+
+        assertEquals(Database.getGameDAO().getNumberOfCommands(2), 2);
     }
 }
