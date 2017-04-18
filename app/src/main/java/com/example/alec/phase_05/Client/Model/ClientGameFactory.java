@@ -79,6 +79,7 @@ public final class ClientGameFactory {
                 //game.getPlayer(i).setTrainCount(Facade.getInstance().getTrainCount());
             }
         }
+        game.setLastPlayerTurn(gameInfo.getLastPlayerTurn());
 
         return game;
     }

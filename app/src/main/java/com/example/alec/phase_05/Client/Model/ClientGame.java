@@ -84,6 +84,11 @@ public class ClientGame extends Game implements IClientGame {
     }
 
     @Override
+    public void setLastPlayerTurn(String lastPlayerTurn) {
+        this.lastPlayerTurn = lastPlayerTurn;
+    }
+
+    @Override
     public void decNumberOfDestinationCards() {
         ((IClientBank) getBank()).decNumberOfDestinationCards();
     }
