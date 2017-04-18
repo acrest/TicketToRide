@@ -1,6 +1,7 @@
 package com.example.alec.phase_05.Server.Database.database_interface;
 
 import com.example.alec.phase_05.Server.model.IServerGame;
+import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 
 /**
@@ -23,7 +24,7 @@ public interface GameDAO {
     // Clears all game blobs.
     void clearAllGames();
 
-    void addCommand(int gameId, ICommand command);
+    void addCommand(int gameId, GameCommand command);
 
     ICommand getCommand(int gameId, int index);
 
