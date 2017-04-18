@@ -6,11 +6,13 @@ package com.example.alec.phase_05.Shared.command;
 
 public abstract class ReturnedDestinationCardsCommand extends BaseCommand {
     private String playerName;
+    private int playerCards;
     private int remainingCards;
 
-    public ReturnedDestinationCardsCommand(String playerName, int remainingCards) {
+    public ReturnedDestinationCardsCommand(String playerName, int playerCards, int remainingCards) {
         super("ReturnedDestinationCards");
         this.playerName = playerName;
+        this.playerCards = playerCards;
         this.remainingCards = remainingCards;
     }
 
@@ -20,5 +22,9 @@ public abstract class ReturnedDestinationCardsCommand extends BaseCommand {
 
     public int getRemainingCards() {
         return remainingCards;
+    }
+
+    public int getPlayerCards() {
+        return playerCards;
     }
 }

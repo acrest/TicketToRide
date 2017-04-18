@@ -240,9 +240,10 @@ public class ClientFacade {
         model.notifyFinishGame();
     }
 
-    public void returnDestinationCard(String playerName, int remainingCards) {
+    public void returnDestinationCard(String playerName, int playerCards, int remainingCards) {
         model.removeDestinationCard(playerName);
-        model.incNumOfDestinationCards();
+        model.setNumberOfDestinationCards(remainingCards);
+        model.setDestinationCards(playerName, playerCards);
     }
 
     public void chatSent(Chat chat) {
