@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteStatement;
 import com.example.alec.phase_05.Server.Database.Blob_Generator;
 import com.example.alec.phase_05.Server.Database.database_interface.GameDAO;
 import com.example.alec.phase_05.Server.model.IServerGame;
+import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.ICommand;
 import com.example.alec.phase_05.Shared.model.User;
 
@@ -138,12 +139,12 @@ public class SQLiteGameDAO implements GameDAO {
         try {
             c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
             c.setAutoCommit(false);
+            System.out.println("Opened database successfully");
 
-            stmt = c.prepareStatement("DELETE FROM GAME WHERE id = " + gameId);
-            //String sql = "DELETE from GAME where id= " + gameId + ";";
-            stmt.executeQuery();
+            Statement stm = c.createStatement();
+            stm.executeUpdate("DELETE FROM GAME WHERE id=\'" + gameId + "\'");
 
-            stmt.close();
+            c.commit();
             c.close();
         } catch (SQLException e) {
             //c.close();
@@ -156,12 +157,7 @@ public class SQLiteGameDAO implements GameDAO {
     }
 
     @Override
-    public void addCommand(int gameId, ICommand command) {    //??????????????????????????????
-
-    }
-
-    @Override
-    public ICommand getCommand(int gameId, int index) {      //??????????????????????????????
+    public void addCommand(int gameId, GameCommand command) {
         Connection c = null;
         PreparedStatement stmt = null;
 
@@ -176,9 +172,44 @@ public class SQLiteGameDAO implements GameDAO {
 
                 if(id == gameId){
                     byte[] gameBytes = rs.getBytes(2);
-
-                    c.close();
                     IServerGame game = (IServerGame) Blob_Generator.deserialize(gameBytes);
+
+                    game.addCommand(command);
+
+                    Statement stm = c.createStatement();
+                    stm.executeUpdate("DELETE FROM GAME WHERE id=\'" + gameId + "\'");
+                    c.commit();
+                    c.close();
+
+                    saveGame(game);
+                }
+            }
+
+            stmt.close();
+            c.close();
+        } catch (SQLException e) {
+            //c.close();
+        }
+    }
+
+    @Override
+    public ICommand getCommand(int gameId, int index) {
+        Connection c = null;
+        PreparedStatement stmt = null;
+
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
+            c.setAutoCommit(false);
+
+            stmt = c.prepareStatement("Select * from GAME");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt(1);
+
+                if(id == gameId){
+                    byte[] gameBytes = rs.getBytes(2);
+                    IServerGame game = (IServerGame) Blob_Generator.deserialize(gameBytes);
+                    c.close();
                     return game.getCommand(index);
                 }
             }
@@ -193,7 +224,7 @@ public class SQLiteGameDAO implements GameDAO {
     }
 
     @Override
-    public int getNumberOfCommands(int gameId) {     //?????????????????????????????????
+    public int getNumberOfCommands(int gameId) {
         IServerGame game = getGame(gameId);
 
         if(game != null){
@@ -204,8 +235,39 @@ public class SQLiteGameDAO implements GameDAO {
     }
 
     @Override
-    public void clearCommands(int gameId) {        //????????????????????????????????????
+    public void clearCommands(int gameId) {
+        Connection c = null;
+        PreparedStatement stmt = null;
 
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:TicketToRide.sqlite");
+            c.setAutoCommit(false);
+
+            stmt = c.prepareStatement("Select * from GAME");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt(1);
+
+                if(id == gameId){
+                    byte[] gameBytes = rs.getBytes(2);
+                    IServerGame game = (IServerGame) Blob_Generator.deserialize(gameBytes);
+
+                    game.clearCommands();
+
+                    Statement stm = c.createStatement();
+                    stm.executeUpdate("DELETE FROM GAME WHERE id=\'" + gameId + "\'");
+                    c.commit();
+                    c.close();
+
+                    saveGame(game);
+                }
+            }
+
+            stmt.close();
+            c.close();
+        } catch (SQLException e) {
+            //c.close();
+        }
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Holds a game id so the server knows which game the client is in.
  * Created by samuel on 2/3/17.
  */
-public abstract class GameCommand extends BaseCommand implements Serializable {
+public abstract class GameCommand extends BaseCommand implements ICommand, Serializable {
     private int gameId;
     private String playerName;
 
