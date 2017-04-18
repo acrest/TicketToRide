@@ -28,7 +28,7 @@ import static junit.framework.Assert.fail;
 public class SQLiteGameDAOTests {
     @BeforeClass
     public static void setUp() {
-        Database.init("sqlite", false);
+        Database.init("sqlite", true);
     }
 
     @AfterClass
@@ -76,8 +76,8 @@ public class SQLiteGameDAOTests {
 
     @Test
     public void testGetNumberOfCommands() {
-        ServerGame game = new ServerGame(2, "hello", 3, new CommandManager(), null, null, null);
-        Database.getGameDAO().saveGame(game);
+//        ServerGame game = new ServerGame(2, "hello", 3, new CommandManager(), null, null, null);
+//        Database.getGameDAO().saveGame(game);
 
         Database.getGameDAO().addCommand(2, new ClientClaimRouteCommand("Andrew", 1, 1, TrainType.ANY));
         Database.getGameDAO().addCommand(2, new ClientChatSentCommand(new Chat("Alex", 1, "hello", "blue")));
