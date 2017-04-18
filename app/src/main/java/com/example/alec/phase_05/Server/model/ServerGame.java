@@ -231,6 +231,13 @@ public class ServerGame extends Game implements IServerGame {
         return lastPlayerTurn;
     }
 
+    @Override
+    public int getDestinationCards(String playerName) {
+        IPlayer player = getPlayerByName(playerName);
+        if (player == null) return 0;
+        return player.getDestinationCardCount();
+    }
+
     public void setLastPlayerTurn(String lastPlayerTurn) {
         this.lastPlayerTurn = lastPlayerTurn;
     }

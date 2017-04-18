@@ -55,4 +55,6 @@ public interface IServerGame extends IGame, Serializable {
     Set<String> getHaveDrawnInitialDestinationCards();
 
     String getLastPlayerTurn();
+
+    int getDestinationCards(String playerName);
 }

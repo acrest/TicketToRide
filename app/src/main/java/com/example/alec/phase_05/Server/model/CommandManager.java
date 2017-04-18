@@ -131,11 +131,11 @@ public class CommandManager implements Serializable {
         } else if (command instanceof ServerDiscardTrainCardCommand) {
             return null; //not sure if we are going to use this command
         } else if (command instanceof ServerDrawDestinationCardsCommand) {
-            return new ServerDrawnDestinationCardsCommand(command.getPlayerName(), game.getNumberOfDestinationCards());
+            return new ServerDrawnDestinationCardsCommand(command.getPlayerName(), game.getDestinationCards(command.getPlayerName()), game.getNumberOfDestinationCards());
         } else if (command instanceof ServerDrawTrainCardCommand) {
             return new ServerDrawnTrainCardCommand(command.getPlayerName(), game.getNumberOfTrainCards());
         } else if (command instanceof ServerDrawInitialDestinationCardsCommand) {
-            return new ServerDrawnDestinationCardsCommand(command.getPlayerName(), game.getNumberOfDestinationCards());
+            return new ServerDrawnDestinationCardsCommand(command.getPlayerName(), game.getDestinationCards(command.getPlayerName()), game.getNumberOfDestinationCards());
         } else if (command instanceof ServerDrawInitialTrainCardCommand) {
             return new ServerDrawnTrainCardCommand(command.getPlayerName(), game.getNumberOfTrainCards());
         } else if (command instanceof ServerFinishTurnCommand) {

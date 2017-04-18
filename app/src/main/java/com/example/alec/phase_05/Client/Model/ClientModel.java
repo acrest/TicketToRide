@@ -245,6 +245,15 @@ public class ClientModel extends Observable {
         return currentGame.getNumberOfDestinationCards();
     }
 
+    public void setDestinationCards(String playerName, int cards) {
+        if (currentGame == null) return;
+        IPlayer player = currentGame.getPlayerByName(playerName);
+        if (player == null || !(player instanceof OtherPlayer)) return;
+        OtherPlayer otherPlayer = (OtherPlayer) player;
+        otherPlayer.setDestinationCardCount(cards);
+        notifyPropertyChanges(PLAYER_DESTINATION_CARDS);
+    }
+
     public void addDestinationCard(String playerName) {
         if (currentGame == null) return;
         IPlayer player = currentGame.getPlayerByName(playerName);
