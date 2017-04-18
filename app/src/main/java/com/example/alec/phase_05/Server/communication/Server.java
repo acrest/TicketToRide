@@ -4,6 +4,7 @@ import com.example.alec.phase_05.Server.Database.Database;
 import com.example.alec.phase_05.Server.Database.file.FilePlayerDAO;
 import com.example.alec.phase_05.Server.Database.sqlite.SQLitePlayerDAO;
 import com.example.alec.phase_05.Server.command_line.ServerCommandLine;
+import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Server.model.ServerModel;
 import com.sun.net.httpserver.HttpServer;
 
@@ -42,8 +43,8 @@ public class Server {
 
     public static void main(String[] args) {
 
-        if (args.length < 2) {
-            System.out.println("Usage: run_server <port> <persistence> [clear]");
+        if (args.length < 3) {
+            System.out.println("Usage: run_server <port> <persistence> <number of commands> [clear]");
             System.exit(1);
         }
         String port = args[0];
@@ -58,11 +59,13 @@ public class Server {
 //            ServerModel.getInstance().setDatabase(FilePlayerDAO.getInstance());
 //            FilePlayerDAO.getInstance().loadUsers();
 //        }
-        boolean clearDatabase = args.length >= 3 && args[2].equals("clear");
+        boolean clearDatabase = args.length >= 4 && args[3].equals("clear");
         if (!Database.init(args[1], clearDatabase)) {
             System.out.println("Invalid persistence");
             System.exit(1);
         }
+
+        ServerFacade.setNumberOfCommands(Integer.parseInt(args[2]));
 
         new Server().run(port);
         new ServerCommandLine().start();
