@@ -9,13 +9,13 @@ import com.example.alec.phase_05.Shared.command.Result;
  */
 
 public class ClientDrawnDestinationCardsCommand extends DrawnDestinationCardsCommand {
-    public ClientDrawnDestinationCardsCommand(String playerName, int remainingCards) {
-        super(playerName, remainingCards);
+    public ClientDrawnDestinationCardsCommand(String playerName, int playerCards, int remainingCards) {
+        super(playerName, playerCards, remainingCards);
     }
 
     @Override
     public Result execute() {
-        ClientFacade.getInstance().drawDestinationCard(getPlayerName(), getRemainingCards());
+        ClientFacade.getInstance().drawDestinationCard(getPlayerName(), getPlayerCards(), getRemainingCards());
         return null;
     }
 }

@@ -152,8 +152,9 @@ public class ClientFacade {
         }
     }
 
-    public void drawDestinationCard(String playerName, int remainingCards) {
+    public void drawDestinationCard(String playerName, int playerCards, int remainingCards) {
         model.setNumberOfDestinationCards(remainingCards);
+        model.setDestinationCards(playerName, playerCards);
         model.addDestinationCard(playerName);
     }
 

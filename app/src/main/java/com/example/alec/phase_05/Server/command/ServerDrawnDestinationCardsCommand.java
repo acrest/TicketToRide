@@ -9,8 +9,8 @@ import com.example.alec.phase_05.Shared.command.Result;
  */
 
 public class ServerDrawnDestinationCardsCommand extends DrawnDestinationCardsCommand implements Serializable {
-    public ServerDrawnDestinationCardsCommand(String playerName, int remainingCards) {
-        super(playerName, remainingCards);
+    public ServerDrawnDestinationCardsCommand(String playerName, int playerCards, int remainingCards) {
+        super(playerName, playerCards, remainingCards);
     }
 
     @Override
