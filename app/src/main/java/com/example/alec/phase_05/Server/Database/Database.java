@@ -58,13 +58,15 @@ public class Database {
     private static void init(DatabaseFactory factory, boolean clearDatabase) {
         playerDAO = factory.createPlayerDAO();
         gameDAO = factory.createGameDAO();
-        playerDAO.setUp();
-        gameDAO.setUp();
         if (clearDatabase) {
             playerDAO.clear();
             gameDAO.clearAll();
+            playerDAO.setUp();
+            gameDAO.setUp();
         } else {
             // Load memory from database.
+            playerDAO.setUp();
+            gameDAO.setUp();
             loadAllDataToMemory();
         }
     }

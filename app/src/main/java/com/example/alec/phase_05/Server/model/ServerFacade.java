@@ -407,6 +407,11 @@ public class ServerFacade implements IServer {
     public boolean finishTurn(String playerName, int gameId) {
         ServerGame game = model.getGame(gameId);
         if (game == null) return false;
+        IPlayer player = game.getPlayerByName(playerName);
+        if (player == null) return false;
+        if (player.getTrainCount() <= 2 && game.getLastPlayerTurn() == null) {
+            game.setLastPlayerTurn(player.getName());
+        }
         game.incrementPlayerIndex();
         game.setStartStatus();
         return true;

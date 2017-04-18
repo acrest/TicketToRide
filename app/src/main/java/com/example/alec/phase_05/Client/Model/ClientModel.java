@@ -628,7 +628,7 @@ public class ClientModel extends Observable {
         currentGame.doEndTurn();
     }
 
-    private void notifyPropertyChanges(String... properties) {
+    public void notifyPropertyChanges(String... properties) {
         UpdateIndicator u = new UpdateIndicator();
         for (String property : properties) {
             u.addProperty(property);

@@ -63,4 +63,6 @@ public interface IClientGame extends IGame {
     void setTurnState(GameState state);
 
     GameState getTurnState();
+
+    void setLastPlayerTurn(String lastPlayerTurn);
 }

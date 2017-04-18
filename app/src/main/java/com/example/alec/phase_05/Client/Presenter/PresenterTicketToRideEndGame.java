@@ -112,6 +112,9 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
     public List<String> getLongestRouteHolders() {
         Map<String, Integer> longest = model.getLongestRoute();
         List<String> longestRouteHolders = new ArrayList<>();
+        if (longest == null) {
+            return longestRouteHolders;
+        }
         int maxLength = getLongestRouteLength();
         for (int i = 0; i < model.getGameMaxPlayers(); i++) {
             IPlayer player = model.getPlayer(i);
@@ -130,6 +133,9 @@ public class PresenterTicketToRideEndGame extends Presenter implements IPresente
 //            return 21000;
 //        }
         Map<String, Integer> longest = model.getLongestRoute();
+        if (longest == null) {
+            return -1;
+        }
 
         System.out.println("the map has " + longest.size());
         int maxLength = -1;

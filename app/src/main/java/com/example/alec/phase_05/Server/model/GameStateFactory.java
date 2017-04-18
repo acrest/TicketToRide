@@ -25,7 +25,7 @@ public final class GameStateFactory {
             visibleTrainCards[i] = game.getVisibleCard(i);
         }
         System.out.println("in gamestatefactory the game status is "+game.getTurnStatus());
-        return new GameInfo(game.getID(), game.getName(), maxPlayers, players, visibleTrainCards, game.getNumberOfTrainCards(), game.getNumberOfDestinationCards(), new GameMapInfo(game.getMap()), game.getPlayerTurnIndex(), game.getTurnStatus(), game.getHaveDrawnInitialDestinationCards());
+        return new GameInfo(game.getID(), game.getName(), maxPlayers, players, visibleTrainCards, game.getNumberOfTrainCards(), game.getNumberOfDestinationCards(), new GameMapInfo(game.getMap()), game.getPlayerTurnIndex(), game.getTurnStatus(), game.getHaveDrawnInitialDestinationCards(), game.getLastPlayerTurn());
     }
 
     private GameStateFactory() {}

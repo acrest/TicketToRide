@@ -19,9 +19,10 @@ public class GameInfo {
     private int playerTurnIndex;
     private PlayerTurnStatus playerStatus;
     private Set<String> haveDrawnInitialDestinationCards;
+    private String lastPlayerTurn;
 
 
-    public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, int trainCardsRemaining, int destinationCardsRemaining, GameMapInfo map, int gamePlayerIndex, PlayerTurnStatus playerStatus, Set<String> haveDrawnInitialDestinationCards) {
+    public GameInfo(int id, String name, int maxPlayers, Player[] players, TrainCard[] visibleTrainCards, int trainCardsRemaining, int destinationCardsRemaining, GameMapInfo map, int gamePlayerIndex, PlayerTurnStatus playerStatus, Set<String> haveDrawnInitialDestinationCards, String lastPlayerTurn) {
         this.id = id;
         this.name = name;
         this.maxPlayers = maxPlayers;
@@ -33,6 +34,7 @@ public class GameInfo {
         playerTurnIndex = gamePlayerIndex;
         this.playerStatus = playerStatus;
         this.haveDrawnInitialDestinationCards = haveDrawnInitialDestinationCards;
+        this.lastPlayerTurn = lastPlayerTurn;
     }
 
     public int getId() {
@@ -86,5 +88,9 @@ public class GameInfo {
 
     public Set<String> getHaveDrawnInitialDestinationCards() {
         return haveDrawnInitialDestinationCards;
+    }
+
+    public String getLastPlayerTurn() {
+        return lastPlayerTurn;
     }
 }

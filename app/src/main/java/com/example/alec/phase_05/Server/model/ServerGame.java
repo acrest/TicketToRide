@@ -37,6 +37,7 @@ public class ServerGame extends Game implements IServerGame {
     private CommandManager commandManager;
     private IChatManager chatManager;
     private Set<String> haveDrawnInitialDestinationCards;
+    private String lastPlayerTurn;
 
     public ServerGame(int id, String name, int maxPlayers, CommandManager commandManager, IChatManager chatManager, IServerBank bank, GameMap gameMap) {
         super(id, name, maxPlayers, bank, gameMap);
@@ -46,6 +47,7 @@ public class ServerGame extends Game implements IServerGame {
         playerTurnIndex = 0;
         haveDrawnInitialDestinationCards = new HashSet<>();
         commandManager.setGame(this);
+        lastPlayerTurn = null;
     }
 
     @Override
@@ -223,5 +225,13 @@ public class ServerGame extends Game implements IServerGame {
 
     public void setHasDrawnInitialDestinationCards(String playerName) {
         haveDrawnInitialDestinationCards.add(playerName);
+    }
+
+    public String getLastPlayerTurn() {
+        return lastPlayerTurn;
+    }
+
+    public void setLastPlayerTurn(String lastPlayerTurn) {
+        this.lastPlayerTurn = lastPlayerTurn;
     }
 }
