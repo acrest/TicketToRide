@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class ServerFacade implements IServer {
     private static ServerFacade instance;
-    private int fullCounter = 10;
+    private static int numberOfCommands;
     private String currentPlayerName;
 
     /**
@@ -52,6 +52,14 @@ public class ServerFacade implements IServer {
 
     public ServerFacade() {
         model = ServerModel.getInstance();
+    }
+
+    public static int getNumberOfCommands() {
+        return numberOfCommands;
+    }
+
+    public static void setNumberOfCommands(int numberOfCommands) {
+        ServerFacade.numberOfCommands = numberOfCommands;
     }
 
     /**
@@ -77,7 +85,7 @@ public class ServerFacade implements IServer {
             r = gameCommand.execute();
 
             // Check if adding one will go over the limit.
-            if (Database.getGameDAO().getNumberOfCommands(gameCommand.getGameId()) + 1 == fullCounter) {
+            if (Database.getGameDAO().getNumberOfCommands(gameCommand.getGameId()) + 1 == numberOfCommands) {
                 // Delete all commands and save a new game blob.
                 Database.getGameDAO().clearCommands(gameCommand.getGameId());
                 Database.getGameDAO().clearGame(gameCommand.getGameId());
