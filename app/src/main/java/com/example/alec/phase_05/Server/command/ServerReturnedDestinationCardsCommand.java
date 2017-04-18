@@ -9,8 +9,8 @@ import com.example.alec.phase_05.Shared.command.ReturnedDestinationCardsCommand;
  */
 
 public class ServerReturnedDestinationCardsCommand extends ReturnedDestinationCardsCommand implements Serializable {
-    public ServerReturnedDestinationCardsCommand(String playerName, int remainingCards) {
-        super(playerName, remainingCards);
+    public ServerReturnedDestinationCardsCommand(String playerName, int playerCards, int remainingCards) {
+        super(playerName, playerCards, remainingCards);
     }
 
     @Override
