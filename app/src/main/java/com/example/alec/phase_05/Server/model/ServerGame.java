@@ -68,6 +68,11 @@ public class ServerGame extends Game implements IServerGame {
     }
 
     @Override
+    public void clearCommands(){
+        commandManager.clearCommands();
+    }
+
+    @Override
     public ICommand recentCommand(String playerName) {
         return commandManager.recentCommand(playerName);
     }

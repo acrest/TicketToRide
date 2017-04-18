@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 import com.example.alec.phase_05.Server.model.ServerFacade;
 import com.example.alec.phase_05.Shared.command.CreateGameCommand;
+import com.example.alec.phase_05.Shared.command.GameCommand;
 import com.example.alec.phase_05.Shared.command.Result;
 
 /**
